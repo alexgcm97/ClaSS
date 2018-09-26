@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<venues>
+    <venue venueID="B223">
+        <venueType>Lab</venueType>
+        <capacity>24</capacity>
+    </venue>
+    <venue venueID="B224">
+        <venueType>Lab</venueType>
+        <capacity>24</capacity>
+    </venue>
+    <venue venueID="D203A">
+        <venueType>Lab</venueType>
+        <capacity>24</capacity>
+    </venue>
+    <venue venueID="K206">
+        <venueType>Room</venueType>
+        <capacity>30</capacity>
+    </venue>
+    <venue venueID="K106">
+        <venueType>Room</venueType>
+        <capacity>30</capacity>
+    </venue>
+    <venue venueID="B107">
+        <venueType>Lab</venueType>
+        <capacity>24</capacity>
+    </venue>    
+    <venue venueID="DKABA">
+        <venueType>Hall</venueType>
+        <capacity>360</capacity>
+    </venue>
+    <venue venueID="DK6">
+        <venueType>Hall</venueType>
+        <capacity>160</capacity>
+    </venue>
+</venues>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<courses>
+    <course courseID="C1001">
+        <courseType>L</courseType>
+        <courseDuration>2</courseDuration>
+        <courseCode>BAIT2123</courseCode>      
+    </course>
+    <course courseID="C1002">
+        <courseType>P</courseType>
+        <courseDuration>2</courseDuration>
+        <courseCode>BAIT2123</courseCode>      
+    </course>
+    <course courseID="C1003">
+        <courseType>L</courseType>
+        <courseDuration>2</courseDuration>
+        <courseCode>BAIT3094</courseCode>      
+    </course>
+    <course courseID="C1004">
+        <courseType>T</courseType>
+        <courseDuration>1</courseDuration>
+        <courseCode>BAIT3094</courseCode>      
+    </course>
+    <course courseID="C1005">
+        <courseType>P</courseType>
+        <courseDuration>2</courseDuration>
+        <courseCode>BAIT3094</courseCode>      
+    </course>
+    <course courseID="C1006">
+        <courseType>L</courseType>
+        <courseDuration>1</courseDuration>
+        <courseCode>MPU-3232</courseCode>      
+    </course>
+    <course courseID="C1007">
+        <courseType>T</courseType>
+        <courseDuration>1</courseDuration>
+        <courseCode>MPU-3232</courseCode>      
+    </course>
+    <course courseID="C1008">
+        <courseType>L</courseType>
+        <courseDuration>2</courseDuration>
+        <courseCode>BAIT3173</courseCode>      
+    </course>
+    <course courseID="C1009">
+        <courseType>P</courseType>
+        <courseDuration>2</courseDuration>
+        <courseCode>BAIT3173</courseCode>      
+    </course>
+    <course courseID="C1010">
+        <courseType>L</courseType>
+        <courseDuration>2</courseDuration>
+        <courseCode>BACS3033</courseCode>      
+    </course>
+    <course courseID="C1011">
+        <courseType>T</courseType>
+        <courseDuration>1</courseDuration>
+        <courseCode>BACS3033</courseCode>      
+    </course>
+</courses>
