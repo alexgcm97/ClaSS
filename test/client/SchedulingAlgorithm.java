@@ -13,6 +13,8 @@ import domain.Venue;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -118,15 +120,25 @@ public class SchedulingAlgorithm {
     }
 
     public void assignCourse(CourseType course) {
+        boolean isClash = false;
         switch (course.getCourseType()) {
             case "L": {
                 String venueID = getRandomVenue("L");
-                //Selecting Venue
-                //Creating lecture class in all groups schedules
-                double startTime = getRandomStartTime();
-                double endTime = startTime + Double.parseDouble(course.getCourseDuration());
+                Class c;
+                do {
+                    isClash = false;
+                    double startTime = getRandomStartTime();
+                    double endTime = startTime + Double.parseDouble(course.getCourseDuration());
+                    c = new Class(course.getCourseID(), venueID, "-", getRandomStaff(), getRandomDay(), startTime + "", endTime + "");
+                    for (int i = 0; i < scheduleList.size(); i++) {
+                        if (isTimeClash(scheduleList.get(i), c)) {
+                            isClash = true;
+                        }
+                    }
+                } while (isClash);
+
                 for (int i = 0; i < groupList.size(); i++) {
-                    Class c = new Class(course.getCourseID(), venueID, groupList.get(i).getGroupID(), getRandomStaff(), getRandomDay(), startTime + "", endTime + "");
+                    c.setGroupID(groupList.get(i).getGroupID());
                     scheduleList.get(i).add(c);
                 }
                 break;
@@ -134,24 +146,57 @@ public class SchedulingAlgorithm {
             case "T": {
                 for (int i = 0; i < groupList.size(); i++) {
                     String venueID = getRandomVenue("T");
-                    double startTime = getRandomStartTime();
-                    double endTime = startTime + Double.parseDouble(course.getCourseDuration());
-                    Class c = new Class(course.getCourseID(), venueID, groupList.get(i).getGroupID(), getRandomStaff(), getRandomDay(), startTime + "", endTime + "");
-                    scheduleList.get(i).add(c);
+                    do {
+                        isClash = false;
+                        double startTime = getRandomStartTime();
+                        double endTime = startTime + Double.parseDouble(course.getCourseDuration());
+                        Class c = new Class(course.getCourseID(), venueID, groupList.get(i).getGroupID(), getRandomStaff(), getRandomDay(), startTime + "", endTime + "");
+                        if (isTimeClash(scheduleList.get(i), c)) {
+                            isClash = true;
+                        } else {
+                            scheduleList.get(i).add(c);
+                            break;
+                        }
+                    } while (isClash == true);
                 }
                 break;
             }
             case "P": {
                 for (int i = 0; i < groupList.size(); i++) {
                     String venueID = getRandomVenue("P");
-                    double startTime = getRandomStartTime();
-                    double endTime = startTime + Double.parseDouble(course.getCourseDuration());
-                    Class c = new Class(course.getCourseID(), venueID, groupList.get(i).getGroupID(), getRandomStaff(), getRandomDay(), startTime + "", endTime + "");
-                    scheduleList.get(i).add(c);
+                    do {
+                        isClash = false;
+                        double startTime = getRandomStartTime();
+                        double endTime = startTime + Double.parseDouble(course.getCourseDuration());
+                        Class c = new Class(course.getCourseID(), venueID, groupList.get(i).getGroupID(), getRandomStaff(), getRandomDay(), startTime + "", endTime + "");
+                        if (isTimeClash(scheduleList.get(i), c)) {
+                            isClash = true;
+                        } else {
+                            scheduleList.get(i).add(c);
+                            break;
+                        }
+                    } while (isClash == true);
                 }
                 break;
             }
         }
+    }
+
+    public boolean isTimeClash(ArrayList<Class> classList, Class c) {
+        boolean found = false;
+        for (int i = 0; i < classList.size(); i++) {
+            if (classList.get(i).getDay() == c.getDay()) {
+                double startTime = Double.parseDouble(c.getStartTime());
+                double endTime = Double.parseDouble(c.getEndTime());
+                double tempStart = Double.parseDouble(classList.get(i).getStartTime());
+                double tempEnd = Double.parseDouble(classList.get(i).getEndTime());
+                if ((startTime >= tempStart && startTime <= tempEnd) || (endTime >= tempStart && endTime <= tempEnd)) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+        return found;
     }
 
     public double getRandomStartTime() {
@@ -198,12 +243,33 @@ public class SchedulingAlgorithm {
         sa.allocation();
         for (int i = 0; i < sa.scheduleList.size(); i++) {
             ArrayList<Class> classList = sa.scheduleList.get(i);
+            classList.sort(new Comparator<Class>() {
+                @Override
+                public int compare(Class o1, Class o2) {
+                    if (o1.getDay() == o2.getDay()) {
+                        double time1 = Double.parseDouble(o1.getStartTime());
+                        double time2 = Double.parseDouble(o2.getStartTime());
+                        if (time1 == time2) {
+                            return 0;
+                        } else if (time1 > time2) {
+                            return 1;
+                        } else {
+                            return -1;
+                        }
+                    } else {
+                        return o1.getDay() - o2.getDay();
+                    }
+                }
+            });
+
             for (int j = 0; j < classList.size(); j++) {
                 if (j == 0) {
                     System.out.println("Group ID : " + classList.get(j).getGroupID());
                 }
-                System.out.println("Course ID: " + classList.get(j).getCourseID() + " Venue : " + classList.get(j).getVenueID() + " Day & Time: " + classList.get(j).getDay() + "(" + classList.get(j).getStartTime() + "-" + classList.get(j).getEndTime() + ")");
+                System.out.println("Course ID: " + classList.get(j).getCourseID() + " Venue : " + classList.get(j).getVenueID() + " Day & Time: " + classList.get(j).getDay() + " (" + classList.get(j).getStartTime() + "-" + classList.get(j).getEndTime() + ")");
             }
+            System.out.println("");
+
         }
     }
 }
