@@ -39,6 +39,9 @@ public class SchedulingAlgorithm {
     ArrayList<Venue> roomList, labList, hallList;
     ArrayList<ArrayList<Class>> scheduleList = new ArrayList();
 
+    private int studyDays;
+    private double studyStart, studyEnd;
+
     public void initialize() throws ParserConfigurationException, UnsupportedEncodingException, SAXException, IOException {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -53,6 +56,20 @@ public class SchedulingAlgorithm {
 
             CourseType c = new CourseType(e.getAttribute("courseID"), e.getElementsByTagName("courseType").item(0).getTextContent(), e.getElementsByTagName("courseDuration").item(0).getTextContent(), e.getElementsByTagName("courseCode").item(0).getTextContent());
             courseList.add(c);
+        }
+
+        doc = dBuilder.parse("test/xml/Configuration.xml");
+        nodes = doc.getElementsByTagName("configuration");
+
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+            Element e = (Element) node;
+
+            studyDays = Integer.parseInt(e.getElementsByTagName("studyDays").item(0).getTextContent());
+            String startStr = e.getElementsByTagName("startTime").item(0).getTextContent().replace(":", ".");
+            String endStr = e.getElementsByTagName("endTime").item(0).getTextContent().replace(":", ".");
+            studyStart = Double.parseDouble(startStr);
+            studyEnd = Double.parseDouble(endStr);
         }
 
         doc = dBuilder.parse("test/xml/Staff.xml");
@@ -215,14 +232,14 @@ public class SchedulingAlgorithm {
 
     public double getRandomStartTime() {
         if (rand.nextBoolean()) {
-            return (rand.nextInt(8) + 8);
+            return (rand.nextInt((int) (studyEnd - studyStart - 2)) + studyStart);
         } else {
-            return (rand.nextInt(8) + 8) + 0.5;
+            return (rand.nextInt((int) (studyEnd - studyStart - 2)) + studyStart) + 0.5;
         }
     }
 
     public int getRandomDay() {
-        return rand.nextInt(5) + 1;
+        return rand.nextInt(studyDays) + 1;
     }
 
     public String getRandomStaff() {
