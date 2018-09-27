@@ -111,6 +111,14 @@ public class SchedulingAlgorithm {
         }
     }
 
+    public void validation() {
+
+    }
+
+    public void optimization() {
+
+    }
+
     public int getTotalSize() {
         int totalSize = 0;
         for (int i = 0; i < groupList.size(); i++) {
@@ -124,12 +132,18 @@ public class SchedulingAlgorithm {
         switch (course.getCourseType()) {
             case "L": {
                 String venueID = getRandomVenue("L");
+                String courseID = course.getCourseID();
+                double startTime, endTime;
+                String staff = "";
+                int day = 0;
                 Class c;
                 do {
                     isClash = false;
-                    double startTime = getRandomStartTime();
-                    double endTime = startTime + Double.parseDouble(course.getCourseDuration());
-                    c = new Class(course.getCourseID(), venueID, "-", getRandomStaff(), getRandomDay(), startTime + "", endTime + "");
+                    startTime = getRandomStartTime();
+                    endTime = startTime + Double.parseDouble(course.getCourseDuration());
+                    staff = getRandomStaff();
+                    day = getRandomDay();
+                    c = new Class(courseID, venueID, "-", staff, day, startTime + "", endTime + "");
                     for (int i = 0; i < scheduleList.size(); i++) {
                         if (isTimeClash(scheduleList.get(i), c)) {
                             isClash = true;
@@ -138,7 +152,7 @@ public class SchedulingAlgorithm {
                 } while (isClash);
 
                 for (int i = 0; i < groupList.size(); i++) {
-                    c.setGroupID(groupList.get(i).getGroupID());
+                    c = new Class(courseID, venueID, groupList.get(i).getGroupID(), staff, day, startTime + "", endTime + "");
                     scheduleList.get(i).add(c);
                 }
                 break;
