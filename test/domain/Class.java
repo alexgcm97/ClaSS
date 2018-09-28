@@ -13,13 +13,14 @@ import java.sql.Time;
  */
 public class Class {
 
-    private String courseID, venueID, groupID, staffID, startTime, endTime;
+    private String courseID, venueID, groupID, staffID, courseType;
     private int day;
+    private double startTime, endTime;
 
     public Class() {
     }
 
-    public Class(String courseID, String venueID, String groupID, String staffID, int day, String startTime, String endTime) {
+    public Class(String courseID, String venueID, String groupID, String staffID, int day, double startTime, double endTime, String courseType) {
         this.courseID = courseID;
         this.venueID = venueID;
         this.groupID = groupID;
@@ -27,6 +28,7 @@ public class Class {
         this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.courseType = courseType;
     }
 
     public String getCourseID() {
@@ -69,20 +71,28 @@ public class Class {
         this.day = day;
     }
 
-    public String getStartTime() {
+    public double getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(double startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public double getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(double endTime) {
         this.endTime = endTime;
+    }
+
+    public String getCourseType() {
+        return courseType;
+    }
+
+    public void setCourseType(String courseType) {
+        this.courseType = courseType;
     }
 
 }

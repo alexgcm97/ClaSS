@@ -8,8 +8,8 @@ and open the template in the editor.
 
 <configuration>
     <studyDays>5</studyDays>
-    <startTime>8:00</startTime>
-    <endTime>20:00</endTime>
+    <startTime>8.00</startTime>
+    <endTime>20.00</endTime>
     <constraints>
     </constraints>
 </configuration>
