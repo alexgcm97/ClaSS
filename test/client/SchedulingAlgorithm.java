@@ -399,6 +399,7 @@ public class SchedulingAlgorithm {
 
     public static void main(String args[]) throws ParserConfigurationException, SAXException, SAXException, IOException {
         SchedulingAlgorithm sa = new SchedulingAlgorithm();
+        sa.initialize();
 
         long startTime = System.nanoTime();
         long totalTime = 0;
@@ -408,7 +409,6 @@ public class SchedulingAlgorithm {
             if (totalTime > 10) {
                 break;
             } else {
-                sa.initialize();
                 sa.allocation();
                 sa.validation();
             }
