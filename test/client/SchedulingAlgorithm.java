@@ -118,16 +118,16 @@ public class SchedulingAlgorithm {
                 hallList.add(v);
             }
         }
+    }
 
+    public void allocation() {
         scheduleList = new ArrayList();
         //Creating Schedule List for each Group
         for (int i = 0; i < groupList.size(); i++) {
             ArrayList<Class> classList = new ArrayList();
             scheduleList.add(classList);
         }
-    }
 
-    public void allocation() {
         //Assign Lecture Schedules
         for (int i = 0; i < lecList.size(); i++) {
             assignLecture(lecList.get(i));
@@ -399,7 +399,7 @@ public class SchedulingAlgorithm {
 
     public static void main(String args[]) throws ParserConfigurationException, SAXException, SAXException, IOException {
         SchedulingAlgorithm sa = new SchedulingAlgorithm();
-        
+
         long startTime = System.nanoTime();
         long totalTime = 0;
         do {
