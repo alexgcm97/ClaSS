@@ -12,7 +12,11 @@ package domain;
 public class CourseType {
 
     private String courseID, courseType, courseDuration, courseCode;
-    
+
+    public CourseType() {
+
+    }
+
     public CourseType(String courseID, String courseType, String courseDuration, String courseCode) {
         this.courseID = courseID;
         this.courseType = courseType;
