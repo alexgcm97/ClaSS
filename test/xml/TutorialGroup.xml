@@ -9,19 +9,33 @@ and open the template in the editor.
 <tutorialGroups>
     <tutorialGroup groupID="G1001">
         <studyYear>3</studyYear>
-        <groupNumber>5</groupNumber>
+        <groupNumber>3</groupNumber>
         <size>24</size>
         <programmeID>P1001</programmeID>
         <cohortID>CH1001</cohortID>
     </tutorialGroup>
     <tutorialGroup groupID="G1002">
         <studyYear>3</studyYear>
-        <groupNumber>6</groupNumber>
+        <groupNumber>4</groupNumber>
         <size>24</size>
         <programmeID>P1001</programmeID>
         <cohortID>CH1001</cohortID>
     </tutorialGroup>
     <tutorialGroup groupID="G1003">
+        <studyYear>3</studyYear>
+        <groupNumber>5</groupNumber>
+        <size>24</size>
+        <programmeID>P1001</programmeID>
+        <cohortID>CH1001</cohortID>
+    </tutorialGroup>
+    <tutorialGroup groupID="G1004">
+        <studyYear>3</studyYear>
+        <groupNumber>6</groupNumber>
+        <size>23</size>
+        <programmeID>P1001</programmeID>
+        <cohortID>CH1001</cohortID>
+    </tutorialGroup>
+    <tutorialGroup groupID="G1005">
         <studyYear>3</studyYear>
         <groupNumber>7</groupNumber>
         <size>24</size>
