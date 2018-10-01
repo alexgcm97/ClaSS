@@ -11,10 +11,13 @@ import domain.Staff;
 import domain.Tutorial_Group;
 import domain.Venue;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -27,6 +30,8 @@ import org.xml.sax.SAXException;
  *
  * @author Alex
  */
+@ManagedBean
+@SessionScoped
 public class SchedulingAlgorithm {
 
     private Random rand = new Random();
@@ -45,7 +50,9 @@ public class SchedulingAlgorithm {
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Element e;
 
-        Document doc = dBuilder.parse("src/java/xml/Course.xml");
+        String fileName = "../xml/Course.xml";
+        InputStream inputStream = getClass().getResourceAsStream(fileName);
+        Document doc = dBuilder.parse(inputStream);
         courseList = new ArrayList();
         lecList = new ArrayList();
         NodeList nodes = doc.getElementsByTagName("course");
@@ -61,7 +68,9 @@ public class SchedulingAlgorithm {
             }
         }
 
-        doc = dBuilder.parse("src/java/xml/Configuration.xml");
+        fileName = "../xml/Configuration.xml";
+        inputStream = getClass().getResourceAsStream(fileName);
+        doc = dBuilder.parse(inputStream);
         nodes = doc.getElementsByTagName("configuration");
 
         e = (Element) nodes.item(0);
@@ -81,7 +90,9 @@ public class SchedulingAlgorithm {
             maxBreak = Double.parseDouble(e.getElementsByTagName("maxBreak").item(0).getTextContent());
         }
 
-        doc = dBuilder.parse("src/java/xml/Staff.xml");
+        fileName = "../xml/Staff.xml";
+        inputStream = getClass().getResourceAsStream(fileName);
+        doc = dBuilder.parse(inputStream);
         staffList = new ArrayList();
         nodes = doc.getElementsByTagName("staff");
 
@@ -92,7 +103,9 @@ public class SchedulingAlgorithm {
             staffList.add(stf);
         }
 
-        doc = dBuilder.parse("src/java/xml/TutorialGroup.xml");
+        fileName = "../xml/TutorialGroup.xml";
+        inputStream = getClass().getResourceAsStream(fileName);
+        doc = dBuilder.parse(inputStream);
         groupList = new ArrayList();
         nodes = doc.getElementsByTagName("tutorialGroup");
 
@@ -103,7 +116,9 @@ public class SchedulingAlgorithm {
             groupList.add(tg);
         }
 
-        doc = dBuilder.parse("src/java/xml/Venue.xml");
+        fileName = "../xml/Venue.xml";
+        inputStream = getClass().getResourceAsStream(fileName);
+        doc = dBuilder.parse(inputStream);
         roomList = new ArrayList();
         labList = new ArrayList();
         hallList = new ArrayList();
@@ -408,7 +423,7 @@ public class SchedulingAlgorithm {
         return venueID;
     }
 
-    public static void main(String args[]) throws ParserConfigurationException, SAXException, IOException {
+    public void start() throws ParserConfigurationException, SAXException, IOException {
         SchedulingAlgorithm sa = new SchedulingAlgorithm();
         sa.initialize();
 
