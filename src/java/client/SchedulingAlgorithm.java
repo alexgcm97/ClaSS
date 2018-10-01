@@ -13,7 +13,6 @@ import domain.Venue;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import javax.xml.parsers.DocumentBuilder;
@@ -31,7 +30,7 @@ import org.xml.sax.SAXException;
  */
 public class SchedulingAlgorithm {
 
-    Random rand = new Random();
+    private Random rand = new Random();
 
     private ArrayList<CourseType> lecList, courseList;
     private ArrayList<Staff> staffList;
@@ -144,27 +143,25 @@ public class SchedulingAlgorithm {
         //Sort List
         for (int i = 0; i < scheduleList.size(); i++) {
             ArrayList<Class> classList = scheduleList.get(i);
-            classList.sort(new Comparator<Class>() {
-                @Override
-                public int compare(Class o1, Class o2) {
-                    if (o1.getDay() == o2.getDay()) {
-                        double time1 = o1.getStartTime();
-                        double time2 = o2.getStartTime();
-                        if (time1 == time2) {
-                            return 0;
-                        } else if (time1 > time2) {
-                            return 1;
-                        } else {
-                            return -1;
-                        }
+            classList.sort((Class o1, Class o2) -> {
+                if (o1.getDay() == o2.getDay()) {
+                    double time1 = o1.getStartTime();
+                    double time2 = o2.getStartTime();
+                    if (time1 == time2) {
+                        return 0;
+                    } else if (time1 > time2) {
+                        return 1;
                     } else {
-                        return o1.getDay() - o2.getDay();
+                        return -1;
                     }
+                } else {
+                    return o1.getDay() - o2.getDay();
                 }
             });
         }
     }
 
+    //Validate Venue & Staff Clashes
     public void validation() {
         for (int i = 0; i < scheduleList.size(); i++) {
             for (int j = i + 1; j < scheduleList.size(); j++) {
@@ -264,7 +261,6 @@ public class SchedulingAlgorithm {
         for (int i = 0; i < courseList.size(); i++) {
             if (courseList.get(i).getCourseID().equalsIgnoreCase(courseID)) {
                 course = courseList.get(i);
-
             }
         }
         return course;
@@ -281,7 +277,7 @@ public class SchedulingAlgorithm {
     public void assignLecture(CourseType course) {
         boolean isClash;
 
-        String venueID = getRandomVenue("L");
+        String venueID = "";
         String courseID = course.getCourseID();
         String courseType = course.getCourseType();
         double startTime, endTime;
@@ -290,6 +286,7 @@ public class SchedulingAlgorithm {
         Class c;
 
         do {
+            venueID = getRandomVenue("L");
             isClash = false;
             startTime = getRandomStartTime();
             endTime = startTime + Double.parseDouble(course.getCourseDuration());
@@ -381,11 +378,9 @@ public class SchedulingAlgorithm {
         if (courseType.equalsIgnoreCase("T")) {
             index = rand.nextInt(roomList.size());
             venueID = roomList.get(index).getVenueID();
-
         } else if (courseType.equalsIgnoreCase("P")) {
             index = rand.nextInt(labList.size());
             venueID = labList.get(index).getVenueID();
-
         } else if (courseType.equalsIgnoreCase("L")) {
             int totalSize = getTotalSize();
             do {
@@ -393,11 +388,10 @@ public class SchedulingAlgorithm {
                 venueID = hallList.get(index).getVenueID();
             } while (hallList.get(index).getCapacity() < totalSize);
         }
-
         return venueID;
     }
 
-    public static void main(String args[]) throws ParserConfigurationException, SAXException, SAXException, IOException {
+    public static void main(String args[]) throws ParserConfigurationException, SAXException, IOException {
         SchedulingAlgorithm sa = new SchedulingAlgorithm();
         sa.initialize();
 

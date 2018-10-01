@@ -10,31 +10,31 @@ and open the template in the editor.
     <staff staffID="S1001">
         <name>Alex</name>
         <startWork>8.00</startWork>
-        <endWork>18.00</endWork>
+        <endWork>20.00</endWork>
         <remark>CS</remark>
     </staff>
     <staff staffID="S1002">
         <name>Steve</name>
         <startWork>8.00</startWork>
-        <endWork>18.00</endWork>
+        <endWork>20.00</endWork>
         <remark>CS</remark>
     </staff>
     <staff staffID="S1003">
         <name>Javier</name>
         <startWork>8.00</startWork>
-        <endWork>18.00</endWork>
+        <endWork>20.00</endWork>
         <remark>IT</remark>
     </staff>
     <staff staffID="S1004">
         <name>John</name>
         <startWork>8.00</startWork>
-        <endWork>18.00</endWork>
+        <endWork>20.00</endWork>
         <remark>CS</remark>
     </staff>
-    <staff staffID="S1004">
+    <staff staffID="S1005">
         <name>Lily</name>
         <startWork>8.00</startWork>
-        <endWork>18.00</endWork>
+        <endWork>20.00</endWork>
         <remark>CS</remark>
     </staff>
 </staffs>
