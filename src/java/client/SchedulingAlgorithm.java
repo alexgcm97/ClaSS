@@ -45,7 +45,7 @@ public class SchedulingAlgorithm {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 
-        Document doc = dBuilder.parse("test/xml/Course.xml");
+        Document doc = dBuilder.parse("src/java/xml/Course.xml");
         courseList = new ArrayList();
         lecList = new ArrayList();
         NodeList nodes = doc.getElementsByTagName("course");
@@ -62,7 +62,7 @@ public class SchedulingAlgorithm {
             }
         }
 
-        doc = dBuilder.parse("test/xml/Configuration.xml");
+        doc = dBuilder.parse("src/java/xml/Configuration.xml");
         nodes = doc.getElementsByTagName("configuration");
 
         for (int i = 0; i < nodes.getLength(); i++) {
@@ -74,7 +74,7 @@ public class SchedulingAlgorithm {
             studyEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
         }
 
-        doc = dBuilder.parse("test/xml/Staff.xml");
+        doc = dBuilder.parse("src/java/xml/Staff.xml");
         staffList = new ArrayList();
         nodes = doc.getElementsByTagName("staff");
 
@@ -86,7 +86,7 @@ public class SchedulingAlgorithm {
             staffList.add(stf);
         }
 
-        doc = dBuilder.parse("test/xml/TutorialGroup.xml");
+        doc = dBuilder.parse("src/java/xml/TutorialGroup.xml");
         groupList = new ArrayList();
         nodes = doc.getElementsByTagName("tutorialGroup");
 
@@ -98,7 +98,7 @@ public class SchedulingAlgorithm {
             groupList.add(tg);
         }
 
-        doc = dBuilder.parse("test/xml/Venue.xml");
+        doc = dBuilder.parse("src/java/xml/Venue.xml");
         roomList = new ArrayList();
         labList = new ArrayList();
         hallList = new ArrayList();
