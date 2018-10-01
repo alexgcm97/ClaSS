@@ -11,5 +11,11 @@ and open the template in the editor.
     <startTime>8.00</startTime>
     <endTime>20.00</endTime>
     <constraints>
+        <block>
+            <day>3</day>
+            <startTime>14.00</startTime>
+            <endTime>16.00</endTime>
+        </block>
+        <maxBreak>2</maxBreak>
     </constraints>
 </configuration>

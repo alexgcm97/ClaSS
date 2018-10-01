@@ -20,7 +20,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -38,12 +37,13 @@ public class SchedulingAlgorithm {
     private ArrayList<Venue> roomList, labList, hallList;
     private ArrayList<ArrayList<Class>> scheduleList;
 
-    private int studyDays;
-    private double studyStart, studyEnd;
+    private int studyDays, blockDay = 99;
+    private double studyStart, studyEnd, blockStart, blockEnd, maxBreak;
 
     public void initialize() throws ParserConfigurationException, UnsupportedEncodingException, SAXException, IOException {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Element e;
 
         Document doc = dBuilder.parse("src/java/xml/Course.xml");
         courseList = new ArrayList();
@@ -51,8 +51,7 @@ public class SchedulingAlgorithm {
         NodeList nodes = doc.getElementsByTagName("course");
 
         for (int i = 0; i < nodes.getLength(); i++) {
-            Node node = nodes.item(i);
-            Element e = (Element) node;
+            e = (Element) nodes.item(i);
 
             CourseType c = new CourseType(e.getAttribute("courseID"), e.getElementsByTagName("courseType").item(0).getTextContent(), e.getElementsByTagName("courseDuration").item(0).getTextContent(), e.getElementsByTagName("courseCode").item(0).getTextContent());
             if (c.getCourseType().equalsIgnoreCase("L")) {
@@ -65,13 +64,21 @@ public class SchedulingAlgorithm {
         doc = dBuilder.parse("src/java/xml/Configuration.xml");
         nodes = doc.getElementsByTagName("configuration");
 
-        for (int i = 0; i < nodes.getLength(); i++) {
-            Node node = nodes.item(i);
-            Element e = (Element) node;
+        e = (Element) nodes.item(0);
 
-            studyDays = Integer.parseInt(e.getElementsByTagName("studyDays").item(0).getTextContent());
-            studyStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
-            studyEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
+        studyDays = Integer.parseInt(e.getElementsByTagName("studyDays").item(0).getTextContent());
+        studyStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
+        studyEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
+
+        nodes = doc.getElementsByTagName("constraints");
+        if (nodes.getLength() > 0) {
+            e = (Element) nodes.item(0);
+            if (e.getElementsByTagName("block").getLength() > 0) {
+                blockDay = Integer.parseInt(e.getElementsByTagName("day").item(0).getTextContent());
+                blockStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
+                blockEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
+            }
+            maxBreak = Double.parseDouble(e.getElementsByTagName("maxBreak").item(0).getTextContent());
         }
 
         doc = dBuilder.parse("src/java/xml/Staff.xml");
@@ -79,8 +86,7 @@ public class SchedulingAlgorithm {
         nodes = doc.getElementsByTagName("staff");
 
         for (int i = 0; i < nodes.getLength(); i++) {
-            Node node = nodes.item(i);
-            Element e = (Element) node;
+            e = (Element) nodes.item(i);
 
             Staff stf = new Staff(e.getAttribute("staffID"), e.getElementsByTagName("name").item(0).getTextContent(), "", e.getElementsByTagName("startWork").item(0).getTextContent(), e.getElementsByTagName("endWork").item(0).getTextContent());
             staffList.add(stf);
@@ -91,8 +97,7 @@ public class SchedulingAlgorithm {
         nodes = doc.getElementsByTagName("tutorialGroup");
 
         for (int i = 0; i < nodes.getLength(); i++) {
-            Node node = nodes.item(i);
-            Element e = (Element) node;
+            e = (Element) nodes.item(i);
 
             Tutorial_Group tg = new Tutorial_Group(e.getAttribute("groupID"), Integer.parseInt(e.getElementsByTagName("studyYear").item(0).getTextContent()), Integer.parseInt(e.getElementsByTagName("groupNumber").item(0).getTextContent()), Integer.parseInt(e.getElementsByTagName("size").item(0).getTextContent()), e.getElementsByTagName("programmeID").item(0).getTextContent(), e.getElementsByTagName("cohortID").item(0).getTextContent());
             groupList.add(tg);
@@ -105,8 +110,7 @@ public class SchedulingAlgorithm {
         nodes = doc.getElementsByTagName("venue");
 
         for (int i = 0; i < nodes.getLength(); i++) {
-            Node node = nodes.item(i);
-            Element e = (Element) node;
+            e = (Element) nodes.item(i);
 
             Venue v = new Venue(e.getAttribute("venueID"), e.getElementsByTagName("venueType").item(0).getTextContent(), Integer.parseInt(e.getElementsByTagName("capacity").item(0).getTextContent()), "");
             if (v.getVenueType().equalsIgnoreCase("Room")) {
@@ -125,6 +129,13 @@ public class SchedulingAlgorithm {
         for (int i = 0; i < groupList.size(); i++) {
             ArrayList<Class> classList = new ArrayList();
             scheduleList.add(classList);
+        }
+
+        if (blockDay != 99) {
+            Class c = new Class("-", "-", "-", "-", blockDay, blockStart, blockEnd, "-");
+            for (int i = 0; i < scheduleList.size(); i++) {
+                scheduleList.get(i).add(c);
+            }
         }
 
         //Assign Lecture Schedules
@@ -170,10 +181,10 @@ public class SchedulingAlgorithm {
 
                 for (int index = 0; index < list1.size(); index++) {
                     Class class1 = list1.get(index);
-                    if (!class1.getCourseType().equalsIgnoreCase("L")) {
+                    if (!class1.getCourseType().equalsIgnoreCase("L") && !class1.getCourseType().equalsIgnoreCase("-")) {
                         for (int index2 = 0; index2 < list2.size(); index2++) {
                             Class class2 = list2.get(index2);
-                            if (!class2.getCourseType().equalsIgnoreCase("L")) {
+                            if (!class2.getCourseType().equalsIgnoreCase("L") && !class2.getCourseType().equalsIgnoreCase("-")) {
                                 if (class1.getDay() == class2.getDay()) {
                                     double startTime1 = class1.getStartTime();
                                     double endTime1 = class1.getEndTime();
@@ -217,10 +228,10 @@ public class SchedulingAlgorithm {
 
                 for (int index = 0; index < list1.size(); index++) {
                     Class class1 = list1.get(index);
-                    if (!class1.getCourseType().equalsIgnoreCase("L")) {
+                    if (!class1.getCourseType().equalsIgnoreCase("L") && !class1.getCourseType().equalsIgnoreCase("-")) {
                         for (int index2 = 0; index2 < list2.size(); index2++) {
                             Class class2 = list2.get(index2);
-                            if (!class2.getCourseType().equalsIgnoreCase("L")) {
+                            if (!class2.getCourseType().equalsIgnoreCase("L") && !class2.getCourseType().equalsIgnoreCase("-")) {
                                 if (class1.getDay() == class2.getDay()) {
                                     double startTime1 = class1.getStartTime();
                                     double endTime1 = class1.getEndTime();
@@ -242,8 +253,14 @@ public class SchedulingAlgorithm {
         return clashNo;
     }
 
-    public void optimization() {
+    public void optimizeBreak(int step) {
+        switch (step) {
+            case 1:
 
+                break;
+            case 2:
+                break;
+        }
     }
 
     public int getIndexOfScheduleList(String groupID) {
@@ -416,8 +433,11 @@ public class SchedulingAlgorithm {
                 for (int j = 0; j < classList.size(); j++) {
                     if (j == 0) {
                         System.out.println("Group ID : " + classList.get(j).getGroupID());
+                    } else {
+                        if (!classList.get(j).getVenueID().equalsIgnoreCase("-")) {
+                            System.out.println("Course ID (Staff ID): " + classList.get(j).getCourseID() + "(" + classList.get(j).getStaffID() + ")" + " Venue : " + classList.get(j).getVenueID() + " Day & Time: " + classList.get(j).getDay() + " (" + classList.get(j).getStartTime() + "-" + classList.get(j).getEndTime() + ")");
+                        }
                     }
-                    System.out.println("Course ID (Staff ID): " + classList.get(j).getCourseID() + "(" + classList.get(j).getStaffID() + ")" + " Venue : " + classList.get(j).getVenueID() + " Day & Time: " + classList.get(j).getDay() + " (" + classList.get(j).getStartTime() + "-" + classList.get(j).getEndTime() + ")");
                 }
                 System.out.println("");
             }
