@@ -6,8 +6,6 @@
 package client;
 
 import da.ClassDA;
-import da.StaffDA;
-import da.VenueDA;
 import domain.Class;
 import domain.CourseType;
 import domain.Schedule;
@@ -47,8 +45,6 @@ public class SchedulingAlgorithm {
     private double studyStart, studyEnd, blockStart, blockEnd, maxBreak;
 
     private ClassDA cda = new ClassDA();
-    private StaffDA sda = new StaffDA();
-    private VenueDA vda = new VenueDA();
 
     public void initialize() throws Exception {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
