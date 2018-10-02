@@ -289,14 +289,6 @@ public class SchedulingAlgorithm {
         }
     }
 
-    public boolean isClassTogether(Class class1, Class class2) {
-        if (class1.getDay() == class2.getDay()) {
-            return class1.getEndTime() == class2.getStartTime();
-        } else {
-            return false;
-        }
-    }
-
     public void clearBlock() {
         Class temp = new Class();
         for (int i = 0; i < scheduleList.size(); i++) {
@@ -318,25 +310,6 @@ public class SchedulingAlgorithm {
             }
         }
         return course;
-    }
-
-    public Venue searchVenue(String courseType, String venueID) {
-        Venue venue = new Venue();
-        ArrayList<Venue> tempList;
-        if (courseType.equalsIgnoreCase("T")) {
-            tempList = roomList;
-        } else if (courseType.equalsIgnoreCase("P")) {
-            tempList = labList;
-        } else {
-            tempList = hallList;
-        }
-
-        for (int i = 0; i < tempList.size(); i++) {
-            if (tempList.get(i).getVenueID().equalsIgnoreCase(venueID)) {
-                venue = tempList.get(i);
-            }
-        }
-        return venue;
     }
 
     public int getTotalSize() {
@@ -413,6 +386,25 @@ public class SchedulingAlgorithm {
         return found;
     }
 
+    public int countTimeClashes() {
+        int count = 0;
+        for (int i = 0; i < scheduleList.size(); i++) {
+            ArrayList<Class> classList = scheduleList.get(i).getClassList();
+            for (int index1 = 0; index1 < classList.size(); index1++) {
+                for (int index2 = index1 + 1; index2 < classList.size(); index2++) {
+                    Class class1 = classList.get(index1);
+                    Class class2 = classList.get(index2);
+                    if (class1.getDay() == class2.getDay()) {
+                        if ((class2.getStartTime() >= class1.getStartTime() && class2.getStartTime() < class1.getEndTime()) || (class2.getEndTime() > class1.getStartTime() && class2.getEndTime() <= class1.getEndTime())) {
+                            count++;
+                        }
+                    }
+                }
+            }
+        }
+        return count;
+    }
+
     public double getRandomStartTime() {
         if (rand.nextBoolean() == true) {
             return (rand.nextInt((int) (studyEnd - studyStart - 2)) + studyStart);
@@ -448,27 +440,6 @@ public class SchedulingAlgorithm {
         return venue;
     }
 
-    public Venue getRandomVenueFromBlock(String courseType, String block) {
-        Venue venue = new Venue();
-        int index = 0;
-        boolean found = false;
-        ArrayList<Venue> tempList = new ArrayList();
-        if (courseType.equalsIgnoreCase("T")) {
-            tempList = roomList;
-        } else if (courseType.equalsIgnoreCase("P")) {
-            tempList = labList;
-        }
-
-        do {
-            index = rand.nextInt(tempList.size());
-            if (tempList.get(index).getBlock().equalsIgnoreCase(block)) {
-                venue = labList.get(index);
-                found = true;
-            }
-        } while (found == true);
-        return venue;
-    }
-
     public void start() throws Exception {
         initialize();
 
@@ -484,8 +455,8 @@ public class SchedulingAlgorithm {
                 allocation();
                 validation();
             }
-        } while (countClash() > 0);
-
+        } while (countTimeClashes() > 0 || countClash() > 0);
+        
         if (totalTime > 10) {
             System.out.println("Timeout.");
         } else {
@@ -505,5 +476,10 @@ public class SchedulingAlgorithm {
                 System.out.println("-----------------------------------------------------------------------------");
             }
         }
+    }
+
+    public static void main(String args[]) throws Exception {
+        SchedulingAlgorithm sa = new SchedulingAlgorithm();
+        sa.start();
     }
 }
