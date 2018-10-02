@@ -9,14 +9,20 @@
  */
 package domain;
 
+import java.util.ArrayList;
+
 public class Venue {
 
-    private String venueID;
-    private String venueType, remark;
+    private String venueID, block, venueType, remark;
     private int capacity;
 
-    public Venue(String venueID, String venueType, int capacity, String remark) {
+    public Venue() {
+
+    }
+
+    public Venue(String venueID, String block, String venueType, int capacity, String remark) {
         this.venueID = venueID;
+        this.block = block;
         this.venueType = venueType;
         this.capacity = capacity;
         this.remark = remark;
@@ -28,6 +34,14 @@ public class Venue {
 
     public void setVenueID(String venueID) {
         this.venueID = venueID;
+    }
+
+    public String getBlock() {
+        return block;
+    }
+
+    public void setBlock(String block) {
+        this.block = block;
     }
 
     public String getVenueType() {

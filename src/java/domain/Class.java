@@ -20,6 +20,25 @@ public class Class {
     public Class() {
     }
 
+    public Class(String courseID, String groupID, int day, double startTime, double endTime, String courseType) {
+        this.courseID = courseID;
+        this.groupID = groupID;
+        this.day = day;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.courseType = courseType;
+    }
+
+    public Class(String courseID, String venueID, String groupID, String staffID, int day, double startTime, double endTime) {
+        this.courseID = courseID;
+        this.venueID = venueID;
+        this.groupID = groupID;
+        this.staffID = staffID;
+        this.day = day;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
     public Class(String courseID, String venueID, String groupID, String staffID, int day, double startTime, double endTime, String courseType) {
         this.courseID = courseID;
         this.venueID = venueID;

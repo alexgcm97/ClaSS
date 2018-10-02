@@ -6,6 +6,7 @@
 package domain;
 
 import java.sql.Time;
+import java.util.ArrayList;
 
 /**
  *
@@ -62,5 +63,4 @@ public class Staff {
     public void setEndWork(String endWork) {
         this.endWork = endWork;
     }
-
 }

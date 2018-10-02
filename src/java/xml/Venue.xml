@@ -7,35 +7,73 @@ and open the template in the editor.
 
 <venues>
     <venue venueID="B223">
+        <block>B</block>
         <venueType>Lab</venueType>
         <capacity>24</capacity>
     </venue>
     <venue venueID="B224">
+        <block>B</block>
         <venueType>Lab</venueType>
         <capacity>24</capacity>
     </venue>
     <venue venueID="D203A">
+        <block>D</block>
         <venueType>Lab</venueType>
         <capacity>24</capacity>
     </venue>
+    <venue venueID="D303B">
+        <block>D</block>
+        <venueType>Lab</venueType>
+        <capacity>24</capacity>
+    </venue>
+    <venue venueID="H303">
+        <block>H</block>
+        <venueType>Room</venueType>
+        <capacity>30</capacity>
+    </venue>
     <venue venueID="K206">
+        <block>K</block>
         <venueType>Room</venueType>
         <capacity>30</capacity>
     </venue>
     <venue venueID="K106">
+        <block>K</block>
+        <venueType>Room</venueType>
+        <capacity>30</capacity>
+    </venue>
+    <venue venueID="K205">
+        <block>K</block>
+        <venueType>Room</venueType>
+        <capacity>30</capacity>
+    </venue>
+    <venue venueID="K306">
+        <block>K</block>
         <venueType>Room</venueType>
         <capacity>30</capacity>
     </venue>
     <venue venueID="B107">
+        <block>B</block>
         <venueType>Lab</venueType>
         <capacity>24</capacity>
     </venue>    
+    <venue venueID="B106">
+        <block>B</block>
+        <venueType>Lab</venueType>
+        <capacity>24</capacity>
+    </venue>
+    <venue venueID="B207">
+        <block>B</block>
+        <venueType>Lab</venueType>
+        <capacity>24</capacity>
+    </venue>    
+    <venue venueID="B206">
+        <block>B</block>
+        <venueType>Lab</venueType>
+        <capacity>24</capacity>
+    </venue>  
     <venue venueID="DKABA">
+        <block>DK</block>
         <venueType>Hall</venueType>
         <capacity>360</capacity>
-    </venue>
-    <venue venueID="DK6">
-        <venueType>Hall</venueType>
-        <capacity>160</capacity>
     </venue>
 </venues>
