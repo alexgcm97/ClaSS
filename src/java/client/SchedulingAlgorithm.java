@@ -255,7 +255,7 @@ public class SchedulingAlgorithm {
 
                                     double startTime2 = class2.getStartTime();
                                     double endTime2 = class2.getEndTime();
-                                    if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime2)) {
+                                    if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1)) {
                                         if (class1.getVenueID().equalsIgnoreCase(class2.getVenueID()) || class1.getStaffID().equalsIgnoreCase(class2.getStaffID())) {
                                             clashNo++;
                                         }
@@ -378,7 +378,7 @@ public class SchedulingAlgorithm {
                 double endTime = c.getEndTime();
                 double tempStart = classList.get(i).getStartTime();
                 double tempEnd = classList.get(i).getEndTime();
-                if ((startTime >= tempStart && startTime < tempEnd) || (endTime > tempStart && endTime <= tempEnd)) {
+                if ((startTime >= tempStart && startTime < tempEnd) || (endTime > tempStart && endTime <= tempEnd) || (tempStart >= startTime && tempStart < endTime) || (tempEnd > startTime && tempEnd <= endTime)) {
                     found = true;
                 }
             }
@@ -455,8 +455,8 @@ public class SchedulingAlgorithm {
                 allocation();
                 validation();
             }
-        } while (countTimeClashes() > 0 || countClash() > 0);
-        
+        } while (countClash() > 0);
+
         if (totalTime > 10) {
             System.out.println("Timeout.");
         } else {
