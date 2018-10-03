@@ -16,6 +16,10 @@ public class Staff {
 
     private String staffID, staffName, remark, startWork, endWork;
 
+    public Staff() {
+
+    }
+
     public Staff(String staffID, String staffName, String remark, String startWork, String endWork) {
         this.staffID = staffID;
         this.staffName = staffName;
