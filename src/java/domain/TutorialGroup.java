@@ -9,15 +9,15 @@
  */
 package domain;
 
-public class Tutorial_Group {
+public class TutorialGroup {
 
     private String groupID, programmeID, cohortID, programmeCode, month, year;
     private int studyYear, groupNumber, size;
 
-    public Tutorial_Group() {
+    public TutorialGroup() {
     }
 
-    public Tutorial_Group(String groupID, int studyYear, int groupNumber, int size, String programmeID, String cohortID) {
+    public TutorialGroup(String groupID, int studyYear, int groupNumber, int size, String programmeID, String cohortID) {
         this.groupID = groupID;
         this.programmeID = programmeID;
         this.cohortID = cohortID;
@@ -26,7 +26,7 @@ public class Tutorial_Group {
         this.size = size;
     }
 
-    public Tutorial_Group(String groupID, int studyYear, int groupNumber, int size, String programmeID, String cohortID, String programmeCode, String month, String year) {
+    public TutorialGroup(String groupID, int studyYear, int groupNumber, int size, String programmeID, String cohortID, String programmeCode, String month, String year) {
         this.groupID = groupID;
         this.programmeID = programmeID;
         this.cohortID = cohortID;

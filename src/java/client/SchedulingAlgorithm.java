@@ -12,10 +12,6 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeoutException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.xml.parsers.DocumentBuilder;
@@ -33,11 +29,10 @@ import org.w3c.dom.NodeList;
 public class SchedulingAlgorithm {
 
     private final Random rand = new Random();
-    private final ExecutorService service = Executors.newSingleThreadExecutor();
 
     private ArrayList<CourseType> lecList, courseList;
     private ArrayList<Staff> staffList;
-    private ArrayList<Tutorial_Group> groupList;
+    private ArrayList<TutorialGroup> groupList;
     private ArrayList<Venue> roomList, labList, hallList;
     private ArrayList<Schedule> scheduleList;
 
@@ -62,7 +57,7 @@ public class SchedulingAlgorithm {
         for (int i = 0; i < nodes.getLength(); i++) {
             e = (Element) nodes.item(i);
 
-            Tutorial_Group tg = new Tutorial_Group(e.getAttribute("groupID"), Integer.parseInt(e.getElementsByTagName("studyYear").item(0).getTextContent()), Integer.parseInt(e.getElementsByTagName("groupNumber").item(0).getTextContent()), Integer.parseInt(e.getElementsByTagName("size").item(0).getTextContent()), e.getElementsByTagName("programmeID").item(0).getTextContent(), e.getElementsByTagName("cohortID").item(0).getTextContent());
+            TutorialGroup tg = new TutorialGroup(e.getAttribute("groupID"), Integer.parseInt(e.getElementsByTagName("studyYear").item(0).getTextContent()), Integer.parseInt(e.getElementsByTagName("groupNumber").item(0).getTextContent()), Integer.parseInt(e.getElementsByTagName("size").item(0).getTextContent()), e.getElementsByTagName("programmeID").item(0).getTextContent(), e.getElementsByTagName("cohortID").item(0).getTextContent());
             cda.deleteRecords(tg.getGroupID());
             groupList.add(tg);
         }
@@ -571,7 +566,7 @@ public class SchedulingAlgorithm {
         return count;
     }
 
-    public void start() throws TimeoutException, Exception {
+    public void start() throws Exception {
         initialize();
         if (staffList.size() <= groupList.size() + 1) {
             System.out.println("Insufficient staff data to perform allocation. ");

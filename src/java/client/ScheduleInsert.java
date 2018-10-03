@@ -9,7 +9,7 @@ import da.DB_connection;
 import domain.CourseType;
 import domain.Programme;
 import domain.Staff;
-import domain.Tutorial_Group;
+import domain.TutorialGroup;
 import domain.Class;
 import domain.scheduleDetail;
 import java.sql.Connection;
@@ -107,7 +107,7 @@ public class ScheduleInsert {
                 stmt = connect.prepareStatement("SELECT * FROM tutorial_group WHERE groupID = '" + cd.getGroupID() + "'");
                 ResultSet rs2 = stmt.executeQuery();
                 while (rs2.next()) {
-                    Tutorial_Group tg = new Tutorial_Group();
+                    TutorialGroup tg = new TutorialGroup();
                     tg.setStudyYear(rs2.getInt("studyYear"));
                     tg.setGroupNumber(rs2.getInt("groupNumber"));
                     tg.setProgrammeID(rs2.getString("programmeID"));
@@ -272,7 +272,7 @@ public class ScheduleInsert {
                 stmt = connect.prepareStatement("SELECT * FROM tutorial_group WHERE groupID = '" + groupID + "'");
                 ResultSet rs2 = stmt.executeQuery();
                 while (rs2.next()) {
-                    Tutorial_Group tg = new Tutorial_Group();
+                    TutorialGroup tg = new TutorialGroup();
                     tg.setStudyYear(rs2.getInt("studyYear"));
                     tg.setGroupNumber(rs2.getInt("groupNumber"));
                     tg.setProgrammeID(rs2.getString("programmeID"));
@@ -419,7 +419,7 @@ public class ScheduleInsert {
                 stmt = connect.prepareStatement("SELECT * FROM tutorial_group WHERE groupID = '" + cd.getGroupID() + "'");
                 ResultSet rs2 = stmt.executeQuery();
                 while (rs2.next()) {
-                    Tutorial_Group tg = new Tutorial_Group();
+                    TutorialGroup tg = new TutorialGroup();
                     tg.setStudyYear(rs2.getInt("studyYear"));
                     tg.setGroupNumber(rs2.getInt("groupNumber"));
                     tg.setProgrammeID(rs2.getString("programmeID"));

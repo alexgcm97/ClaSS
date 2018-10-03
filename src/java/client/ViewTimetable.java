@@ -7,7 +7,7 @@ package client;
 
 import da.DB_connection;
 import domain.Staff;
-import domain.Tutorial_Group;
+import domain.TutorialGroup;
 import domain.Venue;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -53,16 +53,16 @@ public class ViewTimetable {
         return Staff;
     }
 
-    public List<Tutorial_Group> getAllGroup() throws ClassNotFoundException, SQLException {
+    public List<TutorialGroup> getAllGroup() throws ClassNotFoundException, SQLException {
 
         DB_connection dc = new DB_connection();
         Connection connect = dc.connection();
 
-        List<Tutorial_Group> group = new ArrayList<Tutorial_Group>();
+        List<TutorialGroup> group = new ArrayList<TutorialGroup>();
         PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM Tutorial_Group");
         ResultSet rs = pstmt.executeQuery();
         while (rs.next()) {
-            Tutorial_Group grp = new Tutorial_Group();
+            TutorialGroup grp = new TutorialGroup();
             grp.setGroupID(rs.getString("groupID"));
             grp.setProgrammeID(rs.getString("programmeID"));
             grp.setCohortID(rs.getString("cohortID"));
