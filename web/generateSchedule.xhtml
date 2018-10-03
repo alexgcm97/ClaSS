@@ -10,6 +10,7 @@
         <h3>Generating Schedule...</h3>
         <h:form>
             <h:commandButton rendered="${schedulingAlgorithm.start()}"/>
+            <h:commandButton action="ViewTimetable.xhtml" value="View"/>
             <h:commandButton action="setConstraints.xhtml" value="Cancel"/>
         </h:form>
     </h:body>

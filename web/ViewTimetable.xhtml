@@ -1,0 +1,95 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns = "http://www.w3.org/1999/xhtml"   
+      xmlns:h = "http://java.sun.com/jsf/html"
+      xmlns:f = "http://java.sun.com/jsf/core">
+
+    <h:head>
+        <style>
+            body{
+                width: 50%;
+            }
+
+            .columns {
+                display: flex;
+                flex-flow: row wrap;
+                justify-content: center;
+                margin: 5px 0;
+            }
+
+            .column {
+                flex: 1;
+                margin: 2px;
+                padding: 10px;
+                border-collapse: collapse;
+                border: 1px solid black;
+            }
+        </style>
+
+        <title>View Timetable</title>			
+    </h:head>
+
+    <h:body> 
+        <h:form>
+            <section class="columns">
+                <div class="column">
+                    <h3>Student Timetable</h3>
+                    <h:dataTable value = "#{viewTimetable.allGroup}" var = "grp">
+                        <h:column> 				
+                            #{grp.programmeCode}#{grp.studyYear}
+                        </h:column>
+                        <h:column>
+                            (G#{grp.groupNumber})
+                        </h:column>
+                        <h:column> 				
+                            #{grp.year}#{grp.month}
+                        </h:column>
+                        <h:column>
+                            <h:commandButton value="View" action="#{scheduleInsert.view_Group}">
+                                <f:param name="action" value="#{grp.groupID}" />
+                            </h:commandButton>
+                        </h:column>
+                    </h:dataTable>
+                </div>
+
+                <div class="column">
+                    <h3>Staff Timetable</h3>
+                    <h:dataTable value = "#{viewTimetable.allStaff}" var = "stf">
+                        <h:column>    	  				
+                            #{stf.staffID}
+                        </h:column>
+                        <h:column>
+                            #{stf.staffName}
+                        </h:column>
+                        <h:column>
+                            <h:commandButton value="View" action="#{scheduleInsert.view_Staff}">
+                                <f:param name="action" value="#{stf.staffID}" />
+                            </h:commandButton>
+                        </h:column>
+                    </h:dataTable>
+                </div>
+
+                <div class="column">
+                    <h3>Venue Timetable</h3>
+                    <h:dataTable value = "#{viewTimetable.allVenue}" var = "vn">
+                        <h:column>    	  				
+                            #{vn.venueID}
+                        </h:column>
+                        <h:column>
+                            #{vn.venueType}
+                        </h:column>
+                        <h:column>
+                            <h:commandButton value="View" action="#{scheduleInsert.view_Venue()}">
+                                <f:param name="action" value="#{vn.venueID}" />
+                            </h:commandButton>
+                        </h:column>
+                    </h:dataTable>
+                </div>
+            </section>
+
+        </h:form>
+
+    </h:body>
+</html>

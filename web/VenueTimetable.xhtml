@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <style>
+            table {
+                border-collapse: collapse;
+                border: 1px solid black;
+            }
+
+            tr, td {
+                border-collapse: inherit;
+                border: 1px solid black;
+                width: 70px;
+                padding: 6px;
+                font-size: 9px;
+                text-align: center;
+            }
+
+            .col-container {
+                display: table;
+                width: 100%;
+            }
+            
+            .container {
+                display: table;
+                width: 50%;
+            }
+
+            @media print {
+                #printbtn {
+                    display :  none;
+                }
+            </style>
+            <title>Venue Timetable</title>
+
+        </h:head>
+        <h:body>
+            <script type="text/javascript">
+                //<![CDATA[
+                console.clear();
+                var table = $("table");
+                var rows = table.find($("tr"));
+                var colsLength = $(rows[0]).find($("td")).length;
+                var removeLater = new Array();
+                for (var i = 0; i < colsLength; i++) {
+                    var startIndex = 0;
+                    var lastIndex = 0;
+                    var startText = $($(rows[0]).find("td")[i]).text();
+                    for (var j = 1; j < rows.length; j++) {
+                        var cRow = $(rows[j]);
+                        var cCol = $(cRow.find("td")[i]);
+                        var currentText = cCol.text();
+                        if (currentText == startText) {
+                            cCol.css("background", "gray");
+                            console.log(cCol);
+                            removeLater.push(cCol);
+                            lastIndex = j;
+                        } else {
+                            var spanLength = lastIndex - startIndex;
+                            if (spanLength >= 1) {
+                                console.log(lastIndex + " - " + startIndex)
+                                //console.log($($(rows[startIndex]).find("td")[i]))
+                                $($(rows[startIndex]).find("td")[i]).attr("rowspan", spanLength + 1);
+                            }
+                            lastIndex = j;
+                            startIndex = j;
+                            startText = currentText;
+                        }
+
+                    }
+                    var spanLength = lastIndex - startIndex;
+                    if (spanLength >= 1) {
+                        console.log(lastIndex + " - " + startIndex)
+                        //console.log($($(rows[startIndex]).find("td")[i]))
+                        $($(rows[startIndex]).find("td")[i]).attr("rowspan", spanLength + 1);
+                    }
+                    console.log("---");
+                }
+
+                for (var i in removeLater) {
+                    $(removeLater[i]).remove();
+                }
+                //]]>
+            </script>
+            <div class="col-container">
+                <ui:repeat value="#{scheduleInsert.venue}" var="ven" >          
+                    <h1 style="text-align: center">#{ven.venueID} - #{ven.cohort}</h1>
+                </ui:repeat>
+                <table>
+                    <tr>
+                        <td><h:outputLabel><b>Day/Time</b></h:outputLabel></td>
+                        <ui:repeat value="#{displayTimetable.scheduleMon}" var="sch" >
+                            <td>
+                                #{sch.getsTime()}<br></br>
+                                #{sch.geteTime()}
+                            </td>
+
+                        </ui:repeat>
+                    </tr>
+                    <tr>
+                        <td><h:outputLabel><b>Mon</b></h:outputLabel></td>
+                        <ui:repeat value="#{displayTimetable.scheduleMon}" var="sch" >
+                            <td>
+                                #{sch.courseCode} #{sch.courseType} <br></br>
+                                #{sch.programmeCode} #{sch.studyYear} #{sch.groupNumber} <br></br>
+                                #{sch.cohort} <br></br>
+                                #{sch.staffName}
+                            </td>
+                        </ui:repeat>
+                    </tr>
+                    <tr>
+                        <td><h:outputLabel><b>Tue</b></h:outputLabel></td>
+                        <ui:repeat value="#{displayTimetable.scheduleTue}" var="sch2" >
+
+                            <td>
+                                #{sch2.courseCode} #{sch2.courseType} <br></br>
+                                #{sch2.programmeCode} #{sch2.studyYear} #{sch2.groupNumber} <br></br>
+                                #{sch2.cohort} <br></br>
+                                #{sch2.staffName}
+                            </td>
+                        </ui:repeat>
+                    </tr>
+                    <tr>
+                        <td><h:outputLabel><b>Wed</b></h:outputLabel></td>
+                        <ui:repeat value="#{displayTimetable.scheduleWed}" var="sch3" >
+                            <td>
+                                #{sch3.courseCode} #{sch3.courseType} <br></br>
+                                #{sch3.programmeCode} #{sch3.studyYear} #{sch3.groupNumber} <br></br>
+                                #{sch3.cohort} <br></br>
+                                #{sch3.staffName}
+                            </td>
+                        </ui:repeat>
+                    </tr>
+
+                    <tr>
+                        <td><h:outputLabel><b>Thu</b></h:outputLabel></td>
+                        <ui:repeat value="#{displayTimetable.scheduleThu}" var="sch4" >
+                            <td>
+                                #{sch4.courseCode} #{sch4.courseType} <br></br>
+                                #{sch4.programmeCode} #{sch4.studyYear} #{sch4.groupNumber} <br></br>
+                                #{sch4.cohort} <br></br>
+                                #{sch4.staffName}
+                            </td>
+                        </ui:repeat>
+                    </tr>
+
+                    <tr>
+                        <td><h:outputLabel><b>Fri</b></h:outputLabel></td>
+                        <ui:repeat value="#{displayTimetable.scheduleFri}" var="sch5" >
+                            <td>
+                                #{sch5.courseCode} #{sch5.courseType} <br></br>
+                                #{sch5.programmeCode} #{sch5.studyYear} #{sch5.groupNumber} <br></br>
+                                #{sch5.cohort} <br></br>
+                                #{sch5.staffName}
+                            </td>
+                        </ui:repeat>
+                    </tr>
+
+                    <tr>
+                        <td><h:outputLabel><b>Sat</b></h:outputLabel></td>
+                        <ui:repeat value="#{displayTimetable.scheduleSat}" var="sch6" >
+                            <td>
+                                #{sch6.courseCode} #{sch6.courseType} <br></br>
+                                #{sch6.programmeCode} #{sch6.studyYear} #{sch6.groupNumber} <br></br>
+                                #{sch6.cohort} <br></br>
+                                #{sch6.staffName}
+                            </td>
+                        </ui:repeat>
+                    </tr>
+
+                    <tr>
+                        <td><h:outputLabel><b>Sun</b></h:outputLabel></td>
+                        <ui:repeat value="#{displayTimetable.scheduleSun}" var="sch7" >
+                            <td>
+                                #{sch7.courseCode} #{sch7.courseType} <br></br>
+                                #{sch7.programmeCode} #{sch7.studyYear} #{sch7.groupNumber} <br></br>
+                                #{sch7.cohort} <br></br>
+                                #{sch7.staffName}
+                            </td>
+                        </ui:repeat>
+                    </tr>
+                </table>
+            </div>
+            <br></br>
+            <hr></hr>
+            <br></br>
+            <div>
+                <h:dataTable class="container" value = "#{displayTimetable.courseDetail}" var = "sm">
+
+                    <h:column>   				
+                        #{sm.courseCode}
+                    </h:column>
+                    <h:column>   				
+                        #{sm.courseName}
+                    </h:column>
+
+                </h:dataTable>
+            </div>
+
+            <br></br>
+            <form action="ViewTimetable.xhtml" method="POST">
+                <input id ="printbtn" type="button" value="Print" onClick="window.print()"/>
+                <input id ="printbtn" type="submit" value="Back" />
+            </form>
+        </h:body>
+    </html>
