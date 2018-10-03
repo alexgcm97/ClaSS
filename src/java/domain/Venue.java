@@ -15,6 +15,7 @@ public class Venue {
 
     private String venueID, block, venueType, remark;
     private int capacity;
+    private ArrayList<Class> classList;
 
     public Venue() {
 
@@ -26,6 +27,7 @@ public class Venue {
         this.venueType = venueType;
         this.capacity = capacity;
         this.remark = remark;
+        this.classList = new ArrayList();
     }
 
     public String getVenueID() {
@@ -66,6 +68,14 @@ public class Venue {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    public ArrayList<Class> getClassList() {
+        return classList;
+    }
+
+    public void setClassList(ArrayList<Class> classList) {
+        this.classList = classList;
     }
 
 }

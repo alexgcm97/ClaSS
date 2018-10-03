@@ -37,4 +37,16 @@ and open the template in the editor.
         <endWork>20.00</endWork>
         <remark>CS</remark>
     </staff>
+    <staff staffID="S1006">
+        <name>Lizzie</name>
+        <startWork>8.00</startWork>
+        <endWork>20.00</endWork>
+        <remark>CS</remark>
+    </staff>
+    <staff staffID="S1006">
+        <name>Jonathan</name>
+        <startWork>8.00</startWork>
+        <endWork>20.00</endWork>
+        <remark>CS</remark>
+    </staff>
 </staffs>

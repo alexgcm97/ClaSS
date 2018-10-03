@@ -5,7 +5,6 @@
  */
 package domain;
 
-import java.sql.Time;
 import java.util.ArrayList;
 
 /**
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 public class Staff {
 
     private String staffID, staffName, remark, startWork, endWork;
+    private ArrayList<Class> classList;
 
     public Staff() {
 
@@ -26,6 +26,7 @@ public class Staff {
         this.remark = remark;
         this.startWork = startWork;
         this.endWork = endWork;
+        this.classList = new ArrayList();
     }
 
     public String getStaffID() {
@@ -66,5 +67,13 @@ public class Staff {
 
     public void setEndWork(String endWork) {
         this.endWork = endWork;
+    }
+
+    public ArrayList<Class> getClassList() {
+        return classList;
+    }
+
+    public void setClassList(ArrayList<Class> classList) {
+        this.classList = classList;
     }
 }

@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import domain.Class;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -21,6 +22,30 @@ import javax.faces.bean.RequestScoped;
 @ManagedBean
 @RequestScoped
 public class ClassDA {
+
+    public ArrayList<Class> get(String groupID) throws SQLException {
+        ArrayList<Class> classList = new ArrayList();
+        Connection connect = null;
+        String url = "jdbc:derby://localhost:1527/schedule";
+
+        String username = "schedule";
+        String password = "schedule";
+
+        try {
+            connect = DriverManager.getConnection(url, username, password);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM class WHERE groupID = ?");
+        pstmt.setString(1, groupID);
+        ResultSet rs = pstmt.executeQuery();
+        while (rs.next()) {
+            Class c = new domain.Class(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7));
+            classList.add(c);
+        }
+        return classList;
+    }
 
     public boolean checkExist(String groupID) throws SQLException {
         boolean found = false;
