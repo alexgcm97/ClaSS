@@ -732,7 +732,7 @@ public class SchedulingAlgorithm {
 
     public double getRandomStartTime() {
         if (rand.nextBoolean() == true) {
-            return (rand.nextInt((int) (studyEnd - studyStart - 2) + 1) + studyStart);
+            return (rand.nextInt((int) (studyEnd - studyStart - 2)) + studyStart);
         } else {
             return (rand.nextInt((int) (studyEnd - studyStart - 2)) + studyStart) + 0.5;
         }
