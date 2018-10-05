@@ -6,6 +6,21 @@ and open the template in the editor.
 -->
 
 <venues>
+    <venue venueID="B106">
+        <block>B</block>
+        <venueType>Lab</venueType>
+        <capacity>24</capacity>
+    </venue>
+    <venue venueID="B107">
+        <block>B</block>
+        <venueType>Lab</venueType>
+        <capacity>24</capacity>
+    </venue>    
+    <venue venueID="B206">
+        <block>B</block>
+        <venueType>Lab</venueType>
+        <capacity>24</capacity>
+    </venue>
     <venue venueID="B223">
         <block>B</block>
         <venueType>Lab</venueType>
@@ -51,29 +66,14 @@ and open the template in the editor.
         <venueType>Room</venueType>
         <capacity>30</capacity>
     </venue>
-    <venue venueID="B107">
-        <block>B</block>
-        <venueType>Lab</venueType>
-        <capacity>24</capacity>
-    </venue>    
-    <venue venueID="B106">
-        <block>B</block>
-        <venueType>Lab</venueType>
-        <capacity>24</capacity>
-    </venue>
-    <venue venueID="B207">
-        <block>B</block>
-        <venueType>Lab</venueType>
-        <capacity>24</capacity>
-    </venue>    
-    <venue venueID="B206">
-        <block>B</block>
-        <venueType>Lab</venueType>
-        <capacity>24</capacity>
-    </venue>  
     <venue venueID="DKABA">
         <block>DK</block>
         <venueType>Hall</venueType>
         <capacity>360</capacity>
+    </venue>
+    <venue venueID="DK6">
+        <block>DK</block>
+        <venueType>Hall</venueType>
+        <capacity>160</capacity>
     </venue>
 </venues>

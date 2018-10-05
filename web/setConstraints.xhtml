@@ -4,19 +4,23 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
-        <title>Constraints Setting</title>
+        <title>Advanced Setting</title>
     </h:head>
     <h:body>
-        <h1>Constraints Setting</h1>
+        <h1>Advanced Setting</h1>
         <h:form>
-            <h3>Constraints</h3>
+            <h3>Optimization</h3>
+            <h:selectBooleanCheckbox value="maxBreak" onchange=""></h:selectBooleanCheckbox><span>Block time: </span><h:inputText  value="#{generateXML.maxBreak}" converterMessage="Please enter digit only." /><br/>
+            <h:selectBooleanCheckbox value="balanceClass"></h:selectBooleanCheckbox><span>Balance Class Number</span><br/>
+            <h:selectBooleanCheckbox value="maxBreak" onchange=""></h:selectBooleanCheckbox><span>Set Max Break Time: </span><h:inputText  value="#{generateXML.maxBreak}" converterMessage="Please enter digit only." />
+
             <c:choose>
                 <c:when test="#{classDA.checkExist('G1001') == true}">
                     <span>Schedule exist in Database.</span><br/>
-                    <h:commandButton action="generateSchedule.xhtml" value="Replace Schedule"/>
+                    <h:commandButton action="#{schedulingAlgorithm.start()}" value="Replace Schedule"/>
                 </c:when>
                 <c:otherwise>
-                    <h:commandButton action="generateSchedule.xhtml" value="Generate Schedule"/>
+                    <h:commandButton action="#{schedulingAlgorithm.start()}" value="Generate Schedule"/>
                 </c:otherwise>
             </c:choose>
 
