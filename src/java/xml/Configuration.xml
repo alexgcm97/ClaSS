@@ -17,5 +17,6 @@ and open the template in the editor.
             <endTime>16.00</endTime>
         </block>
         <maxBreak>2</maxBreak>
+        <balanceClass>true</balanceClass>
     </constraints>
 </configuration>
