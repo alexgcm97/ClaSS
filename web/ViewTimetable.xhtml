@@ -9,22 +9,52 @@
     <h:head>
         <style>
             body{
-                width: 50%;
+                width: 100%;
             }
 
             .columns {
                 display: flex;
                 flex-flow: row wrap;
                 justify-content: center;
-                margin: 5px 0;
             }
 
             .column {
                 flex: 1;
                 margin: 2px;
-                padding: 10px;
+                padding-left: 10%;
                 border-collapse: collapse;
-                border: 1px solid black;
+                border: 1px black solid;
+                margin-top: 10px;
+            }
+            
+            .btn {
+                background-color: gray;
+                color: white;
+                padding: 8px;
+                margin-left: 30px;
+                width: 100%;
+                border-radius: 10px;
+                cursor: pointer;
+                font-size: 11px;
+            }
+            
+            .btn1 {
+                background-color: gray;
+                color: white;
+                padding: 12px;
+                margin: 10px 0;
+                width: 50%;
+                border-radius: 10px;
+                cursor: pointer;
+                font-size: 17px;
+            }
+
+            .btn:hover {
+                background-color: #45a049;
+            }
+            
+            .btn1:hover {
+                background-color: #45a049;
             }
         </style>
 
@@ -53,7 +83,7 @@
                             #{grp.year}#{grp.month}
                         </h:column>
                         <h:column>
-                            <h:commandButton value="View" action="#{scheduleInsert.view_Group}">
+                            <h:commandButton value="View" action="#{scheduleInsert.view_Group}" class="btn">
                                 <f:param name="action" value="#{grp.groupID}" />
                             </h:commandButton>
                         </h:column>
@@ -70,7 +100,7 @@
                             #{stf.staffName}
                         </h:column>
                         <h:column>
-                            <h:commandButton value="View" action="#{scheduleInsert.view_Staff}">
+                            <h:commandButton value="View" action="#{scheduleInsert.view_Staff}" class="btn">
                                 <f:param name="action" value="#{stf.staffID}" />
                             </h:commandButton>
                         </h:column>
@@ -87,7 +117,7 @@
                             #{vn.venueType}
                         </h:column>
                         <h:column>
-                            <h:commandButton value="View" action="#{scheduleInsert.view_Venue()}">
+                            <h:commandButton value="View" action="#{scheduleInsert.view_Venue()}" class="btn">
                                 <f:param name="action" value="#{vn.venueID}" />
                             </h:commandButton>
                         </h:column>
@@ -96,7 +126,10 @@
             </section>
 
             <h:column>
-                <h:commandButton value="Edit" action="#{modifySchedule.forward()}">
+                <h:commandButton value="Edit" action="#{modifySchedule.forward()}" class="btn1">
+                    <f:param name="staffID" value="#{stf.staffID}" />
+                </h:commandButton>
+                <h:commandButton value="Back" action="#{modifySchedule.forward()}" class="btn1">
                     <f:param name="staffID" value="#{stf.staffID}" />
                 </h:commandButton>
             </h:column>

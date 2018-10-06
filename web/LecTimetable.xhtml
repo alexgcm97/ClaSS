@@ -28,6 +28,21 @@
                 display: table;
                 width: 50%;
             }
+            
+            .btn {
+                background-color: gray;
+                color: white;
+                padding: 12px;
+                margin: 10px 0;
+                width: 50%;
+                border-radius: 10px;
+                cursor: pointer;
+                font-size: 17px;
+            }
+
+            .btn:hover {
+                background-color: #45a049;
+            }
 
             @media print {
                 #printbtn {
@@ -147,8 +162,7 @@
             </div>
             <br></br>
             <form action="#{modifySchedule.back()}" method="POST">
-                <input id ="printbtn" type="button" value="Print" onClick="window.print()"/>
-                <input id ="printbtn" type="submit" value="Back" />
+                <input id ="printbtn" type="button" value="Print" onClick="window.print()" class="btn"/><input id ="printbtn" type="submit" value="Back" class="btn"/>
             </form>
         </h:body>
     </html>
