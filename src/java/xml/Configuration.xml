@@ -1,22 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-
-
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configuration>
-    <studyDays>5</studyDays>
-    <startTime>8.00</startTime>
-    <endTime>20.00</endTime>
-    <constraints>
-        <block>
-            <day>3</day>
-            <startTime>14.00</startTime>
-            <endTime>16.00</endTime>
-        </block>
-        <maxBreak>2</maxBreak>
-        <balanceClass>true</balanceClass>
-    </constraints>
+  <studyDays>5</studyDays>
+  <startTime>8.0</startTime>
+  <endTime>20.0</endTime>
+  <constraints/>
 </configuration>

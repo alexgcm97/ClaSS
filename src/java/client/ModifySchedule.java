@@ -310,7 +310,7 @@ public class ModifySchedule {
 
     //Call by ModifySchedule to check the available venue
     public String forward() {
-        return "modifySchedule.xhtml?faces-redirect=true";
+        return "setConstraints.xhtml?faces-redirect=true";
     }
     
     //Call by the ViewTimetable.xhtml (back)

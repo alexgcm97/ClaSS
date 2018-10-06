@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Advanced Setting</title>
     </h:head>
@@ -10,20 +11,49 @@
         <h1>Advanced Setting</h1>
         <h:form>
             <h3>Optimization</h3>
-            <h:selectBooleanCheckbox value="maxBreak" onchange=""></h:selectBooleanCheckbox><span>Block time: </span><h:inputText  value="#{generateConfiguration.maxBreak}" converterMessage="Please enter digit only." /><br/>
-            <h:selectBooleanCheckbox value="balanceClass"></h:selectBooleanCheckbox><span>Balance Class Number</span><br/>
-            <h:selectBooleanCheckbox value="maxBreak" onchange=""></h:selectBooleanCheckbox><span>Set Max Break Time: </span><h:inputText  value="#{generateConfiguration.maxBreak}" converterMessage="Please enter digit only." />
-
-            <c:choose>
-                <c:when test="#{classDA.checkExist('G1001') == true}">
-                    <span>Schedule exist in Database.</span><br/>
-                    <h:commandButton action="generateSchedule.xhtml" value="Replace Schedule"/>
-                </c:when>
-                <c:otherwise>
-                    <h:commandButton action="generateSchedule.xhtml" value="Generate Schedule"/>
-                </c:otherwise>
-            </c:choose>
-
+            <h:selectBooleanCheckbox value="#{configuration.toBalanceClass}"></h:selectBooleanCheckbox><h:outputText value="Balance Number of Classes Per Day"/><br/>
+            <h:selectBooleanCheckbox value="#{configuration.setBreak}">
+                <f:ajax render="maxBreak"/>
+            </h:selectBooleanCheckbox>
+            <h:outputText value="Limit Break Time Between Classes: "/>
+            <h:selectOneMenu id="maxBreak" value="#{configuration.maxBreak}" style="margin: 0px 5px 0px 5px" disabled="#{!configuration.setBreak}">
+                <f:selectItem itemValue = "1" itemLabel = "1 hour" /> 
+                <f:selectItem itemValue="1.5" itemLabel ="1 hour 30 mins"/>
+                <f:selectItem itemValue = "2" itemLabel = "2 hours" /> 
+                <f:selectItem itemValue = "2.5" itemLabel = "2 hours 30 mins" />
+                <f:selectItem itemValue = "3" itemLabel = "3 hours" />
+            </h:selectOneMenu>
+            <br/>
+            <h:selectBooleanCheckbox value="#{configuration.toBlockTime}">
+                <f:ajax render="blockDay"/>
+                <f:ajax render="blockStart"/>
+                <f:ajax render="blockDuration"/>
+            </h:selectBooleanCheckbox><span>Set Block Time -</span>
+            <span>Block Day: </span><h:selectOneMenu id="blockDay" value="#{configuration.blockDay}" style="margin: 0px 5px 0px 5px" disabled="#{!configuration.toBlockTime}">
+                <f:selectItem itemValue = "1" itemLabel = "Monday" /> 
+                <f:selectItem itemValue = "2" itemLabel = "Tuesday" /> 
+                <f:selectItem itemValue = "3" itemLabel = "Wednesday" /> 
+                <f:selectItem itemValue = "4" itemLabel = "Thursday" /> 
+                <c:if test="#{configuration.studyDays > 4}">
+                    <f:selectItem itemValue = "5" itemLabel = "Friday" />
+                </c:if>
+                <c:if test="#{configuration.studyDays > 5}">
+                    <f:selectItem itemValue = "6" itemLabel = "Saturday" />
+                </c:if>
+            </h:selectOneMenu>
+            <span>Block Start Time: </span>
+            <h:inputText style="width:30px" id="blockStart" value="#{configuration.blockStart}" converterMessage="Please enter integer only for block start time."  validatorMessage="#{configuration.validatorMessage}" disabled="#{!configuration.toBlockTime}">
+                <f:validateLongRange minimum="#{configuration.startTime}" maximum="#{configuration.endTime-2}"  disabled="#{!configuration.toBlockTime}"/>
+            </h:inputText>
+            <span>Block Duration: </span>
+            <h:selectOneMenu id="blockDuration" value="#{configuration.blockDuration}" style="margin: 0px 5px 0px 5px"  disabled="#{!configuration.toBlockTime}">
+                <f:selectItem itemValue="0.5" itemLabel="30 mins"/>
+                <f:selectItem itemValue = "1" itemLabel = "1 hour" /> 
+                <f:selectItem itemValue="1.5" itemLabel ="1 hour 30 mins"/>
+                <f:selectItem itemValue = "2" itemLabel = "2 hours" /> 
+            </h:selectOneMenu>
+            <br/>
+            <h:commandButton action="#{configuration.generateConfiguration()}" value="Generate Schedule"/>
         </h:form>
     </h:body>
 </html>

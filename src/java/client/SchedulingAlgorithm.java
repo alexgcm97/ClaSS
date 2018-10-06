@@ -759,12 +759,19 @@ public class SchedulingAlgorithm {
     }
 
     public double getRandomMoveDuration() {
-        if (rand.nextBoolean()) {
-            return rand.nextInt((int) (maxBreak)) + 1;
+        if (maxBreak <= 1) {
+            if (rand.nextBoolean()) {
+                return 0.5;
+            } else {
+                return 0;
+            }
         } else {
-            return rand.nextInt((int) (maxBreak)) + 0.5;
+            if (rand.nextBoolean()) {
+                return rand.nextInt((int) (maxBreak)) + 1;
+            } else {
+                return rand.nextInt((int) (maxBreak)) + 0.5;
+            }
         }
-
     }
 
     public double getRandomStartTime() {
