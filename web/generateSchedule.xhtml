@@ -5,11 +5,20 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Schedule Generation Page</title>
+        <script>
+            window.onload = function () {
+                document.getElementById('hidden:link').onclick();
+            }
+        </script>
     </h:head>
     <h:body>
         <h3>Generating Schedule....</h3>
+        <h:form id="hidden" style="display:none">
+            <h:commandLink id="link">
+                <f:ajax event="click" listener="#{schedulingAlgorithm.start()}" />
+            </h:commandLink>
+        </h:form>
         <h:form>
-            <h:commandButton rendered="#{schedulingAlgorithm.start()}"/>
             <h:commandButton action="setConstraints.xhtml" value="Cancel"/>
         </h:form>
     </h:body>
