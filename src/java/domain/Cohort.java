@@ -10,6 +10,7 @@ package domain;
  * @author Teck Siong
  */
 public class Cohort {
+
     String cohortID;
     int years;
     int month;

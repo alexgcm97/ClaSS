@@ -59,7 +59,5 @@ public class generateConfiguration {
     public void setBalanceClass(boolean balanceClass) {
         this.balanceClass = balanceClass;
     }
-    
-    
 
 }

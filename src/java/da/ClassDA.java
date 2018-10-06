@@ -47,6 +47,30 @@ public class ClassDA {
         return classList;
     }
 
+    public ArrayList<String> getAllGroupID() throws SQLException {
+        ArrayList<String> groupIDList = new ArrayList();
+        Connection connect = null;
+        String url = "jdbc:derby://localhost:1527/schedule";
+
+        String username = "schedule";
+        String password = "schedule";
+
+        try {
+            connect = DriverManager.getConnection(url, username, password);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        PreparedStatement pstmt = connect.prepareStatement("SELECT groupID FROM class");
+        ResultSet rs = pstmt.executeQuery();
+        while (rs.next()) {
+            if (!groupIDList.contains(rs.getString(1))) {
+                groupIDList.add(rs.getString(1));
+            }
+        }
+        return groupIDList;
+    }
+
     public boolean checkExist(String groupID) throws SQLException {
         boolean found = false;
         Connection connect = null;

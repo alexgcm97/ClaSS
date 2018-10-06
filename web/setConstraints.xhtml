@@ -17,10 +17,10 @@
             <c:choose>
                 <c:when test="#{classDA.checkExist('G1001') == true}">
                     <span>Schedule exist in Database.</span><br/>
-                    <h:commandButton action="#{schedulingAlgorithm.start()}" value="Replace Schedule"/>
+                    <h:commandButton action="generateSchedule.xhtml" value="Replace Schedule"/>
                 </c:when>
                 <c:otherwise>
-                    <h:commandButton action="#{schedulingAlgorithm.start()}" value="Generate Schedule"/>
+                    <h:commandButton action="generateSchedule.xhtml" value="Generate Schedule"/>
                 </c:otherwise>
             </c:choose>
 

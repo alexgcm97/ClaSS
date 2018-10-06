@@ -5,8 +5,6 @@
  */
 package domain;
 
-import java.sql.Time;
-
 /**
  *
  * @author Alex
@@ -112,6 +110,16 @@ public class Class {
 
     public void setCourseType(String courseType) {
         this.courseType = courseType;
+    }
+
+    public void moveRight(double duration) {
+        this.startTime += duration;
+        this.endTime += duration;
+    }
+
+    public void moveLeft(double duration) {
+        this.startTime -= duration;
+        this.endTime -= duration;
     }
 
 }

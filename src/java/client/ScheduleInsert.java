@@ -343,7 +343,7 @@ public class ScheduleInsert {
 
         return "/StdTimetable.xhtml?faces-redirect=true";
     }
-    
+
     String venueID;
 
     public String view_Venue() throws SQLException {
@@ -559,7 +559,7 @@ public class ScheduleInsert {
 
         return schedule;
     }
-    
+
     public List<scheduleDetail> getVenue() throws ClassNotFoundException, SQLException {
 
         DB_connection dc = new DB_connection();

@@ -10,6 +10,7 @@ package domain;
  * @author Teck Siong
  */
 public class Programme {
+
     String programmeID;
     String programmeCode;
     String programmeName;
@@ -46,5 +47,5 @@ public class Programme {
     public void setProgrammeName(String programmeName) {
         this.programmeName = programmeName;
     }
-    
+
 }
