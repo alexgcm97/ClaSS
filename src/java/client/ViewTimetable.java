@@ -1,11 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//@author Kok Teck Siong
+//This page is to get data and display the list of tutorial group, staff, and venue
+
 package client;
 
 import da.DB_connection;
+import domain.CourseType;
 import domain.Staff;
 import domain.TutorialGroup;
 import domain.Venue;
@@ -18,34 +17,26 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-/**
- *
- * @author Teck Siong
- */
 @ManagedBean
 @SessionScoped
 public class ViewTimetable {
 
+    //Get the staff list
     public List<Staff> getAllStaff() throws ClassNotFoundException, SQLException {
 
         DB_connection dc = new DB_connection();
         Connection connect = dc.connection();
 
         List<Staff> Staff = new ArrayList<Staff>();
-        PreparedStatement pstmt = connect
-                .prepareStatement("SELECT * FROM staff");
+        PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM staff ORDER BY staffID");
         ResultSet rs = pstmt.executeQuery();
-
         while (rs.next()) {
-
             Staff stf = new Staff();
             stf.setStaffID(rs.getString("staffID"));
             stf.setStaffName(rs.getString("staffName"));
 
             Staff.add(stf);
         }
-
-        // close resources
         rs.close();
         pstmt.close();
         connect.close();
@@ -53,6 +44,7 @@ public class ViewTimetable {
         return Staff;
     }
 
+    //Get the group list
     public List<TutorialGroup> getAllGroup() throws ClassNotFoundException, SQLException {
 
         DB_connection dc = new DB_connection();
@@ -84,8 +76,6 @@ public class ViewTimetable {
                 }
             }
         }
-
-        // close resources
         rs.close();
         pstmt.close();
         connect.close();
@@ -93,6 +83,7 @@ public class ViewTimetable {
         return group;
     }
 
+    //Get the venue list
     public List<Venue> getAllVenue() throws ClassNotFoundException, SQLException {
 
         DB_connection dc = new DB_connection();
@@ -111,8 +102,6 @@ public class ViewTimetable {
 
             venue.add(vn);
         }
-
-        // close resources
         rs.close();
         pstmt.close();
         connect.close();
@@ -120,8 +109,27 @@ public class ViewTimetable {
         return venue;
     }
 
-    public String forward() {
-        return "/displayTT?faces-redirect=true";
-    }
+    //Get the course list use by modifySchedule
+    public List<CourseType> getAllCourse() throws ClassNotFoundException, SQLException {
 
+        DB_connection dc = new DB_connection();
+        Connection connect = dc.connection();
+
+        List<CourseType> cType = new ArrayList<CourseType>();
+        PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM coursetype");
+        ResultSet rs = pstmt.executeQuery();
+        while (rs.next()) {
+            CourseType ct = new CourseType();
+            ct.setCourseID(rs.getString("courseID"));
+            ct.setCourseCode(rs.getString("courseCode"));
+            ct.setCourseType(rs.getString("courseType"));
+
+            cType.add(ct);
+        }
+        rs.close();
+        pstmt.close();
+        connect.close();
+
+        return cType;
+    }
 }

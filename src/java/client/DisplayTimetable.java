@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//@author Kok Teck Siong
+//This page is to get the schedule data follow by the day
+
 package client;
 
-/**
- *
- * @author Teck Siong
- */
+
 import da.DB_connection;
 import domain.scheduleDetail;
 import java.io.Serializable;
@@ -25,18 +20,16 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class DisplayTimetable implements Serializable {
 
+    // Get Monday schedule to display
     public List<scheduleDetail> getScheduleMon() throws ClassNotFoundException, SQLException {
 
         DB_connection dc = new DB_connection();
         Connection connect = dc.connection();
 
         List<scheduleDetail> schedule = new ArrayList<scheduleDetail>();
-        PreparedStatement pstmt = connect
-                .prepareStatement("SELECT * FROM schedule WHERE day = 1");
+        PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM schedule WHERE day = 1");
         ResultSet rs = pstmt.executeQuery();
-
         while (rs.next()) {
-
             scheduleDetail sch = new scheduleDetail();
             sch.setStartTime(rs.getDouble("startTime"));
             sch.setEndTime(rs.getDouble("endTime"));
@@ -52,10 +45,7 @@ public class DisplayTimetable implements Serializable {
             sch.seteTime(rs.getString("eTime"));
 
             schedule.add(sch);
-
         }
-
-        // close resources
         rs.close();
         pstmt.close();
         connect.close();
@@ -63,18 +53,16 @@ public class DisplayTimetable implements Serializable {
         return schedule;
     }
 
+    // Get Tuesday schedule to display
     public List<scheduleDetail> getScheduleTue() throws ClassNotFoundException, SQLException {
 
         DB_connection dc = new DB_connection();
         Connection connect = dc.connection();
 
         List<scheduleDetail> schedule2 = new ArrayList<scheduleDetail>();
-        PreparedStatement pstmt2 = connect
-                .prepareStatement("SELECT * FROM schedule WHERE day = 2");
+        PreparedStatement pstmt2 = connect.prepareStatement("SELECT * FROM schedule WHERE day = 2");
         ResultSet rs2 = pstmt2.executeQuery();
-
         while (rs2.next()) {
-
             scheduleDetail sch2 = new scheduleDetail();
             sch2.setStartTime(rs2.getDouble("startTime"));
             sch2.setEndTime(rs2.getDouble("endTime"));
@@ -90,29 +78,24 @@ public class DisplayTimetable implements Serializable {
             sch2.seteTime(rs2.getString("eTime"));
 
             schedule2.add(sch2);
-
         }
-
-        // close resources
         rs2.close();
         pstmt2.close();
         connect.close();
 
         return schedule2;
     }
-
+    
+    // Get Wednesday schedule to display
     public List<scheduleDetail> getScheduleWed() throws ClassNotFoundException, SQLException {
 
         DB_connection dc = new DB_connection();
         Connection connect = dc.connection();
 
         List<scheduleDetail> schedule3 = new ArrayList<scheduleDetail>();
-        PreparedStatement pstmt3 = connect
-                .prepareStatement("SELECT * FROM schedule WHERE day = 3");
+        PreparedStatement pstmt3 = connect.prepareStatement("SELECT * FROM schedule WHERE day = 3");
         ResultSet rs3 = pstmt3.executeQuery();
-
         while (rs3.next()) {
-
             scheduleDetail sch3 = new scheduleDetail();
             sch3.setStartTime(rs3.getDouble("startTime"));
             sch3.setEndTime(rs3.getDouble("endTime"));
@@ -128,10 +111,7 @@ public class DisplayTimetable implements Serializable {
             sch3.seteTime(rs3.getString("eTime"));
 
             schedule3.add(sch3);
-
         }
-
-        // close resources
         rs3.close();
         pstmt3.close();
         connect.close();
@@ -139,18 +119,16 @@ public class DisplayTimetable implements Serializable {
         return schedule3;
     }
 
+    // Get Thursday schedule to display
     public List<scheduleDetail> getScheduleThu() throws ClassNotFoundException, SQLException {
 
         DB_connection dc = new DB_connection();
         Connection connect = dc.connection();
 
         List<scheduleDetail> schedule4 = new ArrayList<scheduleDetail>();
-        PreparedStatement pstmt4 = connect
-                .prepareStatement("SELECT * FROM schedule WHERE day = 4");
+        PreparedStatement pstmt4 = connect.prepareStatement("SELECT * FROM schedule WHERE day = 4");
         ResultSet rs4 = pstmt4.executeQuery();
-
         while (rs4.next()) {
-
             scheduleDetail sch4 = new scheduleDetail();
             sch4.setStartTime(rs4.getDouble("startTime"));
             sch4.setEndTime(rs4.getDouble("endTime"));
@@ -164,12 +142,9 @@ public class DisplayTimetable implements Serializable {
             sch4.setCohort(rs4.getString("cohort"));
             sch4.setsTime(rs4.getString("sTime"));
             sch4.seteTime(rs4.getString("eTime"));
-
+            
             schedule4.add(sch4);
-
         }
-
-        // close resources
         rs4.close();
         pstmt4.close();
         connect.close();
@@ -177,18 +152,16 @@ public class DisplayTimetable implements Serializable {
         return schedule4;
     }
 
+    // Get Friday schedule to display
     public List<scheduleDetail> getScheduleFri() throws ClassNotFoundException, SQLException {
 
         DB_connection dc = new DB_connection();
         Connection connect = dc.connection();
 
         List<scheduleDetail> schedule5 = new ArrayList<scheduleDetail>();
-        PreparedStatement pstmt5 = connect
-                .prepareStatement("SELECT * FROM schedule WHERE day = 5");
+        PreparedStatement pstmt5 = connect.prepareStatement("SELECT * FROM schedule WHERE day = 5");
         ResultSet rs5 = pstmt5.executeQuery();
-
         while (rs5.next()) {
-
             scheduleDetail sch5 = new scheduleDetail();
             sch5.setStartTime(rs5.getDouble("startTime"));
             sch5.setEndTime(rs5.getDouble("endTime"));
@@ -204,10 +177,7 @@ public class DisplayTimetable implements Serializable {
             sch5.seteTime(rs5.getString("eTime"));
 
             schedule5.add(sch5);
-
         }
-
-        // close resources
         rs5.close();
         pstmt5.close();
         connect.close();
@@ -215,18 +185,16 @@ public class DisplayTimetable implements Serializable {
         return schedule5;
     }
 
+    // Get Saturday schedule to display
     public List<scheduleDetail> getScheduleSat() throws ClassNotFoundException, SQLException {
 
         DB_connection dc = new DB_connection();
         Connection connect = dc.connection();
 
         List<scheduleDetail> schedule6 = new ArrayList<scheduleDetail>();
-        PreparedStatement pstmt6 = connect
-                .prepareStatement("SELECT * FROM schedule WHERE day = 6");
+        PreparedStatement pstmt6 = connect.prepareStatement("SELECT * FROM schedule WHERE day = 6");
         ResultSet rs6 = pstmt6.executeQuery();
-
         while (rs6.next()) {
-
             scheduleDetail sch6 = new scheduleDetail();
             sch6.setStartTime(rs6.getDouble("startTime"));
             sch6.setEndTime(rs6.getDouble("endTime"));
@@ -242,10 +210,7 @@ public class DisplayTimetable implements Serializable {
             sch6.seteTime(rs6.getString("eTime"));
 
             schedule6.add(sch6);
-
         }
-
-        // close resources
         rs6.close();
         pstmt6.close();
         connect.close();
@@ -253,18 +218,16 @@ public class DisplayTimetable implements Serializable {
         return schedule6;
     }
 
+    // Get Sunday schedule to display
     public List<scheduleDetail> getScheduleSun() throws ClassNotFoundException, SQLException {
 
         DB_connection dc = new DB_connection();
         Connection connect = dc.connection();
 
         List<scheduleDetail> schedule7 = new ArrayList<scheduleDetail>();
-        PreparedStatement pstmt7 = connect
-                .prepareStatement("SELECT * FROM schedule WHERE day = 0");
+        PreparedStatement pstmt7 = connect.prepareStatement("SELECT * FROM schedule WHERE day = 0");
         ResultSet rs7 = pstmt7.executeQuery();
-
         while (rs7.next()) {
-
             scheduleDetail sch7 = new scheduleDetail();
             sch7.setStartTime(rs7.getDouble("startTime"));
             sch7.setEndTime(rs7.getDouble("endTime"));
@@ -280,10 +243,7 @@ public class DisplayTimetable implements Serializable {
             sch7.seteTime(rs7.getString("eTime"));
 
             schedule7.add(sch7);
-
         }
-
-        // close resources
         rs7.close();
         pstmt7.close();
         connect.close();
@@ -291,19 +251,19 @@ public class DisplayTimetable implements Serializable {
         return schedule7;
     }
 
+    // Get courseCode to display
     public List<scheduleDetail> getCourseDetail() throws ClassNotFoundException, SQLException {
 
         DB_connection dc = new DB_connection();
         Connection connect = dc.connection();
 
         List<scheduleDetail> schedule = new ArrayList<scheduleDetail>();
-
         PreparedStatement pstmt = connect.prepareStatement("SELECT courseCode FROM schedule GROUP BY courseCode");
         ResultSet rs = pstmt.executeQuery();
         while (rs.next()) {
             scheduleDetail sch = new scheduleDetail();
             sch.setCourseCode(rs.getString("courseCode"));
-
+            
             pstmt = connect.prepareStatement("SELECT * FROM course WHERE courseCode='" + sch.getCourseCode() + "'");
             ResultSet rs2 = pstmt.executeQuery();
             while (rs2.next()) {
@@ -312,13 +272,10 @@ public class DisplayTimetable implements Serializable {
                 schedule.add(sch);
             }
         }
-
-// close resources
         rs.close();
         pstmt.close();
         connect.close();
 
         return schedule;
     }
-
 }

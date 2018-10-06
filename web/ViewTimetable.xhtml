@@ -33,6 +33,12 @@
 
     <h:body> 
         <h:form>
+            <h:outputScript rendered="#{modifySchedule.success}">
+                alert("Successfully Updated!!!");
+            </h:outputScript>
+            <h:outputScript rendered="#{modifySchedule.message}">
+                alert("Error!!! Please provide correct information!");
+            </h:outputScript>
             <section class="columns">
                 <div class="column">
                     <h3>Student Timetable</h3>
@@ -89,7 +95,11 @@
                 </div>
             </section>
 
-        </h:form>
-
+            <h:column>
+                <h:commandButton value="Edit" action="#{modifySchedule.forward()}">
+                    <f:param name="staffID" value="#{stf.staffID}" />
+                </h:commandButton>
+            </h:column>
+        </h:form>s
     </h:body>
 </html>

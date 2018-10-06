@@ -38,53 +38,6 @@
 
         </h:head>
         <h:body>
-            <script type="text/javascript">
-                //<![CDATA[
-                console.clear();
-                var table = $("table");
-                var rows = table.find($("tr"));
-                var colsLength = $(rows[0]).find($("td")).length;
-                var removeLater = new Array();
-                for (var i = 0; i < colsLength; i++) {
-                    var startIndex = 0;
-                    var lastIndex = 0;
-                    var startText = $($(rows[0]).find("td")[i]).text();
-                    for (var j = 1; j < rows.length; j++) {
-                        var cRow = $(rows[j]);
-                        var cCol = $(cRow.find("td")[i]);
-                        var currentText = cCol.text();
-                        if (currentText == startText) {
-                            cCol.css("background", "gray");
-                            console.log(cCol);
-                            removeLater.push(cCol);
-                            lastIndex = j;
-                        } else {
-                            var spanLength = lastIndex - startIndex;
-                            if (spanLength >= 1) {
-                                console.log(lastIndex + " - " + startIndex)
-                                //console.log($($(rows[startIndex]).find("td")[i]))
-                                $($(rows[startIndex]).find("td")[i]).attr("rowspan", spanLength + 1);
-                            }
-                            lastIndex = j;
-                            startIndex = j;
-                            startText = currentText;
-                        }
-
-                    }
-                    var spanLength = lastIndex - startIndex;
-                    if (spanLength >= 1) {
-                        console.log(lastIndex + " - " + startIndex)
-                        //console.log($($(rows[startIndex]).find("td")[i]))
-                        $($(rows[startIndex]).find("td")[i]).attr("rowspan", spanLength + 1);
-                    }
-                    console.log("---");
-                }
-
-                for (var i in removeLater) {
-                    $(removeLater[i]).remove();
-                }
-                //]]>
-            </script>
             <div class="col-container">
                 <ui:repeat value="#{scheduleInsert.group}" var="grp" >          
                     <h1 style="text-align: center">#{grp.programmeCode}#{grp.studyYear} (G#{grp.groupNumber}) - #{grp.cohort}</h1>
@@ -97,7 +50,6 @@
                                 #{sch.getsTime()}<br></br>
                                 #{sch.geteTime()}
                             </td>
-
                         </ui:repeat>
                     </tr>
                     <tr>
@@ -131,7 +83,6 @@
                             </td>
                         </ui:repeat>
                     </tr>
-
                     <tr>
                         <td><h:outputLabel><b>Thu</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.scheduleThu}" var="sch4" >
@@ -142,7 +93,6 @@
                             </td>
                         </ui:repeat>
                     </tr>
-
                     <tr>
                         <td><h:outputLabel><b>Fri</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.scheduleFri}" var="sch5" >
@@ -153,7 +103,6 @@
                             </td>
                         </ui:repeat>
                     </tr>
-
                     <tr>
                         <td><h:outputLabel><b>Sat</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.scheduleSat}" var="sch6" >
@@ -164,7 +113,6 @@
                             </td>
                         </ui:repeat>
                     </tr>
-
                     <tr>
                         <td><h:outputLabel><b>Sun</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.scheduleSun}" var="sch7" >
@@ -182,19 +130,16 @@
             <br></br>
             <div>
                 <h:dataTable class="container" value = "#{displayTimetable.courseDetail}" var = "sm">
-
                     <h:column>   				
                         #{sm.courseCode}
                     </h:column>
                     <h:column>   				
                         #{sm.courseName}
                     </h:column>
-
                 </h:dataTable>
             </div>
-
             <br></br>
-            <form action="ViewTimetable.xhtml" method="POST">
+            <form action="#{modifySchedule.back()}" method="POST">
                 <input id ="printbtn" type="button" value="Print" onClick="window.print()"/>
                 <input id ="printbtn" type="submit" value="Back" />
             </form>

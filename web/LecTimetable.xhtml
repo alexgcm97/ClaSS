@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <h:head>
         <style>
@@ -24,7 +23,7 @@
                 display: table;
                 width: 100%;
             }
-
+            
             .container {
                 display: table;
                 width: 50%;
@@ -39,7 +38,6 @@
 
         </h:head>
         <h:body>
-
             <div class="col-container">
                 <ui:repeat value="#{scheduleInsert.staff}" var="stf" >          
                     <h1 style="text-align: center">#{stf.staffName} - #{stf.cohort}</h1>
@@ -60,7 +58,7 @@
                             <td>
                                 #{sch.courseCode} #{sch.courseType} 
                                 #{sch.venueID} <br></br>
-                                #{sch.programmeCode} #{sch.studyYear} #{sch.groupNumber} <br></br>
+                                #{sch.programmeCode}#{sch.studyYear} #{sch.groupNumber} <br></br>
                                 #{sch.cohort}
                             </td>
                         </ui:repeat>
@@ -88,7 +86,6 @@
                             </td>
                         </ui:repeat>
                     </tr>
-
                     <tr>
                         <td><h:outputLabel><b>Thu</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.scheduleThu}" var="sch4" >
@@ -100,7 +97,6 @@
                             </td>
                         </ui:repeat>
                     </tr>
-
                     <tr>
                         <td><h:outputLabel><b>Fri</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.scheduleFri}" var="sch5" >
@@ -112,7 +108,6 @@
                             </td>
                         </ui:repeat>
                     </tr>
-
                     <tr>
                         <td><h:outputLabel><b>Sat</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.scheduleSat}" var="sch6" >
@@ -124,7 +119,6 @@
                             </td>
                         </ui:repeat>
                     </tr>
-
                     <tr>
                         <td><h:outputLabel><b>Sun</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.scheduleSun}" var="sch7" >
@@ -143,19 +137,16 @@
             <br></br>
             <div>
                 <h:dataTable class="container" value = "#{displayTimetable.courseDetail}" var = "sm">
-
                     <h:column>   				
                         #{sm.courseCode}
                     </h:column>
                     <h:column>   				
                         #{sm.courseName}
                     </h:column>
-
                 </h:dataTable>
             </div>
-
             <br></br>
-            <form action="ViewTimetable.xhtml" method="POST">
+            <form action="#{modifySchedule.back()}" method="POST">
                 <input id ="printbtn" type="button" value="Print" onClick="window.print()"/>
                 <input id ="printbtn" type="submit" value="Back" />
             </form>

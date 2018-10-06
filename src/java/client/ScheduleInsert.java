@@ -1,8 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//@author Kok Teck Siong
+//This page is to get the class table data and insert to schedule table for display purpose
+
 package client;
 
 import da.DB_connection;
@@ -12,6 +10,8 @@ import domain.Staff;
 import domain.TutorialGroup;
 import domain.Class;
 import domain.scheduleDetail;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,11 +22,14 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
-/**
- *
- * @author Teck Siong
- */
 @ManagedBean
 @SessionScoped
 public class ScheduleInsert {
@@ -34,23 +37,40 @@ public class ScheduleInsert {
     String staffID;
     String sTime = "", eTime = "";
 
-    public String view_Staff() throws SQLException {
+    //Generate staff timetable for view
+    public String view_Staff() throws SQLException, ParserConfigurationException, SAXException, IOException {
         DB_connection dc = new DB_connection();
         Connection connect = dc.connection();
 
-        PreparedStatement stmt = connect.prepareStatement(
-                "DELETE FROM schedule");
+        //Delete everytime generate new schedule for view
+        PreparedStatement stmt = connect.prepareStatement("DELETE FROM schedule");
         stmt.executeUpdate();
 
-        stmt = connect.prepareStatement(
-                "insert into schedule(day, startTime, EndTime, courseID, courseCode, courseType, venueID, groupID, groupNumber, staffID, staffName, programmeCode, studyYear, cohort, sTime, eTime) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        //Insert the day, startTime and endTime to schedule table
+        stmt = connect.prepareStatement("insert into schedule(day, startTime, EndTime, courseID, courseCode, courseType, venueID, groupID, groupNumber, staffID, staffName, programmeCode, studyYear, cohort, sTime, eTime) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+        //Get start time and end time from Configuration.xml
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Element e;
+
+        String fileName = "../xml/Configuration.xml";
+        InputStream inputStream = getClass().getResourceAsStream(fileName);
+        Document doc = dBuilder.parse(inputStream);
+        NodeList nodes = doc.getElementsByTagName("configuration");
+
+        e = (Element) nodes.item(0);
+
+        double studyStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
+        double studyEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
 
         for (int d = 0; d < 7; d++) {
-            double a = 8;
-            for (double t = 8; t < 20; t += 0.5) {
+            double a = studyStart;
+            for (double t = studyStart; t < studyEnd; t += 0.5) {
 
                 double chk = t - a;
 
+                //Time display format
                 if (chk == 0.5) {
                     sTime = Integer.toString((int) t) + ":30";
                     eTime = Integer.toString((int) t + 1) + ":00";
@@ -77,17 +97,16 @@ public class ScheduleInsert {
                 stmt.setString(15, sTime);
                 stmt.setString(16, eTime);
                 stmt.executeUpdate();
-
             }
         }
 
+        //Get data from the ViewTimetable.xhtml (view button)
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
         staffID = params.get("action");
 
         stmt = connect.prepareStatement("SELECT * FROM class WHERE staffID = '" + staffID + "'");
         ResultSet rs = stmt.executeQuery();
-
         while (rs.next()) {
             Class cd = new Class();
             cd.setCourseID(rs.getString("courseID"));
@@ -134,7 +153,7 @@ public class ScheduleInsert {
 
                                 double st = cd.getStartTime();
                                 double et = cd.getEndTime();
-                                for (double i = 8; i <= 20; i += 0.5) {
+                                for (double i = studyStart; i <= studyEnd; i += 0.5) {
                                     if (st <= i) {
                                         if (i < et) {
                                             stmt = connect.prepareStatement("SELECT * FROM schedule WHERE startTime = " + i);
@@ -147,6 +166,7 @@ public class ScheduleInsert {
                                                 stmt = connect.prepareStatement(
                                                         "update schedule SET endTime=?, courseID=?, courseCode=?, courseType=?, venueID=?, groupID=?, groupNumber=?, staffID=?, staffName=?, programmeCode=?, studyYear=?, cohort=?, sTime=?, eTime=? WHERE day=? AND startTime=?");
 
+                                                //Do not display the tutorial group number if detected courseType=L
                                                 if (ct.getCourseType().equals("L")) {
                                                     stmt.setInt(15, cd.getDay());
                                                     stmt.setDouble(16, i);
@@ -199,20 +219,33 @@ public class ScheduleInsert {
 
     String groupID;
 
-    public String view_Group() throws SQLException {
+    //Generate group timetable for view (step similar to View_Staff)
+    public String view_Group() throws SQLException, ParserConfigurationException, SAXException, IOException {
         DB_connection dc = new DB_connection();
         Connection connect = dc.connection();
 
-        PreparedStatement stmt = connect.prepareStatement(
-                "DELETE FROM schedule");
+        PreparedStatement stmt = connect.prepareStatement("DELETE FROM schedule");
         stmt.executeUpdate();
 
-        stmt = connect.prepareStatement(
-                "insert into schedule(day, startTime, EndTime, courseID, courseCode, courseType, venueID, groupID, groupNumber, staffID, staffName, programmeCode, studyYear, cohort, sTime, eTime) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        stmt = connect.prepareStatement("insert into schedule(day, startTime, EndTime, courseID, courseCode, courseType, venueID, groupID, groupNumber, staffID, staffName, programmeCode, studyYear, cohort, sTime, eTime) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Element e;
+
+        String fileName = "../xml/Configuration.xml";
+        InputStream inputStream = getClass().getResourceAsStream(fileName);
+        Document doc = dBuilder.parse(inputStream);
+        NodeList nodes = doc.getElementsByTagName("configuration");
+
+        e = (Element) nodes.item(0);
+
+        double studyStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
+        double studyEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
 
         for (int d = 0; d < 7; d++) {
-            double a = 8;
-            for (double t = 8; t < 20; t += 0.5) {
+            double a = studyStart;
+            for (double t = studyStart; t < studyEnd; t += 0.5) {
 
                 double chk = t - a;
 
@@ -242,7 +275,6 @@ public class ScheduleInsert {
                 stmt.setString(15, sTime);
                 stmt.setString(16, eTime);
                 stmt.executeUpdate();
-
             }
         }
 
@@ -252,7 +284,6 @@ public class ScheduleInsert {
 
         stmt = connect.prepareStatement("SELECT * FROM class WHERE groupID = '" + groupID + "'");
         ResultSet rs = stmt.executeQuery();
-
         while (rs.next()) {
             Class cd = new Class();
             cd.setCourseID(rs.getString("courseID"));
@@ -299,7 +330,7 @@ public class ScheduleInsert {
 
                                 double st = cd.getStartTime();
                                 double et = cd.getEndTime();
-                                for (double i = 8; i <= 20; i += 0.5) {
+                                for (double i = studyStart; i <= studyEnd; i += 0.5) {
                                     if (st <= i) {
                                         if (i < et) {
                                             stmt = connect.prepareStatement("SELECT * FROM schedule WHERE startTime = " + i);
@@ -346,20 +377,33 @@ public class ScheduleInsert {
 
     String venueID;
 
-    public String view_Venue() throws SQLException {
+    //Generate venue timetable for view (step similar to View_Staff)
+    public String view_Venue() throws SQLException, ParserConfigurationException, SAXException, IOException {
         DB_connection dc = new DB_connection();
         Connection connect = dc.connection();
 
-        PreparedStatement stmt = connect.prepareStatement(
-                "DELETE FROM schedule");
+        PreparedStatement stmt = connect.prepareStatement("DELETE FROM schedule");
         stmt.executeUpdate();
 
-        stmt = connect.prepareStatement(
-                "insert into schedule(day, startTime, EndTime, courseID, courseCode, courseType, venueID, groupID, groupNumber, staffID, staffName, programmeCode, studyYear, cohort, sTime, eTime) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        stmt = connect.prepareStatement("insert into schedule(day, startTime, EndTime, courseID, courseCode, courseType, venueID, groupID, groupNumber, staffID, staffName, programmeCode, studyYear, cohort, sTime, eTime) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Element e;
+
+        String fileName = "../xml/Configuration.xml";
+        InputStream inputStream = getClass().getResourceAsStream(fileName);
+        Document doc = dBuilder.parse(inputStream);
+        NodeList nodes = doc.getElementsByTagName("configuration");
+
+        e = (Element) nodes.item(0);
+
+        double studyStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
+        double studyEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
 
         for (int d = 0; d < 7; d++) {
-            double a = 8;
-            for (double t = 8; t < 20; t += 0.5) {
+            double a = studyStart;
+            for (double t = studyStart; t < studyEnd; t += 0.5) {
 
                 double chk = t - a;
 
@@ -389,7 +433,6 @@ public class ScheduleInsert {
                 stmt.setString(15, sTime);
                 stmt.setString(16, eTime);
                 stmt.executeUpdate();
-
             }
         }
 
@@ -399,7 +442,6 @@ public class ScheduleInsert {
 
         stmt = connect.prepareStatement("SELECT * FROM class WHERE venueID = '" + venueID + "'");
         ResultSet rs = stmt.executeQuery();
-
         while (rs.next()) {
             Class cd = new Class();
             cd.setCourseID(rs.getString("courseID"));
@@ -446,7 +488,7 @@ public class ScheduleInsert {
 
                                 double st = cd.getStartTime();
                                 double et = cd.getEndTime();
-                                for (double i = 8; i <= 20; i += 0.5) {
+                                for (double i = studyStart; i <= studyEnd; i += 0.5) {
                                     if (st <= i) {
                                         if (i < et) {
                                             stmt = connect.prepareStatement("SELECT * FROM schedule WHERE startTime = " + i);
@@ -509,13 +551,13 @@ public class ScheduleInsert {
         return "/VenueTimetable.xhtml?faces-redirect=true";
     }
 
+    //Get staff timetable display title
     public List<scheduleDetail> getStaff() throws ClassNotFoundException, SQLException {
 
         DB_connection dc = new DB_connection();
         Connection connect = dc.connection();
 
         List<scheduleDetail> schedule = new ArrayList<scheduleDetail>();
-
         PreparedStatement pstmt = connect.prepareStatement("SELECT staffName, cohort FROM schedule WHERE staffID = '" + staffID + "' GROUP BY staffName, cohort");
         ResultSet rs = pstmt.executeQuery();
         while (rs.next()) {
@@ -524,8 +566,6 @@ public class ScheduleInsert {
             sd.setCohort(rs.getString("cohort"));
             schedule.add(sd);
         }
-
-        // close resources
         rs.close();
         pstmt.close();
         connect.close();
@@ -533,13 +573,13 @@ public class ScheduleInsert {
         return schedule;
     }
 
+    //Get group timetable display title
     public List<scheduleDetail> getGroup() throws ClassNotFoundException, SQLException {
 
         DB_connection dc = new DB_connection();
         Connection connect = dc.connection();
 
         List<scheduleDetail> schedule = new ArrayList<scheduleDetail>();
-
         PreparedStatement pstmt = connect.prepareStatement("SELECT programmeCode, studyYear, cohort, groupNumber FROM schedule WHERE groupID = '" + groupID + "' GROUP BY  programmeCode, studyYear, cohort, groupNumber");
         ResultSet rs = pstmt.executeQuery();
         while (rs.next()) {
@@ -551,8 +591,6 @@ public class ScheduleInsert {
             sd.setCohort(rs.getString("cohort"));
             schedule.add(sd);
         }
-
-        // close resources
         rs.close();
         pstmt.close();
         connect.close();
@@ -560,13 +598,13 @@ public class ScheduleInsert {
         return schedule;
     }
 
+    //Get venue timetable display title
     public List<scheduleDetail> getVenue() throws ClassNotFoundException, SQLException {
 
         DB_connection dc = new DB_connection();
         Connection connect = dc.connection();
 
         List<scheduleDetail> schedule = new ArrayList<scheduleDetail>();
-
         PreparedStatement pstmt = connect.prepareStatement("SELECT venueID, cohort FROM schedule WHERE venueID = '" + venueID + "' GROUP BY venueID, cohort");
         ResultSet rs = pstmt.executeQuery();
         while (rs.next()) {
@@ -575,8 +613,6 @@ public class ScheduleInsert {
             sd.setCohort(rs.getString("cohort"));
             schedule.add(sd);
         }
-
-        // close resources
         rs.close();
         pstmt.close();
         connect.close();
