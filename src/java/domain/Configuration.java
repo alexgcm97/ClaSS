@@ -37,7 +37,7 @@ public class Configuration {
     private double maxBreak, blockDuration, startTime = 8, endTime = 20;
     private boolean toBalanceClass, toBlockTime, setBreak;
 
-    private final String filePath = "C:\\Users\\Alex\\Documents\\NetBeansProjects\\ClaSS\\src\\java\\xml\\";
+    private final String filePath = "C:\\Users\\Teck Siong\\Desktop\\ClaSS\\src\\java\\xml\\";
 
     public void generateConfiguration() throws ParserConfigurationException, TransformerConfigurationException, TransformerException, FileNotFoundException, UnsupportedEncodingException, IOException {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
