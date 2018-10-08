@@ -8,7 +8,6 @@ package client;
 import da.*;
 import domain.Class;
 import domain.*;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -46,14 +45,15 @@ public class SchedulingAlgorithm {
     private final VenueDA vda = new VenueDA();
     private final StaffDA sda = new StaffDA();
 
+    private final String filePath = "C:\\Users\\Alex\\Documents\\NetBeansProjects\\ClaSS\\src\\java\\xml\\";
+
     public void initialize() throws Exception {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Element e;
 
-        String fileName = "../xml/TutorialGroup.xml";
-        InputStream inputStream = getClass().getResourceAsStream(fileName);
-        Document doc = dBuilder.parse(inputStream);
+        String fileName = filePath + "TutorialGroup.xml";
+        Document doc = dBuilder.parse(fileName);
         groupList = new ArrayList();
         NodeList nodes = doc.getElementsByTagName("tutorialGroup");
 
@@ -65,9 +65,8 @@ public class SchedulingAlgorithm {
             groupList.add(tg);
         }
 
-        fileName = "../xml/Course.xml";
-        inputStream = getClass().getResourceAsStream(fileName);
-        doc = dBuilder.parse(inputStream);
+        fileName = filePath + "Course.xml";
+        doc = dBuilder.parse(fileName);
         courseList = new ArrayList();
         lecList = new ArrayList();
         nodes = doc.getElementsByTagName("course");
@@ -83,9 +82,8 @@ public class SchedulingAlgorithm {
             }
         }
 
-        fileName = "../xml/Configuration.xml";
-        inputStream = getClass().getResourceAsStream(fileName);
-        doc = dBuilder.parse(inputStream);
+        fileName = filePath + "Configuration.xml";
+        doc = dBuilder.parse(fileName);
         nodes = doc.getElementsByTagName("configuration");
 
         e = (Element) nodes.item(0);
@@ -114,9 +112,8 @@ public class SchedulingAlgorithm {
             }
         }
 
-        fileName = "../xml/Staff.xml";
-        inputStream = getClass().getResourceAsStream(fileName);
-        doc = dBuilder.parse(inputStream);
+        fileName = filePath + "Staff.xml";
+        doc = dBuilder.parse(fileName);
         staffList = new ArrayList();
         nodes = doc.getElementsByTagName("staff");
 
@@ -128,9 +125,8 @@ public class SchedulingAlgorithm {
             staffList.add(stf);
         }
 
-        fileName = "../xml/Venue.xml";
-        inputStream = getClass().getResourceAsStream(fileName);
-        doc = dBuilder.parse(inputStream);
+        fileName = filePath + "Venue.xml";
+        doc = dBuilder.parse(fileName);
         roomList = new ArrayList();
         labList = new ArrayList();
         hallList = new ArrayList();
@@ -191,22 +187,22 @@ public class SchedulingAlgorithm {
             optimizeBreak(3);
         }
 
+        if (blockDay != 99) {
+            clearBlock();
+        }
+
         for (int i = 0; i < scheduleList.size(); i++) {
             ArrayList<Class> classList = scheduleList.get(i).getClassList();
             for (int j = 0; j < classList.size(); j++) {
                 Class previousClass = null;
+                Class thisClass = classList.get(j);
                 if (j > 0) {
                     previousClass = classList.get(j - 1);
                 }
-                Class thisClass = classList.get(j);
                 if (!thisClass.getCourseType().equalsIgnoreCase("L") && !thisClass.getCourseType().equalsIgnoreCase("B")) {
                     assignVenueStaff(previousClass, thisClass);
                 }
             }
-        }
-
-        if (blockDay != 99) {
-            clearBlock();
         }
     }
 
@@ -269,10 +265,8 @@ public class SchedulingAlgorithm {
         for (int i = 0; i < scheduleList.size(); i++) {
             ArrayList<Class> classList = scheduleList.get(i).getClassList();
             for (Class c : classList) {
-                if (!c.getCourseType().equalsIgnoreCase("B")) {
-                    if (c.getVenueID().equalsIgnoreCase("-") || c.getStaffID().equalsIgnoreCase("-")) {
-                        emptyNo++;
-                    }
+                if (c.getVenueID().equalsIgnoreCase("-") || c.getStaffID().equalsIgnoreCase("-")) {
+                    emptyNo++;
                 }
             }
         }
@@ -623,8 +617,9 @@ public class SchedulingAlgorithm {
                         }
                     }
                 }
+
                 ArrayList<Class> venueClassList = v.getClassList();
-                if (venueClassList.size() > 0) {
+                if (venueClassList != null) {
                     for (int i = 0; i < venueClassList.size(); i++) {
                         Class temp = venueClassList.get(i);
                         if (temp.getDay() == thisClass.getDay()) {
@@ -643,9 +638,9 @@ public class SchedulingAlgorithm {
                 if (!isClash) {
                     for (int i = 0; i < scheduleList.size(); i++) {
                         ArrayList<Class> classList = scheduleList.get(i).getClassList();
-                        for (int j = 0; j < classList.size(); j++) {
-                            Class temp = scheduleList.get(i).getClassList().get(j);
-                            if (!temp.getVenueID().equalsIgnoreCase("-")) {
+                        if (classList != null) {
+                            for (int j = 0; j < classList.size(); j++) {
+                                Class temp = classList.get(j);
                                 if (temp.getDay() == thisClass.getDay()) {
                                     double startTime1 = temp.getStartTime();
                                     double endTime1 = temp.getEndTime();
@@ -910,6 +905,7 @@ public class SchedulingAlgorithm {
     }
 
     public void start() throws Exception {
+
         initialize();
         int dbClash;
         do {
@@ -924,7 +920,6 @@ public class SchedulingAlgorithm {
 
         printClass();
         FacesContext.getCurrentInstance().getExternalContext().redirect("ViewTimetable.xhtml");
-
     }
 
     public void printClass() {

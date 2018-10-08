@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -30,12 +30,14 @@ import org.w3c.dom.Element;
  * @author Alex
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class Configuration {
 
     private int blockDay, blockStart, studyDays = 5;
     private double maxBreak, blockDuration, startTime = 8, endTime = 20;
     private boolean toBalanceClass, toBlockTime, setBreak;
+
+    private final String filePath = "C:\\Users\\Alex\\Documents\\NetBeansProjects\\ClaSS\\src\\java\\xml\\";
 
     public void generateConfiguration() throws ParserConfigurationException, TransformerConfigurationException, TransformerException, FileNotFoundException, UnsupportedEncodingException, IOException {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -86,9 +88,13 @@ public class Configuration {
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
         DOMSource source = new DOMSource(doc);
-        StreamResult result = new StreamResult(new File("C:\\Users\\Alex\\Documents\\NetBeansProjects\\ClaSS\\src\\java\\xml\\Configuration.xml"));
+        StreamResult result = new StreamResult(new File(filePath + "Configuration.xml"));
         transformer.transform(source, result);
         FacesContext.getCurrentInstance().getExternalContext().redirect("generateSchedule.xhtml");
+    }
+
+    public Configuration getInstance() {
+        return this;
     }
 
     public String getValidatorMessage() {
