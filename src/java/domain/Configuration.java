@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.concurrent.TimeUnit;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -37,7 +38,7 @@ public class Configuration {
     private double maxBreak, blockDuration, startTime = 8, endTime = 20;
     private boolean toBalanceClass, toBlockTime, setBreak;
 
-    private final String filePath = "C:\\Users\\Teck Siong\\Desktop\\ClaSS\\src\\java\\xml\\";
+    private final String filePath = "C:\\Users\\Alex\\Documents\\NetBeansProjects\\ClaSS\\src\\java\\xml\\";
 
     public void generateConfiguration() throws ParserConfigurationException, TransformerConfigurationException, TransformerException, FileNotFoundException, UnsupportedEncodingException, IOException {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
