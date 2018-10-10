@@ -909,7 +909,6 @@ public class SchedulingAlgorithm {
 
         initialize();
         do {
-            System.out.println(getRandomMoveDuration());
             allocation();
         } while (countEmpty() > 0 || countClash() > 0 || countTimeClashes() > 0 || countBlockClash() > 0 || countInvalidBreak() > 0 || countDBClash() > 0);
 
