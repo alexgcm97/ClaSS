@@ -596,14 +596,19 @@ public class SchedulingAlgorithm {
 
                 if (previousClass != null) {
                     if (!previousClass.getCourseType().equalsIgnoreCase("B")) {
-                        if (previousClass.getDay() == thisClass.getDay() && previousClass.getEndTime() == thisClass.getStartTime() && previousClass.getCourseType().equals(thisClass.getCourseType())) {
-                            Venue previousV = searchVenue(previousClass.getCourseType(), previousClass.getVenueID());
-                            if (runCount < 15) {
-                                v = previousV;
-                            } else if (runCount < 30) {
-                                v = getRandomVenueFromBlock(previousV.getBlock(), thisClass.getCourseType());
+                        if (previousClass.getDay() == thisClass.getDay() && previousClass.getEndTime() == thisClass.getStartTime()) {
+                            double moveDuration = 0.5;
+                            if (previousClass.getCourseType().equals(thisClass.getCourseType())) {
+                                Venue previousV = searchVenue(previousClass.getCourseType(), previousClass.getVenueID());
+                                if (runCount < 15) {
+                                    v = previousV;
+                                } else if (runCount < 30) {
+                                    v = getRandomVenueFromBlock(previousV.getBlock(), thisClass.getCourseType());
+                                } else {
+                                    thisClass.moveRight(moveDuration);
+                                }
                             } else {
-                                v = getRandomVenue(thisClass.getCourseType());
+                                thisClass.moveRight(moveDuration);
                             }
                         }
                     }
@@ -754,7 +759,7 @@ public class SchedulingAlgorithm {
             if (rand.nextBoolean()) {
                 return 0.5;
             } else {
-                return 0;
+                return 1;
             }
         } else {
             if (rand.nextBoolean()) {
@@ -904,6 +909,7 @@ public class SchedulingAlgorithm {
 
         initialize();
         do {
+            System.out.println(getRandomMoveDuration());
             allocation();
         } while (countEmpty() > 0 || countClash() > 0 || countTimeClashes() > 0 || countBlockClash() > 0 || countInvalidBreak() > 0 || countDBClash() > 0);
 
