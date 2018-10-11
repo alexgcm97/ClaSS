@@ -912,7 +912,7 @@ public class SchedulingAlgorithm {
 
         do {
             allocation();
-        } while (countEmpty() > 0 || countClash() > 0 || countTimeClashes() > 0 || countBlockClash() > 0 || countInvalidBreak() > 0);
+        } while (countEmpty() > 0 || countClash() > 0 || countTimeClashes() > 0 || countBlockClash() > 0 || countInvalidBreak() > 0 || countDBClash() > 0);
 
         sortList();
         isGenerationEnd = true;
