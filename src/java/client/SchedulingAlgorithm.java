@@ -744,7 +744,7 @@ public class SchedulingAlgorithm {
                     Class class1 = classList.get(index1);
                     Class class2 = classList.get(index2);
                     if (class1.getDay() == class2.getDay()) {
-                        if ((class2.getStartTime() >= class1.getStartTime() && class2.getStartTime() < class1.getEndTime()) || (class2.getEndTime() > class1.getStartTime() && class2.getEndTime() <= class1.getEndTime())) {
+                        if ((class2.getStartTime() >= class1.getStartTime() && class2.getStartTime() < class1.getEndTime()) || (class2.getEndTime() > class1.getStartTime() && class2.getEndTime() <= class1.getEndTime()) || (class1.getStartTime() >= class2.getStartTime() && class1.getStartTime() < class2.getEndTime()) || (class1.getEndTime() > class2.getStartTime() && class1.getEndTime() <= class2.getEndTime())) {
                             count++;
                         }
                     }
@@ -893,8 +893,10 @@ public class SchedulingAlgorithm {
                 int j = i + 1;
                 Class c1 = classList.get(i);
                 Class c2 = classList.get(j);
-                if ((c2.getStartTime() - c1.getEndTime()) > maxBreak) {
-                    count++;
+                if (c1.getDay() == c2.getDay()) {
+                    if ((c2.getStartTime() - c1.getEndTime()) > maxBreak) {
+                        count++;
+                    }
                 }
             }
         }
@@ -906,11 +908,11 @@ public class SchedulingAlgorithm {
     }
 
     public void start() throws Exception {
-
         initialize();
+
         do {
             allocation();
-        } while (countEmpty() > 0 || countClash() > 0 || countTimeClashes() > 0 || countBlockClash() > 0 || countInvalidBreak() > 0 || countDBClash() > 0);
+        } while (countEmpty() > 0 || countClash() > 0 || countTimeClashes() > 0 || countBlockClash() > 0 || countInvalidBreak() > 0);
 
         sortList();
         isGenerationEnd = true;
