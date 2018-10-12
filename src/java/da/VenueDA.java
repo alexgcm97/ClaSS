@@ -19,9 +19,10 @@ import domain.Class;
  */
 public class VenueDA {
 
+    private Connection connect;
+
     public ArrayList<Class> getClassList(String venueID) throws SQLException {
         ArrayList<Class> classList = new ArrayList();
-        Connection connect = null;
         String url = "jdbc:derby://localhost:1527/schedule";
 
         String username = "schedule";
@@ -29,17 +30,19 @@ public class VenueDA {
 
         try {
             connect = DriverManager.getConnection(url, username, password);
+
+            PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM class WHERE venueID = ?");
+            pstmt.setString(1, venueID);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Class c = new domain.Class(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7));
+                classList.add(c);
+            }
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
 
-        PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM class WHERE venueID = ?");
-        pstmt.setString(1, venueID);
-        ResultSet rs = pstmt.executeQuery();
-        while (rs.next()) {
-            Class c = new domain.Class(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7));
-            classList.add(c);
-        }
         return classList;
     }
 }
