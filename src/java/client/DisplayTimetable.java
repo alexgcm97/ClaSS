@@ -32,7 +32,7 @@ public class DisplayTimetable {
 
         connect = DBConnection.getConnection();
 
-        PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM schedule");
+        PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM schedule ORDER BY day, startTime ASC");
         ResultSet rs = pstmt.executeQuery();
         while (rs.next()) {
             scheduleDetail sch = new scheduleDetail();
@@ -107,7 +107,7 @@ public class DisplayTimetable {
         return sunList;
     }
 
-    // Get courseCode to display
+// Get courseCode to display
     public List<scheduleDetail> getCourseDetail() throws ClassNotFoundException, SQLException {
         connect = DBConnection.getConnection();
 
