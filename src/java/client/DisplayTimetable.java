@@ -4,7 +4,6 @@ package client;
 
 import da.DB_connection;
 import domain.scheduleDetail;
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +17,7 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class DisplayTimetable {
 
-    private ArrayList<scheduleDetail> timeList, monList, tuesList, wedList, thursList, friList, satList, sunList;
+    private ArrayList<scheduleDetail> monList, tuesList, wedList, thursList, friList, satList, sunList;
 
     // Get Monday schedule to display
     public void intializeSchedule() throws ClassNotFoundException, SQLException {
