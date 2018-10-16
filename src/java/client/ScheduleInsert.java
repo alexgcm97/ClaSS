@@ -1,6 +1,5 @@
 //@author Kok Teck Siong
 //This page is to get the class table data and insert to schedule table for display purpose
-
 package client;
 
 import da.DB_connection;
@@ -12,6 +11,7 @@ import domain.Class;
 import domain.scheduleDetail;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +32,7 @@ import org.xml.sax.SAXException;
 
 @ManagedBean
 @SessionScoped
-public class ScheduleInsert {
+public class ScheduleInsert implements Serializable {
 
     String staffID;
     String sTime = "", eTime = "";

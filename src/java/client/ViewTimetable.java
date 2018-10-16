@@ -1,6 +1,5 @@
 //@author Kok Teck Siong
 //This page is to get data and display the list of tutorial group, staff, and venue
-
 package client;
 
 import da.DB_connection;
@@ -8,6 +7,7 @@ import domain.CourseType;
 import domain.Staff;
 import domain.TutorialGroup;
 import domain.Venue;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +19,7 @@ import javax.faces.bean.SessionScoped;
 
 @ManagedBean
 @SessionScoped
-public class ViewTimetable {
+public class ViewTimetable implements Serializable {
 
     //Get the staff list
     public List<Staff> getAllStaff() throws ClassNotFoundException, SQLException {

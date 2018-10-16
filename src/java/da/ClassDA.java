@@ -42,11 +42,13 @@ public class ClassDA {
                 Class c = new domain.Class(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7));
                 classList.add(c);
             }
-
+            rs.close();
+            pstmt.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
 
+        connect.close();
         return classList;
     }
 
@@ -67,11 +69,12 @@ public class ClassDA {
                     groupIDList.add(rs.getString(1));
                 }
             }
-
+            rs.close();
+            pstmt.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
+        connect.close();
         return groupIDList;
     }
 
@@ -91,11 +94,12 @@ public class ClassDA {
             while (rs.next()) {
                 found = true;
             }
-
+            rs.close();
+            pstmt.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
+        connect.close();
         return found;
     }
 
@@ -111,11 +115,11 @@ public class ClassDA {
             PreparedStatement pstmt = connect.prepareStatement("DELETE FROM class WHERE groupID = ?");
             pstmt.setString(1, groupID);
             pstmt.executeUpdate();
-
+            pstmt.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
+        connect.close();
     }
 
     public void insert(Class c) throws SQLException {
@@ -136,10 +140,10 @@ public class ClassDA {
             pstmt.setDouble(6, c.getStartTime());
             pstmt.setDouble(7, c.getEndTime());
             pstmt.executeUpdate();
-
+            pstmt.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
+        connect.close();
     }
 }

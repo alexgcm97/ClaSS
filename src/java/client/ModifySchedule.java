@@ -1,6 +1,5 @@
 //@author Kok Teck Siong
 //This page is to get data and update the modification done by user
-
 package client;
 
 import da.DB_connection;
@@ -8,6 +7,7 @@ import domain.Class;
 import domain.CourseType;
 import domain.Venue;
 import domain.scheduleDetail;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +19,7 @@ import javax.faces.bean.SessionScoped;
 
 @ManagedBean
 @SessionScoped
-public class ModifySchedule {
+public class ModifySchedule implements Serializable {
 
     // get data from previous page (modifySchedule.xhtml)
     private int day;
@@ -222,7 +222,7 @@ public class ModifySchedule {
             ct.setCourseID(rs.getString("courseID"));
             ct.setCourseCode(rs.getString("courseCode"));
             ct.setCourseType(rs.getString("courseType"));
-            
+
             cType.add(ct);
         }
         rs.close();
@@ -242,7 +242,7 @@ public class ModifySchedule {
     public void setSuccess(boolean success) {
         this.success = success;
     }
-    
+
     public boolean isMessage() {
         return message;
     }
@@ -312,14 +312,14 @@ public class ModifySchedule {
     public String forward() {
         return "modifySchedule.xhtml?faces-redirect=true";
     }
-    
+
     //Call by the ViewTimetable.xhtml (back)
     public String back() {
         this.message = false;
         this.success = false;
         return "ViewTimetable.xhtml?faces-redirect=true";
     }
-    
+
     public String back1() {
         this.message = false;
         this.success = false;

@@ -1,8 +1,6 @@
 //@author Kok Teck Siong
 //This page is to get the schedule data follow by the day
-
 package client;
-
 
 import da.DB_connection;
 import domain.scheduleDetail;
@@ -85,7 +83,7 @@ public class DisplayTimetable implements Serializable {
 
         return schedule2;
     }
-    
+
     // Get Wednesday schedule to display
     public List<scheduleDetail> getScheduleWed() throws ClassNotFoundException, SQLException {
 
@@ -142,7 +140,7 @@ public class DisplayTimetable implements Serializable {
             sch4.setCohort(rs4.getString("cohort"));
             sch4.setsTime(rs4.getString("sTime"));
             sch4.seteTime(rs4.getString("eTime"));
-            
+
             schedule4.add(sch4);
         }
         rs4.close();
@@ -263,7 +261,7 @@ public class DisplayTimetable implements Serializable {
         while (rs.next()) {
             scheduleDetail sch = new scheduleDetail();
             sch.setCourseCode(rs.getString("courseCode"));
-            
+
             pstmt = connect.prepareStatement("SELECT * FROM course WHERE courseCode='" + sch.getCourseCode() + "'");
             ResultSet rs2 = pstmt.executeQuery();
             while (rs2.next()) {

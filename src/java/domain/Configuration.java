@@ -8,6 +8,7 @@ package domain;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -31,7 +32,7 @@ import org.w3c.dom.Element;
  */
 @ManagedBean
 @SessionScoped
-public class Configuration {
+public class Configuration implements Serializable{
 
     private int blockDay, blockStart, studyDays = 5;
     private double maxBreak, blockDuration, startTime = 8, endTime = 20;

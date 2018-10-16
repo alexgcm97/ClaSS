@@ -920,11 +920,6 @@ public class SchedulingAlgorithm {
 
         printClass();
 
-        for (int i = 0; i < 5; i++) {
-            thread.sleep(1000);
-
-        }
-
         FacesContext.getCurrentInstance().getExternalContext().redirect("ViewTimetable.xhtml");
     }
 
