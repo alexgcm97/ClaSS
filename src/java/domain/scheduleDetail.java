@@ -188,4 +188,29 @@ public class scheduleDetail {
         this.eTime = eTime;
     }
 
+    public String getStdHeader() {
+        if (this.getGroupNumber() == null || this.getGroupNumber().equals("")) {
+            return this.cohort;
+        } else {
+            return this.programmeCode + this.studyYear + " (G" + this.groupNumber + ") - " + this.cohort;
+        }
+    }
+
+    public String getStfHeader() {
+        if (this.getStaffName() == null || this.getStaffName().equals("")) {
+            return this.cohort;
+        } else {
+            return this.staffName + " - " + this.cohort;
+
+        }
+    }
+
+    public String getVenHeader() {
+        if (this.getVenueID() == null || this.getVenueID().equals("")) {
+            return this.cohort;
+        } else {
+            return this.venueID + " - " + this.cohort;
+        }
+    }
+
 }

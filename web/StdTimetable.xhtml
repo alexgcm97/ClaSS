@@ -59,7 +59,7 @@
         <h:body>
             <div class="col-container">
                 <ui:repeat value="#{scheduleInsert.group}" var="grp" >          
-                    <h1 style="text-align: center">#{grp.programmeCode}#{grp.studyYear} (G#{grp.groupNumber}) - #{grp.cohort}</h1>
+                    <h1 style="text-align: center">#{grp.stdHeader}</h1>
                 </ui:repeat>
                 <table>
                     <tr>
