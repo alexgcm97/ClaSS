@@ -32,7 +32,7 @@ import org.w3c.dom.Element;
  */
 @ManagedBean
 @SessionScoped
-public class Configuration implements Serializable{
+public class Configuration implements Serializable {
 
     private int blockDay, blockStart, studyDays = 5;
     private double maxBreak, blockDuration, startTime = 8, endTime = 20;
@@ -200,5 +200,4 @@ public class Configuration implements Serializable{
     public void setSetBreak(boolean setBreak) {
         this.setBreak = setBreak;
     }
-
 }

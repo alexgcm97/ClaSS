@@ -41,8 +41,8 @@
                     <f:selectItem itemValue = "6" itemLabel = "Saturday" />
                 </c:if>
             </h:selectOneMenu>
-            <span>Start Time: </span>
-            <h:inputText style="width:30px" title="Enter time in 24 hrs format &amp; integer value only." id="blockStart" value="#{configuration.blockStart}" converterMessage="Please enter integer only for block start time."  validatorMessage="#{configuration.validatorMessage}" disabled="#{!configuration.toBlockTime}">
+            <span>Start Hour: </span>
+            <h:inputText style="width:30px" title="Enter start hour in 24 hours format &amp; integer value only." id="blockStart" value="#{configuration.blockStart}" converterMessage="Please enter integer only for block start time."  validatorMessage="#{configuration.validatorMessage}" disabled="#{!configuration.toBlockTime}">
                 <f:validateLongRange minimum="#{configuration.startTime}" maximum="#{configuration.endTime-2}"/>
             </h:inputText>
             <span>Duration: </span>
