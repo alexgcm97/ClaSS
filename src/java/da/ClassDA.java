@@ -84,7 +84,7 @@ public class ClassDA {
 
         String username = "schedule";
         String password = "schedule";
-        System.out.println(groupID);
+        
         try {
             connect = DriverManager.getConnection(url, username, password);
 
