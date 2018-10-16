@@ -36,7 +36,7 @@ public class SchedulingAlgorithm {
     private ArrayList<Venue> roomList, labList, hallList;
     private ArrayList<Schedule> scheduleList;
 
-    private int studyDays, totalClass = 0, blockDay = 99;
+    private int studyDays, totalClass = 0, blockDay = 99, runLimit = 50;
     private double studyStart, studyEnd, blockStart, blockEnd, maxBreak = 99, noOfClassPerDay = 99;
     private boolean isGenerationEnd = false;
     private Class blockClass;
@@ -455,7 +455,7 @@ public class SchedulingAlgorithm {
         boolean isBreak = false;
 
         do {
-            if (runCount == 50) {
+            if (runCount == runLimit) {
                 isBreak = true;
                 break;
             } else {
@@ -587,7 +587,7 @@ public class SchedulingAlgorithm {
         Staff s = new Staff();
 
         do {
-            if (runCount == 50) {
+            if (runCount == runLimit) {
                 isBreak = true;
                 break;
             } else {
@@ -661,7 +661,7 @@ public class SchedulingAlgorithm {
 
         if (!isBreak) {
             do {
-                if (runCount == 50) {
+                if (runCount == runLimit) {
                     isBreak = true;
                     break;
                 } else {
