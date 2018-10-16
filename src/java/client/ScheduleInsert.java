@@ -558,12 +558,21 @@ public class ScheduleInsert implements Serializable {
         Connection connect = dc.connection();
 
         List<scheduleDetail> schedule = new ArrayList<scheduleDetail>();
+
         PreparedStatement pstmt = connect.prepareStatement("SELECT staffName, cohort FROM schedule WHERE staffID = '" + staffID + "' GROUP BY staffName, cohort");
         ResultSet rs = pstmt.executeQuery();
-        while (rs.next()) {
+
+        if (rs.next()) {
+            do {
+                scheduleDetail sd = new scheduleDetail();
+                sd.setStaffName(rs.getString("staffName"));
+                sd.setCohort(rs.getString("cohort"));
+                schedule.add(sd);
+            } while (rs.next());
+        } else {
             scheduleDetail sd = new scheduleDetail();
-            sd.setStaffName(rs.getString("staffName"));
-            sd.setCohort(rs.getString("cohort"));
+            sd.setStaffName("No Classes");
+            sd.setCohort("Display");
             schedule.add(sd);
         }
         rs.close();
@@ -572,8 +581,8 @@ public class ScheduleInsert implements Serializable {
 
         return schedule;
     }
-
     //Get group timetable display title
+
     public List<scheduleDetail> getGroup() throws ClassNotFoundException, SQLException {
 
         DB_connection dc = new DB_connection();
@@ -582,13 +591,19 @@ public class ScheduleInsert implements Serializable {
         List<scheduleDetail> schedule = new ArrayList<scheduleDetail>();
         PreparedStatement pstmt = connect.prepareStatement("SELECT programmeCode, studyYear, cohort, groupNumber FROM schedule WHERE groupID = '" + groupID + "' GROUP BY  programmeCode, studyYear, cohort, groupNumber");
         ResultSet rs = pstmt.executeQuery();
-        while (rs.next()) {
+        if (rs.next()) {
+            do {
+                scheduleDetail sd = new scheduleDetail();
+                sd.setGroupNumber(rs.getString("groupNumber"));
+                sd.setStudyYear(rs.getString("studyYear"));
+                sd.setProgrammeCode(rs.getString("programmeCode"));
+                sd.setGroupNumber(rs.getString("groupNumber"));
+                sd.setCohort(rs.getString("cohort"));
+                schedule.add(sd);
+            } while (rs.next());
+        } else {
             scheduleDetail sd = new scheduleDetail();
-            sd.setGroupNumber(rs.getString("groupNumber"));
-            sd.setStudyYear(rs.getString("studyYear"));
-            sd.setProgrammeCode(rs.getString("programmeCode"));
-            sd.setGroupNumber(rs.getString("groupNumber"));
-            sd.setCohort(rs.getString("cohort"));
+            sd.setGroupNumber("No Classes Display");
             schedule.add(sd);
         }
         rs.close();
@@ -607,10 +622,18 @@ public class ScheduleInsert implements Serializable {
         List<scheduleDetail> schedule = new ArrayList<scheduleDetail>();
         PreparedStatement pstmt = connect.prepareStatement("SELECT venueID, cohort FROM schedule WHERE venueID = '" + venueID + "' GROUP BY venueID, cohort");
         ResultSet rs = pstmt.executeQuery();
-        while (rs.next()) {
+
+        if (rs.next()) {
+            do {
+                scheduleDetail sd = new scheduleDetail();
+                sd.setVenueID(rs.getString("venueID"));
+                sd.setCohort(rs.getString("cohort"));
+                schedule.add(sd);
+            } while (rs.next());
+        } else {
             scheduleDetail sd = new scheduleDetail();
-            sd.setVenueID(rs.getString("venueID"));
-            sd.setCohort(rs.getString("cohort"));
+            sd.setVenueID("No Classes");
+            sd.setCohort("Display");
             schedule.add(sd);
         }
         rs.close();
