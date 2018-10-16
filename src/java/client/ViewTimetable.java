@@ -7,7 +7,6 @@ import domain.CourseType;
 import domain.Staff;
 import domain.TutorialGroup;
 import domain.Venue;
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,11 +14,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 
 @ManagedBean
-@SessionScoped
-public class ViewTimetable implements Serializable {
+@RequestScoped
+public class ViewTimetable {
 
     private Connection connect;
 

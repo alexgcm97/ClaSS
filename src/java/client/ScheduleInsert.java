@@ -11,7 +11,6 @@ import domain.Class;
 import domain.scheduleDetail;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -31,8 +30,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 @ManagedBean
-@SessionScoped
-public class ScheduleInsert implements Serializable {
+@RequestScoped
+public class ScheduleInsert{
 
     String staffID;
     String sTime = "", eTime = "";
