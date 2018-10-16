@@ -905,6 +905,8 @@ public class SchedulingAlgorithm {
         return isGenerationEnd;
     }
 
+    static Thread thread = new Thread();
+
     public void start() throws Exception {
         initialize();
 
@@ -917,6 +919,12 @@ public class SchedulingAlgorithm {
         storeData();
 
         printClass();
+
+        for (int i = 0; i < 5; i++) {
+            thread.sleep(1000);
+
+        }
+
         FacesContext.getCurrentInstance().getExternalContext().redirect("ViewTimetable.xhtml");
     }
 

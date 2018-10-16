@@ -285,7 +285,7 @@ public class ModifySchedule {
             venID = venueID;
         }
 
-        if (!stfID.equals("") && !grpID.equals("") && !venID.equals("")) {
+        if (!stfID.equals("") && !grpID.equals("") && !venID.equals("") && !venID.equals("null")) {
 
             pstmt = connect.prepareStatement("DELETE FROM class WHERE courseID='" + courseID + "' AND venueID='" + oldVenueID + "' AND groupID='" + grpID + "' AND staffID='" + oldStaffID + "'");
             pstmt.executeUpdate();

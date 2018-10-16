@@ -139,6 +139,7 @@
                         <tr><td><b>Venue</b></td>
                             <td><b> : </b></td>
                             <td><h:selectOneMenu value="#{modifySchedule.venueID}" class="ddl">
+                                    <f:selectItem itemLabel="Select" itemValue="null" />
                                     <f:selectItems value="#{modifySchedule.avaVenue}" var="ava"
                                                    itemLabel="#{ava.venueID} - #{ava.venueType}" itemValue="#{ava.venueID}" />
                                 </h:selectOneMenu></td>
