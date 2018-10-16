@@ -2,7 +2,7 @@
 //This page is to get data and update the modification done by user
 package client;
 
-import da.DB_connection;
+import da.DBConnection;
 import domain.Class;
 import domain.CourseType;
 import domain.Venue;
@@ -25,6 +25,7 @@ public class ModifySchedule implements Serializable {
     private int day;
     private double startTime, endTime;
     private String venueType, groupID, courseID, staffID, venueID, oldStaffID, oldVenueID;
+    private Connection connect;
 
     public int getDay() {
         return day;
@@ -108,9 +109,7 @@ public class ModifySchedule implements Serializable {
 
     //Display the selection start time and end time
     public List<scheduleDetail> getTime() throws ClassNotFoundException, SQLException {
-
-        DB_connection dc = new DB_connection();
-        Connection connect = dc.connection();
+        connect = DBConnection.getConnection();
 
         List<scheduleDetail> scheduleDetail = new ArrayList<scheduleDetail>();
         PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM schedule WHERE day = 1");
@@ -133,9 +132,7 @@ public class ModifySchedule implements Serializable {
 
     //Check the available venue and show in drop down list
     public List<Venue> getAvaVenue() throws ClassNotFoundException, SQLException {
-
-        DB_connection dc = new DB_connection();
-        Connection connect = dc.connection();
+        connect = DBConnection.getConnection();
 
         List<Venue> venue = new ArrayList<Venue>();
         List<Venue> venueNew = new ArrayList<Venue>();
@@ -186,9 +183,7 @@ public class ModifySchedule implements Serializable {
 
     //get the previous venueID and show in drop down list
     public List<Venue> getOldVenue() throws ClassNotFoundException, SQLException {
-
-        DB_connection dc = new DB_connection();
-        Connection connect = dc.connection();
+        connect = DBConnection.getConnection();
 
         List<Venue> venue = new ArrayList<Venue>();
         PreparedStatement pstmt = connect.prepareStatement("SELECT venueID, venueType FROM venue WHERE venueType!='Hall' ORDER BY venueID");
@@ -209,9 +204,7 @@ public class ModifySchedule implements Serializable {
 
     //get the previous couseID and show in drop down list
     public List<CourseType> getOldCourse() throws ClassNotFoundException, SQLException {
-
-        DB_connection dc = new DB_connection();
-        Connection connect = dc.connection();
+        connect = DBConnection.getConnection();
 
         List<CourseType> cType = new ArrayList<CourseType>();
         PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM coursetype WHERE courseType!='L' ORDER BY courseCode");
@@ -254,8 +247,7 @@ public class ModifySchedule implements Serializable {
     //Update the modification
     public String updateModify() throws SQLException {
         String stfID = "", grpID = "", venID = "";
-        DB_connection dc = new DB_connection();
-        Connection connect = dc.connection();
+        connect = DBConnection.getConnection();
 
         //Check validation
         PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM class WHERE staffID='" + staffID + "' AND day=" + day + " AND ((startTime>=" + startTime + " AND startTime<" + endTime + ") OR (endTime>=" + startTime + " AND endTime<" + endTime + "))");

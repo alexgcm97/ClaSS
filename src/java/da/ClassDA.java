@@ -6,7 +6,6 @@
 package da;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import domain.Class;
@@ -24,15 +23,12 @@ import javax.faces.bean.RequestScoped;
 public class ClassDA {
 
     private Connection connect;
-    private final String url = "jdbc:derby://localhost:1527/schedule";
-    private final String username = "schedule";
-    private final String password = "schedule";
 
     public ArrayList<Class> get(String groupID) throws SQLException {
         ArrayList<Class> classList = new ArrayList();
 
         try {
-            connect = DriverManager.getConnection(url, username, password);
+            connect = DBConnection.getConnection();
 
             PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM class WHERE groupID = ?");
             pstmt.setString(1, groupID);
@@ -54,7 +50,7 @@ public class ClassDA {
     public ArrayList<String> getAllGroupID() throws SQLException {
         ArrayList<String> groupIDList = new ArrayList();
         try {
-            connect = DriverManager.getConnection(url, username, password);
+            connect = DBConnection.getConnection();
 
             PreparedStatement pstmt = connect.prepareStatement("SELECT groupID FROM class");
             ResultSet rs = pstmt.executeQuery();
@@ -76,7 +72,7 @@ public class ClassDA {
         boolean found = false;
 
         try {
-            connect = DriverManager.getConnection(url, username, password);
+            connect = DBConnection.getConnection();
 
             PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM class WHERE groupID = ?");
             pstmt.setString(1, groupID);
@@ -97,7 +93,7 @@ public class ClassDA {
         boolean found = true;
 
         try {
-            connect = DriverManager.getConnection(url, username, password);
+            connect = DBConnection.getConnection();
 
             PreparedStatement pstmt = connect.prepareStatement("DELETE FROM class WHERE groupID = ?");
             pstmt.setString(1, groupID);
@@ -111,7 +107,7 @@ public class ClassDA {
 
     public void insert(Class c) throws SQLException {
         try {
-            connect = DriverManager.getConnection(url, username, password);
+            connect = DBConnection.getConnection();
 
             PreparedStatement pstmt = connect.prepareStatement("INSERT INTO class VALUES(?,?,?,?,?,?,?)");
             pstmt.setString(1, c.getCourseID());

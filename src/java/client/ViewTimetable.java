@@ -2,7 +2,7 @@
 //This page is to get data and display the list of tutorial group, staff, and venue
 package client;
 
-import da.DB_connection;
+import da.DBConnection;
 import domain.CourseType;
 import domain.Staff;
 import domain.TutorialGroup;
@@ -21,11 +21,11 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class ViewTimetable implements Serializable {
 
+    private Connection connect;
+
     //Get the staff list
     public List<Staff> getAllStaff() throws ClassNotFoundException, SQLException {
-
-        DB_connection dc = new DB_connection();
-        Connection connect = dc.connection();
+        connect = DBConnection.getConnection();
 
         List<Staff> Staff = new ArrayList<Staff>();
         PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM staff ORDER BY staffID");
@@ -46,9 +46,7 @@ public class ViewTimetable implements Serializable {
 
     //Get the group list
     public List<TutorialGroup> getAllGroup() throws ClassNotFoundException, SQLException {
-
-        DB_connection dc = new DB_connection();
-        Connection connect = dc.connection();
+        connect = DBConnection.getConnection();
 
         List<TutorialGroup> group = new ArrayList<TutorialGroup>();
         PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM Tutorial_Group");
@@ -85,9 +83,7 @@ public class ViewTimetable implements Serializable {
 
     //Get the venue list
     public List<Venue> getAllVenue() throws ClassNotFoundException, SQLException {
-
-        DB_connection dc = new DB_connection();
-        Connection connect = dc.connection();
+        connect = DBConnection.getConnection();
 
         List<Venue> venue = new ArrayList<Venue>();
         PreparedStatement pstmt = connect
@@ -111,9 +107,7 @@ public class ViewTimetable implements Serializable {
 
     //Get the course list use by modifySchedule
     public List<CourseType> getAllCourse() throws ClassNotFoundException, SQLException {
-
-        DB_connection dc = new DB_connection();
-        Connection connect = dc.connection();
+        connect = DBConnection.getConnection();
 
         List<CourseType> cType = new ArrayList<CourseType>();
         PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM coursetype");

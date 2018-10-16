@@ -2,7 +2,7 @@
 //This page is to get the class table data and insert to schedule table for display purpose
 package client;
 
-import da.DB_connection;
+import da.DBConnection;
 import domain.CourseType;
 import domain.Programme;
 import domain.Staff;
@@ -36,11 +36,11 @@ public class ScheduleInsert implements Serializable {
 
     String staffID;
     String sTime = "", eTime = "";
+    private Connection connect;
 
     //Generate staff timetable for view
     public String view_Staff() throws SQLException, ParserConfigurationException, SAXException, IOException {
-        DB_connection dc = new DB_connection();
-        Connection connect = dc.connection();
+        connect = DBConnection.getConnection();
 
         //Delete everytime generate new schedule for view
         PreparedStatement stmt = connect.prepareStatement("DELETE FROM schedule");
@@ -221,8 +221,7 @@ public class ScheduleInsert implements Serializable {
 
     //Generate group timetable for view (step similar to View_Staff)
     public String view_Group() throws SQLException, ParserConfigurationException, SAXException, IOException {
-        DB_connection dc = new DB_connection();
-        Connection connect = dc.connection();
+        connect = DBConnection.getConnection();
 
         PreparedStatement stmt = connect.prepareStatement("DELETE FROM schedule");
         stmt.executeUpdate();
@@ -379,8 +378,7 @@ public class ScheduleInsert implements Serializable {
 
     //Generate venue timetable for view (step similar to View_Staff)
     public String view_Venue() throws SQLException, ParserConfigurationException, SAXException, IOException {
-        DB_connection dc = new DB_connection();
-        Connection connect = dc.connection();
+        connect = DBConnection.getConnection();
 
         PreparedStatement stmt = connect.prepareStatement("DELETE FROM schedule");
         stmt.executeUpdate();
@@ -553,9 +551,7 @@ public class ScheduleInsert implements Serializable {
 
     //Get staff timetable display title
     public List<scheduleDetail> getStaff() throws ClassNotFoundException, SQLException {
-
-        DB_connection dc = new DB_connection();
-        Connection connect = dc.connection();
+        connect = DBConnection.getConnection();
 
         List<scheduleDetail> schedule = new ArrayList<scheduleDetail>();
 
@@ -584,9 +580,7 @@ public class ScheduleInsert implements Serializable {
     //Get group timetable display title
 
     public List<scheduleDetail> getGroup() throws ClassNotFoundException, SQLException {
-
-        DB_connection dc = new DB_connection();
-        Connection connect = dc.connection();
+        connect = DBConnection.getConnection();
 
         List<scheduleDetail> schedule = new ArrayList<scheduleDetail>();
         PreparedStatement pstmt = connect.prepareStatement("SELECT programmeCode, studyYear, cohort, groupNumber FROM schedule WHERE groupID = '" + groupID + "' GROUP BY  programmeCode, studyYear, cohort, groupNumber");
@@ -615,9 +609,7 @@ public class ScheduleInsert implements Serializable {
 
     //Get venue timetable display title
     public List<scheduleDetail> getVenue() throws ClassNotFoundException, SQLException {
-
-        DB_connection dc = new DB_connection();
-        Connection connect = dc.connection();
+        connect = DBConnection.getConnection();
 
         List<scheduleDetail> schedule = new ArrayList<scheduleDetail>();
         PreparedStatement pstmt = connect.prepareStatement("SELECT venueID, cohort FROM schedule WHERE venueID = '" + venueID + "' GROUP BY venueID, cohort");

@@ -6,7 +6,6 @@
 package da;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,15 +19,12 @@ import java.util.ArrayList;
 public class StaffDA {
 
     private Connection connect;
-    private final String url = "jdbc:derby://localhost:1527/schedule";
-    private final String username = "schedule";
-    private final String password = "schedule";
 
     public ArrayList<Class> getClassList(String staffID) throws SQLException {
         ArrayList<Class> classList = new ArrayList();
 
         try {
-            connect = DriverManager.getConnection(url, username, password);
+            connect = DBConnection.getConnection();
 
             PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM class WHERE staffID = ?");
             pstmt.setString(1, staffID);

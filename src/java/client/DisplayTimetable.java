@@ -2,7 +2,7 @@
 //This page is to get the schedule data follow by the day
 package client;
 
-import da.DB_connection;
+import da.DBConnection;
 import domain.scheduleDetail;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,6 +18,7 @@ import javax.faces.bean.RequestScoped;
 public class DisplayTimetable {
 
     private ArrayList<scheduleDetail> monList, tuesList, wedList, thursList, friList, satList, sunList;
+    private Connection connect;
 
     // Get Monday schedule to display
     public void intializeSchedule() throws ClassNotFoundException, SQLException {
@@ -29,8 +30,7 @@ public class DisplayTimetable {
         satList = new ArrayList();
         sunList = new ArrayList();
 
-        DB_connection dc = new DB_connection();
-        Connection connect = dc.connection();
+        connect = DBConnection.getConnection();
 
         PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM schedule");
         ResultSet rs = pstmt.executeQuery();
@@ -109,9 +109,7 @@ public class DisplayTimetable {
 
     // Get courseCode to display
     public List<scheduleDetail> getCourseDetail() throws ClassNotFoundException, SQLException {
-
-        DB_connection dc = new DB_connection();
-        Connection connect = dc.connection();
+        connect = DBConnection.getConnection();
 
         List<scheduleDetail> schedule = new ArrayList<scheduleDetail>();
         PreparedStatement pstmt = connect.prepareStatement("SELECT courseCode FROM schedule GROUP BY courseCode");
