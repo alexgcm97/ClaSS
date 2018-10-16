@@ -157,7 +157,7 @@ public class SchedulingAlgorithm {
         }
 
         if (blockDay != 99) {
-            blockClass = new Class("-", "-", "-", "-", blockDay, blockStart, blockEnd, "B");
+            blockClass = new Class("-", "-", "-", "-", blockDay, blockStart, blockEnd, "BLK");
             for (int i = 0; i < scheduleList.size(); i++) {
                 scheduleList.get(i).addClassToList(blockClass);
             }
@@ -239,7 +239,7 @@ public class SchedulingAlgorithm {
                     Class class1 = list1.get(index);
                     for (int index2 = 0; index2 < list2.size(); index2++) {
                         Class class2 = list2.get(index2);
-                        if (!class1.getCourseType().equalsIgnoreCase("L") && !class1.getCourseType().equalsIgnoreCase("B") && !class2.getCourseType().equalsIgnoreCase("L") && !class2.getCourseType().equalsIgnoreCase("B")) {
+                        if (!class1.getCourseType().equalsIgnoreCase("L") && !class1.getCourseType().equals("BLK") && !class2.getCourseType().equalsIgnoreCase("L") && !class2.getCourseType().equals("BLK")) {
                             if (class1.getDay() == class2.getDay()) {
                                 double startTime1 = class1.getStartTime();
                                 double endTime1 = class1.getEndTime();
@@ -284,8 +284,8 @@ public class SchedulingAlgorithm {
                     int j = i + 1;
                     Class c1 = classList.get(i);
                     Class c2 = classList.get(j);
-                    if (!c1.getCourseType().equalsIgnoreCase("B")) {
-                        if (c2.getCourseType().equalsIgnoreCase("B")) {
+                    if (!c1.getCourseType().equals("BLK")) {
+                        if (c2.getCourseType().equals("BLK")) {
                             if (j < scheduleList.size() - 1) {
                                 c2 = classList.get(j + 1);
                             } else {
@@ -326,7 +326,7 @@ public class SchedulingAlgorithm {
                         if (countClassBeforeHalfDay(i, classList) == 0 && countLecClassPerDay(i, classList) == 0) {
                             for (Class c : classList) {
                                 if (c.getDay() == i) {
-                                    if (!c.getCourseType().equalsIgnoreCase("B")) {
+                                    if (!c.getCourseType().equals("BLK")) {
                                         if (moveDuration == 0) {
                                             moveDuration = c.getStartTime() - studyStart - getRandomMoveDuration();
                                         }
@@ -346,9 +346,9 @@ public class SchedulingAlgorithm {
                         int j = i + 1;
                         Class c1 = classList.get(i);
                         Class c2 = classList.get(j);
-                        if (!c1.getCourseType().equalsIgnoreCase("B")) {
+                        if (!c1.getCourseType().equals("BLK")) {
                             if (!c1.getCourseType().equalsIgnoreCase("L") || !c2.getCourseType().equalsIgnoreCase("L")) {
-                                if (c2.getCourseType().equalsIgnoreCase("B")) {
+                                if (c2.getCourseType().equals("BLK")) {
                                     if (j != classList.size() - 1) {
                                         c2 = classList.get(j + 1);
                                     } else {
@@ -408,7 +408,7 @@ public class SchedulingAlgorithm {
         for (Class c : classList) {
             if (c.getDay() == day) {
                 if (c.getEndTime() <= ((studyStart + studyEnd) / 2)) {
-                    if (!c.getCourseType().equalsIgnoreCase("B")) {
+                    if (!c.getCourseType().equals("BLK")) {
                         count++;
                     }
                 }
@@ -595,7 +595,7 @@ public class SchedulingAlgorithm {
                 v = getRandomVenue(thisClass.getCourseType());
 
                 if (previousClass != null) {
-                    if (!previousClass.getCourseType().equalsIgnoreCase("B")) {
+                    if (!previousClass.getCourseType().equals("BLK")) {
                         if (previousClass.getDay() == thisClass.getDay() && previousClass.getEndTime() == thisClass.getStartTime()) {
                             double moveDuration = 0.5;
                             if (previousClass.getCourseType().equals(thisClass.getCourseType())) {
@@ -642,7 +642,7 @@ public class SchedulingAlgorithm {
                                     double startTime1 = temp.getStartTime();
                                     double endTime1 = temp.getEndTime();
                                     if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1) || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2)) {
-                                        if (temp.getVenueID() != null && !temp.getVenueID().equalsIgnoreCase("-")) {
+                                        if (temp.getVenueID() != null && !temp.getVenueID().equals("-")) {
                                             if (temp.getVenueID().equalsIgnoreCase(v.getVenueID())) {
                                                 isClash = true;
                                                 break;
@@ -689,17 +689,15 @@ public class SchedulingAlgorithm {
                             ArrayList<Class> classList = scheduleList.get(i).getClassList();
                             for (int j = 0; j < classList.size(); j++) {
                                 Class temp = scheduleList.get(i).getClassList().get(j);
-                                if (!temp.getStaffID().equalsIgnoreCase("-")) {
-                                    if (temp.getDay() == thisClass.getDay()) {
-                                        double startTime1 = temp.getStartTime();
-                                        double endTime1 = temp.getEndTime();
+                                if (temp.getDay() == thisClass.getDay()) {
+                                    double startTime1 = temp.getStartTime();
+                                    double endTime1 = temp.getEndTime();
 
-                                        if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1) || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2)) {
-                                            if (temp.getStaffID() != null && !temp.getStaffID().equalsIgnoreCase("-")) {
-                                                if (temp.getStaffID().equalsIgnoreCase(s.getStaffID())) {
-                                                    isClash = true;
-                                                    break;
-                                                }
+                                    if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1) || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2)) {
+                                        if (temp.getStaffID() != null && !temp.getStaffID().equals("-")) {
+                                            if (temp.getStaffID().equalsIgnoreCase(s.getStaffID())) {
+                                                isClash = true;
+                                                break;
                                             }
                                         }
                                     }
@@ -789,34 +787,34 @@ public class SchedulingAlgorithm {
     public Venue getRandomVenue(String courseType) {
         Venue venue = new Venue();
         int index = 0;
-        if (courseType.equalsIgnoreCase("T")) {
-            index = rand.nextInt(roomList.size());
-            venue = roomList.get(index);
-        } else if (courseType.equalsIgnoreCase("P")) {
+        if (courseType.equals("P")) {
             index = rand.nextInt(labList.size());
             venue = labList.get(index);
-        } else if (courseType.equalsIgnoreCase("L")) {
+        } else if (courseType.equals("L")) {
             int totalSize = getTotalSize();
             do {
                 index = rand.nextInt(hallList.size());
                 venue = hallList.get(index);
             } while (hallList.get(index).getCapacity() < totalSize);
+        } else {
+            index = rand.nextInt(roomList.size());
+            venue = roomList.get(index);
         }
         return venue;
     }
 
     public Venue getRandomVenueFromBlock(String block, String courseType) {
         Venue venue = new Venue();
-        int index = 0;
-        if (courseType.equalsIgnoreCase("T")) {
-            do {
-                index = rand.nextInt(roomList.size());
-                venue = roomList.get(index);
-            } while (!venue.getBlock().equalsIgnoreCase(block));
-        } else if (courseType.equalsIgnoreCase("P")) {
+        int index;
+        if (courseType.equals("P")) {
             do {
                 index = rand.nextInt(labList.size());
                 venue = labList.get(index);
+            } while (!venue.getBlock().equalsIgnoreCase(block));
+        } else {
+            do {
+                index = rand.nextInt(roomList.size());
+                venue = roomList.get(index);
             } while (!venue.getBlock().equalsIgnoreCase(block));
         }
         return venue;
@@ -824,13 +822,13 @@ public class SchedulingAlgorithm {
 
     public Venue searchVenue(String courseType, String venueID) {
         Venue venue = new Venue();
-        ArrayList<Venue> tempList = new ArrayList();
-        if (courseType.equalsIgnoreCase("T")) {
-            tempList = roomList;
-        } else if (courseType.equalsIgnoreCase("P")) {
+        ArrayList<Venue> tempList;
+        if (courseType.equals("P")) {
             tempList = labList;
-        } else if (courseType.equalsIgnoreCase("L")) {
+        } else if (courseType.equals("L")) {
             tempList = hallList;
+        } else {
+            tempList = roomList;
         }
         for (Venue v : tempList) {
             if (v.getVenueID().equalsIgnoreCase(venueID)) {
@@ -930,7 +928,7 @@ public class SchedulingAlgorithm {
                 if (j == 0) {
                     System.out.println("Group ID : " + c.getGroupID());
                 }
-                System.out.println("Course ID (Staff ID): " + c.getCourseID() + " (" + c.getStaffID() + ")" + " Venue : " + c.getVenueID() + " Day & Time: " + c.getDay() + " (" + c.getStartTime() + "-" + c.getEndTime() + ")");
+                System.out.println("Course ID (Staff ID): " + c.getCourseID() + c.getCourseType() + " (" + c.getStaffID() + ")" + " Venue : " + c.getVenueID() + " Day & Time: " + c.getDay() + " (" + c.getStartTime() + "-" + c.getEndTime() + ")");
             }
             System.out.println("-----------------------------------------------------------------------------");
         }
