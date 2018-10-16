@@ -12,13 +12,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 
 @ManagedBean
-@SessionScoped
-public class DisplayTimetable implements Serializable {
+@RequestScoped
+public class DisplayTimetable {
 
-    private ArrayList<scheduleDetail> monList, tuesList, wedList, thursList, friList, satList, sunList;
+    private ArrayList<scheduleDetail> timeList, monList, tuesList, wedList, thursList, friList, satList, sunList;
 
     // Get Monday schedule to display
     public void intializeSchedule() throws ClassNotFoundException, SQLException {
@@ -52,6 +52,9 @@ public class DisplayTimetable implements Serializable {
             sch.seteTime(rs.getString("eTime"));
 
             switch (sch.getDay()) {
+                case 0:
+                    this.sunList.add(sch);
+                    break;
                 case 1:
                     this.monList.add(sch);
                     break;
@@ -69,9 +72,6 @@ public class DisplayTimetable implements Serializable {
                     break;
                 case 6:
                     this.satList.add(sch);
-                    break;
-                case 7:
-                    this.sunList.add(sch);
                     break;
             }
         }
