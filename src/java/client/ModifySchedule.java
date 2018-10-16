@@ -7,6 +7,7 @@ import domain.Class;
 import domain.CourseType;
 import domain.Venue;
 import domain.scheduleDetail;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,11 +15,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
 @ManagedBean
-@RequestScoped
-public class ModifySchedule {
+@SessionScoped
+public class ModifySchedule implements Serializable {
 
     // get data from previous page (modifySchedule.xhtml)
     private int day;
