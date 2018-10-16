@@ -28,7 +28,7 @@
                 display: table;
                 width: 50%;
             }
-            
+
             .btn {
                 background-color: gray;
                 color: white;
@@ -52,6 +52,9 @@
             <title>Venue Timetable</title>
 
         </h:head>
+        <h:form>
+            <h:commandLink rendered="#{displayTimetable.intializeSchedule()}"/>
+        </h:form>
         <h:body>
             <div class="col-container">
                 <ui:repeat value="#{scheduleInsert.venue}" var="ven" >          
@@ -60,7 +63,7 @@
                 <table>
                     <tr>
                         <td><h:outputLabel><b>Day/Time</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.scheduleMon}" var="sch" >
+                        <ui:repeat value="#{displayTimetable.monList}" var="sch" >
                             <td>
                                 #{sch.getsTime()}<br></br>
                                 #{sch.geteTime()}
@@ -70,7 +73,7 @@
                     </tr>
                     <tr>
                         <td><h:outputLabel><b>Mon</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.scheduleMon}" var="sch" >
+                        <ui:repeat value="#{displayTimetable.monList}" var="sch" >
                             <td>
                                 #{sch.courseCode} #{sch.courseType} <br></br>
                                 #{sch.programmeCode}#{sch.studyYear} #{sch.groupNumber} <br></br>
@@ -81,7 +84,7 @@
                     </tr>
                     <tr>
                         <td><h:outputLabel><b>Tue</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.scheduleTue}" var="sch2" >
+                        <ui:repeat value="#{displayTimetable.tuesList}" var="sch2" >
 
                             <td>
                                 #{sch2.courseCode} #{sch2.courseType} <br></br>
@@ -93,7 +96,7 @@
                     </tr>
                     <tr>
                         <td><h:outputLabel><b>Wed</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.scheduleWed}" var="sch3" >
+                        <ui:repeat value="#{displayTimetable.wedList}" var="sch3" >
                             <td>
                                 #{sch3.courseCode} #{sch3.courseType} <br></br>
                                 #{sch3.programmeCode}#{sch3.studyYear} #{sch3.groupNumber} <br></br>
@@ -104,7 +107,7 @@
                     </tr>
                     <tr>
                         <td><h:outputLabel><b>Thu</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.scheduleThu}" var="sch4" >
+                        <ui:repeat value="#{displayTimetable.thursList}" var="sch4" >
                             <td>
                                 #{sch4.courseCode} #{sch4.courseType} <br></br>
                                 #{sch4.programmeCode}#{sch4.studyYear} #{sch4.groupNumber} <br></br>
@@ -115,7 +118,7 @@
                     </tr>
                     <tr>
                         <td><h:outputLabel><b>Fri</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.scheduleFri}" var="sch5" >
+                        <ui:repeat value="#{displayTimetable.friList}" var="sch5" >
                             <td>
                                 #{sch5.courseCode} #{sch5.courseType} <br></br>
                                 #{sch5.programmeCode}#{sch5.studyYear} #{sch5.groupNumber} <br></br>
@@ -126,7 +129,7 @@
                     </tr>
                     <tr>
                         <td><h:outputLabel><b>Sat</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.scheduleSat}" var="sch6" >
+                        <ui:repeat value="#{displayTimetable.satList}" var="sch6" >
                             <td>
                                 #{sch6.courseCode} #{sch6.courseType} <br></br>
                                 #{sch6.programmeCode}#{sch6.studyYear} #{sch6.groupNumber} <br></br>
@@ -137,7 +140,7 @@
                     </tr>
                     <tr>
                         <td><h:outputLabel><b>Sun</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.scheduleSun}" var="sch7" >
+                        <ui:repeat value="#{displayTimetable.sunList}" var="sch7" >
                             <td>
                                 #{sch7.courseCode} #{sch7.courseType} <br></br>
                                 #{sch7.programmeCode}#{sch7.studyYear} #{sch7.groupNumber} <br></br>

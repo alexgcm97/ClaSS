@@ -24,13 +24,12 @@ import javax.faces.bean.RequestScoped;
 public class ClassDA {
 
     private Connection connect;
+    private final String url = "jdbc:derby://localhost:1527/schedule";
+    private final String username = "schedule";
+    private final String password = "schedule";
 
     public ArrayList<Class> get(String groupID) throws SQLException {
         ArrayList<Class> classList = new ArrayList();
-        String url = "jdbc:derby://localhost:1527/schedule";
-
-        String username = "schedule";
-        String password = "schedule";
 
         try {
             connect = DriverManager.getConnection(url, username, password);
@@ -54,11 +53,6 @@ public class ClassDA {
 
     public ArrayList<String> getAllGroupID() throws SQLException {
         ArrayList<String> groupIDList = new ArrayList();
-        String url = "jdbc:derby://localhost:1527/schedule";
-
-        String username = "schedule";
-        String password = "schedule";
-
         try {
             connect = DriverManager.getConnection(url, username, password);
 
@@ -80,11 +74,7 @@ public class ClassDA {
 
     public boolean checkExist(String groupID) throws SQLException {
         boolean found = false;
-        String url = "jdbc:derby://localhost:1527/schedule";
 
-        String username = "schedule";
-        String password = "schedule";
-        
         try {
             connect = DriverManager.getConnection(url, username, password);
 
@@ -105,9 +95,6 @@ public class ClassDA {
 
     public void deleteRecords(String groupID) throws SQLException {
         boolean found = true;
-        String url = "jdbc:derby://localhost:1527/schedule";
-        String username = "schedule";
-        String password = "schedule";
 
         try {
             connect = DriverManager.getConnection(url, username, password);
@@ -123,11 +110,6 @@ public class ClassDA {
     }
 
     public void insert(Class c) throws SQLException {
-        String url = "jdbc:derby://localhost:1527/schedule";
-
-        String username = "schedule";
-        String password = "schedule";
-
         try {
             connect = DriverManager.getConnection(url, username, password);
 

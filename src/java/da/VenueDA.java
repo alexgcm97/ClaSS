@@ -20,13 +20,12 @@ import domain.Class;
 public class VenueDA {
 
     private Connection connect;
+    private final String url = "jdbc:derby://localhost:1527/schedule";
+    private final String username = "schedule";
+    private final String password = "schedule";
 
     public ArrayList<Class> getClassList(String venueID) throws SQLException {
         ArrayList<Class> classList = new ArrayList();
-        String url = "jdbc:derby://localhost:1527/schedule";
-
-        String username = "schedule";
-        String password = "schedule";
 
         try {
             connect = DriverManager.getConnection(url, username, password);
