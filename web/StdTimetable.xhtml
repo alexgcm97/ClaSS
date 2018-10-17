@@ -74,7 +74,7 @@
                     <tr>
                         <td><h:outputLabel><b>Mon</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.monList}" var="sch">
-                            <td>
+                            <td colspan="#{sch.colspan}">
                                 #{sch.courseCode} #{sch.courseType} <br></br>
                                 #{sch.venueID} <br></br>
                                 #{sch.staffName}
@@ -83,62 +83,61 @@
                     </tr>
                     <tr>
                         <td><h:outputLabel><b>Tue</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.tuesList}" var="sch2" >
-
-                            <td>
-                                #{sch2.courseCode} #{sch2.courseType} <br></br>
-                                #{sch2.venueID} <br></br>
-                                #{sch2.staffName}
+                        <ui:repeat value="#{displayTimetable.tuesList}" var="sch" >
+                            <td colspan="#{sch.colspan}">
+                                #{sch.courseCode} #{sch.courseType} <br></br>
+                                #{sch.venueID} <br></br>
+                                #{sch.staffName}
                             </td>
                         </ui:repeat>
                     </tr>
                     <tr>
                         <td><h:outputLabel><b>Wed</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.wedList}" var="sch3" >
-                            <td>
-                                #{sch3.courseCode} #{sch3.courseType} <br></br>
-                                #{sch3.venueID} <br></br>
-                                #{sch3.staffName}
+                        <ui:repeat value="#{displayTimetable.wedList}" var="sch" >
+                            <td colspan="#{sch.colspan}">
+                                #{sch.courseCode} #{sch.courseType} <br></br>
+                                #{sch.venueID} <br></br>
+                                #{sch.staffName}
                             </td>
                         </ui:repeat>
                     </tr>
                     <tr>
                         <td><h:outputLabel><b>Thu</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.thursList}" var="sch4" >
-                            <td>
-                                #{sch4.courseCode} #{sch4.courseType} <br></br>
-                                #{sch4.venueID} <br></br>
-                                #{sch4.staffName}
+                        <ui:repeat value="#{displayTimetable.thursList}" var="sch" >
+                            <td colspan="#{sch.colspan}">
+                                #{sch.courseCode} #{sch.courseType} <br></br>
+                                #{sch.venueID} <br></br>
+                                #{sch.staffName}
                             </td>
                         </ui:repeat>
                     </tr>
                     <tr>
                         <td><h:outputLabel><b>Fri</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.friList}" var="sch5" >
-                            <td>
-                                #{sch5.courseCode} #{sch5.courseType} <br></br>
-                                #{sch5.venueID} <br></br>
-                                #{sch5.staffName}
+                        <ui:repeat value="#{displayTimetable.friList}" var="sch" >
+                            <td colspan="#{sch.colspan}">
+                                #{sch.courseCode} #{sch.courseType} <br></br>
+                                #{sch.venueID} <br></br>
+                                #{sch.staffName}
                             </td>
                         </ui:repeat>
                     </tr>
                     <tr>
                         <td><h:outputLabel><b>Sat</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.satList}" var="sch6" >
-                            <td>
-                                #{sch6.courseCode} #{sch6.courseType} <br></br>
-                                #{sch6.venueID} <br></br>
-                                #{sch6.staffName}
+                        <ui:repeat value="#{displayTimetable.satList}" var="sch" >
+                            <td colspan="#{sch.colspan}">
+                                #{sch.courseCode} #{sch.courseType} <br></br>
+                                #{sch.venueID} <br></br>
+                                #{sch.staffName}
                             </td>
                         </ui:repeat>
                     </tr>
                     <tr>
                         <td><h:outputLabel><b>Sun</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.sunList}" var="sch7" >
-                            <td>
-                                #{sch7.courseCode} #{sch7.courseType} <br></br>
-                                #{sch7.venueID} <br></br>
-                                #{sch7.staffName}
+                        <ui:repeat value="#{displayTimetable.sunList}" var="sch" >
+                            <td colspan="#{sch.colspan}">
+                                #{sch.courseCode} #{sch.courseType} <br></br>
+                                #{sch.venueID} <br></br>
+                                #{sch.staffName}
                             </td>
                         </ui:repeat>
                     </tr>

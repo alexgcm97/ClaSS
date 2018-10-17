@@ -29,7 +29,7 @@
                 <f:ajax render="blockStart"/>
                 <f:ajax render="blockDuration"/>
             </h:selectBooleanCheckbox><span>Insert Block -</span>
-            <span>Day: </span><h:selectOneMenu id="blockDay" value="#{configuration.blockDay}" style="margin: 0px 5px 0px 5px" disabled="#{!configuration.toBlockTime}">
+            <span>Day: </span><h:selectOneMenu id="blockDay" value="#{configuration.blockDay}" style="margin: 0px 5px 0px 5px" disabled="#{!curation.blockDay}onfiguration.toBlockTime}">
                 <f:selectItem itemValue = "1" itemLabel = "Monday" /> 
                 <f:selectItem itemValue = "2" itemLabel = "Tuesday" /> 
                 <f:selectItem itemValue = "3" itemLabel = "Wednesday" /> 

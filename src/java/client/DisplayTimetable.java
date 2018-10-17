@@ -37,6 +37,7 @@ public class DisplayTimetable {
         while (rs.next()) {
             scheduleDetail sch = new scheduleDetail();
             sch.setDay(rs.getInt("day"));
+            sch.setCourseID(rs.getString("courseID"));
             sch.setStartTime(rs.getDouble("startTime"));
             sch.setEndTime(rs.getDouble("endTime"));
             sch.setCourseCode(rs.getString("courseCode"));
@@ -79,31 +80,56 @@ public class DisplayTimetable {
         connect.close();
     }
 
+    public void mergeClass(ArrayList<scheduleDetail> schList) {
+        int nextIndex;
+        for (int startIndex = 0; startIndex < schList.size(); startIndex++) {
+            scheduleDetail startSlot = schList.get(startIndex);
+            if (!startSlot.getCourseID().equals("")) {
+                nextIndex = startIndex + 1;
+                scheduleDetail nextSlot = schList.get(nextIndex);
+                while (nextIndex < schList.size() && !nextSlot.getCourseID().equals("") && startSlot.getCourseID().equals(nextSlot.getCourseID())) {
+                    startSlot.setEndTime(nextSlot.getEndTime());
+                    startSlot.increaseColspan();
+                    schList.remove(nextSlot);
+                    nextSlot = schList.get(nextIndex);
+                }
+            }
+        }
+
+    }
+
     public ArrayList<scheduleDetail> getMonList() {
+        mergeClass(monList);
         return monList;
     }
 
     public ArrayList<scheduleDetail> getTuesList() {
+        mergeClass(tuesList);
         return tuesList;
     }
 
     public ArrayList<scheduleDetail> getWedList() {
+        mergeClass(wedList);
         return wedList;
     }
 
     public ArrayList<scheduleDetail> getThursList() {
+        mergeClass(thursList);
         return thursList;
     }
 
     public ArrayList<scheduleDetail> getFriList() {
+        mergeClass(friList);
         return friList;
     }
 
     public ArrayList<scheduleDetail> getSatList() {
+        mergeClass(satList);
         return satList;
     }
 
     public ArrayList<scheduleDetail> getSunList() {
+        mergeClass(sunList);
         return sunList;
     }
 

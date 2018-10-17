@@ -45,7 +45,7 @@ public class SchedulingAlgorithm {
     private final VenueDA vda = new VenueDA();
     private final StaffDA sda = new StaffDA();
 
-    private final String filePath = "C:\\Users\\Alex\\Documents\\NetBeansProjects\\ClaSS\\src\\java\\xml\\";
+    private final String filePath = "C:\\Users\\Teck Siong\\Documents\\ClaSS\\src\\java\\xml\\";
 
     public void initialize() throws Exception {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

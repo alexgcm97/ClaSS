@@ -74,7 +74,7 @@
                     <tr>
                         <td><h:outputLabel><b>Mon</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.monList}" var="sch" >
-                            <td>
+                            <td colspan="#{sch.colspan}">
                                 #{sch.courseCode} #{sch.courseType} <br></br>
                                 #{sch.programmeCode}#{sch.studyYear} #{sch.groupNumber} <br></br>
                                 #{sch.cohort} <br></br>
@@ -84,68 +84,67 @@
                     </tr>
                     <tr>
                         <td><h:outputLabel><b>Tue</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.tuesList}" var="sch2" >
-
-                            <td>
-                                #{sch2.courseCode} #{sch2.courseType} <br></br>
-                                #{sch2.programmeCode}#{sch2.studyYear} #{sch2.groupNumber} <br></br>
-                                #{sch2.cohort} <br></br>
-                                #{sch2.staffName}
+                        <ui:repeat value="#{displayTimetable.tuesList}" var="sch" >
+                            <td colspan="#{sch.colspan}">
+                                #{sch.courseCode} #{sch.courseType} <br></br>
+                                #{sch.programmeCode}#{sch.studyYear} #{sch.groupNumber} <br></br>
+                                #{sch.cohort} <br></br>
+                                #{sch.staffName}
                             </td>
                         </ui:repeat>
                     </tr>
                     <tr>
                         <td><h:outputLabel><b>Wed</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.wedList}" var="sch3" >
-                            <td>
-                                #{sch3.courseCode} #{sch3.courseType} <br></br>
-                                #{sch3.programmeCode}#{sch3.studyYear} #{sch3.groupNumber} <br></br>
-                                #{sch3.cohort} <br></br>
-                                #{sch3.staffName}
+                        <ui:repeat value="#{displayTimetable.wedList}" var="sch" >
+                            <td colspan="#{sch.colspan}">
+                                #{sch.courseCode} #{sch.courseType} <br></br>
+                                #{sch.programmeCode}#{sch.studyYear} #{sch.groupNumber} <br></br>
+                                #{sch.cohort} <br></br>
+                                #{sch.staffName}
                             </td>
                         </ui:repeat>
                     </tr>
                     <tr>
                         <td><h:outputLabel><b>Thu</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.thursList}" var="sch4" >
-                            <td>
-                                #{sch4.courseCode} #{sch4.courseType} <br></br>
-                                #{sch4.programmeCode}#{sch4.studyYear} #{sch4.groupNumber} <br></br>
-                                #{sch4.cohort} <br></br>
-                                #{sch4.staffName}
+                        <ui:repeat value="#{displayTimetable.thursList}" var="sch" >
+                            <td colspan="#{sch.colspan}">
+                                #{sch.courseCode} #{sch.courseType} <br></br>
+                                #{sch.programmeCode}#{sch.studyYear} #{sch.groupNumber} <br></br>
+                                #{sch.cohort} <br></br>
+                                #{sch.staffName}
                             </td>
                         </ui:repeat>
                     </tr>
                     <tr>
                         <td><h:outputLabel><b>Fri</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.friList}" var="sch5" >
-                            <td>
-                                #{sch5.courseCode} #{sch5.courseType} <br></br>
-                                #{sch5.programmeCode}#{sch5.studyYear} #{sch5.groupNumber} <br></br>
-                                #{sch5.cohort} <br></br>
-                                #{sch5.staffName}
+                        <ui:repeat value="#{displayTimetable.friList}" var="sch" >
+                            <td colspan="#{sch.colspan}">
+                                #{sch.courseCode} #{sch.courseType} <br></br>
+                                #{sch.programmeCode}#{sch.studyYear} #{sch.groupNumber} <br></br>
+                                #{sch.cohort} <br></br>
+                                #{sch.staffName}
                             </td>
                         </ui:repeat>
                     </tr>
                     <tr>
                         <td><h:outputLabel><b>Sat</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.satList}" var="sch6" >
-                            <td>
-                                #{sch6.courseCode} #{sch6.courseType} <br></br>
-                                #{sch6.programmeCode}#{sch6.studyYear} #{sch6.groupNumber} <br></br>
-                                #{sch6.cohort} <br></br>
-                                #{sch6.staffName}
+                        <ui:repeat value="#{displayTimetable.satList}" var="sch" >
+                            <td colspan="#{sch.colspan}">
+                                #{sch.courseCode} #{sch.courseType} <br></br>
+                                #{sch.programmeCode}#{sch.studyYear} #{sch.groupNumber} <br></br>
+                                #{sch.cohort} <br></br>
+                                #{sch.staffName}
                             </td>
                         </ui:repeat>
                     </tr>
                     <tr>
                         <td><h:outputLabel><b>Sun</b></h:outputLabel></td>
-                        <ui:repeat value="#{displayTimetable.sunList}" var="sch7" >
-                            <td>
-                                #{sch7.courseCode} #{sch7.courseType} <br></br>
-                                #{sch7.programmeCode}#{sch7.studyYear} #{sch7.groupNumber} <br></br>
-                                #{sch7.cohort} <br></br>
-                                #{sch7.staffName}
+                        <ui:repeat value="#{displayTimetable.sunList}" var="sch" >
+                            <td colspan="#{sch.colspan}">
+                                #{sch.courseCode} #{sch.courseType} <br></br>
+                                #{sch.programmeCode}#{sch.studyYear} #{sch.groupNumber} <br></br>
+                                #{sch.cohort} <br></br>
+                                #{sch.staffName}
                             </td>
                         </ui:repeat>
                     </tr>

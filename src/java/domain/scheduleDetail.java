@@ -11,7 +11,7 @@ package domain;
  */
 public class scheduleDetail {
 
-    int day;
+    int day, colspan = 1;
     double startTime;
     double endTime;
     String courseID;
@@ -186,6 +186,14 @@ public class scheduleDetail {
 
     public void seteTime(String eTime) {
         this.eTime = eTime;
+    }
+
+    public void increaseColspan() {
+        this.colspan++;
+    }
+
+    public int getColspan() {
+        return colspan;
     }
 
     public String getStdHeader() {
