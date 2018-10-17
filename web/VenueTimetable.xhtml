@@ -8,14 +8,15 @@
             table {
                 border-collapse: collapse;
                 border: 1px solid black;
+                margin-left:auto; 
+                margin-right:auto;
             }
 
             tr, td {
                 border-collapse: inherit;
                 border: 1px solid black;
-                width: 70px;
                 padding: 6px;
-                font-size: 9px;
+                font-size: 12px;
                 text-align: center;
             }
 
@@ -55,7 +56,7 @@
         <h:form>
             <h:commandLink rendered="#{displayTimetable.intializeSchedule()}"/>
         </h:form>
-        <h:body>
+        <h:body style="height: 70px;">
             <div class="col-container">
                 <ui:repeat value="#{scheduleInsert.venue}" var="ven" >          
                     <h1 style="text-align: center">#{ven.venHeader}</h1>
@@ -154,7 +155,7 @@
             <hr></hr>
             <br></br>
             <div>
-                <h:dataTable class="container" value = "#{displayTimetable.courseDetail}" var = "sm">
+                <h:dataTable class="container" id="printbtn" value = "#{displayTimetable.courseDetail}" var = "sm">
                     <h:column>   				
                         #{sm.courseCode}
                     </h:column>

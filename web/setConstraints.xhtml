@@ -5,9 +5,42 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
+        <style>
+            div {
+                padding-top: 8%;
+                padding-left: 30%;
+            }
+            
+            .ddl {
+                padding: 12px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+                margin-top: 6px;
+                margin-bottom: 16px;
+                resize: vertical;
+            }
+            
+            .btn {
+                background-color: gray;
+                color: white;
+                padding: 12px;
+                margin: 10px 0;
+                width: auto;
+                border-radius: 10px;
+                cursor: pointer;
+                font-size: 17px;
+            }
+
+            .btn:hover {
+                background-color: #45a049;
+            }
+        </style>
+        
         <title>Advanced Setting</title>
     </h:head>
     <h:body>
+        <div>
         <h1>Advanced Setting</h1>
         <h:form>
             <h3>Optimization</h3>
@@ -16,7 +49,7 @@
                 <f:ajax render="maxBreak"/>
             </h:selectBooleanCheckbox>
             <h:outputText value="Limit Maximum Break Time Between Classes: "/>
-            <h:selectOneMenu id="maxBreak" value="#{configuration.maxBreak}" style="margin: 0px 5px 0px 5px" disabled="#{!configuration.setBreak}">
+            <h:selectOneMenu id="maxBreak" value="#{configuration.maxBreak}" class="ddl" disabled="#{!configuration.setBreak}">
                 <f:selectItem itemValue = "1" itemLabel = "1 hour" /> 
                 <f:selectItem itemValue="1.5" itemLabel ="1 hour 30 mins"/>
                 <f:selectItem itemValue = "2" itemLabel = "2 hours" /> 
@@ -29,7 +62,7 @@
                 <f:ajax render="blockStart"/>
                 <f:ajax render="blockDuration"/>
             </h:selectBooleanCheckbox><span>Insert Block -</span>
-            <span>Day: </span><h:selectOneMenu id="blockDay" value="#{configuration.blockDay}" style="margin: 0px 5px 0px 5px" disabled="#{!curation.blockDay}onfiguration.toBlockTime}">
+            <span>Day: </span><h:selectOneMenu id="blockDay" value="#{configuration.blockDay}" class="ddl" disabled="#{!curation.blockDay}onfiguration.toBlockTime}">
                 <f:selectItem itemValue = "1" itemLabel = "Monday" /> 
                 <f:selectItem itemValue = "2" itemLabel = "Tuesday" /> 
                 <f:selectItem itemValue = "3" itemLabel = "Wednesday" /> 
@@ -42,11 +75,11 @@
                 </c:if>
             </h:selectOneMenu>
             <span>Start Hour: </span>
-            <h:inputText style="width:30px" title="Enter start hour in 24 hours format &amp; integer value only." id="blockStart" value="#{configuration.blockStart}" converterMessage="Please enter integer only for block start time."  validatorMessage="#{configuration.validatorMessage}" disabled="#{!configuration.toBlockTime}">
+            <h:inputText style="width: 5%" class="ddl" title="Enter start hour in 24 hours format &amp; integer value only." id="blockStart" value="#{configuration.blockStart}" converterMessage="Please enter integer only for block start time."  validatorMessage="#{configuration.validatorMessage}" disabled="#{!configuration.toBlockTime}">
                 <f:validateLongRange minimum="#{configuration.startTime}" maximum="#{configuration.endTime-2}"/>
             </h:inputText>
             <span>Duration: </span>
-            <h:selectOneMenu id="blockDuration" value="#{configuration.blockDuration}" style="margin: 0px 5px 0px 5px"  disabled="#{!configuration.toBlockTime}">
+            <h:selectOneMenu id="blockDuration" value="#{configuration.blockDuration}" class="ddl" disabled="#{!configuration.toBlockTime}">
                 <f:selectItem itemValue="0.5" itemLabel="30 mins"/>
                 <f:selectItem itemValue = "1" itemLabel = "1 hour" /> 
                 <f:selectItem itemValue="1.5" itemLabel ="1 hour 30 mins"/>
@@ -56,13 +89,14 @@
 
             <c:choose>
                 <c:when test="#{classDA.checkExist('G1001')}">
-                    <h:commandButton action="#{configuration.generateConfiguration()}" value="Replace Schedule" onclick="return confirm('Are you sure you want to replace the previous generated schedules?')"/>
+                    <h:commandButton action="#{configuration.generateConfiguration()}" value="Replace Schedule" class="btn" onclick="return confirm('Are you sure you want to replace the previous generated schedules?')"/>
                 </c:when>
                 <c:otherwise>           
-                    <h:commandButton action="#{configuration.generateConfiguration()}" value="Generate Schedule"/>
+                    <h:commandButton action="#{configuration.generateConfiguration()}" class="btn" value="Generate Schedule"/>
                 </c:otherwise>
             </c:choose>
         </h:form>
+        </div>
     </h:body>
 </html>
 

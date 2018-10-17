@@ -16,27 +16,21 @@
                 resize: vertical;
             }
 
-            body{
-                width: 90%;
-            }
-
             .columns {
                 display: flex;
                 flex-flow: row wrap;
                 justify-content: center;
-                margin: 5px 0;
-                margin-left: 60px;
+                margin-left:auto; 
+                margin-right:auto;
             }
 
             .column {
                 flex: 1;
-                margin: 15px;
-                margin-top: 30px;
+                padding-left: 15%;
                 border-collapse: collapse;
                 border: 1px black solid;
-                padding-left: 150px;
             }
-
+            
             .btn {
                 background-color: gray;
                 color: white;
@@ -57,7 +51,7 @@
     </h:head>
     <h:body>
         <h:form>
-            <div class="columns">
+            <session class="columns">
                 <div class="column">
                     <table>
                         <h1>Current Information</h1>
@@ -154,13 +148,12 @@
                         </tr>
                     </table>
                 </div>
+            </session>
 
-
-                <h:commandButton value="Update" action="#{modifySchedule.updateModify()}" class="btn" style="width:50%">
-                </h:commandButton>
-                <h:commandButton value="Cancel" action="#{modifySchedule.back()}" class="btn" style="width:50%">
-                </h:commandButton>
-            </div>
+            <h:commandButton value="Update" action="#{modifySchedule.updateModify()}" class="btn" style="width:50%">
+            </h:commandButton>
+            <h:commandButton value="Cancel" action="#{modifySchedule.back()}" class="btn" style="width:50%">
+            </h:commandButton>
         </h:form>
     </h:body>
 </html>

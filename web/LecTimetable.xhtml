@@ -8,14 +8,15 @@
             table {
                 border-collapse: collapse;
                 border: 1px solid black;
+                margin-left:auto; 
+                margin-right:auto;
             }
 
             tr, td {
                 border-collapse: inherit;
                 border: 1px solid black;
-                width: 70px;
                 padding: 6px;
-                font-size: 9px;
+                font-size: 12px;
                 text-align: center;
             }
 
@@ -60,7 +61,7 @@
                 <ui:repeat value="#{scheduleInsert.staff}" var="stf" >          
                     <h1 style="text-align: center">#{stf.stfHeader}</h1>
                 </ui:repeat>
-                <table>
+                <table style="height: 70px;">
                     <tr>
                         <td><h:outputLabel><b>Day/Time</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.sunList}" var="sch" >
@@ -74,7 +75,7 @@
                         <td><h:outputLabel><b>Mon</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.monList}" var="sch" >
                             <td colspan="#{sch.colspan}">
-                                #{sch.courseCode} #{sch.courseType} 
+                                #{sch.courseCode} #{sch.courseType} <br></br>
                                 #{sch.venueID} <br></br>
                                 #{sch.programmeCode}#{sch.studyYear} #{sch.groupNumber} <br></br>
                                 #{sch.cohort}
@@ -85,7 +86,7 @@
                         <td><h:outputLabel><b>Tue</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.tuesList}" var="sch" >
                             <td colspan="#{sch.colspan}">
-                                #{sch.courseCode} #{sch.courseType} 
+                                #{sch.courseCode} #{sch.courseType} <br></br>
                                 #{sch.venueID} <br></br>
                                 #{sch.programmeCode}#{sch.studyYear} #{sch.groupNumber} <br></br>
                                 #{sch.cohort}
@@ -96,7 +97,7 @@
                         <td><h:outputLabel><b>Wed</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.wedList}" var="sch" >
                             <td colspan="#{sch.colspan}">
-                                #{sch.courseCode} #{sch.courseType} 
+                                #{sch.courseCode} #{sch.courseType} <br></br>
                                 #{sch.venueID} <br></br>
                                 #{sch.programmeCode}#{sch.studyYear} #{sch.groupNumber} <br></br>
                                 #{sch.cohort}
@@ -107,7 +108,7 @@
                         <td><h:outputLabel><b>Thu</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.thursList}" var="sch" >
                             <td colspan="#{sch.colspan}">
-                                #{sch.courseCode} #{sch.courseType} 
+                                #{sch.courseCode} #{sch.courseType} <br></br>
                                 #{sch.venueID} <br></br>
                                 #{sch.programmeCode}#{sch.studyYear} #{sch.groupNumber} <br></br>
                                 #{sch.cohort}
@@ -118,7 +119,7 @@
                         <td><h:outputLabel><b>Fri</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.friList}" var="sch" >
                             <td colspan="#{sch.colspan}">
-                                #{sch.courseCode} #{sch.courseType} 
+                                #{sch.courseCode} #{sch.courseType} <br></br>
                                 #{sch.venueID} <br></br>
                                 #{sch.programmeCode}#{sch.studyYear} #{sch.groupNumber} <br></br>
                                 #{sch.cohort}
@@ -129,7 +130,7 @@
                         <td><h:outputLabel><b>Sat</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.satList}" var="sch" >
                             <td colspan="#{sch.colspan}">
-                                #{sch.courseCode} #{sch.courseType} 
+                                #{sch.courseCode} #{sch.courseType} <br></br>
                                 #{sch.venueID} <br></br>
                                 #{sch.programmeCode}#{sch.studyYear} #{sch.groupNumber} <br></br>
                                 #{sch.cohort}
@@ -140,7 +141,7 @@
                         <td><h:outputLabel><b>Sun</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.sunList}" var="sch" >
                             <td colspan="#{sch.colspan}">
-                                #{sch.courseCode} #{sch.courseType} 
+                                #{sch.courseCode} #{sch.courseType} <br></br>
                                 #{sch.venueID} <br></br>
                                 #{sch.programmeCode}#{sch.studyYear} #{sch.groupNumber} <br></br>
                                 #{sch.cohort}
@@ -153,7 +154,7 @@
             <hr></hr>
             <br></br>
             <div>
-                <h:dataTable class="container" value = "#{displayTimetable.courseDetail}" var = "sm">
+                <h:dataTable class="container" id="printbtn" value = "#{displayTimetable.courseDetail}" var = "sm">
                     <h:column>   				
                         #{sm.courseCode}
                     </h:column>
