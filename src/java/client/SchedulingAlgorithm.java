@@ -45,7 +45,7 @@ public class SchedulingAlgorithm {
     private final VenueDA vda = new VenueDA();
     private final StaffDA sda = new StaffDA();
 
-    private final String filePath = "C:\\Users\\Teck Siong\\Documents\\ClaSS\\src\\java\\xml\\";
+    private final String filePath = "C:\\Users\\Alex\\Documents\\NetBeansProjects\\ClaSS\\src\\java\\xml\\";
 
     public void initialize() throws Exception {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -120,7 +120,7 @@ public class SchedulingAlgorithm {
         for (int i = 0; i < nodes.getLength(); i++) {
             e = (Element) nodes.item(i);
 
-            Staff stf = new Staff(e.getAttribute("staffID"), e.getElementsByTagName("name").item(0).getTextContent(), "", e.getElementsByTagName("startWork").item(0).getTextContent(), e.getElementsByTagName("endWork").item(0).getTextContent());
+            Staff stf = new Staff(e.getAttribute("staffID"), e.getElementsByTagName("name").item(0).getTextContent(), e.getElementsByTagName("remark").item(0).getTextContent(), e.getElementsByTagName("startWork").item(0).getTextContent(), e.getElementsByTagName("endWork").item(0).getTextContent());
             stf.setClassList(sda.getClassList(stf.getStaffID()));
             staffList.add(stf);
         }
@@ -446,6 +446,7 @@ public class SchedulingAlgorithm {
 
         String courseID = course.getCourseID();
         String courseType = course.getCourseType();
+        String courseCode = course.getCourseCode();
         String venueID = "", staffID = "";
         Venue v = new Venue();
         Staff s = new Staff();
@@ -478,7 +479,7 @@ public class SchedulingAlgorithm {
                 if (isTimeClash(scheduleList.get(0).getClassList(), c)) {
                     isClash = true;
                 } else {
-                    s = getRandomStaff();
+                    s = getRandomStaffWithCourse(courseCode);
                     ArrayList<Class> staffClassList = s.getClassList();
                     if (staffClassList.size() > 0) {
                         for (int i = 0; i < staffClassList.size(); i++) {
@@ -583,6 +584,7 @@ public class SchedulingAlgorithm {
         int runCount = 0;
         double startTime2 = thisClass.getStartTime();
         double endTime2 = thisClass.getEndTime();
+        String courseCode = searchCourseCode(thisClass);
         Venue v = new Venue();
         Staff s = new Staff();
 
@@ -666,7 +668,7 @@ public class SchedulingAlgorithm {
                     break;
                 } else {
                     isClash = false;
-                    s = getRandomStaff();
+                    s = getRandomStaffWithCourse(courseCode);
                     ArrayList<Class> staffClassList = s.getClassList();
                     if (staffClassList != null) {
                         for (int i = 0; i < staffClassList.size(); i++) {
@@ -784,6 +786,17 @@ public class SchedulingAlgorithm {
         return staffList.get(rand.nextInt(staffList.size()));
     }
 
+    public Staff getRandomStaffWithCourse(String courseCode) {
+        ArrayList<Staff> qualifiedList = new ArrayList();
+        Staff staff = new Staff();
+        for (Staff s : staffList) {
+            if (s.getRemark().contains(courseCode)) {
+                qualifiedList.add(s);
+            }
+        }
+        return qualifiedList.get(rand.nextInt(qualifiedList.size()));
+    }
+
     public Venue getRandomVenue(String courseType) {
         Venue venue = new Venue();
         int index = 0;
@@ -818,6 +831,22 @@ public class SchedulingAlgorithm {
             } while (!venue.getBlock().equalsIgnoreCase(block));
         }
         return venue;
+    }
+
+    public String searchCourseCode(Class c) {
+        ArrayList<CourseType> tempList;
+        String courseCode = "";
+        if (c.getCourseType().equals("L")) {
+            tempList = lecList;
+        } else {
+            tempList = courseList;
+        }
+        for (CourseType ct : tempList) {
+            if (ct.getCourseID().equals(c.getCourseID())) {
+                courseCode = ct.getCourseCode();
+            }
+        }
+        return courseCode;
     }
 
     public Venue searchVenue(String courseType, String venueID) {
