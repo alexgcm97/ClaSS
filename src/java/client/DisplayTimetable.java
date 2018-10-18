@@ -16,7 +16,7 @@ import javax.faces.bean.RequestScoped;
 @ManagedBean
 @RequestScoped
 public class DisplayTimetable {
-    
+
     private ArrayList<scheduleDetail> monList, tuesList, wedList, thursList, friList, satList, sunList;
     private Connection connect;
 
@@ -29,9 +29,9 @@ public class DisplayTimetable {
         friList = new ArrayList();
         satList = new ArrayList();
         sunList = new ArrayList();
-        
+
         connect = DBConnection.getConnection();
-        
+
         PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM schedule ORDER BY day, startTime ASC");
         ResultSet rs = pstmt.executeQuery();
         while (rs.next()) {
@@ -41,17 +41,21 @@ public class DisplayTimetable {
             sch.setStartTime(rs.getDouble("startTime"));
             sch.setEndTime(rs.getDouble("endTime"));
             sch.setCourseCode(rs.getString("courseCode"));
-            sch.setCourseType(rs.getString("courseType"));
+            if (!rs.getString("courseType").equals("")) {
+                sch.setCourseType("(" + rs.getString("courseType") + ")");
+            }
             sch.setVenueID(rs.getString("venueID"));
             sch.setProgrammeCode(rs.getString("programmeCode"));
             sch.setGroupID(rs.getString("groupID"));
-            sch.setGroupNumber(rs.getString("groupNumber"));
+            if (!rs.getString("groupNumber").equals("")) {
+                sch.setGroupNumber("G" + rs.getString("groupNumber"));
+            }
             sch.setStudyYear(rs.getString("studyYear"));
             sch.setStaffName(rs.getString("staffName"));
             sch.setCohort(rs.getString("cohort"));
             sch.setsTime(rs.getString("sTime"));
             sch.seteTime(rs.getString("eTime"));
-            
+
             switch (sch.getDay()) {
                 case 0:
                     this.sunList.add(sch);
@@ -80,7 +84,7 @@ public class DisplayTimetable {
         pstmt.close();
         connect.close();
     }
-    
+
     public void mergeClass(ArrayList<scheduleDetail> schList) {
         int nextIndex;
         for (int startIndex = 0; startIndex < schList.size(); startIndex++) {
@@ -98,39 +102,39 @@ public class DisplayTimetable {
                 }
             }
         }
-        
+
     }
-    
+
     public ArrayList<scheduleDetail> getMonList() {
         mergeClass(monList);
         return monList;
     }
-    
+
     public ArrayList<scheduleDetail> getTuesList() {
         mergeClass(tuesList);
         return tuesList;
     }
-    
+
     public ArrayList<scheduleDetail> getWedList() {
         mergeClass(wedList);
         return wedList;
     }
-    
+
     public ArrayList<scheduleDetail> getThursList() {
         mergeClass(thursList);
         return thursList;
     }
-    
+
     public ArrayList<scheduleDetail> getFriList() {
         mergeClass(friList);
         return friList;
     }
-    
+
     public ArrayList<scheduleDetail> getSatList() {
         mergeClass(satList);
         return satList;
     }
-    
+
     public ArrayList<scheduleDetail> getSunList() {
         mergeClass(sunList);
         return sunList;
@@ -139,26 +143,26 @@ public class DisplayTimetable {
 // Get courseCode to display
     public List<scheduleDetail> getCourseDetail() throws ClassNotFoundException, SQLException {
         connect = DBConnection.getConnection();
-        
+
         List<scheduleDetail> schedule = new ArrayList<scheduleDetail>();
         PreparedStatement pstmt = connect.prepareStatement("SELECT courseCode FROM schedule GROUP BY courseCode");
         ResultSet rs = pstmt.executeQuery();
         while (rs.next()) {
             scheduleDetail sch = new scheduleDetail();
             sch.setCourseCode(rs.getString("courseCode"));
-            
+
             pstmt = connect.prepareStatement("SELECT * FROM course WHERE courseCode='" + sch.getCourseCode() + "'");
             ResultSet rs2 = pstmt.executeQuery();
             while (rs2.next()) {
                 sch.setCourseName(rs2.getString("courseName"));
-                
+
                 schedule.add(sch);
             }
         }
         rs.close();
         pstmt.close();
         connect.close();
-        
+
         return schedule;
     }
 }
