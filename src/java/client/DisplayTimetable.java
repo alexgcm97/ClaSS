@@ -88,15 +88,25 @@ public class DisplayTimetable {
     public void mergeClass(ArrayList<scheduleDetail> schList) {
         int nextIndex;
         for (int startIndex = 0; startIndex < schList.size(); startIndex++) {
+            //get schedule detail from index 0
             scheduleDetail startSlot = schList.get(startIndex);
+            //if the column is not empty
             if (!startSlot.getCourseID().equals("")) {
+                //go to next index
                 nextIndex = startIndex + 1;
+                //get schedule detail from next index
                 scheduleDetail nextSlot = schList.get(nextIndex);
+                //if the index is not over the total index && the next index is not empty && first slot schedule course detail is same with the next slot && first slot schedule group detail is same with the next slot
                 while (nextIndex < schList.size() && !nextSlot.getCourseID().equals("") && startSlot.getCourseID().equals(nextSlot.getCourseID()) && startSlot.getGroupID().equals(nextSlot.getGroupID())) {
+                    //8-9 ; 9-10 => 8-10
                     startSlot.setEndTime(nextSlot.getEndTime());
+                    //colspan+1
                     startSlot.increaseColspan();
+                    //delete extra slot (8-9;9-10 = 2, now become 1 because of merge)
                     schList.remove(nextSlot);
+                    //if the index is not over the total index
                     if (nextIndex < schList.size()) {
+                        //original third index now become second slot of schedule detail
                         nextSlot = schList.get(nextIndex);
                     }
                 }
@@ -105,6 +115,7 @@ public class DisplayTimetable {
 
     }
 
+    //pass array list to merge method parameter
     public ArrayList<scheduleDetail> getMonList() {
         mergeClass(monList);
         return monList;

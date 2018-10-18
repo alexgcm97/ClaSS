@@ -36,16 +36,17 @@ public class SchedulingAlgorithm {
     private ArrayList<Venue> roomList, labList, hallList;
     private ArrayList<Schedule> scheduleList;
 
-    private int studyDays, totalClass = 0, blockDay = 99, runLimit = 50;
+    private int studyDays, totalClass = 0, blockDay = 99;
     private double studyStart, studyEnd, blockStart, blockEnd, maxBreak = 99, noOfClassPerDay = 99;
     private boolean isGenerationEnd = false;
     private Class blockClass;
 
+    private final int runLimit = 50;
     private final ClassDA cda = new ClassDA();
     private final VenueDA vda = new VenueDA();
     private final StaffDA sda = new StaffDA();
 
-    private final String filePath = "C:\\Users\\Alex\\Documents\\NetBeansProjects\\ClaSS\\src\\java\\xml\\";
+    private final String filePath = "C:\\Users\\Teck Siong\\Documents\\ClaSS\\src\\java\\xml\\";
 
     public void initialize() throws Exception {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
