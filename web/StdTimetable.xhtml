@@ -57,7 +57,7 @@
         <h:form>
             <h:commandLink rendered="#{displayTimetable.intializeSchedule()}"/>
         </h:form>
-        <h:body style="height: 70px;">
+        <h:body>
             <div class="col-container">
                 <ui:repeat value="#{scheduleInsert.group}" var="grp" >          
                     <h1 style="text-align: center">#{grp.stdHeader}</h1>
@@ -145,7 +145,7 @@
                 </table>
             </div>
             <br></br>
-            <hr></hr>
+            <hr id ="printbtn"></hr>
             <br></br>
             <div>
                 <h:dataTable class="container" id="printbtn" value = "#{displayTimetable.courseDetail}" var = "sm">

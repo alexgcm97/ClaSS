@@ -61,7 +61,7 @@
                 <ui:repeat value="#{scheduleInsert.staff}" var="stf" >          
                     <h1 style="text-align: center">#{stf.stfHeader}</h1>
                 </ui:repeat>
-                <table style="height: 70px;">
+                <table>
                     <tr>
                         <td><h:outputLabel><b>Day/Time</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.sunList}" var="sch" >
@@ -151,7 +151,7 @@
                 </table>
             </div>
             <br></br>
-            <hr></hr>
+            <hr id ="printbtn"></hr>
             <br></br>
             <div>
                 <h:dataTable class="container" id="printbtn" value = "#{displayTimetable.courseDetail}" var = "sm">
