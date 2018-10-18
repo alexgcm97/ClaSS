@@ -91,7 +91,9 @@ public class DisplayTimetable {
                     startSlot.setEndTime(nextSlot.getEndTime());
                     startSlot.increaseColspan();
                     schList.remove(nextSlot);
-                    nextSlot = schList.get(nextIndex);
+                    if (nextIndex < schList.size()) {
+                        nextSlot = schList.get(nextIndex);
+                    }
                 }
             }
         }
