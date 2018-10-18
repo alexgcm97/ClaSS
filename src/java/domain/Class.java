@@ -112,6 +112,10 @@ public class Class {
         this.courseType = courseType;
     }
 
+    public double getDuration() {
+        return this.endTime - this.startTime;
+    }
+
     public void moveRight(double duration) {
         this.startTime += duration;
         this.endTime += duration;

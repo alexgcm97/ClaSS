@@ -81,6 +81,7 @@ public class SchedulingAlgorithm {
                 courseList.add(c);
             }
         }
+        totalClass = lecList.size() + courseList.size();
 
         fileName = filePath + "Configuration.xml";
         doc = dBuilder.parse(fileName);
@@ -103,7 +104,6 @@ public class SchedulingAlgorithm {
             if (e.getElementsByTagName("balanceClass").getLength() > 0) {
                 boolean toBalance = Boolean.parseBoolean(e.getElementsByTagName("balanceClass").item(0).getTextContent());
                 if (toBalance) {
-                    totalClass = lecList.size() + courseList.size();
                     noOfClassPerDay = Math.floor((double) totalClass / studyDays) + 1;
                 }
             }
@@ -297,6 +297,17 @@ public class SchedulingAlgorithm {
                             int day = c1.getDay();
                             if (c1.getVenueID().equalsIgnoreCase(c2.getVenueID())) {
                                 moveDuration = breakTime;
+                                if (i > 0) {
+                                    Class previousC = classList.get(i - 1);
+                                    if (previousC.getDay() == c1.getDay()) {
+                                        if (previousC.getEndTime() == c1.getStartTime()) {
+                                            double totalDuration = previousC.getDuration() + c1.getDuration() + c2.getDuration();
+                                            if (totalDuration > 4) {
+                                                moveDuration = breakTime - getRandomMoveDuration();
+                                            }
+                                        }
+                                    }
+                                }
                             } else {
                                 if (breakTime == 0) {
                                     moveDuration = 0.5;
@@ -447,7 +458,7 @@ public class SchedulingAlgorithm {
         String courseID = course.getCourseID();
         String courseType = course.getCourseType();
         String courseCode = course.getCourseCode();
-        String venueID = "", staffID = "";
+        String venueID, staffID;
         Venue v = new Venue();
         Staff s = new Staff();
         double startTime = 0, endTime = 0;
@@ -930,6 +941,17 @@ public class SchedulingAlgorithm {
         return count;
     }
 
+    public boolean isNoOfClassEnough() {
+        boolean isEnough = true;
+        for (int i = 0; i < scheduleList.size(); i++) {
+            if (scheduleList.get(i).getClassList().size() < totalClass) {
+                isEnough = false;
+                break;
+            }
+        }
+        return isEnough;
+    }
+
     public boolean getIsGenerationEnd() {
         return isGenerationEnd;
     }
@@ -941,7 +963,7 @@ public class SchedulingAlgorithm {
 
         do {
             allocation();
-        } while (countEmpty() > 0 || countClash() > 0 || countTimeClashes() > 0 || countBlockClash() > 0 || countInvalidBreak() > 0 || countDBClash() > 0);
+        } while (!isNoOfClassEnough() || countEmpty() > 0 || countClash() > 0 || countTimeClashes() > 0 || countBlockClash() > 0 || countInvalidBreak() > 0 || countDBClash() > 0);
 
         sortList();
         isGenerationEnd = true;
