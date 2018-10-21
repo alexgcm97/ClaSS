@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <style>
+            div {
+                padding-top: 8%;
+                padding-left: 30%;
+            }
+
+            .ddl {
+                padding: 12px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+                margin-top: 6px;
+                margin-bottom: 16px;
+                resize: vertical;
+            }
+
+            .btn {
+                background-color: gray;
+                color: white;
+                padding: 12px;
+                margin: 10px 0;
+                width: auto;
+                border-radius: 10px;
+                cursor: pointer;
+                font-size: 17px;
+            }
+
+            .btn:hover {
+                background-color: #45a049;
+            }
+        </style>
+
+        <title>Scheduling Initial Setting</title>
+    </h:head>
+    <h:body>
+        <div>
+            <h:form>
+                <h1>Scheduling Initial Setting</h1>
+                <h:outputText value="No of Study Days: "/>
+                <h:selectOneMenu value="#{configuration.studyDays}" class="ddl">
+                    <f:selectItem itemValue = "3" /> 
+                    <f:selectItem itemValue = "4" />
+                    <f:selectItem itemValue = "5" />
+                    <f:selectItem itemValue = "6"/>
+                </h:selectOneMenu><br/>
+                <h:outputText value="Daily Start Time: " style="margin-left:5px"/>
+                <h:selectOneMenu class="ddl" value="#{configuration.startTime}">
+                    <f:selectItem itemValue = "8.00" itemLabel = "8 a.m."/> 
+                    <f:selectItem itemValue="9.00" itemLabel ="9 a.m."/>
+                    <f:selectItem itemValue = "10.00" itemLabel = "10 a.m." /> 
+                </h:selectOneMenu><br/>
+                <h:outputText value="Daily End Time: " style="margin-left:5px"/>
+                <h:selectOneMenu  class="ddl" value="#{configuration.endTime}">
+                    <f:selectItem itemValue = "18.00" itemLabel = "6 p.m."/> 
+                    <f:selectItem itemValue="19.00" itemLabel ="7 p.m."/>
+                    <f:selectItem itemValue = "20.00" itemLabel = "8 p.m." /> 
+                </h:selectOneMenu><br/>
+                <h:commandButton action="setConstraints.xhtml" class="btn" value="Next"/>
+            </h:form>
+        </div>
+    </h:body>
+</html>
+

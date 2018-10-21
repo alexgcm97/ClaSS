@@ -9,38 +9,58 @@ and open the template in the editor.
 <staffs>
     <staff staffID="S1001">
         <name>Alex</name>
-        <startWork>8.00</startWork>
-        <endWork>20.00</endWork>
-        <remark>BAIT2123, BACS3033</remark>
+        <blockDay>4</blockDay>
+        <blockStart>14.00</blockStart>
+        <blockDuration>2</blockDuration>
+        <courseCodeList>BAIT2123, BACS3033</courseCodeList>
+        <tutGroupList>G1001, G1002, G1003</tutGroupList>
     </staff>
     <staff staffID="S1002">
         <name>Steve</name>
-        <startWork>8.00</startWork>
-        <endWork>20.00</endWork>
-        <remark>MPU-3232</remark>
+        <blockDay>3</blockDay>
+        <blockStart>12.00</blockStart>
+        <blockDuration>2</blockDuration>
+        <courseCodeList>MPU-3232</courseCodeList>
+        <tutGroupList>G1001, G1002, G1003</tutGroupList>
     </staff>
     <staff staffID="S1003">
         <name>Javier</name>
-        <startWork>8.00</startWork>
-        <endWork>20.00</endWork>
-        <remark>BACS3033</remark>
+        <blockDay>4</blockDay>
+        <blockStart>15.00</blockStart>
+        <blockDuration>1</blockDuration>
+        <courseCodeList>BACS3033</courseCodeList>
+        <tutGroupList>G1004, G1005</tutGroupList>
     </staff>
     <staff staffID="S1004">
         <name>John</name>
-        <startWork>8.00</startWork>
-        <endWork>20.00</endWork>
-        <remark>BAIT3094, BAIT2123</remark>
+        <blockDay>4</blockDay>
+        <blockStart>15.00</blockStart>
+        <blockDuration>1</blockDuration>
+        <courseCodeList>BAIT3094</courseCodeList>
+        <tutGroupList>G1001, G1002, G1003</tutGroupList>
     </staff>
     <staff staffID="S1005">
         <name>Lily</name>
-        <startWork>8.00</startWork>
-        <endWork>20.00</endWork>
-        <remark>BAIT3173</remark>
+        <blockDay>-</blockDay>
+        <blockStart>-</blockStart>
+        <blockDuration>-</blockDuration>
+        <courseCodeList>BAIT3173</courseCodeList>
+        <tutGroupList>G1001, G1002, G1003, G1004, G1005</tutGroupList>
     </staff>
     <staff staffID="S1006">
-        <name>Lily</name>
-        <startWork>8.00</startWork>
-        <endWork>20.00</endWork>
-        <remark>MPU-3232</remark>
+        <name>Jonathan</name>
+        <blockDay>-</blockDay>
+        <blockTime>-</blockTime>
+        <blockDuration>-</blockDuration>
+        <courseCodeList>MPU-3232</courseCodeList>
+        <tutGroupList>G1004, G1005</tutGroupList>
+    </staff>
+    <staff staffID="S1007">
+        <name>Lizzie</name>
+        <blockDay>-</blockDay>
+        <blockStart>-</blockStart>
+        <blockDuration>-</blockDuration>
+        <courseCodeList>BAIT3094, BAIT2123</courseCodeList>
+        <tutGroupList>G1004, G1005</tutGroupList>
     </staff>
 </staffs>

@@ -34,11 +34,11 @@ import org.w3c.dom.Element;
 @SessionScoped
 public class Configuration implements Serializable {
 
-    private int blockDay, blockStart, studyDays = 5;
-    private double maxBreak, blockDuration, startTime = 8, endTime = 20;
+    private int blockDay, blockStart, studyDays;
+    private double maxBreak, blockDuration, startTime, endTime;
     private boolean toBalanceClass, toBlockTime, setBreak;
 
-    private final String filePath = "C:\\Users\\Teck Siong\\Documents\\ClaSS\\src\\java\\xml\\";
+    private final String filePath = "C:\\Users\\Alex\\Documents\\NetBeansProjects\\ClaSS\\src\\java\\xml\\";
 
     public void generateConfiguration() throws ParserConfigurationException, TransformerConfigurationException, TransformerException, FileNotFoundException, UnsupportedEncodingException, IOException {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -100,7 +100,7 @@ public class Configuration implements Serializable {
 
     public String getValidatorMessage() {
         double tempStart = startTime;
-        double tempEnd = endTime - 2;
+        double tempEnd = endTime;
         String startStr, endStr;
         if (tempEnd == 12) {
             startStr = tempStart + "0 p.m.";

@@ -13,19 +13,23 @@ import java.util.ArrayList;
  */
 public class Staff {
 
-    private String staffID, staffName, remark, startWork, endWork;
+    private String staffID, staffName, courseCodeList, tutGroupList;
+    private int blockDay;
+    private double blockStart, blockDuration;
     private ArrayList<Class> classList;
 
     public Staff() {
 
     }
 
-    public Staff(String staffID, String staffName, String remark, String startWork, String endWork) {
+    public Staff(String staffID, String staffName, String courseCodeList, String tutGroupList) {
         this.staffID = staffID;
         this.staffName = staffName;
-        this.remark = remark;
-        this.startWork = startWork;
-        this.endWork = endWork;
+        this.blockDay = 99;
+        this.blockStart = 0;
+        this.blockDuration = 0;
+        this.courseCodeList = courseCodeList;
+        this.tutGroupList = tutGroupList;
         this.classList = new ArrayList();
     }
 
@@ -45,28 +49,44 @@ public class Staff {
         this.staffName = staffName;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getCourseCodeList() {
+        return courseCodeList;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setCourseCodeList(String courseCodeList) {
+        this.courseCodeList = courseCodeList;
     }
 
-    public String getStartWork() {
-        return startWork;
+    public String getTutGroupList() {
+        return tutGroupList;
     }
 
-    public void setStartWork(String startWork) {
-        this.startWork = startWork;
+    public void setTutGroupList(String tutGroupList) {
+        this.tutGroupList = tutGroupList;
     }
 
-    public String getEndWork() {
-        return endWork;
+    public int getBlockDay() {
+        return blockDay;
     }
 
-    public void setEndWork(String endWork) {
-        this.endWork = endWork;
+    public void setBlockDay(int blockDay) {
+        this.blockDay = blockDay;
+    }
+
+    public double getBlockStart() {
+        return blockStart;
+    }
+
+    public void setBlockStart(double blockStart) {
+        this.blockStart = blockStart;
+    }
+
+    public double getBlockDuration() {
+        return blockDuration;
+    }
+
+    public void setBlockDuration(double blockDuration) {
+        this.blockDuration = blockDuration;
     }
 
     public ArrayList<Class> getClassList() {

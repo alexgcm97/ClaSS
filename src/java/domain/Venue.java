@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class Venue {
 
-    private String venueID, block, venueType, remark;
+    private String venueID, block, venueType, courseCodeList;
     private int capacity;
     private ArrayList<Class> classList;
 
@@ -21,12 +21,12 @@ public class Venue {
 
     }
 
-    public Venue(String venueID, String block, String venueType, int capacity, String remark) {
+    public Venue(String venueID, String block, String venueType, int capacity, String courseCodeList) {
         this.venueID = venueID;
         this.block = block;
         this.venueType = venueType;
         this.capacity = capacity;
-        this.remark = remark;
+        this.courseCodeList = courseCodeList;
         this.classList = new ArrayList();
     }
 
@@ -54,12 +54,12 @@ public class Venue {
         this.venueType = venueType;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getCourseCodelist() {
+        return courseCodeList;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setCourseCodelist(String courseCodeList) {
+        this.courseCodeList = courseCodeList;
     }
 
     public int getCapacity() {
