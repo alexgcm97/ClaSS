@@ -120,7 +120,17 @@ public class SchedulingAlgorithm {
         for (int i = 0; i < nodes.getLength(); i++) {
             e = (Element) nodes.item(i);
 
-            Staff stf = new Staff(e.getAttribute("staffID"), e.getElementsByTagName("name").item(0).getTextContent(), e.getElementsByTagName("courseCodeList").item(0).getTextContent(), e.getElementsByTagName("tutGroupList").item(0).getTextContent());
+            Staff stf = new Staff(e.getAttribute("staffID"), e.getElementsByTagName("name").item(0).getTextContent(), e.getElementsByTagName("courseCodeList").item(0).getTextContent());
+            String tutGroupStr = e.getElementsByTagName("tutGroupList").item(0).getTextContent();
+            if (tutGroupStr.contains("|")) {
+                String tutGroupArr[] = tutGroupStr.split("\\|");
+                for (String s : tutGroupArr) {
+                    stf.addTutGroupToList(s);
+                }
+            } else {
+                stf.addTutGroupToList(tutGroupStr);
+            }
+
             if (!e.getElementsByTagName("blockDay").item(0).getTextContent().equals("-")) {
                 stf.setBlockDay(Integer.parseInt(e.getElementsByTagName("blockDay").item(0).getTextContent()));
                 stf.setBlockStart(Double.parseDouble(e.getElementsByTagName("blockStart").item(0).getTextContent()));
@@ -838,7 +848,7 @@ public class SchedulingAlgorithm {
     public Staff getRandomStaffWithTutGroup(String courseCode, String groupID) {
         ArrayList<Staff> qualifiedList = new ArrayList();
         for (Staff s : staffList) {
-            if (s.getCourseCodeList().contains(courseCode) && s.getTutGroupList().contains(groupID)) {
+            if (s.getCourseCodeList().contains(courseCode) && s.searchTutGroupList(courseCode).contains(groupID)) {
                 qualifiedList.add(s);
             }
         }

@@ -13,7 +13,7 @@ and open the template in the editor.
         <blockStart>14.00</blockStart>
         <blockDuration>2</blockDuration>
         <courseCodeList>BAIT2123, BACS3033</courseCodeList>
-        <tutGroupList>G1001, G1002, G1003</tutGroupList>
+        <tutGroupList>BAIT2123-G1001, G1002, G1003|BACS3033-G1003, G1004, G1005</tutGroupList>
     </staff>
     <staff staffID="S1002">
         <name>Steve</name>
@@ -21,7 +21,7 @@ and open the template in the editor.
         <blockStart>12.00</blockStart>
         <blockDuration>2</blockDuration>
         <courseCodeList>MPU-3232</courseCodeList>
-        <tutGroupList>G1001, G1002, G1003</tutGroupList>
+        <tutGroupList>MPU-3232-G1001, G1002, G1003</tutGroupList>
     </staff>
     <staff staffID="S1003">
         <name>Javier</name>
@@ -29,7 +29,7 @@ and open the template in the editor.
         <blockStart>15.00</blockStart>
         <blockDuration>1</blockDuration>
         <courseCodeList>BACS3033</courseCodeList>
-        <tutGroupList>G1004, G1005</tutGroupList>
+        <tutGroupList>BACS3033-G1001, G1002</tutGroupList>
     </staff>
     <staff staffID="S1004">
         <name>John</name>
@@ -37,7 +37,7 @@ and open the template in the editor.
         <blockStart>15.00</blockStart>
         <blockDuration>1</blockDuration>
         <courseCodeList>BAIT3094</courseCodeList>
-        <tutGroupList>G1001, G1002, G1003</tutGroupList>
+        <tutGroupList>BAIT3094-G1001, G1002, G1003</tutGroupList>
     </staff>
     <staff staffID="S1005">
         <name>Lily</name>
@@ -45,7 +45,7 @@ and open the template in the editor.
         <blockStart>-</blockStart>
         <blockDuration>-</blockDuration>
         <courseCodeList>BAIT3173</courseCodeList>
-        <tutGroupList>G1001, G1002, G1003, G1004, G1005</tutGroupList>
+        <tutGroupList>BAIT3173-G1001, G1002, G1003, G1004, G1005</tutGroupList>
     </staff>
     <staff staffID="S1006">
         <name>Jonathan</name>
@@ -53,7 +53,7 @@ and open the template in the editor.
         <blockTime>-</blockTime>
         <blockDuration>-</blockDuration>
         <courseCodeList>MPU-3232</courseCodeList>
-        <tutGroupList>G1004, G1005</tutGroupList>
+        <tutGroupList>MPU-3232-G1004, G1005</tutGroupList>
     </staff>
     <staff staffID="S1007">
         <name>Lizzie</name>
@@ -61,6 +61,6 @@ and open the template in the editor.
         <blockStart>-</blockStart>
         <blockDuration>-</blockDuration>
         <courseCodeList>BAIT3094, BAIT2123</courseCodeList>
-        <tutGroupList>G1004, G1005</tutGroupList>
+        <tutGroupList>BAIT3094-G1004, G1005|BAIT2123-G1004, G1005</tutGroupList>
     </staff>
 </staffs>

@@ -13,23 +13,24 @@ import java.util.ArrayList;
  */
 public class Staff {
 
-    private String staffID, staffName, courseCodeList, tutGroupList;
+    private String staffID, staffName, courseCodeList;
     private int blockDay;
     private double blockStart, blockDuration;
     private ArrayList<Class> classList;
+    private ArrayList<String> tutGroupList;
 
     public Staff() {
 
     }
 
-    public Staff(String staffID, String staffName, String courseCodeList, String tutGroupList) {
+    public Staff(String staffID, String staffName, String courseCodeList) {
         this.staffID = staffID;
         this.staffName = staffName;
         this.blockDay = 99;
         this.blockStart = 0;
         this.blockDuration = 0;
         this.courseCodeList = courseCodeList;
-        this.tutGroupList = tutGroupList;
+        this.tutGroupList = new ArrayList();
         this.classList = new ArrayList();
     }
 
@@ -57,12 +58,26 @@ public class Staff {
         this.courseCodeList = courseCodeList;
     }
 
-    public String getTutGroupList() {
+    public ArrayList<String> getTutGroupList() {
         return tutGroupList;
     }
 
-    public void setTutGroupList(String tutGroupList) {
+    public void setTutGroupList(ArrayList<String> tutGroupList) {
         this.tutGroupList = tutGroupList;
+    }
+
+    public void addTutGroupToList(String tutGroup) {
+        this.tutGroupList.add(tutGroup);
+    }
+
+    public String searchTutGroupList(String courseCode) {
+        String str = "";
+        for (String tutGroupStr : this.tutGroupList) {
+            if (tutGroupStr.contains(courseCode)) {
+                str = tutGroupStr;
+            }
+        }
+        return str;
     }
 
     public int getBlockDay() {
