@@ -243,8 +243,8 @@ public class SchedulingAlgorithm {
         }
     }
 
-    public int countClash() {
-        int clashNo = 0;
+    public boolean isClassListsClash() {
+        boolean isClash = false;
         for (int i = 0; i < scheduleList.size(); i++) {
             for (int j = i + 1; j < scheduleList.size(); j++) {
                 ArrayList<Class> list1 = scheduleList.get(i).getClassList();
@@ -263,7 +263,8 @@ public class SchedulingAlgorithm {
                                 double endTime2 = class2.getEndTime();
                                 if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1) || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2)) {
                                     if (class1.getVenueID().equalsIgnoreCase(class2.getVenueID()) || class1.getStaffID().equalsIgnoreCase(class2.getStaffID())) {
-                                        clashNo++;
+                                        isClash = true;
+                                        break;
                                     }
                                 }
                             }
@@ -273,20 +274,7 @@ public class SchedulingAlgorithm {
 
             }
         }
-        return clashNo;
-    }
-
-    public int countEmpty() {
-        int emptyNo = 0;
-        for (int i = 0; i < scheduleList.size(); i++) {
-            ArrayList<Class> classList = scheduleList.get(i).getClassList();
-            for (Class c : classList) {
-                if (c.getVenueID() == null || c.getStaffID() == null || c.getVenueID().equalsIgnoreCase("-") || c.getStaffID().equalsIgnoreCase("-")) {
-                    emptyNo++;
-                }
-            }
-        }
-        return emptyNo;
+        return isClash;
     }
 
     public void optimizeBreak(int step) {
@@ -502,7 +490,7 @@ public class SchedulingAlgorithm {
                 } while (noOfClass > noOfClassPerDay);
 
                 c = new Class(courseID, "-", "-", "-", day, startTime, endTime, courseType);
-                if (isTimeClash(scheduleList.get(0).getClassList(), c)) {
+                if (isTimeClashWithClassList(scheduleList.get(0).getClassList(), c)) {
                     isClash = true;
                 } else {
                     s = getRandomStaff(courseCode);
@@ -605,7 +593,7 @@ public class SchedulingAlgorithm {
             } while (noOfClass > noOfClassPerDay);
             c = new Class(course.getCourseID(), "-", groupID, "-", day, startTime, endTime, course.getCourseType());
 
-            if (isTimeClash(classList, c)) {
+            if (isTimeClashWithClassList(classList, c)) {
                 isClash = true;
             }
         } while (isClash == true);
@@ -771,7 +759,7 @@ public class SchedulingAlgorithm {
         }
     }
 
-    public boolean isTimeClash(ArrayList<Class> classList, Class c) {
+    public boolean isTimeClashWithClassList(ArrayList<Class> classList, Class c) {
         boolean found = false;
         for (int i = 0; i < classList.size(); i++) {
             if (classList.get(i).getDay() == c.getDay()) {
@@ -786,25 +774,6 @@ public class SchedulingAlgorithm {
             }
         }
         return found;
-    }
-
-    public int countTimeClashes() {
-        int count = 0;
-        for (int i = 0; i < scheduleList.size(); i++) {
-            ArrayList<Class> classList = scheduleList.get(i).getClassList();
-            for (int index1 = 0; index1 < classList.size(); index1++) {
-                for (int index2 = index1 + 1; index2 < classList.size(); index2++) {
-                    Class class1 = classList.get(index1);
-                    Class class2 = classList.get(index2);
-                    if (class1.getDay() == class2.getDay()) {
-                        if ((class2.getStartTime() >= class1.getStartTime() && class2.getStartTime() < class1.getEndTime()) || (class2.getEndTime() > class1.getStartTime() && class2.getEndTime() <= class1.getEndTime()) || (class1.getStartTime() >= class2.getStartTime() && class1.getStartTime() < class2.getEndTime()) || (class1.getEndTime() > class2.getStartTime() && class1.getEndTime() <= class2.getEndTime())) {
-                            count++;
-                        }
-                    }
-                }
-            }
-        }
-        return count;
     }
 
     public double getRandomMoveDuration() {
@@ -859,24 +828,28 @@ public class SchedulingAlgorithm {
         Venue venue;
         ArrayList<Venue> qualifiedList = new ArrayList();
         int index = 0;
-        if (courseType.equals("P")) {
-            for (Venue v : labList) {
-                if (v.getCourseCodelist().contains(courseCode)) {
-                    qualifiedList.add(v);
+        switch (courseType) {
+            case "P":
+                for (Venue v : labList) {
+                    if (v.getCourseCodelist().contains(courseCode)) {
+                        qualifiedList.add(v);
+                    }
                 }
-            }
-            venue = qualifiedList.get(rand.nextInt(qualifiedList.size()));
-        } else if (courseType.equals("L")) {
-            int totalSize = getTotalSize();
-            for (Venue v : hallList) {
-                if (v.getCapacity() >= totalSize) {
-                    qualifiedList.add(v);
+                venue = qualifiedList.get(rand.nextInt(qualifiedList.size()));
+                break;
+            case "L":
+                int totalSize = getTotalSize();
+                for (Venue v : hallList) {
+                    if (v.getCapacity() >= totalSize) {
+                        qualifiedList.add(v);
+                    }
                 }
-            }
-            venue = qualifiedList.get(rand.nextInt(qualifiedList.size()));
-        } else {
-            index = rand.nextInt(roomList.size());
-            venue = roomList.get(index);
+                venue = qualifiedList.get(rand.nextInt(qualifiedList.size()));
+                break;
+            default:
+                index = rand.nextInt(roomList.size());
+                venue = roomList.get(index);
+                break;
         }
         return venue;
     }
@@ -942,9 +915,29 @@ public class SchedulingAlgorithm {
         return venue;
     }
 
-    public int countDBClash() throws SQLException {
+    public boolean isClassListsTimeClash() {
+        boolean isClash = false;
+        for (int i = 0; i < scheduleList.size(); i++) {
+            ArrayList<Class> classList = scheduleList.get(i).getClassList();
+            for (int index1 = 0; index1 < classList.size(); index1++) {
+                for (int index2 = index1 + 1; index2 < classList.size(); index2++) {
+                    Class class1 = classList.get(index1);
+                    Class class2 = classList.get(index2);
+                    if (class1.getDay() == class2.getDay()) {
+                        if ((class2.getStartTime() >= class1.getStartTime() && class2.getStartTime() < class1.getEndTime()) || (class2.getEndTime() > class1.getStartTime() && class2.getEndTime() <= class1.getEndTime()) || (class1.getStartTime() >= class2.getStartTime() && class1.getStartTime() < class2.getEndTime()) || (class1.getEndTime() > class2.getStartTime() && class1.getEndTime() <= class2.getEndTime())) {
+                            isClash = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return isClash;
+    }
+
+    public boolean isClashWithDB() throws SQLException {
         ArrayList<String> groupIDList = cda.getAllGroupID();
-        int count = 0;
+        boolean isClash = false;
         if (groupIDList != null) {
             for (String groupID : groupIDList) {
                 ArrayList<Class> dbList = cda.get(groupID);
@@ -956,7 +949,8 @@ public class SchedulingAlgorithm {
                                 if (c.getDay() == d.getDay()) {
                                     if ((c.getStartTime() >= d.getStartTime() && c.getStartTime() < d.getEndTime()) || (d.getEndTime() > c.getStartTime() && d.getEndTime() <= c.getEndTime())) {
                                         if (c.getVenueID().equalsIgnoreCase(d.getVenueID()) || c.getStaffID().equalsIgnoreCase(d.getStaffID())) {
-                                            count++;
+                                            isClash = true;
+                                            break;
                                         }
                                     }
                                 }
@@ -966,50 +960,47 @@ public class SchedulingAlgorithm {
                 }
             }
         }
-        return count;
+        return isClash;
     }
 
-    public int countBlockClash() {
-        double startTime, endTime;
-        int count = 0;
-        if (blockClass != null) {
-            startTime = blockClass.getStartTime();
-            endTime = blockClass.getEndTime();
-            for (int i = 0; i < scheduleList.size(); i++) {
-                ArrayList<Class> classList = scheduleList.get(i).getClassList();
-                for (Class c : classList) {
+    public boolean isBlockClassClash() {
+        boolean isClash = false;
+        double tempStart, tempEnd, startTime, endTime;
+        for (int i = 0; i < scheduleList.size(); i++) {
+            ArrayList<Class> classList = scheduleList.get(i).getClassList();
+            for (Class c : classList) {
+                tempStart = c.getStartTime();
+                tempEnd = c.getEndTime();
+
+                Staff staff = searchStaff(c.getStaffID());
+                startTime = staff.getBlockStart();
+                endTime = staff.getBlockStart() + staff.getBlockDuration();
+
+                if (c.getDay() == staff.getBlockDay()) {
+                    if ((startTime >= tempStart && startTime < tempEnd) || (endTime > tempStart && endTime <= tempEnd) || (tempStart >= startTime && tempStart < endTime) || (tempEnd > startTime && tempEnd <= endTime)) {
+                        isClash = true;
+                        break;
+                    }
+                }
+
+                if (blockClass != null) {
+                    startTime = blockClass.getStartTime();
+                    endTime = blockClass.getEndTime();
                     if (c.getDay() == blockClass.getDay()) {
-                        double tempStart = c.getStartTime();
-                        double tempEnd = c.getEndTime();
                         if ((startTime >= tempStart && startTime < tempEnd) || (endTime > tempStart && endTime <= tempEnd) || (tempStart >= startTime && tempStart < endTime) || (tempEnd > startTime && tempEnd <= endTime)) {
-                            count++;
+                            isClash = true;
+                            break;
                         }
                     }
                 }
             }
         }
 
-        for (int i = 0; i < scheduleList.size(); i++) {
-            ArrayList<Class> classList = scheduleList.get(i).getClassList();
-            for (Class c : classList) {
-                Staff staff = searchStaff(c.getStaffID());
-                startTime = staff.getBlockStart();
-                endTime = staff.getBlockStart() + staff.getBlockDuration();
-                if (c.getDay() == staff.getBlockDay()) {
-                    double tempStart = c.getStartTime();
-                    double tempEnd = c.getEndTime();
-                    if ((startTime >= tempStart && startTime < tempEnd) || (endTime > tempStart && endTime <= tempEnd) || (tempStart >= startTime && tempStart < endTime) || (tempEnd > startTime && tempEnd <= endTime)) {
-                        count++;
-                    }
-                }
-            }
-        }
-
-        return count;
+        return isClash;
     }
 
-    public int countInvalidBreak() {
-        int count = 0;
+    public boolean hasInvalidBreak() {
+        boolean hasInvalid = false;
         for (int index = 0; index < scheduleList.size(); index++) {
             ArrayList<Class> classList = scheduleList.get(index).getClassList();
             for (int i = 0; i < classList.size() - 1; i++) {
@@ -1018,12 +1009,27 @@ public class SchedulingAlgorithm {
                 Class c2 = classList.get(j);
                 if (c1.getDay() == c2.getDay()) {
                     if ((c2.getStartTime() - c1.getEndTime()) > maxBreak) {
-                        count++;
+                        hasInvalid = true;
+                        break;
                     }
                 }
             }
         }
-        return count;
+        return hasInvalid;
+    }
+
+    public boolean isClassListCompleted() {
+        boolean isComplete = true;
+        for (int i = 0; i < scheduleList.size(); i++) {
+            ArrayList<Class> classList = scheduleList.get(i).getClassList();
+            for (Class c : classList) {
+                if (c.getVenueID() == null || c.getStaffID() == null || c.getVenueID().equalsIgnoreCase("-") || c.getStaffID().equalsIgnoreCase("-")) {
+                    isComplete = false;
+                    break;
+                }
+            }
+        }
+        return isComplete;
     }
 
     public boolean isNoOfClassEnough() {
@@ -1042,7 +1048,7 @@ public class SchedulingAlgorithm {
 
         do {
             allocation();
-        } while (!isNoOfClassEnough() || countEmpty() > 0 || countClash() > 0 || countTimeClashes() > 0 || countBlockClash() > 0 || countInvalidBreak() > 0 || countDBClash() > 0);
+        } while (!isNoOfClassEnough() || !isClassListCompleted() || isClassListsTimeClash() || isClassListsClash() || isBlockClassClash() || hasInvalidBreak() || isClashWithDB());
 
         sortList();
         storeData();
