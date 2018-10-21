@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -25,7 +25,7 @@ import org.w3c.dom.NodeList;
  * @author Alex
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class SchedulingAlgorithm {
 
     private final Random rand = new Random();
@@ -960,17 +960,20 @@ public class SchedulingAlgorithm {
     }
 
     public int countBlockClash() {
-        double startTime = blockClass.getStartTime();
-        double endTime = blockClass.getEndTime();
+        double startTime, endTime;
         int count = 0;
-        for (int i = 0; i < scheduleList.size(); i++) {
-            ArrayList<Class> classList = scheduleList.get(i).getClassList();
-            for (Class c : classList) {
-                if (c.getDay() == blockClass.getDay()) {
-                    double tempStart = c.getStartTime();
-                    double tempEnd = c.getEndTime();
-                    if ((startTime >= tempStart && startTime < tempEnd) || (endTime > tempStart && endTime <= tempEnd) || (tempStart >= startTime && tempStart < endTime) || (tempEnd > startTime && tempEnd <= endTime)) {
-                        count++;
+        if (blockClass != null) {
+            startTime = blockClass.getStartTime();
+            endTime = blockClass.getEndTime();
+            for (int i = 0; i < scheduleList.size(); i++) {
+                ArrayList<Class> classList = scheduleList.get(i).getClassList();
+                for (Class c : classList) {
+                    if (c.getDay() == blockClass.getDay()) {
+                        double tempStart = c.getStartTime();
+                        double tempEnd = c.getEndTime();
+                        if ((startTime >= tempStart && startTime < tempEnd) || (endTime > tempStart && endTime <= tempEnd) || (tempStart >= startTime && tempStart < endTime) || (tempEnd > startTime && tempEnd <= endTime)) {
+                            count++;
+                        }
                     }
                 }
             }
@@ -991,6 +994,7 @@ public class SchedulingAlgorithm {
                 }
             }
         }
+
         return count;
     }
 
