@@ -42,6 +42,9 @@
     <h:body>
         <div>
             <h:form>
+                <h:outputScript rendered="#{schedulingAlgorithm.isInvalidGeneration}">
+                    alert("Insufficient amount of data to generate perfect schedules.");
+                </h:outputScript>
                 <h1>Scheduling Initial Setting</h1>
                 <h:outputText value="No of Study Days: "/>
                 <h:selectOneMenu value="#{configuration.studyDays}" class="ddl">

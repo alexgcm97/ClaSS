@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -25,7 +25,7 @@ import org.w3c.dom.NodeList;
  * @author Alex
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class SchedulingAlgorithm {
 
     private final Random rand = new Random();
@@ -36,16 +36,25 @@ public class SchedulingAlgorithm {
     private ArrayList<Venue> roomList, labList, hallList;
     private ArrayList<Schedule> scheduleList;
 
+    private boolean isInvalidGeneration = false;
     private int studyDays, totalClass = 0, blockDay = 99;
     private double studyStart, studyEnd, blockStart, blockEnd, maxBreak = 99, noOfClassPerDay = 99;
     private Class blockClass;
 
-    private final int runLimit = 50;
+    private final int runLimit = 50, exitLimit = 1000;
     private final ClassDA cda = new ClassDA();
     private final VenueDA vda = new VenueDA();
     private final StaffDA sda = new StaffDA();
 
     private final String filePath = "C:\\Users\\Alex\\Documents\\NetBeansProjects\\ClaSS\\src\\java\\xml\\";
+
+    public boolean isIsInvalidGeneration() {
+        return isInvalidGeneration;
+    }
+
+    public void setIsInvalidGeneration(boolean isInvalidGeneration) {
+        this.isInvalidGeneration = isInvalidGeneration;
+    }
 
     public void initialize() throws Exception {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -1045,16 +1054,24 @@ public class SchedulingAlgorithm {
 
     public void start() throws Exception {
         initialize();
-
+        int runCount = 0;
         do {
+            if (runCount == exitLimit) {
+                break;
+            }
             allocation();
+            runCount++;
         } while (!isNoOfClassEnough() || !isClassListCompleted() || isClassListsTimeClash() || isClassListsClash() || isBlockClassClash() || hasInvalidBreak() || isClashWithDB());
 
-        sortList();
-        storeData();
-        printClass();
-
-        FacesContext.getCurrentInstance().getExternalContext().redirect("ViewTimetable.xhtml");
+        if (runCount < exitLimit) {
+            sortList();
+            storeData();
+            printClass();
+            FacesContext.getCurrentInstance().getExternalContext().redirect("ViewTimetable.xhtml");
+        } else {
+            isInvalidGeneration = true;
+            FacesContext.getCurrentInstance().getExternalContext().redirect("setSettings.xhtml");
+        }
     }
 
     public void printClass() {
