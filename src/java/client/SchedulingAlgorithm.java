@@ -295,17 +295,28 @@ public class SchedulingAlgorithm implements Serializable {
                     Class class1 = list1.get(index);
                     for (int index2 = 0; index2 < list2.size(); index2++) {
                         Class class2 = list2.get(index2);
-                        if (!class1.getCourseType().equalsIgnoreCase("L") && !class1.getCourseType().equals("BLK") && !class2.getCourseType().equalsIgnoreCase("L") && !class2.getCourseType().equals("BLK")) {
+                        if (!class1.getCourseType().equals("BLK") && !class2.getCourseType().equals("BLK")) {
                             if (class1.getDay() == class2.getDay()) {
                                 double startTime1 = class1.getStartTime();
                                 double endTime1 = class1.getEndTime();
 
                                 double startTime2 = class2.getStartTime();
                                 double endTime2 = class2.getEndTime();
-                                if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1) || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2)) {
-                                    if (class1.getVenueID().equalsIgnoreCase(class2.getVenueID()) || class1.getStaffID().equalsIgnoreCase(class2.getStaffID())) {
-                                        isClash = true;
-                                        break;
+                                if (class1.getCourseType().equals("L") && class2.getCourseType().equals("L")) {
+                                    if (!class1.getStaffID().equals(class2.getStaffID())) {
+                                        if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1) || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2)) {
+                                            if (class1.getVenueID().equalsIgnoreCase(class2.getVenueID()) || class1.getStaffID().equalsIgnoreCase(class2.getStaffID())) {
+                                                isClash = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1) || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2)) {
+                                        if (class1.getVenueID().equalsIgnoreCase(class2.getVenueID()) || class1.getStaffID().equalsIgnoreCase(class2.getStaffID())) {
+                                            isClash = true;
+                                            break;
+                                        }
                                     }
                                 }
                             }
