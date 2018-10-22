@@ -37,8 +37,7 @@ public class SchedulingAlgorithm implements Serializable {
     private ArrayList<Venue> roomList, labList, hallList;
     private ArrayList<Schedule> scheduleList;
 
-    private int errorCode = 0;
-    private int studyDays, totalClass = 0, blockDay = 99;
+    private int studyDays, totalClass = 0, blockDay = 99, errorCode = 0;
     private double studyStart, studyEnd, blockStart, blockEnd, maxBreak = 99, noOfClassPerDay = 99;
     private Class blockClass;
 
@@ -591,32 +590,31 @@ public class SchedulingAlgorithm implements Serializable {
     }
 
     public void assignCourse(String groupID, ArrayList<Class> classList, CourseType course) {
-        boolean isClash;
+        boolean isClash, isBreak = false;
         int day;
         double startTime, endTime;
-        Class c;
+        Class c = new Class();
+        int runCount = 0;
         do {
-            isClash = false;
-            int noOfClass;
-            do {
-                noOfClass = 1;
+            if (runCount == runLimit) {
+                isBreak = true;
+                break;
+            } else {
+                isClash = false;
                 day = getRandomDay();
                 startTime = getRandomStartTime();
                 endTime = startTime + Double.parseDouble(course.getCourseDuration());
-                for (int i = 0; i < classList.size(); i++) {
-                    if (day == classList.get(i).getDay()) {
-                        noOfClass++;
-                    }
-                }
-            } while (noOfClass > noOfClassPerDay);
-            c = new Class(course.getCourseID(), "-", groupID, "-", day, startTime, endTime, course.getCourseType());
+                c = new Class(course.getCourseID(), "-", groupID, "-", day, startTime, endTime, course.getCourseType());
 
-            if (isTimeClashWithClassList(classList, c)) {
-                isClash = true;
+                if (isTimeClashWithClassList(classList, c)) {
+                    isClash = true;
+                }
+                runCount++;
             }
         } while (isClash == true);
-
-        classList.add(c);
+        if (!isBreak) {
+            classList.add(c);
+        }
     }
 
     public void assignVenueStaff(Class previousClass, Class thisClass) {
@@ -1162,14 +1160,16 @@ public class SchedulingAlgorithm implements Serializable {
 
     public void start() throws Exception {
         initialize();
-        int runCount = 0;
+        int runCount = 0, loopCount = 1;
         double oriMaxBreak = maxBreak;
         boolean toRestart;
+
         do {
             toRestart = false;
             if (runCount == exitLimit) {
                 if (studyDays < 6) {
                     studyDays++;
+                    loopCount++;
                     runCount = 0;
                     maxBreak = oriMaxBreak;
                     toRestart = true;
@@ -1182,6 +1182,7 @@ public class SchedulingAlgorithm implements Serializable {
                 }
                 allocation();
                 runCount++;
+                System.out.println("Loop " + loopCount + " Run " + runCount);
             }
         } while (toRestart || checkClassNo() || hasInvalidTime() || hasLongDurationClass() || !isNoOfClassEnough() || !isClassListCompleted() || isClassListsTimeClash() || isClassListsClash() || isBlockClassClash() || hasInvalidBreak() || isClashWithDB());
 
@@ -1193,6 +1194,7 @@ public class SchedulingAlgorithm implements Serializable {
             errorCode = 1;
             FacesContext.getCurrentInstance().getExternalContext().redirect("setSettings.xhtml");
         }
+
     }
 
     public void printClass() {
