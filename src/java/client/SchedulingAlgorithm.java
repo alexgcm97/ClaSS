@@ -1163,6 +1163,7 @@ public class SchedulingAlgorithm implements Serializable {
     public void start() throws Exception {
         initialize();
         int runCount = 0;
+        double oriMaxBreak = maxBreak;
         boolean toRestart;
         do {
             toRestart = false;
@@ -1170,6 +1171,7 @@ public class SchedulingAlgorithm implements Serializable {
                 if (studyDays < 6) {
                     studyDays++;
                     runCount = 0;
+                    maxBreak = oriMaxBreak;
                     toRestart = true;
                 } else {
                     break;
