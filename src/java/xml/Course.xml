@@ -10,56 +10,67 @@ and open the template in the editor.
     <course courseID="C1001">
         <courseType>L</courseType>
         <courseDuration>2</courseDuration>
-        <courseCode>BAIT2123</courseCode>      
+        <courseCode>BAIT2123</courseCode>
+        <noOfSession>1</noOfSession>
     </course>
     <course courseID="C1002">
         <courseType>P</courseType>
         <courseDuration>2</courseDuration>
-        <courseCode>BAIT2123</courseCode>      
+        <courseCode>BAIT2123</courseCode> 
+        <noOfSession>0</noOfSession>
     </course>
     <course courseID="C1003">
         <courseType>L</courseType>
         <courseDuration>2</courseDuration>
-        <courseCode>BAIT3094</courseCode>      
+        <courseCode>BAIT3094</courseCode>   
+        <noOfSession>2</noOfSession>
     </course>
     <course courseID="C1004">
         <courseType>T</courseType>
         <courseDuration>1</courseDuration>
-        <courseCode>BAIT3094</courseCode>      
+        <courseCode>BAIT3094</courseCode>     
+        <noOfSession>0</noOfSession>
     </course>
     <course courseID="C1005">
         <courseType>P</courseType>
         <courseDuration>2</courseDuration>
-        <courseCode>BAIT3094</courseCode>      
+        <courseCode>BAIT3094</courseCode>  
+        <noOfSession>0</noOfSession> 
     </course>
     <course courseID="C1006">
         <courseType>L</courseType>
         <courseDuration>1</courseDuration>
-        <courseCode>MPU-3232</courseCode>      
+        <courseCode>MPU-3232</courseCode>  
+        <noOfSession>1</noOfSession>  
     </course>
     <course courseID="C1007">
         <courseType>T</courseType>
         <courseDuration>1</courseDuration>
         <courseCode>MPU-3232</courseCode>      
+        <noOfSession>0</noOfSession>
     </course>
     <course courseID="C1008">
         <courseType>L</courseType>
         <courseDuration>2</courseDuration>
-        <courseCode>BAIT3173</courseCode>      
+        <courseCode>BAIT3173</courseCode>     
+        <noOfSession>1</noOfSession>
     </course>
     <course courseID="C1009">
         <courseType>P</courseType>
         <courseDuration>2</courseDuration>
         <courseCode>BAIT3173</courseCode>      
+        <noOfSession>0</noOfSession>
     </course>
     <course courseID="C1010">
         <courseType>L</courseType>
         <courseDuration>2</courseDuration>
-        <courseCode>BACS3033</courseCode>      
+        <courseCode>BACS3033</courseCode>   
+        <noOfSession>1</noOfSession>
     </course>
     <course courseID="C1011">
         <courseType>T</courseType>
         <courseDuration>1</courseDuration>
-        <courseCode>BACS3033</courseCode>      
+        <courseCode>BACS3033</courseCode> 
+        <noOfSession>0</noOfSession>
     </course>
 </courses>

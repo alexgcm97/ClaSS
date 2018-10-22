@@ -13,24 +13,26 @@ import java.util.ArrayList;
  */
 public class Staff {
 
-    private String staffID, staffName, courseCodeList;
+    private String staffID, staffName;
     private int blockDay;
     private double blockStart, blockDuration;
     private ArrayList<Class> classList;
-    private ArrayList<String> tutGroupList;
+    private ArrayList<String> courseCodeList, tutGroupList, lecGroupList, pracGroupList;
 
     public Staff() {
 
     }
 
-    public Staff(String staffID, String staffName, String courseCodeList) {
+    public Staff(String staffID, String staffName) {
         this.staffID = staffID;
         this.staffName = staffName;
         this.blockDay = 99;
         this.blockStart = 0;
         this.blockDuration = 0;
-        this.courseCodeList = courseCodeList;
+        this.courseCodeList = new ArrayList();
         this.tutGroupList = new ArrayList();
+        this.lecGroupList = new ArrayList();
+        this.pracGroupList = new ArrayList();
         this.classList = new ArrayList();
     }
 
@@ -50,12 +52,16 @@ public class Staff {
         this.staffName = staffName;
     }
 
-    public String getCourseCodeList() {
+    public ArrayList<String> getCourseCodeList() {
         return courseCodeList;
     }
 
-    public void setCourseCodeList(String courseCodeList) {
+    public void setCourseCodeList(ArrayList<String> courseCodeList) {
         this.courseCodeList = courseCodeList;
+    }
+
+    public void addCourseCodeToList(String courseCode) {
+        this.courseCodeList.add(courseCode);
     }
 
     public ArrayList<String> getTutGroupList() {
@@ -78,6 +84,30 @@ public class Staff {
             }
         }
         return str;
+    }
+
+    public ArrayList<String> getLecGroupList() {
+        return lecGroupList;
+    }
+
+    public void setLecGroupList(ArrayList<String> lecGroupList) {
+        this.lecGroupList = lecGroupList;
+    }
+
+    public void addLecGroupToList(String lecGroup) {
+        this.lecGroupList.add(lecGroup);
+    }
+
+    public ArrayList<String> getPracGroupList() {
+        return pracGroupList;
+    }
+
+    public void setPracGroupList(ArrayList<String> pracGroupList) {
+        this.pracGroupList = pracGroupList;
+    }
+
+    public void addPracGroupToList(String pracGroup) {
+        this.pracGroupList.add(pracGroup);
     }
 
     public int getBlockDay() {

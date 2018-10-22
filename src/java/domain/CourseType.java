@@ -12,16 +12,18 @@ package domain;
 public class CourseType {
 
     private String courseID, courseType, courseDuration, courseCode;
+    private int noOfSession;
 
     public CourseType() {
 
     }
 
-    public CourseType(String courseID, String courseType, String courseDuration, String courseCode) {
+    public CourseType(String courseID, String courseType, String courseDuration, String courseCode, int noOfSession) {
         this.courseID = courseID;
         this.courseType = courseType;
         this.courseDuration = courseDuration;
         this.courseCode = courseCode;
+        this.noOfSession = noOfSession;
     }
 
     public String getCourseID() {
@@ -54,6 +56,14 @@ public class CourseType {
 
     public void setCourseCode(String courseCode) {
         this.courseCode = courseCode;
+    }
+
+    public int getNoOfSession() {
+        return noOfSession;
+    }
+
+    public void setNoOfSession(int noOfSession) {
+        this.noOfSession = noOfSession;
     }
 
 }

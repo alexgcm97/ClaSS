@@ -8,6 +8,7 @@ package client;
 import da.*;
 import domain.Class;
 import domain.*;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -26,7 +27,7 @@ import org.w3c.dom.NodeList;
  */
 @ManagedBean
 @SessionScoped
-public class SchedulingAlgorithm {
+public class SchedulingAlgorithm implements Serializable {
 
     private final Random rand = new Random();
 
@@ -36,24 +37,24 @@ public class SchedulingAlgorithm {
     private ArrayList<Venue> roomList, labList, hallList;
     private ArrayList<Schedule> scheduleList;
 
-    private boolean isInvalidGeneration = false;
+    private int errorCode = 0;
     private int studyDays, totalClass = 0, blockDay = 99;
     private double studyStart, studyEnd, blockStart, blockEnd, maxBreak = 99, noOfClassPerDay = 99;
     private Class blockClass;
 
-    private final int runLimit = 50, exitLimit = 1000;
+    private final int runLimit = 50, exitLimit = 50000;
     private final ClassDA cda = new ClassDA();
     private final VenueDA vda = new VenueDA();
     private final StaffDA sda = new StaffDA();
 
     private final String filePath = "C:\\Users\\Alex\\Documents\\NetBeansProjects\\ClaSS\\src\\java\\xml\\";
 
-    public boolean isIsInvalidGeneration() {
-        return isInvalidGeneration;
+    public int getErrorCode() {
+        return errorCode;
     }
 
-    public void setIsInvalidGeneration(boolean isInvalidGeneration) {
-        this.isInvalidGeneration = isInvalidGeneration;
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
     }
 
     public void initialize() throws Exception {
@@ -83,7 +84,7 @@ public class SchedulingAlgorithm {
         for (int i = 0; i < nodes.getLength(); i++) {
             e = (Element) nodes.item(i);
 
-            CourseType c = new CourseType(e.getAttribute("courseID"), e.getElementsByTagName("courseType").item(0).getTextContent(), e.getElementsByTagName("courseDuration").item(0).getTextContent(), e.getElementsByTagName("courseCode").item(0).getTextContent());
+            CourseType c = new CourseType(e.getAttribute("courseID"), e.getElementsByTagName("courseType").item(0).getTextContent(), e.getElementsByTagName("courseDuration").item(0).getTextContent(), e.getElementsByTagName("courseCode").item(0).getTextContent(), Integer.parseInt(e.getElementsByTagName("noOfSession").item(0).getTextContent()));
             if (c.getCourseType().equalsIgnoreCase("L")) {
                 lecList.add(c);
             } else {
@@ -129,15 +130,45 @@ public class SchedulingAlgorithm {
         for (int i = 0; i < nodes.getLength(); i++) {
             e = (Element) nodes.item(i);
 
-            Staff stf = new Staff(e.getAttribute("staffID"), e.getElementsByTagName("name").item(0).getTextContent(), e.getElementsByTagName("courseCodeList").item(0).getTextContent());
+            Staff stf = new Staff(e.getAttribute("staffID"), e.getElementsByTagName("name").item(0).getTextContent());
+            String courseCodeStr = e.getElementsByTagName("courseCodeList").item(0).getTextContent();
+            if (courseCodeStr.contains("\\|")) {
+                String courseCodeArr[] = courseCodeStr.split("\\|");
+                for (String s : courseCodeArr) {
+                    stf.addCourseCodeToList(s);
+                }
+            } else {
+                stf.addCourseCodeToList(courseCodeStr);
+            }
+
+            String lecGroupStr = e.getElementsByTagName("lecGroupList").item(0).getTextContent();
+            if (lecGroupStr.contains("\\|")) {
+                String lecGroupArr[] = lecGroupStr.split("\\|");
+                for (String s : lecGroupArr) {
+                    stf.addLecGroupToList(s);
+                }
+            } else {
+                stf.addLecGroupToList(lecGroupStr);
+            }
+
             String tutGroupStr = e.getElementsByTagName("tutGroupList").item(0).getTextContent();
-            if (tutGroupStr.contains("|")) {
+            if (tutGroupStr.contains("\\|")) {
                 String tutGroupArr[] = tutGroupStr.split("\\|");
                 for (String s : tutGroupArr) {
                     stf.addTutGroupToList(s);
                 }
             } else {
                 stf.addTutGroupToList(tutGroupStr);
+            }
+
+            String pracGroupStr = e.getElementsByTagName("pracGroupList").item(0).getTextContent();
+            if (pracGroupStr.contains("\\|")) {
+                String pracGroupArr[] = pracGroupStr.split("\\|");
+                for (String s : pracGroupArr) {
+                    stf.addPracGroupToList(s);
+                }
+            } else {
+                stf.addPracGroupToList(pracGroupStr);
             }
 
             if (!e.getElementsByTagName("blockDay").item(0).getTextContent().equals("-")) {
@@ -470,19 +501,13 @@ public class SchedulingAlgorithm {
         String courseID = course.getCourseID();
         String courseType = course.getCourseType();
         String courseCode = course.getCourseCode();
-        String venueID, staffID;
-        Venue v = new Venue();
-        Staff s = new Staff();
+        Venue v;
+        ArrayList<Staff> lecStaffList = getLecStaffList(courseType, courseCode);
         double startTime = 0, endTime = 0;
         int day = 0, runCount = 0;
         Class c;
-        boolean isBreak = false;
-
-        do {
-            if (runCount == runLimit) {
-                isBreak = true;
-                break;
-            } else {
+        for (Staff s : lecStaffList) {
+            do {
                 isClash = false;
                 int noOfClass;
                 do {
@@ -502,7 +527,6 @@ public class SchedulingAlgorithm {
                 if (isTimeClashWithClassList(scheduleList.get(0).getClassList(), c)) {
                     isClash = true;
                 } else {
-                    s = getRandomStaff(courseCode);
                     if (s.getBlockDay() == c.getDay()) {
                         double startTime1 = s.getBlockStart();
                         double endTime1 = s.getBlockStart() + s.getBlockDuration();
@@ -565,19 +589,23 @@ public class SchedulingAlgorithm {
                             }
                         }
                     }
+
+                    for (int i = 0; i < scheduleList.size(); i++) {
+                        for (String courseCodeList : s.getCourseCodeList()) {
+                            if (courseCodeList.contains(courseCode) && courseCodeList.contains(courseType)) {
+                                for (String lecGroupList : s.getLecGroupList()) {
+                                    if (lecGroupList.contains(courseCode) && lecGroupList.contains(scheduleList.get(i).getGroupID())) {
+                                        c = new Class(courseID, v.getVenueID(), scheduleList.get(i).getGroupID(), s.getStaffID(), day, startTime, endTime, courseType);
+                                        scheduleList.get(i).addClassToList(c);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                 }
                 runCount++;
-            }
-        } while (isClash);
-
-        if (!isBreak) {
-            venueID = v.getVenueID();
-            staffID = s.getStaffID();
-
-            for (int i = 0; i < scheduleList.size(); i++) {
-                c = new Class(courseID, venueID, scheduleList.get(i).getGroupID(), staffID, day, startTime, endTime, courseType);
-                scheduleList.get(i).addClassToList(c);
-            }
+            } while (isClash);
         }
     }
 
@@ -708,7 +736,7 @@ public class SchedulingAlgorithm {
                     break;
                 } else {
                     isClash = false;
-                    s = getRandomStaffWithTutGroup(courseCode, groupID);
+                    s = getRandomStaffWithGroup(thisClass.getCourseType(), courseCode, groupID);
                     if (s.getBlockDay() == thisClass.getDay()) {
                         double startTime = thisClass.getStartTime();
                         double endTime = thisClass.getEndTime();
@@ -813,21 +841,40 @@ public class SchedulingAlgorithm {
         return rand.nextInt(studyDays) + 1;
     }
 
-    public Staff getRandomStaff(String courseCode) {
+    public ArrayList<Staff> getLecStaffList(String courseType, String courseCode) {
         ArrayList<Staff> qualifiedList = new ArrayList();
         for (Staff s : staffList) {
-            if (s.getCourseCodeList().contains(courseCode)) {
-                qualifiedList.add(s);
+            for (String courseCodeList : s.getCourseCodeList()) {
+                if (courseCodeList.contains(courseCode) && courseCodeList.contains(courseType)) {
+                    qualifiedList.add(s);
+                }
             }
         }
-        return qualifiedList.get(rand.nextInt(qualifiedList.size()));
+        return qualifiedList;
     }
 
-    public Staff getRandomStaffWithTutGroup(String courseCode, String groupID) {
+    public Staff getRandomStaffWithGroup(String courseType, String courseCode, String groupID) {
         ArrayList<Staff> qualifiedList = new ArrayList();
         for (Staff s : staffList) {
-            if (s.getCourseCodeList().contains(courseCode) && s.searchTutGroupList(courseCode).contains(groupID)) {
-                qualifiedList.add(s);
+            for (String courseCodeList : s.getCourseCodeList()) {
+                if (courseCodeList.contains(courseCode) && courseCodeList.contains(courseType)) {
+                    switch (courseType) {
+                        case "P":
+                            for (String pracGroupList : s.getPracGroupList()) {
+                                if (pracGroupList.contains(courseCode) && pracGroupList.contains(groupID)) {
+                                    qualifiedList.add(s);
+                                }
+                            }
+                            break;
+                        default:
+                            for (String tutGroupList : s.getTutGroupList()) {
+                                if (tutGroupList.contains(courseCode) && tutGroupList.contains(groupID)) {
+                                    qualifiedList.add(s);
+                                }
+                            }
+                            break;
+                    }
+                }
             }
         }
         return qualifiedList.get(rand.nextInt(qualifiedList.size()));
@@ -1058,9 +1105,11 @@ public class SchedulingAlgorithm {
         do {
             if (runCount == exitLimit) {
                 break;
+            } else {
+                System.out.println(runCount);
+                allocation();
+                runCount++;
             }
-            allocation();
-            runCount++;
         } while (!isNoOfClassEnough() || !isClassListCompleted() || isClassListsTimeClash() || isClassListsClash() || isBlockClassClash() || hasInvalidBreak() || isClashWithDB());
 
         if (runCount < exitLimit) {
@@ -1069,7 +1118,7 @@ public class SchedulingAlgorithm {
             printClass();
             FacesContext.getCurrentInstance().getExternalContext().redirect("ViewTimetable.xhtml");
         } else {
-            isInvalidGeneration = true;
+            errorCode = 1;
             FacesContext.getCurrentInstance().getExternalContext().redirect("setSettings.xhtml");
         }
     }

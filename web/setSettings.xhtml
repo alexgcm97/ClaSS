@@ -42,7 +42,7 @@
     <h:body>
         <div>
             <h:form>
-                <h:outputScript rendered="#{schedulingAlgorithm.isInvalidGeneration}">
+                <h:outputScript rendered="#{schedulingAlgorithm.errorCode == 1}">
                     alert("Insufficient amount of data to generate perfect schedules.");
                 </h:outputScript>
                 <h1>Scheduling Initial Setting</h1>

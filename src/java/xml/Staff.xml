@@ -9,58 +9,72 @@ and open the template in the editor.
 <staffs>
     <staff staffID="S1001">
         <name>Alex</name>
-        <blockDay>4</blockDay>
+        <blockDay>1</blockDay>
         <blockStart>14.00</blockStart>
         <blockDuration>2</blockDuration>
-        <courseCodeList>BAIT2123, BACS3033</courseCodeList>
-        <tutGroupList>BAIT2123-G1001, G1002, G1003|BACS3033-G1003, G1004, G1005</tutGroupList>
+        <courseCodeList>BAIT2123-L,P|BACS3033-T</courseCodeList>
+        <lecGroupList>BAIT2123-G1001,G1002,G1003,G1004,G1005</lecGroupList>
+        <tutGroupList>BACS3033-G1003,G1004,G1005</tutGroupList>
+        <pracGroupList>BAIT2123-G1001,G1002</pracGroupList>
     </staff>
     <staff staffID="S1002">
         <name>Steve</name>
         <blockDay>3</blockDay>
         <blockStart>12.00</blockStart>
         <blockDuration>2</blockDuration>
-        <courseCodeList>MPU-3232</courseCodeList>
-        <tutGroupList>MPU-3232-G1001, G1002, G1003</tutGroupList>
+        <courseCodeList>MPU-3232-T</courseCodeList>
+        <lecGroupList>-</lecGroupList>
+        <tutGroupList>MPU-3232-G1001,G1002,G1003</tutGroupList>
+        <pracGroupList>-</pracGroupList>
     </staff>
     <staff staffID="S1003">
         <name>Javier</name>
         <blockDay>4</blockDay>
         <blockStart>15.00</blockStart>
         <blockDuration>1</blockDuration>
-        <courseCodeList>BACS3033</courseCodeList>
-        <tutGroupList>BACS3033-G1001, G1002</tutGroupList>
+        <courseCodeList>BACS3033-L,T</courseCodeList>
+        <lecGroupList>BACS3033-G1001,G1002,G1003,G1004,G1005</lecGroupList>
+        <tutGroupList>BACS3033-G1001,G1002</tutGroupList>
+        <pracGroupList>-</pracGroupList>
     </staff>
     <staff staffID="S1004">
         <name>John</name>
         <blockDay>4</blockDay>
         <blockStart>15.00</blockStart>
         <blockDuration>1</blockDuration>
-        <courseCodeList>BAIT3094</courseCodeList>
-        <tutGroupList>BAIT3094-G1001, G1002, G1003</tutGroupList>
+        <courseCodeList>BAIT3094-L,T,P</courseCodeList>
+        <lecGroupList>BAIT3094-G1001,G1002,G1003</lecGroupList>
+        <tutGroupList>BAIT3094-G1001,G1002,G1003</tutGroupList>
+        <pracGroupList>BAIT3094-G1001,G1002</pracGroupList>
     </staff>
     <staff staffID="S1005">
         <name>Lily</name>
         <blockDay>-</blockDay>
         <blockStart>-</blockStart>
         <blockDuration>-</blockDuration>
-        <courseCodeList>BAIT3173</courseCodeList>
-        <tutGroupList>BAIT3173-G1001, G1002, G1003, G1004, G1005</tutGroupList>
+        <courseCodeList>BAIT3173-L,T,P</courseCodeList>
+        <lecGroupList>BAIT3173-G1001,G1002,G1003,G1004,G1005</lecGroupList>
+        <tutGroupList>BAIT3173-G1001,G1002,G1003,G1004,G1005</tutGroupList>
+        <pracGroupList>BAIT3173-G1001,G1002,G1003,G1004,G1005</pracGroupList>
     </staff>
     <staff staffID="S1006">
         <name>Jonathan</name>
         <blockDay>-</blockDay>
         <blockTime>-</blockTime>
         <blockDuration>-</blockDuration>
-        <courseCodeList>MPU-3232</courseCodeList>
+        <courseCodeList>MPU-3232-L,T</courseCodeList>
+        <lecGroupList>MPU-3232-G1001,G1002,G1003,G1004,G1005</lecGroupList>
         <tutGroupList>MPU-3232-G1004, G1005</tutGroupList>
+        <pracGroupList>-</pracGroupList>
     </staff>
     <staff staffID="S1007">
         <name>Lizzie</name>
         <blockDay>-</blockDay>
         <blockStart>-</blockStart>
         <blockDuration>-</blockDuration>
-        <courseCodeList>BAIT3094, BAIT2123</courseCodeList>
-        <tutGroupList>BAIT3094-G1004, G1005|BAIT2123-G1004, G1005</tutGroupList>
+        <courseCodeList>BAIT3094-L,P|BAIT2123-T,P</courseCodeList>
+        <lecGroupList>BAIT3094-G1004,G1005</lecGroupList>
+        <tutGroupList>BAIT3094-G1004,G1005</tutGroupList>
+        <pracGroupList>BAIT3094-G1003,G1004,G1005|BAIT2123-G1003,G1004,G1005</pracGroupList>
     </staff>
 </staffs>
