@@ -1163,14 +1163,25 @@ public class SchedulingAlgorithm implements Serializable {
     public void start() throws Exception {
         initialize();
         int runCount = 0;
+        boolean toRestart;
         do {
+            toRestart = false;
             if (runCount == exitLimit) {
-                break;
+                if (studyDays < 6) {
+                    studyDays++;
+                    runCount = 0;
+                    toRestart = true;
+                } else {
+                    break;
+                }
             } else {
+                if (runCount != 0 && maxBreak < 4.0 && (runCount % (exitLimit * 0.25)) == 0) {
+                    maxBreak += 0.5;
+                }
                 allocation();
                 runCount++;
             }
-        } while (checkClassNo() || hasInvalidTime() || hasLongDurationClass() || !isNoOfClassEnough() || !isClassListCompleted() || isClassListsTimeClash() || isClassListsClash() || isBlockClassClash() || hasInvalidBreak() || isClashWithDB());
+        } while (toRestart || checkClassNo() || hasInvalidTime() || hasLongDurationClass() || !isNoOfClassEnough() || !isClassListCompleted() || isClassListsTimeClash() || isClassListsClash() || isBlockClassClash() || hasInvalidBreak() || isClashWithDB());
 
         if (runCount < exitLimit) {
             storeData();
