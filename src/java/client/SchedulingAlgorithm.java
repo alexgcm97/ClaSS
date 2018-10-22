@@ -42,7 +42,7 @@ public class SchedulingAlgorithm implements Serializable {
     private double studyStart, studyEnd, blockStart, blockEnd, maxBreak = 99, noOfClassPerDay = 99;
     private Class blockClass;
 
-    private final int runLimit = 50, exitLimit = 50000;
+    private final int runLimit = 50, exitLimit = 100000;
     private final ClassDA cda = new ClassDA();
     private final VenueDA vda = new VenueDA();
     private final StaffDA sda = new StaffDA();
@@ -1142,7 +1142,6 @@ public class SchedulingAlgorithm implements Serializable {
             if (runCount == exitLimit) {
                 break;
             } else {
-                System.out.println(runCount);
                 allocation();
                 runCount++;
             }
