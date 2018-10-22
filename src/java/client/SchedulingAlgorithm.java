@@ -1080,6 +1080,20 @@ public class SchedulingAlgorithm implements Serializable {
         return isEnough;
     }
 
+    public boolean hasInvalidTime() {
+        boolean hasInvalid = false;
+        for (int i = 0; i < scheduleList.size(); i++) {
+            ArrayList<Class> classList = scheduleList.get(i).getClassList();
+            for (Class c : classList) {
+                if (c.getStartTime() < studyStart || c.getEndTime() > studyEnd) {
+                    hasInvalid = true;
+                    break;
+                }
+            }
+        }
+        return hasInvalid;
+    }
+
     public boolean checkClassNo() {
         boolean isExceed = false;
         for (int i = 0; i < scheduleList.size(); i++) {
@@ -1156,7 +1170,7 @@ public class SchedulingAlgorithm implements Serializable {
                 allocation();
                 runCount++;
             }
-        } while (checkClassNo() || hasLongDurationClass() || !isNoOfClassEnough() || !isClassListCompleted() || isClassListsTimeClash() || isClassListsClash() || isBlockClassClash() || hasInvalidBreak() || isClashWithDB());
+        } while (checkClassNo() || hasInvalidTime() || hasLongDurationClass() || !isNoOfClassEnough() || !isClassListCompleted() || isClassListsTimeClash() || isClassListsClash() || isBlockClassClash() || hasInvalidBreak() || isClashWithDB());
 
         if (runCount < exitLimit) {
             storeData();
