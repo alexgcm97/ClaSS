@@ -13,9 +13,9 @@ and open the template in the editor.
         <blockStart>14.00</blockStart>
         <blockDuration>2</blockDuration>
         <courseCodeList>BAIT2123-L,P|BACS3033-T</courseCodeList>
-        <lecGroupList>BAIT2123-G1001,G1002,G1003,G1004,G1005</lecGroupList>
+        <lecGroupList>BAIT2123-G1001,G1002,G1003,G1004,G1005,G1006</lecGroupList>
         <tutGroupList>BACS3033-G1003,G1004,G1005</tutGroupList>
-        <pracGroupList>BAIT2123-G1001,G1002</pracGroupList>
+        <pracGroupList>BAIT2123-G1001,G1002,G1006</pracGroupList>
     </staff>
     <staff staffID="S1002">
         <name>Steve</name>
@@ -76,5 +76,15 @@ and open the template in the editor.
         <lecGroupList>BAIT3094-G1004,G1005</lecGroupList>
         <tutGroupList>BAIT3094-G1004,G1005</tutGroupList>
         <pracGroupList>BAIT3094-G1003,G1004,G1005|BAIT2123-G1003,G1004,G1005</pracGroupList>
+    </staff>
+    <staff staffID="S1008">
+        <name>Jesicca</name>
+        <blockDay>-</blockDay>
+        <blockStart>-</blockStart>
+        <blockDuration>-</blockDuration>
+        <courseCodeList>BACS2103-L,T,P</courseCodeList>
+        <lecGroupList>BACS2103-G1006</lecGroupList>
+        <tutGroupList>BACS2103-G1006</tutGroupList>
+        <pracGroupList>BACS2103-G1006</pracGroupList>
     </staff>
 </staffs>

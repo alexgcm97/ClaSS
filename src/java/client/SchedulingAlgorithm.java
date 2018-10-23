@@ -37,7 +37,8 @@ public class SchedulingAlgorithm implements Serializable {
     private ArrayList<Venue> roomList, labList, hallList;
     private ArrayList<Schedule> scheduleList;
 
-    private int studyDays, totalClass = 0, blockDay = 99, errorCode = 0;
+    private int studyDays, blockDay = 99, errorCode = 0;
+    private boolean toBalance = false;
     private double studyStart, studyEnd, blockStart, blockEnd, maxBreak = 99, noOfClassPerDay = 99;
     private Class blockClass;
 
@@ -90,7 +91,6 @@ public class SchedulingAlgorithm implements Serializable {
                 courseList.add(c);
             }
         }
-        totalClass = lecList.size() + courseList.size();
 
         fileName = filePath + "Configuration.xml";
         doc = dBuilder.parse(fileName);
@@ -110,14 +110,13 @@ public class SchedulingAlgorithm implements Serializable {
                 blockStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
                 blockEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
             }
-            if (e.getElementsByTagName("balanceClass").getLength() > 0) {
-                boolean toBalance = Boolean.parseBoolean(e.getElementsByTagName("balanceClass").item(0).getTextContent());
-                if (toBalance) {
-                    noOfClassPerDay = Math.floor((double) totalClass / studyDays) + 1;
-                }
-            }
+
             if (e.getElementsByTagName("maxBreak").getLength() > 0) {
                 maxBreak = Double.parseDouble(e.getElementsByTagName("maxBreak").item(0).getTextContent());
+            }
+
+            if (e.getElementsByTagName("balanceClass").getLength() > 0) {
+                toBalance = Boolean.parseBoolean(e.getElementsByTagName("balanceClass").item(0).getTextContent());
             }
         }
 
@@ -126,7 +125,9 @@ public class SchedulingAlgorithm implements Serializable {
         staffList = new ArrayList();
         nodes = doc.getElementsByTagName("staff");
 
-        for (int i = 0; i < nodes.getLength(); i++) {
+        for (int i = 0;
+                i < nodes.getLength();
+                i++) {
             e = (Element) nodes.item(i);
 
             Staff stf = new Staff(e.getAttribute("staffID"), e.getElementsByTagName("name").item(0).getTextContent());
@@ -207,6 +208,18 @@ public class SchedulingAlgorithm implements Serializable {
         for (int i = 0; i < groupList.size(); i++) {
             ArrayList<Class> classList = new ArrayList();
             Schedule s = new Schedule(groupList.get(i).getGroupID(), classList);
+            int count = 0;
+            for (CourseType ct : courseList) {
+                if (groupList.get(i).getCourseCodeList().contains(ct.getCourseCode())) {
+                    count++;
+                }
+            }
+            for (CourseType ct : lecList) {
+                if (groupList.get(i).getCourseCodeList().contains(ct.getCourseCode())) {
+                    count++;
+                }
+            }
+            s.setRequiredNoOfClass(count);
             scheduleList.add(s);
         }
 
@@ -234,7 +247,7 @@ public class SchedulingAlgorithm implements Serializable {
             for (int j = 0; j < scheduleList.size(); j++) {
                 TutorialGroup tg = searchTutorialGroup(scheduleList.get(j).getGroupID());
                 if (tg.getCourseCodeList().contains(courseList.get(i).getCourseCode())) {
-                    assignCourse(scheduleList.get(j).getGroupID(), scheduleList.get(j).getClassList(), courseList.get(i));
+                    assignCourse(scheduleList.get(j).getRequiredNoOfClass(), scheduleList.get(j).getGroupID(), scheduleList.get(j).getClassList(), courseList.get(i));
                 }
             }
         }
@@ -650,7 +663,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
     }
 
-    public void assignCourse(String groupID, ArrayList<Class> classList, CourseType course) {
+    public void assignCourse(int requiredNoOfClass, String groupID, ArrayList<Class> classList, CourseType course) {
         boolean isClash, isBreak = false;
         int day;
         double startTime, endTime;
@@ -663,6 +676,9 @@ public class SchedulingAlgorithm implements Serializable {
             } else {
                 isClash = false;
                 do {
+                    if (toBalance) {
+                        noOfClassPerDay = Math.floor(requiredNoOfClass / (studyDays)) + 1;
+                    }
                     classCount = 1;
                     day = getRandomDay();
                     startTime = getRandomStartTime();
@@ -1146,17 +1162,6 @@ public class SchedulingAlgorithm implements Serializable {
         return isComplete;
     }
 
-    public boolean isNoOfClassEnough() {
-        boolean isEnough = true;
-        for (int i = 0; i < scheduleList.size(); i++) {
-            if (scheduleList.get(i).getClassList().size() < totalClass) {
-                isEnough = false;
-                break;
-            }
-        }
-        return isEnough;
-    }
-
     public boolean hasInvalidTime() {
         boolean hasInvalid = false;
         for (int i = 0; i < scheduleList.size(); i++) {
@@ -1171,10 +1176,24 @@ public class SchedulingAlgorithm implements Serializable {
         return hasInvalid;
     }
 
+    public boolean isClassEnough() {
+        boolean isEnough = true;
+        for (int i = 0; i < scheduleList.size(); i++) {
+            ArrayList<Class> classList = scheduleList.get(i).getClassList();
+            if (classList.size() < scheduleList.get(i).getRequiredNoOfClass()) {
+                isEnough = false;
+            }
+        }
+        return isEnough;
+    }
+
     public boolean checkNoOfClassPerDay() {
         boolean isExceed = false;
         for (int i = 0; i < scheduleList.size(); i++) {
             ArrayList<Class> classList = scheduleList.get(i).getClassList();
+            if (toBalance) {
+                noOfClassPerDay = Math.floor(scheduleList.get(i).getRequiredNoOfClass() / studyDays) + 1;
+            }
             int[] noOfClasses = new int[7];
             for (Class c : classList) {
                 switch (c.getDay()) {
@@ -1274,7 +1293,7 @@ public class SchedulingAlgorithm implements Serializable {
                 runCount++;
                 System.out.println("Loop " + loopCount + " Run " + runCount + " (StudyDays : " + studyDays + " - Max Break: " + maxBreak + "h)");
             }
-        } while (toRestart || checkNoOfClassPerDay() || hasInvalidTime() || hasLongDurationClass() || !isClassListDataCompleted() || isClassListsTimeClash() || isClassListsClash() || isBlockClassClash() || hasInvalidBreak() || isClashWithDB());
+        } while (toRestart || !isClassEnough() || checkNoOfClassPerDay() || hasInvalidTime() || hasLongDurationClass() || !isClassListDataCompleted() || isClassListsTimeClash() || isClassListsClash() || isBlockClassClash() || hasInvalidBreak() || isClashWithDB());
 
         if (runCount < exitLimit) {
             storeData();

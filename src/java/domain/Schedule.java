@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class Schedule {
 
     private String groupID;
+    private int requiredNoOfClass;
     private ArrayList<Class> classList;
 
     public Schedule() {
@@ -43,5 +44,17 @@ public class Schedule {
 
     public void addClassToList(Class c) {
         this.classList.add(c);
+    }
+
+    public int getRequiredNoOfClass() {
+        return requiredNoOfClass;
+    }
+
+    public void setRequiredNoOfClass(int requiredNoOfClass) {
+        this.requiredNoOfClass = requiredNoOfClass;
+    }
+
+    public int getNoOfClass() {
+        return this.classList.size();
     }
 }

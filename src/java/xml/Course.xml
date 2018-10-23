@@ -62,4 +62,19 @@ and open the template in the editor.
         <courseDuration>1</courseDuration>
         <courseCode>BACS3033</courseCode> 
     </course>
+    <course courseID="C1012">
+        <courseType>L</courseType>
+        <courseDuration>2</courseDuration>
+        <courseCode>BACS2103</courseCode> 
+    </course>
+    <course courseID="C1013">
+        <courseType>T</courseType>
+        <courseDuration>1</courseDuration>
+        <courseCode>BACS2103</courseCode> 
+    </course>
+    <course courseID="C1014">
+        <courseType>P</courseType>
+        <courseDuration>2</courseDuration>
+        <courseCode>BACS2103</courseCode> 
+    </course>
 </courses>

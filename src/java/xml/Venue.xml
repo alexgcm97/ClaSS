@@ -42,6 +42,18 @@ and open the template in the editor.
         <capacity>24</capacity>
         <courseCodeList>BAIT2123</courseCodeList>
     </venue>
+    <venue venueID="D203C">
+        <block>D</block>
+        <venueType>Lab</venueType>
+        <capacity>24</capacity>
+        <courseCodeList>BACS2103</courseCodeList>
+    </venue>
+    <venue venueID="D203D">
+        <block>D</block>
+        <venueType>Lab</venueType>
+        <capacity>24</capacity>
+        <courseCodeList>BACS2103</courseCodeList>
+    </venue>
     <venue venueID="H303">
         <block>H</block>
         <venueType>Room</venueType>
