@@ -42,7 +42,7 @@ public class SchedulingAlgorithm implements Serializable {
     private double studyStart, studyEnd, blockStart, blockEnd, maxBreak = 99, noOfClassPerDay = 99;
     private Class blockClass;
 
-    private final int assignLimit = 120, firstVLimit = 30, secondVLimit = 60, exitLimit = 140000;
+    private final int assignLimit = 120, firstVLimit = 30, secondVLimit = 60, exitLimit = 40;
     private final ClassDA cda = new ClassDA();
     private final VenueDA vda = new VenueDA();
     private final StaffDA sda = new StaffDA();
@@ -1260,38 +1260,38 @@ public class SchedulingAlgorithm implements Serializable {
         int runCount = 0, loopCount = 1;
         double oriMaxBreak = maxBreak;
         int oriStudyDays = studyDays;
-        boolean toRestart;
+        boolean toRestart, toStop;
         do {
             toRestart = false;
             if (runCount == exitLimit) {
-                if (maxBreak < 4.0 && studyDays < 6) {
-                    maxBreak += 0.5;
-                    loopCount++;
-                    studyDays = oriStudyDays;
-                    runCount = 0;
-                    toRestart = true;
-                } else if (maxBreak <= 4.0 && studyDays >= 5) {
-                    if (maxBreak == 4.0 && studyDays == 5) {
-                        maxBreak = oriMaxBreak;
-                        studyDays++;
-                    } else if (maxBreak < 4.0 && studyDays == 6) {
+                if (maxBreak < 4.0) {
+                    if (studyDays <= 5) {
                         maxBreak += 0.5;
-                        loopCount++;
+                        studyDays = oriStudyDays;
                         runCount = 0;
                         toRestart = true;
-                    } else {
-                        break;
+                        loopCount++;
                     }
                 } else {
-                    break;
+                    studyDays++;
+                    maxBreak = oriMaxBreak;
+                    runCount = 0;
+                    toRestart = true;
+                    loopCount++;
                 }
             } else {
                 if (runCount != 0 && studyDays < 5 && (runCount % Math.floor(exitLimit * 0.25)) == 0) {
                     studyDays++;
+                } else if (runCount != 0 && studyDays == 6 && (runCount % Math.floor(exitLimit * 0.25)) == 0) {
+                    maxBreak += 0.5;
                 }
                 allocation();
                 runCount++;
                 System.out.println("Loop " + loopCount + " Run " + runCount + " (StudyDays : " + studyDays + " - Max Break: " + maxBreak + "h)");
+            }
+
+            if (runCount == exitLimit && studyDays == 6) {
+                break;
             }
         } while (toRestart || !isClassEnough() || checkNoOfClassPerDay() || hasInvalidTime() || hasLongDurationClass() || !isClassListDataCompleted() || isClassListsTimeClash() || isClassListsClash() || isBlockClassClash() || hasInvalidBreak() || isClashWithDB());
 
