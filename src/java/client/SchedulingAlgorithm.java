@@ -1252,17 +1252,17 @@ public class SchedulingAlgorithm implements Serializable {
                     runCount = 0;
                     toRestart = true;
                 } else if (maxBreak <= 4.0 && studyDays >= 5) {
-                    if (studyDays == 5) {
-                        studyDays++;
-                    }
-                    if (maxBreak == 4.0) {
+                    if (maxBreak == 4.0 && studyDays == 5) {
                         maxBreak = oriMaxBreak;
-                    } else {
+                        studyDays++;
+                    } else if (maxBreak < 4.0 && studyDays == 6) {
                         maxBreak += 0.5;
+                        loopCount++;
+                        runCount = 0;
+                        toRestart = true;
+                    } else {
+                        break;
                     }
-                    loopCount++;
-                    runCount = 0;
-                    toRestart = true;
                 } else {
                     break;
                 }
