@@ -222,11 +222,10 @@ public class SchedulingAlgorithm implements Serializable {
             assignLecture(lecList.get(i));
         }
 
-        if (maxBreak != 99) {
-            sortList();
-            optimizeBreak(1);
-        }
-
+//        if (maxBreak != 99) {
+//            sortList();
+//            optimizeBreak(1);
+//        }
         //Assign Other Schedules, ex: Tutorial, Practical
         for (int i = 0; i < courseList.size(); i++) {
             for (int j = 0; j < scheduleList.size(); j++) {
@@ -405,32 +404,19 @@ public class SchedulingAlgorithm implements Serializable {
                                     moveDuration = breakTime - getRandomMoveDuration();
                                 }
                             }
+                            c2.moveLeft(moveDuration);
                         }
                     }
+
                 }
-
-                classCheckList.sort((Class o1, Class o2) -> {
-                    if (o1.getDay() == o2.getDay()) {
-                        double time1 = o1.getStartTime();
-                        double time2 = o2.getStartTime();
-                        if (time1 == time2) {
-                            return 0;
-                        } else if (time1 > time2) {
-                            return 1;
-                        } else {
-                            return -1;
-                        }
-                    }
-                    return o1.getDay() - o2.getDay();
-                });
-
                 for (int index = 0; index < scheduleList.size(); index++) {
                     classList = scheduleList.get(index).getClassList();
                     for (Class c : classList) {
                         for (Class d : classCheckList) {
                             if (c.getDay() == d.getDay()) {
                                 if (c.getCourseID().equals(d.getCourseID()) && c.getStaffID().equals(d.getStaffID()) && d.getOriStartTime() == c.getStartTime() && d.getOriEndTime() == c.getEndTime()) {
-                                    c.moveLeft(moveDuration);
+                                    c.setStartTime(d.getStartTime());
+                                    c.setEndTime(d.getEndTime());
                                 }
                             }
                         }
