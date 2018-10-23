@@ -41,7 +41,7 @@ public class SchedulingAlgorithm implements Serializable {
     private double studyStart, studyEnd, blockStart, blockEnd, maxBreak = 99, noOfClassPerDay = 99;
     private Class blockClass;
 
-    private final int assignLimit = 120, firstVLimit = 30, secondVLimit = 60, exitLimit = 140000;
+    private final int assignLimit = 120, firstVLimit = 30, secondVLimit = 60, exitLimit = 1400;
     private final ClassDA cda = new ClassDA();
     private final VenueDA vda = new VenueDA();
     private final StaffDA sda = new StaffDA();
@@ -1052,8 +1052,6 @@ public class SchedulingAlgorithm implements Serializable {
     public boolean isClashWithDB() throws SQLException {
         ArrayList<String> groupIDList = cda.getAllGroupID();
         boolean isClash = false;
-        System.out.println(groupIDList.isEmpty());
-
         if (!groupIDList.isEmpty()) {
             for (String groupID : groupIDList) {
                 ArrayList<Class> dbList = cda.get(groupID);
@@ -1241,15 +1239,28 @@ public class SchedulingAlgorithm implements Serializable {
     public void start() throws Exception {
         initialize();
         int runCount = 0, loopCount = 1;
+        double oriMaxBreak = maxBreak;
         int oriStudyDays = studyDays;
         boolean toRestart;
         do {
             toRestart = false;
             if (runCount == exitLimit) {
-                if (maxBreak < 4.0) {
+                if (maxBreak < 4.0 && studyDays < 6) {
                     maxBreak += 0.5;
                     loopCount++;
                     studyDays = oriStudyDays;
+                    runCount = 0;
+                    toRestart = true;
+                } else if (maxBreak <= 4.0 && studyDays >= 5) {
+                    if (studyDays == 5) {
+                        studyDays++;
+                    }
+                    if (maxBreak == 4.0) {
+                        maxBreak = oriMaxBreak;
+                    } else {
+                        maxBreak += 0.5;
+                    }
+                    loopCount++;
                     runCount = 0;
                     toRestart = true;
                 } else {
