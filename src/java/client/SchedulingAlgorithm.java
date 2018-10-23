@@ -222,10 +222,11 @@ public class SchedulingAlgorithm implements Serializable {
             assignLecture(lecList.get(i));
         }
 
-//        if (maxBreak != 99) {
-//            sortList();
-//            optimizeBreak(1);
-//        }
+        if (maxBreak != 99) {
+            sortList();
+            optimizeBreak(1);
+        }
+
         //Assign Other Schedules, ex: Tutorial, Practical
         for (int i = 0; i < courseList.size(); i++) {
             for (int j = 0; j < scheduleList.size(); j++) {
