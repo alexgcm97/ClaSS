@@ -225,6 +225,8 @@ public class SchedulingAlgorithm implements Serializable {
         if (maxBreak != 99) {
             sortList();
             optimizeBreak(1);
+            sortList();
+            optimizeBreak(2);
         }
 
         //Assign Other Schedules, ex: Tutorial, Practical
@@ -239,9 +241,9 @@ public class SchedulingAlgorithm implements Serializable {
 
         if (maxBreak != 99) {
             sortList();
-            optimizeBreak(2);
-            sortList();
             optimizeBreak(3);
+            sortList();
+            optimizeBreak(4);
         }
 
         if (blockDay != 99) {
@@ -336,6 +338,26 @@ public class SchedulingAlgorithm implements Serializable {
         ArrayList<Class> classList;
         switch (step) {
             case 1:
+                for (int i = 1; i <= studyDays; i++) {
+                    for (int index = 0; index < scheduleList.size(); index++) {
+                        classList = scheduleList.get(index).getClassList();
+                        if (countClassBeforeHalfDay(i, classList) == 0) {
+                            for (Class c : classList) {
+                                if (c.getDay() == i) {
+                                    if (!c.getCourseType().equals("BLK")) {
+                                        if (moveDuration == 0) {
+                                            moveDuration = c.getStartTime() - studyStart;
+                                        }
+                                        c.moveLeft(moveDuration);
+                                    }
+                                }
+                            }
+                            moveDuration = 0;
+                        }
+                    }
+                }
+                break;
+            case 2:
                 ArrayList<Class> classCheckList = new ArrayList();
                 for (int i = 0; i < scheduleList.size(); i++) {
                     classList = scheduleList.get(i).getClassList();
@@ -383,6 +405,7 @@ public class SchedulingAlgorithm implements Serializable {
                         }
                         if (c1.getDay() == c2.getDay()) {
                             double breakTime = c2.getStartTime() - c1.getEndTime();
+                            int day = c1.getDay();
                             if (c1.getVenueID().equalsIgnoreCase(c2.getVenueID())) {
                                 moveDuration = breakTime;
                                 if (thisIndex > 0) {
@@ -420,7 +443,7 @@ public class SchedulingAlgorithm implements Serializable {
                     }
                 }
                 break;
-            case 2:
+            case 3:
                 for (int i = 1; i <= studyDays; i++) {
                     for (int index = 0; index < scheduleList.size(); index++) {
                         classList = scheduleList.get(index).getClassList();
@@ -429,7 +452,7 @@ public class SchedulingAlgorithm implements Serializable {
                                 if (c.getDay() == i) {
                                     if (!c.getCourseType().equals("BLK")) {
                                         if (moveDuration == 0) {
-                                            moveDuration = c.getStartTime() - studyStart - getRandomMoveDuration();
+                                            moveDuration = c.getStartTime() - studyStart;
                                         }
                                         c.moveLeft(moveDuration);
                                     }
@@ -440,7 +463,7 @@ public class SchedulingAlgorithm implements Serializable {
                     }
                 }
                 break;
-            case 3:
+            case 4:
                 for (int index = 0; index < scheduleList.size(); index++) {
                     classList = scheduleList.get(index).getClassList();
                     for (int i = 0; i < classList.size() - 1; i++) {
@@ -632,7 +655,7 @@ public class SchedulingAlgorithm implements Serializable {
         int day;
         double startTime, endTime;
         Class c = new Class();
-        int runCount = 0, classCount = 1;
+        int runCount = 0, classCount;
         do {
             if (runCount == assignLimit) {
                 isBreak = true;
@@ -923,7 +946,7 @@ public class SchedulingAlgorithm implements Serializable {
     public Venue getCourseVenue(String courseType, String courseCode) {
         Venue venue;
         ArrayList<Venue> qualifiedList = new ArrayList();
-        int index = 0;
+        int index;
         if (courseType.equals("P")) {
             for (Venue v : labList) {
                 if (v.getCourseCodeList().contains(courseCode)) {
@@ -977,12 +1000,16 @@ public class SchedulingAlgorithm implements Serializable {
     public Venue searchVenue(String courseType, String venueID) {
         Venue venue = new Venue();
         ArrayList<Venue> tempList;
-        if (courseType.equals("P")) {
-            tempList = labList;
-        } else if (courseType.equals("L")) {
-            tempList = hallList;
-        } else {
-            tempList = roomList;
+        switch (courseType) {
+            case "P":
+                tempList = labList;
+                break;
+            case "L":
+                tempList = hallList;
+                break;
+            default:
+                tempList = roomList;
+                break;
         }
         for (Venue v : tempList) {
             if (v.getVenueID().equalsIgnoreCase(venueID)) {
@@ -1025,10 +1052,12 @@ public class SchedulingAlgorithm implements Serializable {
     public boolean isClashWithDB() throws SQLException {
         ArrayList<String> groupIDList = cda.getAllGroupID();
         boolean isClash = false;
-        if (groupIDList != null) {
+        System.out.println(groupIDList.isEmpty());
+
+        if (!groupIDList.isEmpty()) {
             for (String groupID : groupIDList) {
                 ArrayList<Class> dbList = cda.get(groupID);
-                if (dbList != null) {
+                if (!dbList.isEmpty()) {
                     for (int i = 0; i < scheduleList.size(); i++) {
                         ArrayList<Class> classList = scheduleList.get(i).getClassList();
                         for (Class c : classList) {
@@ -1204,7 +1233,6 @@ public class SchedulingAlgorithm implements Serializable {
                     hasLongDuration = true;
                     break;
                 }
-                totalDuration = 0;
             }
         }
         return hasLongDuration;
@@ -1228,7 +1256,7 @@ public class SchedulingAlgorithm implements Serializable {
                     break;
                 }
             } else {
-                if (runCount != 0 && studyDays < 6 && (runCount % Math.floor(exitLimit * 0.25)) == 0) {
+                if (runCount != 0 && studyDays < 5 && (runCount % Math.floor(exitLimit * 0.25)) == 0) {
                     studyDays++;
                 }
                 allocation();
