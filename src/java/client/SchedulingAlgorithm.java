@@ -41,7 +41,7 @@ public class SchedulingAlgorithm implements Serializable {
     private double studyStart, studyEnd, blockStart, blockEnd, maxBreak = 99, noOfClassPerDay = 99;
     private Class blockClass;
 
-    private final int assignLimit = 150, firstVLimit = 30, secondVLimit = 60, exitLimit = 150000;
+    private final int assignLimit = 120, firstVLimit = 30, secondVLimit = 60, exitLimit = 140000;
     private final ClassDA cda = new ClassDA();
     private final VenueDA vda = new VenueDA();
     private final StaffDA sda = new StaffDA();
@@ -749,15 +749,19 @@ public class SchedulingAlgorithm implements Serializable {
                                     Venue previousV = searchVenue(previousClass.getCourseType(), previousClass.getVenueID());
                                     if (previousV.getVenueID() != null && !previousV.getVenueID().equals("-")) {
                                         if (runCount < firstVLimit) {
-                                            if (previousClass.getCourseType().equals("P")) {
-                                                if (previousV.getCourseCodelist().contains(courseCode)) {
+                                            if (thisClass.getCourseType().equals("P") && previousClass.getCourseType().equals("P")) {
+                                                if (previousV.getCourseCodeList().contains(courseCode)) {
                                                     v = previousV;
                                                 }
                                             } else {
                                                 v = previousV;
                                             }
                                         } else if (runCount < secondVLimit) {
-                                            v = getRandomVenueFromBlock(previousV.getBlock(), thisClass.getCourseType());
+                                            if (!thisClass.getCourseType().equals("P")) {
+                                                v = getTutVenueWithBlock(previousV.getBlock());
+                                            } else {
+                                                thisClass.moveRight(moveDuration);
+                                            }
                                         } else {
                                             thisClass.moveRight(moveDuration);
                                         }
@@ -922,7 +926,7 @@ public class SchedulingAlgorithm implements Serializable {
         int index = 0;
         if (courseType.equals("P")) {
             for (Venue v : labList) {
-                if (v.getCourseCodelist().contains(courseCode)) {
+                if (v.getCourseCodeList().contains(courseCode)) {
                     qualifiedList.add(v);
                 }
             }
@@ -934,21 +938,14 @@ public class SchedulingAlgorithm implements Serializable {
         return venue;
     }
 
-    public Venue getRandomVenueFromBlock(String block, String courseType) {
-        Venue venue = new Venue();
-        int index;
-        if (courseType.equals("P")) {
-            do {
-                index = rand.nextInt(labList.size());
-                venue = labList.get(index);
-            } while (!venue.getBlock().equalsIgnoreCase(block));
-        } else {
-            do {
-                index = rand.nextInt(roomList.size());
-                venue = roomList.get(index);
-            } while (!venue.getBlock().equalsIgnoreCase(block));
+    public Venue getTutVenueWithBlock(String block) {
+        ArrayList<Venue> qualifiedList = new ArrayList();
+        for (Venue v : roomList) {
+            if (v.getBlock().equals(block)) {
+                qualifiedList.add(v);
+            }
         }
-        return venue;
+        return qualifiedList.get(rand.nextInt(qualifiedList.size()));
     }
 
     public String searchCourseCode(Class c) {
@@ -1231,7 +1228,7 @@ public class SchedulingAlgorithm implements Serializable {
                     break;
                 }
             } else {
-                if (runCount != 0 && studyDays < 6 && (runCount % Math.floor(exitLimit * 0.30)) == 0) {
+                if (runCount != 0 && studyDays < 6 && (runCount % Math.floor(exitLimit * 0.25)) == 0) {
                     studyDays++;
                 }
                 allocation();

@@ -54,11 +54,11 @@ public class Venue {
         this.venueType = venueType;
     }
 
-    public String getCourseCodelist() {
+    public String getCourseCodeList() {
         return courseCodeList;
     }
 
-    public void setCourseCodelist(String courseCodeList) {
+    public void setCourseCodeList(String courseCodeList) {
         this.courseCodeList = courseCodeList;
     }
 
