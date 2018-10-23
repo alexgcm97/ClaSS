@@ -13,7 +13,7 @@ public class Class {
 
     private String courseID, venueID, groupID, staffID, courseType;
     private int day;
-    private double startTime, endTime;
+    private double startTime, endTime, oriStartTime, oriEndTime;
 
     public Class() {
     }
@@ -124,6 +124,22 @@ public class Class {
     public void moveLeft(double duration) {
         this.startTime -= duration;
         this.endTime -= duration;
+    }
+
+    public double getOriStartTime() {
+        return oriStartTime;
+    }
+
+    public void setOriStartTime(double oriStartTime) {
+        this.oriStartTime = oriStartTime;
+    }
+
+    public double getOriEndTime() {
+        return oriEndTime;
+    }
+
+    public void setOriEndTime(double oriEndTime) {
+        this.oriEndTime = oriEndTime;
     }
 
 }
