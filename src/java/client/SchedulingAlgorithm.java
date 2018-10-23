@@ -230,8 +230,9 @@ public class SchedulingAlgorithm implements Serializable {
         for (int i = 0; i < courseList.size(); i++) {
             for (int j = 0; j < scheduleList.size(); j++) {
                 TutorialGroup tg = searchTutorialGroup(scheduleList.get(j).getGroupID());
-                assignCourse(scheduleList.get(j).getGroupID(), scheduleList.get(j).getClassList(), courseList.get(i));
-
+                if (tg.getCourseCodeList().contains(courseList.get(i).getCourseCode())) {
+                    assignCourse(scheduleList.get(j).getGroupID(), scheduleList.get(j).getClassList(), courseList.get(i));
+                }
             }
         }
 
