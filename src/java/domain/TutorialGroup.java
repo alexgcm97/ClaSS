@@ -11,19 +11,20 @@ package domain;
 
 public class TutorialGroup {
 
-    private String groupID, programmeID, cohortID, programmeCode, month, year;
+    private String groupID, programmeID, cohortID, programmeCode, month, year, courseCodeList;
     private int studyYear, groupNumber, size;
 
     public TutorialGroup() {
     }
 
-    public TutorialGroup(String groupID, int studyYear, int groupNumber, int size, String programmeID, String cohortID) {
+    public TutorialGroup(String groupID, int studyYear, int groupNumber, int size, String programmeID, String cohortID, String courseCodeList) {
         this.groupID = groupID;
         this.programmeID = programmeID;
         this.cohortID = cohortID;
         this.studyYear = studyYear;
         this.groupNumber = groupNumber;
         this.size = size;
+        this.courseCodeList = courseCodeList;
     }
 
     public TutorialGroup(String groupID, int studyYear, int groupNumber, int size, String programmeID, String cohortID, String programmeCode, String month, String year) {
@@ -108,6 +109,14 @@ public class TutorialGroup {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getCourseCodeList() {
+        return courseCodeList;
+    }
+
+    public void setCourseCodeList(String courseCodeList) {
+        this.courseCodeList = courseCodeList;
     }
 
 }
