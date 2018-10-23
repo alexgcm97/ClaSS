@@ -342,10 +342,8 @@ public class SchedulingAlgorithm implements Serializable {
                     for (Class c : classList) {
                         boolean exist = false;
                         for (Class d : classCheckList) {
-                            if (c.getDay() == d.getDay()) {
-                                if (c.getCourseID().equals(d.getCourseID()) && c.getStaffID().equals(d.getStaffID()) && c.getStartTime() == d.getStartTime() && c.getEndTime() == d.getEndTime()) {
-                                    exist = true;
-                                }
+                            if (c.getDay() == d.getDay() && c.getCourseID().equals(d.getCourseID()) && c.getStaffID().equals(d.getStaffID()) && c.getStartTime() == d.getStartTime() && c.getEndTime() == d.getEndTime()) {
+                                exist = true;
                             }
                         }
                         if (!exist) {
@@ -408,17 +406,15 @@ public class SchedulingAlgorithm implements Serializable {
                             c2.moveLeft(moveDuration);
                         }
                     }
-
                 }
+
                 for (int index = 0; index < scheduleList.size(); index++) {
                     classList = scheduleList.get(index).getClassList();
                     for (Class c : classList) {
                         for (Class d : classCheckList) {
-                            if (c.getDay() == d.getDay()) {
-                                if (c.getCourseID().equals(d.getCourseID()) && c.getStaffID().equals(d.getStaffID()) && d.getOriStartTime() == c.getStartTime() && d.getOriEndTime() == c.getEndTime()) {
-                                    c.setStartTime(d.getStartTime());
-                                    c.setEndTime(d.getEndTime());
-                                }
+                            if (c.getDay() == d.getDay() && c.getCourseID().equals(d.getCourseID()) && c.getStaffID().equals(d.getStaffID()) && d.getOriStartTime() == c.getStartTime() && d.getOriEndTime() == c.getEndTime()) {
+                                c.setStartTime(d.getStartTime());
+                                c.setEndTime(d.getEndTime());
                             }
                         }
                     }
@@ -1220,23 +1216,23 @@ public class SchedulingAlgorithm implements Serializable {
     public void start() throws Exception {
         initialize();
         int runCount = 0, loopCount = 1;
-        double oriMaxBreak = maxBreak;
+        int oriStudyDays = studyDays;
         boolean toRestart;
         do {
             toRestart = false;
             if (runCount == exitLimit) {
-                if (studyDays < 6) {
-                    studyDays++;
+                if (maxBreak < 4.0) {
+                    maxBreak += 0.5;
                     loopCount++;
+                    studyDays = oriStudyDays;
                     runCount = 0;
-                    maxBreak = oriMaxBreak;
                     toRestart = true;
                 } else {
                     break;
                 }
             } else {
-                if (runCount != 0 && maxBreak < 4.0 && (runCount % Math.floor(exitLimit * 0.25)) == 0) {
-                    maxBreak += 0.5;
+                if (runCount != 0 && studyDays < 6 && (runCount % Math.floor(exitLimit * 0.30)) == 0) {
+                    studyDays++;
                 }
                 allocation();
                 runCount++;
