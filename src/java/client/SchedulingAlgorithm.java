@@ -1264,6 +1264,7 @@ public class SchedulingAlgorithm implements Serializable {
                 }
                 allocation();
                 runCount++;
+                System.out.println("Loop " + loopCount + " Run " + runCount + " (StudyDays: " + studyDays + " - MaxBreak: " + maxBreak + " h)");
             }
 
             if (runCount == exitLimit && studyDays == 6) {
