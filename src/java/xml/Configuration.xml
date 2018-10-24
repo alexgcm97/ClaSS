@@ -2,7 +2,7 @@
 <configuration>
     <studyDays>3</studyDays>
     <startTime>8.0</startTime>
-    <endTime>18.0</endTime>
+    <endTime>20.0</endTime>
     <constraints>
         <balanceClass>true</balanceClass>
         <block>
@@ -10,6 +10,5 @@
             <startTime>12</startTime>
             <endTime>13.0</endTime>
         </block>
-        <maxBreak>1.0</maxBreak>
     </constraints>
 </configuration>

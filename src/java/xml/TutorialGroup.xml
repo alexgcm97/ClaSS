@@ -53,6 +53,6 @@ and open the template in the editor.
         <size>24</size>
         <programmeID>P1002</programmeID>
         <cohortID>CH1001</cohortID>
-        <courseCodeList>BACS2103,BAIT2123</courseCodeList>
+        <courseCodeList>BACS2103,BAIT2123,BACS3033,BAIT3094,MPU-3232</courseCodeList>
     </tutorialGroup>
 </tutorialGroups>

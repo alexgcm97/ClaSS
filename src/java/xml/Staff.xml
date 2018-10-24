@@ -33,8 +33,8 @@ and open the template in the editor.
         <blockStart>15.00</blockStart>
         <blockDuration>1</blockDuration>
         <courseCodeList>BACS3033-L,T</courseCodeList>
-        <lecGroupList>BACS3033-G1001,G1002,G1003,G1004,G1005</lecGroupList>
-        <tutGroupList>BACS3033-G1001,G1002</tutGroupList>
+        <lecGroupList>BACS3033-G1001,G1002,G1003,G1004,G1005,G1006</lecGroupList>
+        <tutGroupList>BACS3033-G1001,G1002,G1006</tutGroupList>
         <pracGroupList>-</pracGroupList>
     </staff>
     <staff staffID="S1004">
@@ -43,9 +43,9 @@ and open the template in the editor.
         <blockStart>15.00</blockStart>
         <blockDuration>1</blockDuration>
         <courseCodeList>BAIT3094-L,T,P</courseCodeList>
-        <lecGroupList>BAIT3094-G1001,G1002,G1003</lecGroupList>
+        <lecGroupList>BAIT3094-G1001,G1002,G1003,G1004,G1005,G1006</lecGroupList>
         <tutGroupList>BAIT3094-G1001,G1002,G1003</tutGroupList>
-        <pracGroupList>BAIT3094-G1001,G1002</pracGroupList>
+        <pracGroupList>BAIT3094-G1001,G1002,G1006</pracGroupList>
     </staff>
     <staff staffID="S1005">
         <name>Lily</name>
@@ -63,8 +63,8 @@ and open the template in the editor.
         <blockTime>-</blockTime>
         <blockDuration>-</blockDuration>
         <courseCodeList>MPU-3232-L,T</courseCodeList>
-        <lecGroupList>MPU-3232-G1001,G1002,G1003,G1004,G1005</lecGroupList>
-        <tutGroupList>MPU-3232-G1004, G1005</tutGroupList>
+        <lecGroupList>MPU-3232-G1001,G1002,G1003,G1004,G1005,G1006</lecGroupList>
+        <tutGroupList>MPU-3232-G1004,G1005,G1006</tutGroupList>
         <pracGroupList>-</pracGroupList>
     </staff>
     <staff staffID="S1007">
@@ -72,9 +72,9 @@ and open the template in the editor.
         <blockDay>-</blockDay>
         <blockStart>-</blockStart>
         <blockDuration>-</blockDuration>
-        <courseCodeList>BAIT3094-L,P|BAIT2123-T,P</courseCodeList>
-        <lecGroupList>BAIT3094-G1004,G1005</lecGroupList>
-        <tutGroupList>BAIT3094-G1004,G1005</tutGroupList>
+        <courseCodeList>BAIT3094-T,P|BAIT2123-T,P</courseCodeList>
+        <lecGroupList>-</lecGroupList>
+        <tutGroupList>BAIT3094-G1004,G1005,G1006</tutGroupList>
         <pracGroupList>BAIT3094-G1003,G1004,G1005|BAIT2123-G1003,G1004,G1005</pracGroupList>
     </staff>
     <staff staffID="S1008">
