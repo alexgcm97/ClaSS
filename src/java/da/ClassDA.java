@@ -67,6 +67,28 @@ public class ClassDA {
         connect.close();
         return groupIDList;
     }
+    
+    public ArrayList<Class> getAll() throws SQLException {
+        ArrayList<Class> classList = new ArrayList();
+
+        try {
+            connect = DBConnection.getConnection();
+
+            PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM class");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Class c = new domain.Class(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7));
+                classList.add(c);
+            }
+            rs.close();
+            pstmt.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        connect.close();
+        return classList;
+    }
 
     public boolean checkExist(String groupID) throws SQLException {
         boolean found = false;
