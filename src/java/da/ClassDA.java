@@ -67,7 +67,7 @@ public class ClassDA {
         connect.close();
         return groupIDList;
     }
-    
+
     public ArrayList<Class> getAll() throws SQLException {
         ArrayList<Class> classList = new ArrayList();
 
@@ -111,14 +111,15 @@ public class ClassDA {
         return found;
     }
 
-    public void deleteRecords(String groupID) throws SQLException {
+    public void deleteRecords(String groupID, String courseID) throws SQLException {
         boolean found = true;
 
         try {
             connect = DBConnection.getConnection();
 
-            PreparedStatement pstmt = connect.prepareStatement("DELETE FROM class WHERE groupID = ?");
+            PreparedStatement pstmt = connect.prepareStatement("DELETE FROM class WHERE groupID = ? and courseID = ?");
             pstmt.setString(1, groupID);
+            pstmt.setString(2, courseID);
             pstmt.executeUpdate();
             pstmt.close();
         } catch (SQLException ex) {
