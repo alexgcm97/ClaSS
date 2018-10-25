@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configuration>
-    <studyDays>5</studyDays>
+    <studyDays>3</studyDays>
     <startTime>8.0</startTime>
     <endTime>18.0</endTime>
     <constraints>

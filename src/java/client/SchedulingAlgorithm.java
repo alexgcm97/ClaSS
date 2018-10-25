@@ -284,7 +284,6 @@ public class SchedulingAlgorithm implements Serializable {
                 }
             }
         }
-        System.out.println("After Venue");
         sortList();
     }
 
