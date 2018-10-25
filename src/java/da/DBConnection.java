@@ -4,14 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DBConnection{
+public class DBConnection {
 
     private static DBConnection instance;
-    private String url="jdbc:derby://localhost:1527/schedule";
-    private String login="schedule";
-    private String pass="schedule";
+    private String url = "jdbc:derby://localhost:1527/schedule";
+    private String login = "schedule";
+    private String pass = "schedule";
 
-    private DBConnection(){
+    private DBConnection() {
 
     }
 
@@ -21,18 +21,17 @@ public class DBConnection{
             System.out.println("Connection  - - - - - - - -  New DBConnection created");
         }
         try {
-            return DriverManager.getConnection(instance.url, instance.login,instance.pass);
+            return DriverManager.getConnection(instance.url, instance.login, instance.pass);
         } catch (SQLException e) {
             throw e;
         }
     }
 
-    public static void close(Connection connection)
-    {
+    public static void close(Connection connection) {
         try {
             if (connection != null) {
                 connection.close();
-                connection=null;
+                connection = null;
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -57,4 +57,8 @@ public class Schedule {
     public int getNoOfClass() {
         return this.classList.size();
     }
+
+    public void resetClassList() {
+        this.classList = new ArrayList();
+    }
 }
