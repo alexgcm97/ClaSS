@@ -18,9 +18,22 @@ public class Staff {
     private double blockStart, blockDuration;
     private ArrayList<Class> classList;
     private ArrayList<String> courseCodeList, tutGroupList, lecGroupList, pracGroupList;
+    private String courseCodeListS, tutGroupListS, lecGroupListS, pracGroupListS;
 
     public Staff() {
 
+    }
+
+    public Staff(String staffID, String staffName, int blockDay, double blockStart, double blockDuration, String courseCodeListS, String tutGroupListS, String lecGroupListS, String pracGroupListS) {
+        this.staffID = staffID;
+        this.staffName = staffName;
+        this.blockDay = blockDay;
+        this.blockStart = blockStart;
+        this.blockDuration = blockDuration;
+        this.courseCodeListS = courseCodeListS;
+        this.tutGroupListS = tutGroupListS;
+        this.lecGroupListS = lecGroupListS;
+        this.pracGroupListS = pracGroupListS;
     }
 
     public Staff(String staffID, String staffName) {
@@ -34,6 +47,38 @@ public class Staff {
         this.lecGroupList = new ArrayList();
         this.pracGroupList = new ArrayList();
         this.classList = new ArrayList();
+    }
+
+    public String getCourseCodeListS() {
+        return courseCodeListS;
+    }
+
+    public void setCourseCodeListS(String courseCodeListS) {
+        this.courseCodeListS = courseCodeListS;
+    }
+
+    public String getTutGroupListS() {
+        return tutGroupListS;
+    }
+
+    public void setTutGroupListS(String tutGroupListS) {
+        this.tutGroupListS = tutGroupListS;
+    }
+
+    public String getLecGroupListS() {
+        return lecGroupListS;
+    }
+
+    public void setLecGroupListS(String lecGroupListS) {
+        this.lecGroupListS = lecGroupListS;
+    }
+
+    public String getPracGroupListS() {
+        return pracGroupListS;
+    }
+
+    public void setPracGroupListS(String pracGroupListS) {
+        this.pracGroupListS = pracGroupListS;
     }
 
     public String getStaffID() {

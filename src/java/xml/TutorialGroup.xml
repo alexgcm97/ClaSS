@@ -1,58 +1,123 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-
-
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <tutorialGroups>
-    <tutorialGroup groupID="G1001">
-        <studyYear>3</studyYear>
-        <groupNumber>3</groupNumber>
-        <size>24</size>
-        <programmeID>P1001</programmeID>
-        <cohortID>CH1001</cohortID>
-        <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
-    </tutorialGroup>
-    <tutorialGroup groupID="G1002">
-        <studyYear>3</studyYear>
-        <groupNumber>4</groupNumber>
-        <size>24</size>
-        <programmeID>P1001</programmeID>
-        <cohortID>CH1001</cohortID>
-        <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
-    </tutorialGroup>
-    <tutorialGroup groupID="G1003">
-        <studyYear>3</studyYear>
-        <groupNumber>5</groupNumber>
-        <size>24</size>
-        <programmeID>P1001</programmeID>
-        <cohortID>CH1001</cohortID>
-        <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
-    </tutorialGroup>
-    <tutorialGroup groupID="G1004">
-        <studyYear>3</studyYear>
-        <groupNumber>6</groupNumber>
-        <size>23</size>
-        <programmeID>P1001</programmeID>
-        <cohortID>CH1001</cohortID>
-        <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
-    </tutorialGroup>
-    <tutorialGroup groupID="G1005">
-        <studyYear>3</studyYear>
-        <groupNumber>7</groupNumber>
-        <size>24</size>
-        <programmeID>P1001</programmeID>
-        <cohortID>CH1001</cohortID>
-        <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
-    </tutorialGroup>
-    <tutorialGroup groupID="G1006">
-        <studyYear>3</studyYear>
-        <groupNumber>7</groupNumber>
-        <size>24</size>
-        <programmeID>P1002</programmeID>
-        <cohortID>CH1001</cohortID>
-        <courseCodeList>BACS2103,BAIT2123,BACS3033,BAIT3094,MPU-3232</courseCodeList>
-    </tutorialGroup>
+  <tutorialGroup groupID="G1006">
+    <studyYear>3</studyYear>
+    <groupNumber>3</groupNumber>
+    <size>24</size>
+    <programmeID>P1002</programmeID>
+    <cohortID>CH1001</cohortID>
+    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1007">
+    <studyYear>3</studyYear>
+    <groupNumber>4</groupNumber>
+    <size>24</size>
+    <programmeID>P1002</programmeID>
+    <cohortID>CH1001</cohortID>
+    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1008">
+    <studyYear>3</studyYear>
+    <groupNumber>5</groupNumber>
+    <size>24</size>
+    <programmeID>P1002</programmeID>
+    <cohortID>CH1001</cohortID>
+    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1009">
+    <studyYear>3</studyYear>
+    <groupNumber>6</groupNumber>
+    <size>24</size>
+    <programmeID>P1002</programmeID>
+    <cohortID>CH1001</cohortID>
+    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1010">
+    <studyYear>3</studyYear>
+    <groupNumber>7</groupNumber>
+    <size>24</size>
+    <programmeID>P1002</programmeID>
+    <cohortID>CH1001</cohortID>
+    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1011">
+    <studyYear>3</studyYear>
+    <groupNumber>3</groupNumber>
+    <size>24</size>
+    <programmeID>P1003</programmeID>
+    <cohortID>CH1001</cohortID>
+    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1012">
+    <studyYear>3</studyYear>
+    <groupNumber>4</groupNumber>
+    <size>24</size>
+    <programmeID>P1003</programmeID>
+    <cohortID>CH1001</cohortID>
+    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1013">
+    <studyYear>3</studyYear>
+    <groupNumber>5</groupNumber>
+    <size>24</size>
+    <programmeID>P1003</programmeID>
+    <cohortID>CH1001</cohortID>
+    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1014">
+    <studyYear>3</studyYear>
+    <groupNumber>6</groupNumber>
+    <size>24</size>
+    <programmeID>P1003</programmeID>
+    <cohortID>CH1001</cohortID>
+    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1015">
+    <studyYear>3</studyYear>
+    <groupNumber>7</groupNumber>
+    <size>24</size>
+    <programmeID>P1003</programmeID>
+    <cohortID>CH1001</cohortID>
+    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1001">
+    <studyYear>3</studyYear>
+    <groupNumber>3</groupNumber>
+    <size>24</size>
+    <programmeID>P1001</programmeID>
+    <cohortID>CH1001</cohortID>
+    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1002">
+    <studyYear>3</studyYear>
+    <groupNumber>4</groupNumber>
+    <size>24</size>
+    <programmeID>P1001</programmeID>
+    <cohortID>CH1001</cohortID>
+    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1003">
+    <studyYear>3</studyYear>
+    <groupNumber>5</groupNumber>
+    <size>24</size>
+    <programmeID>P1001</programmeID>
+    <cohortID>CH1001</cohortID>
+    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1004">
+    <studyYear>3</studyYear>
+    <groupNumber>6</groupNumber>
+    <size>24</size>
+    <programmeID>P1001</programmeID>
+    <cohortID>CH1001</cohortID>
+    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1005">
+    <studyYear>3</studyYear>
+    <groupNumber>7</groupNumber>
+    <size>24</size>
+    <programmeID>P1001</programmeID>
+    <cohortID>CH1001</cohortID>
+    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+  </tutorialGroup>
 </tutorialGroups>

@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import domain.Class;
+import domain.Venue;
+import java.util.List;
 
 /**
  *
@@ -40,5 +42,86 @@ public class VenueDA {
         }
         connect.close();
         return classList;
+    }
+
+    public List<Venue> getVenueIdViaCourseCode(String courseCode) throws SQLException {
+
+        Connection connect = null;
+
+        List<Venue> output = new ArrayList<Venue>();
+        try {
+            connect = DBConnection.getConnection();
+            PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM venue WHERE courseCodeList LIKE ?");
+            pstmt.setString(1, '%' + courseCode + '%');
+
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Venue v = new Venue(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
+                output.add(v);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+        DBConnection.close(connect);
+        return output;
+
+    }
+
+    public List<Venue> getAllVenueRecords() throws SQLException {
+
+        Connection connect = null;
+
+        List<Venue> output = new ArrayList<Venue>();
+        try {
+            connect = DBConnection.getConnection();
+            PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM venue");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Venue v = new Venue(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
+                output.add(v);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+        DBConnection.close(connect);
+        return output;
+
+    }
+
+    public List<Venue> getSelectedRecords(String venueID) throws SQLException {
+
+        Connection connect = null;
+        List<Venue> output = new ArrayList<Venue>();
+
+        try {
+            connect = DBConnection.getConnection();
+            PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM venue WHERE venueID=? ");
+            pstmt.setString(1, venueID);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Venue v = new Venue();
+                v.setVenueID(rs.getString(1));
+                v.setBlock(rs.getString(2));
+                v.setVenueType(rs.getString(3));
+                v.setCapacity(rs.getInt(4));
+                if (rs.getString(5) == null  || rs.getString(5)=="") {
+                    v.setCourseCodeList("");
+                } else {
+                    v.setCourseCodeList(rs.getString(5));
+                }
+                output.add(v);
+
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        DBConnection.close(connect);
+        return output;
+
     }
 }

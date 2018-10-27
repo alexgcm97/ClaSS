@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <style>
+
+        </style>
+        <title>Select Courses</title>
+    </h:head>
+    <h:body>
+        <div align="center" class="btn">
+            <h1>Courses</h1>
+            <h:form>
+
+
+                <h:commandButton action="#{selection.courseButton()}" value="Next"/><br/>
+
+                <br/>
+
+                <p:dataTable id="checkboxDT"  value="#{selection.allCourseRecords}" var="c" selection="#{selection.selectedCourse}" rowKey="#{c.courseCode}" style="margin-bottom:0">
+                    <f:facet name="header">
+                        Courses
+                    </f:facet>
+                    <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                    <p:column headerText="Course Code">
+                        <h:outputText value="#{c.courseCode}" />
+                    </p:column>
+                    <p:column headerText="Course Name">
+                        <h:outputText value="#{c.courseName}" />
+                    </p:column>
+                    <p:column headerText="Lecture Hours">
+                        <h:outputText value="#{c.lecHours}" />
+                    </p:column>
+                    <p:column headerText="Tutorial Hours">
+                        <h:outputText value="#{c.tutHours}" />
+                    </p:column>
+                    <p:column headerText="Practical Hours">
+                        <h:outputText value="#{c.pracHours}" />
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+
+        </div>
+    </h:body>
+</html>
+

@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <style>
+        </style>
+        <title>Select Programme</title>
+    </h:head>
+    <h:body>
+        <div align="center" class="btn">
+             <h1>Programme</h1>
+            <h:form>
+                <h:commandButton action="#{selection.programmeButton()}" value="Next"/><br/>
+                <br/>
+                <p:dataTable id="programmeTable"  value="#{selection.allProgrammeRecords}" var="p" selection="#{selection.selectedProgramme}" rowKey="#{p.programmeID}" style="margin-bottom:0">
+                    <f:facet name="header">
+                        Programmes
+                    </f:facet>
+                    <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                    <p:column headerText="Programme Code" style="width:200px;text-align:left">
+                        <h:outputText value="#{p.programmeCode}" />
+                    </p:column>
+                    <p:column headerText="Programme Name" style="text-align:left">
+                        <h:outputText value="#{p.programmeName}" />
+                    </p:column>
+                
+                </p:dataTable>
+            </h:form>
+             
+        </div>
+    </h:body>
+</html>
+
