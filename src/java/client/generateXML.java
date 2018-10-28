@@ -9,6 +9,7 @@ import domain.Venue;
 import da.TutorialGroupDA;
 import domain.TutorialGroup;
 import java.io.File;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ import org.w3c.dom.Document;
 
 @ManagedBean
 @SessionScoped
-public class generateXML {
+public class generateXML implements Serializable {
 
     //Course
     private CourseDA cda = new CourseDA();
@@ -44,14 +45,14 @@ public class generateXML {
 
     //Tutorial Group
     private TutorialGroupDA tgda = new TutorialGroupDA();
-    
-    private final String filePath = "C:\\Users\\REPUBLIC\\Documents\\NetBeansProjects\\FYPFinal\\ClaSS\\src\\java\\xml\\";
-    
+
+    private final String filePath = "C:\\Users\\Alex\\Documents\\NetBeansProjects\\ClaSS\\src\\java\\xml\\";
+
     public void generateCourseXML(List<String> courseList) {
         List<CourseType> list = new ArrayList<CourseType>();
         List<CourseType> recordList = new ArrayList<CourseType>();
         String xmlFilePath = filePath + "Course.xml";
-        
+
         try {
             for (String id : courseList) {
                 list = cda.getSelectedRecords(id);
@@ -63,18 +64,18 @@ public class generateXML {
         } catch (SQLException ex) {
             Logger.getLogger(generateXML.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         try {
             DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-            
+
             DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
-            
+
             Document document = documentBuilder.newDocument();
 
             //root element
             Element root = document.createElement("courses");
             document.appendChild(root);
-            
+
             for (CourseType item : recordList) {
                 // course element
                 Element course = document.createElement("course");
@@ -99,7 +100,7 @@ public class generateXML {
                 Element courseCode = document.createElement("courseCode");
                 courseCode.appendChild(document.createTextNode(item.getCourseCode()));
                 course.appendChild(courseCode);
-                
+
             }
 
             //create the xml file
@@ -112,20 +113,20 @@ public class generateXML {
             StreamResult streamResult = new StreamResult(new File(xmlFilePath));
             transformer.transform(domSource, streamResult);
             System.out.println("Done generating Course.xml XML File");
-            
+
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
         } catch (TransformerException tfe) {
             tfe.printStackTrace();
         }
-        
+
     }
-    
+
     public void generateVenueXML(List<String> venueList) {
         List<Venue> list = new ArrayList<Venue>();
         List<Venue> recordList = new ArrayList<Venue>();
         String xmlFilePath = filePath + "Venue.xml";
-        
+
         try {
             for (String id : venueList) {
                 list = vda.getSelectedRecords(id);
@@ -137,18 +138,18 @@ public class generateXML {
         } catch (SQLException ex) {
             Logger.getLogger(generateXML.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         try {
             DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-            
+
             DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
-            
+
             Document document = documentBuilder.newDocument();
 
             //root element
             Element root = document.createElement("venues");
             document.appendChild(root);
-            
+
             for (Venue item : recordList) {
                 // venue element
                 Element venue = document.createElement("venue");
@@ -182,7 +183,7 @@ public class generateXML {
                     courseCodeList.appendChild(document.createTextNode(item.getCourseCodeList()));
                 }
                 venue.appendChild(courseCodeList);
-                
+
             }
 
             //create the xml file
@@ -195,20 +196,20 @@ public class generateXML {
             StreamResult streamResult = new StreamResult(new File(xmlFilePath));
             transformer.transform(domSource, streamResult);
             System.out.println("Done generating Venue.xml XML File");
-            
+
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
         } catch (TransformerException tfe) {
             tfe.printStackTrace();
         }
-        
+
     }
-    
+
     public void generateStaffXML(List<String> staffList) {
         List<Staff> list = new ArrayList<Staff>();
         List<Staff> recordList = new ArrayList<Staff>();
         String xmlFilePath = filePath + "Staff.xml";
-        
+
         for (String id : staffList) {
             list = sda.getSelectedStaff(id);
             for (Staff item : list) {
@@ -217,18 +218,18 @@ public class generateXML {
                 recordList.add(record);
             }
         }
-        
+
         try {
             DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-            
+
             DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
-            
+
             Document document = documentBuilder.newDocument();
 
             //root element
             Element root = document.createElement("staffs");
             document.appendChild(root);
-            
+
             for (Staff item : recordList) {
                 // staff element
                 Element staff = document.createElement("staff");
@@ -248,7 +249,7 @@ public class generateXML {
                 Element blockDay = document.createElement("blockDay");
                 if (item.getBlockDay() == 0) {
                     blockDay.appendChild(document.createTextNode("-"));
-                    
+
                 } else {
                     blockDay.appendChild(document.createTextNode(Integer.toString(item.getBlockDay())));
                 }
@@ -258,7 +259,7 @@ public class generateXML {
                 Element blockStart = document.createElement("blockStart");
                 if (item.getBlockStart() == 0.0) {
                     blockStart.appendChild(document.createTextNode("-"));
-                    
+
                 } else {
                     blockStart.appendChild(document.createTextNode(Double.toString(item.getBlockStart())));
                 }
@@ -268,7 +269,7 @@ public class generateXML {
                 Element blockDuration = document.createElement("blockDuration");
                 if (item.getBlockDuration() == 0.0) {
                     blockDuration.appendChild(document.createTextNode("-"));
-                    
+
                 } else {
                     blockDuration.appendChild(document.createTextNode(Double.toString(item.getBlockDuration())));
                 }
@@ -278,7 +279,7 @@ public class generateXML {
                 Element courseCodeList = document.createElement("courseCodeList");
                 if (item.getCourseCodeListS().equals("")) {
                     courseCodeList.appendChild(document.createTextNode("-"));
-                    
+
                 } else {
                     courseCodeList.appendChild(document.createTextNode(item.getCourseCodeListS()));
                 }
@@ -289,7 +290,7 @@ public class generateXML {
                 if (item.getLecGroupListS().equals("")) {
                     lecGroupList.appendChild(document.createTextNode("-"));
                 } else {
-                    
+
                     lecGroupList.appendChild(document.createTextNode(item.getLecGroupListS()));
                 }
                 staff.appendChild(lecGroupList);
@@ -298,7 +299,7 @@ public class generateXML {
                 Element tutGroupList = document.createElement("tutGroupList");
                 if (item.getTutGroupListS().equals("")) {
                     tutGroupList.appendChild(document.createTextNode("-"));
-                    
+
                 } else {
                     tutGroupList.appendChild(document.createTextNode(item.getTutGroupListS()));
                 }
@@ -308,12 +309,12 @@ public class generateXML {
                 Element pracGroupList = document.createElement("pracGroupList");
                 if (item.getPracGroupListS().equals("")) {
                     pracGroupList.appendChild(document.createTextNode("-"));
-                    
+
                 } else {
                     pracGroupList.appendChild(document.createTextNode(item.getPracGroupListS()));
                 }
                 staff.appendChild(pracGroupList);
-                
+
             }
 
             //create the xml file
@@ -326,20 +327,20 @@ public class generateXML {
             StreamResult streamResult = new StreamResult(new File(xmlFilePath));
             transformer.transform(domSource, streamResult);
             System.out.println("Done generating Staff.xml XML File");
-            
+
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
         } catch (TransformerException tfe) {
             tfe.printStackTrace();
         }
-        
+
     }
-    
+
     public void generateTutorialGroupXML(List<String> tgList) {
         List<TutorialGroup> list = new ArrayList<TutorialGroup>();
         List<TutorialGroup> recordList = new ArrayList<TutorialGroup>();
         String xmlFilePath = filePath + "TutorialGroup.xml";
-        
+
         try {
             for (String id : tgList) {
                 list = tgda.getSelectedRecords(id);
@@ -351,18 +352,18 @@ public class generateXML {
         } catch (SQLException ex) {
             Logger.getLogger(generateXML.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         try {
             DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-            
+
             DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
-            
+
             Document document = documentBuilder.newDocument();
 
             //root element
             Element root = document.createElement("tutorialGroups");
             document.appendChild(root);
-            
+
             for (TutorialGroup item : recordList) {
                 // tutorialGroup element
                 Element tutorialGroup = document.createElement("tutorialGroup");
@@ -402,7 +403,7 @@ public class generateXML {
                 Element courseCodeList = document.createElement("courseCodeList");
                 courseCodeList.appendChild(document.createTextNode(item.getCourseCodeList()));
                 tutorialGroup.appendChild(courseCodeList);
-                
+
             }
 
             //create the xml file
@@ -415,12 +416,12 @@ public class generateXML {
             StreamResult streamResult = new StreamResult(new File(xmlFilePath));
             transformer.transform(domSource, streamResult);
             System.out.println("Done generating TutorialGroup.xml XML File");
-            
+
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
         } catch (TransformerException tfe) {
             tfe.printStackTrace();
         }
-        
+
     }
 }

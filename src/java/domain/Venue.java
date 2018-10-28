@@ -9,9 +9,10 @@
  */
 package domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Venue {
+public class Venue  implements Serializable {
 
     private String venueID, block, venueType, courseCodeList;
     private int capacity;

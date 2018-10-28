@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <courses>
+  <course courseID="C1012">
+    <courseType>L</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>BACS2103</courseCode>
+  </course>
+  <course courseID="C1013">
+    <courseType>T</courseType>
+    <courseDuration>1.0</courseDuration>
+    <courseCode>BACS2103</courseCode>
+  </course>
+  <course courseID="C1014">
+    <courseType>P</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>BACS2103</courseCode>
+  </course>
   <course courseID="C1010">
     <courseType>L</courseType>
     <courseDuration>2.0</courseDuration>

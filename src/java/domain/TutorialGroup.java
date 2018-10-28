@@ -9,7 +9,9 @@
  */
 package domain;
 
-public class TutorialGroup {
+import java.io.Serializable;
+
+public class TutorialGroup  implements Serializable {
 
     private String groupID, programmeID, cohortID, programmeCode, month, year, courseCodeList;
     private int studyYear, groupNumber, size;

@@ -90,15 +90,7 @@
                     <f:selectItem itemValue = "4" itemLabel = "4 hours" /> 
                 </h:selectOneMenu>
                 <br/>
-
-                <c:choose>
-                    <c:when test="#{classDA.checkExist('G1001')}">
-                        <h:commandButton action="#{configuration.generateConfiguration()}" value="Replace Schedule" class="btn" onclick="return confirm('Are you sure you want to replace the previous generated schedules?')"/>
-                    </c:when>
-                    <c:otherwise>           
-                        <h:commandButton action="#{configuration.generateConfiguration()}" class="btn" value="Generate Schedule"/>
-                    </c:otherwise>
-                </c:choose>
+                <h:commandButton action="#{configuration.generateConfiguration()}" class="btn" value="Generate Schedule"/>
                 <h:commandButton action="setSettings.xhtml" class="btn" value="Back"/>
             </h:form>
         </div>

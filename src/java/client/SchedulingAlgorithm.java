@@ -907,6 +907,9 @@ public class SchedulingAlgorithm implements Serializable {
 
     public Staff getStaffWithGroup(String courseType, String courseCode, String groupID) {
         ArrayList<Staff> qualifiedList = new ArrayList();
+        System.out.println(groupID);
+        System.out.println(courseCode);
+        System.out.println(courseType);
         for (Staff s : staffList) {
             for (String courseCodeList : s.getCourseCodeList()) {
                 if (courseCodeList.contains(courseCode) && courseCodeList.contains(courseType)) {
@@ -1264,7 +1267,7 @@ public class SchedulingAlgorithm implements Serializable {
         double oriMaxBreak = maxBreak;
         int oriStudyDays = studyDays;
         boolean toRestart;
-        
+
         do {
             toRestart = false;
             if (runCount == exitLimit) {

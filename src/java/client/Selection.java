@@ -16,6 +16,7 @@ import domain.Staff;
 import domain.TutorialGroup;
 import domain.Venue;
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +32,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean(name = "selection")
 @SessionScoped
-public class Selection {
+public class Selection implements Serializable {
 
     private generateXML xml = new generateXML();
     private VenueDA vda = new VenueDA();
@@ -156,8 +157,6 @@ public class Selection {
         xml.generateTutorialGroupXML(selectedGroups);
         xml.generateStaffXML(selectedStaff);
         xml.generateVenueXML(selectedVenueID);
-        FacesContext.getCurrentInstance().getExternalContext().redirect("setConstraints.xhtml");
-
     }
 
     public void generateXML() {

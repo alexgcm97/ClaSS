@@ -5,11 +5,13 @@
  */
 package domain;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Teck Siong
  */
-public class Programme {
+public class Programme  implements Serializable {
 
     String programmeID;
     String programmeCode;

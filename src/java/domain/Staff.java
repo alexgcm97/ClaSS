@@ -5,13 +5,14 @@
  */
 package domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Alex
  */
-public class Staff {
+public class Staff  implements Serializable {
 
     private String staffID, staffName;
     private int blockDay;
