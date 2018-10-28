@@ -148,7 +148,7 @@ public class ScheduleInsert implements Serializable {
                             stmt = connect.prepareStatement("SELECT * FROM cohort WHERE cohortID = '" + tg.getCohortID() + "'");
                             ResultSet rs5 = stmt.executeQuery();
                             while (rs5.next()) {
-                                tg.setYear(rs5.getString("years"));
+                                tg.setYear(rs5.getString("year"));
                                 tg.setMonth(rs5.getString("month"));
 
                                 double st = cd.getStartTime();
@@ -324,7 +324,7 @@ public class ScheduleInsert implements Serializable {
                             stmt = connect.prepareStatement("SELECT * FROM cohort WHERE cohortID = '" + tg.getCohortID() + "'");
                             ResultSet rs5 = stmt.executeQuery();
                             while (rs5.next()) {
-                                tg.setYear(rs5.getString("years"));
+                                tg.setYear(rs5.getString("year"));
                                 tg.setMonth(rs5.getString("month"));
 
                                 double st = cd.getStartTime();
@@ -481,7 +481,7 @@ public class ScheduleInsert implements Serializable {
                             stmt = connect.prepareStatement("SELECT * FROM cohort WHERE cohortID = '" + tg.getCohortID() + "'");
                             ResultSet rs5 = stmt.executeQuery();
                             while (rs5.next()) {
-                                tg.setYear(rs5.getString("years"));
+                                tg.setYear(rs5.getString("year"));
                                 tg.setMonth(rs5.getString("month"));
 
                                 double st = cd.getStartTime();

@@ -67,7 +67,7 @@ public class ViewTimetable {
                 ResultSet rs3 = pstmt.executeQuery();
                 while (rs3.next()) {
                     grp.setMonth(rs3.getString("month"));
-                    grp.setYear(rs3.getString("years"));
+                    grp.setYear(rs3.getString("year"));
 
                     group.add(grp);
                 }
