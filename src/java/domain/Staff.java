@@ -24,7 +24,7 @@ public class Staff {
 
     }
 
-    public Staff(String staffID, String staffName, int blockDay, double blockStart, double blockDuration, String courseCodeListS, String tutGroupListS, String lecGroupListS, String pracGroupListS) {
+    public Staff(String staffID, String staffName, int blockDay, double blockStart, double blockDuration, String courseCodeListS, String lecGroupListS, String tutGroupListS, String pracGroupListS) {
         this.staffID = staffID;
         this.staffName = staffName;
         this.blockDay = blockDay;
