@@ -12,6 +12,8 @@ package domain;
 public class Cohort {
 
     String cohortID;
-    int years;
+    int year;
     int month;
+    
+    
 }
