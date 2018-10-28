@@ -10,7 +10,6 @@ import domain.TutorialGroup;
 import domain.Class;
 import domain.scheduleDetail;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,6 +36,8 @@ public class ScheduleInsert implements Serializable {
     String staffID;
     String sTime = "", eTime = "";
     private Connection connect;
+    
+    private final String filePath = "C:\\Users\\Alex\\Documents\\NetBeansProjects\\ClaSS\\src\\java\\xml\\Configuration.xml";
 
     //Generate staff timetable for view
     public String view_Staff() throws SQLException, ParserConfigurationException, SAXException, IOException {
@@ -54,9 +55,7 @@ public class ScheduleInsert implements Serializable {
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Element e;
 
-        String fileName = "../xml/Configuration.xml";
-        InputStream inputStream = getClass().getResourceAsStream(fileName);
-        Document doc = dBuilder.parse(inputStream);
+        Document doc = dBuilder.parse(filePath);
         NodeList nodes = doc.getElementsByTagName("configuration");
 
         e = (Element) nodes.item(0);
@@ -232,9 +231,7 @@ public class ScheduleInsert implements Serializable {
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Element e;
 
-        String fileName = "../xml/Configuration.xml";
-        InputStream inputStream = getClass().getResourceAsStream(fileName);
-        Document doc = dBuilder.parse(inputStream);
+        Document doc = dBuilder.parse(filePath);
         NodeList nodes = doc.getElementsByTagName("configuration");
 
         e = (Element) nodes.item(0);
@@ -389,9 +386,7 @@ public class ScheduleInsert implements Serializable {
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Element e;
 
-        String fileName = "../xml/Configuration.xml";
-        InputStream inputStream = getClass().getResourceAsStream(fileName);
-        Document doc = dBuilder.parse(inputStream);
+        Document doc = dBuilder.parse(filePath);
         NodeList nodes = doc.getElementsByTagName("configuration");
 
         e = (Element) nodes.item(0);
