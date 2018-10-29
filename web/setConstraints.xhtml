@@ -43,14 +43,13 @@
     <h:body>
         <div>
             <h1>Scheduling Advanced Setting</h1>
-            <h:form id="form">
+            <h:form>
                 <h3>Optimization</h3>
                 <h:selectBooleanCheckbox title="The system will balance the number of classes evenly over the number of study days." value="#{configuration.toBalanceClass}">
-                    <p:ajax update="form"/>
                 </h:selectBooleanCheckbox>
                 <h:outputText value="Balance Number of Classes Per Day"/><br/>
                 <h:selectBooleanCheckbox value="#{configuration.setBreak}">
-                    <p:ajax update="form"/>
+                    <f:ajax render="maxBreak"/>
                 </h:selectBooleanCheckbox>
                 <h:outputText value="Limit Maximum Break Time Between Classes: "/>
                 <h:selectOneMenu id="maxBreak" value="#{configuration.maxBreak}" class="ddl" disabled="#{!configuration.setBreak}">
@@ -62,7 +61,9 @@
                 </h:selectOneMenu>
                 <br/>
                 <h:selectBooleanCheckbox value="#{configuration.toBlockTime}">
-                    <p:ajax update="form"/>
+                    <f:ajax render="blockDay"/>
+                    <f:ajax render="blockStart"/>
+                    <f:ajax render="blockDuration"/>
                 </h:selectBooleanCheckbox><span>Insert Block -</span>
                 <span>Day: </span><h:selectOneMenu id="blockDay" value="#{configuration.blockDay}" class="ddl" disabled="#{!configuration.toBlockTime}">
                     <f:selectItem itemValue = "1" itemLabel = "Monday" /> 
