@@ -14,13 +14,13 @@
         <div align="center" class="btn">
             <h1>Venues</h1>
             <h:form>
-                <h:commandButton action="#{selection.venueButton()}" value="Next"/><br/>
+                <h:commandButton action="#{selection.venueButton()}" value="Generate Schedule"/><br/>
                 <br/>
                 <p:dataTable id="programmeTable"  value="#{selection.allVenueRecords}" var="v" disabledSelection="#{selection.checkValue(v.venueID)=='true'}" selection="#{selection.selectedVenue}" rowKey="#{v.venueID}" style="margin-bottom:0">
                     <f:facet name="header">
                         Venues
                     </f:facet>
-                    
+
                     <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 
                     <p:column headerText="Venue" style="width:200px;text-align:left">

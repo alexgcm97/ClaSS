@@ -91,7 +91,7 @@ public class Configuration implements Serializable {
         DOMSource source = new DOMSource(doc);
         StreamResult result = new StreamResult(new File(filePath + "Configuration.xml"));
         transformer.transform(source, result);
-        FacesContext.getCurrentInstance().getExternalContext().redirect("generateSchedule.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("ProgrammeSelection.xhtml");
     }
 
     public Configuration getInstance() {

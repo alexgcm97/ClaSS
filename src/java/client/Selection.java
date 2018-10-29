@@ -157,6 +157,8 @@ public class Selection implements Serializable {
         xml.generateTutorialGroupXML(selectedGroups);
         xml.generateStaffXML(selectedStaff);
         xml.generateVenueXML(selectedVenueID);
+        FacesContext.getCurrentInstance().getExternalContext().redirect("generateSchedule.xhtml");
+
     }
 
     public void generateXML() {
