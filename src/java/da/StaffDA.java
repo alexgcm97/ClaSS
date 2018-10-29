@@ -90,22 +90,22 @@ public class StaffDA {
                 s.setBlockDay(rs.getInt(3));
                 s.setBlockStart(rs.getDouble(4));
                 s.setBlockDuration(rs.getDouble(5));
-                if (rs.getString(6) == null || rs.getString(6)== "") {
+                if (rs.getString(6) == null || rs.getString(6).equals("")) {
                     s.setCourseCodeListS("");
                 } else {
                     s.setCourseCodeListS(rs.getString(6));
                 }
-                if (rs.getString(7) == null || rs.getString(7)=="") {
+                if (rs.getString(7) == null || rs.getString(7).equals("")) {
                     s.setLecGroupListS("");
                 } else {
                     s.setLecGroupListS(rs.getString(7));
                 }
-                if (rs.getString(8) == null  || rs.getString(8)=="") {
+                if (rs.getString(8) == null || rs.getString(8).equals("")) {
                     s.setTutGroupListS("");
                 } else {
                     s.setTutGroupListS(rs.getString(8));
                 }
-                if (rs.getString(9) == null  || rs.getString(9)=="") {
+                if (rs.getString(9) == null || rs.getString(9).equals("")) {
                     s.setPracGroupListS("");
                 } else {
                     s.setPracGroupListS(rs.getString(9));
