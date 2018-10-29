@@ -36,15 +36,11 @@
                 background-color: #45a049;
             }
         </style>
-
         <title>Scheduling Initial Setting</title>
     </h:head>
     <h:body>
         <div>
             <h:form>
-                <h:outputScript rendered="#{schedulingAlgorithm.errorCode == 1}">
-                    alert("Insufficient amount of data to generate perfect schedules.");
-                </h:outputScript>
                 <h1>Scheduling Initial Setting</h1>
                 <h:outputText value="No of Study Days: "/>
                 <h:selectOneMenu value="#{configuration.studyDays}" class="ddl">
@@ -65,7 +61,7 @@
                     <f:selectItem itemValue="19.00" itemLabel ="7 p.m."/>
                     <f:selectItem itemValue = "20.00" itemLabel = "8 p.m." /> 
                 </h:selectOneMenu><br/>
-                <h:commandButton action="setConstraints.xhtml" class="btn" value="Next"/>
+                <h:commandButton action="setConstraints?faces-redirect=true" class="btn" value="Next"/>
             </h:form>
         </div>
     </h:body>

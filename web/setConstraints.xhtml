@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <style>
             div {
@@ -42,11 +43,14 @@
     <h:body>
         <div>
             <h1>Scheduling Advanced Setting</h1>
-            <h:form>
+            <h:form id="form">
                 <h3>Optimization</h3>
-                <h:selectBooleanCheckbox title="The system will balance the number of classes evenly over the number of study days." value="#{configuration.toBalanceClass}"></h:selectBooleanCheckbox><h:outputText value="Balance Number of Classes Per Day"/><br/>
+                <h:selectBooleanCheckbox title="The system will balance the number of classes evenly over the number of study days." value="#{configuration.toBalanceClass}">
+                    <p:ajax update="form"/>
+                </h:selectBooleanCheckbox>
+                <h:outputText value="Balance Number of Classes Per Day"/><br/>
                 <h:selectBooleanCheckbox value="#{configuration.setBreak}">
-                    <f:ajax render="maxBreak"/>
+                    <p:ajax update="form"/>
                 </h:selectBooleanCheckbox>
                 <h:outputText value="Limit Maximum Break Time Between Classes: "/>
                 <h:selectOneMenu id="maxBreak" value="#{configuration.maxBreak}" class="ddl" disabled="#{!configuration.setBreak}">
@@ -58,11 +62,9 @@
                 </h:selectOneMenu>
                 <br/>
                 <h:selectBooleanCheckbox value="#{configuration.toBlockTime}">
-                    <f:ajax render="blockDay"/>
-                    <f:ajax render="blockStart"/>
-                    <f:ajax render="blockDuration"/>
+                    <p:ajax update="form"/>
                 </h:selectBooleanCheckbox><span>Insert Block -</span>
-                <span>Day: </span><h:selectOneMenu id="blockDay" value="#{configuration.blockDay}" class="ddl" disabled="#{!curation.blockDay}onfiguration.toBlockTime}">
+                <span>Day: </span><h:selectOneMenu id="blockDay" value="#{configuration.blockDay}" class="ddl" disabled="#{!configuration.toBlockTime}">
                     <f:selectItem itemValue = "1" itemLabel = "Monday" /> 
                     <f:selectItem itemValue = "2" itemLabel = "Tuesday" /> 
                     <f:selectItem itemValue = "3" itemLabel = "Wednesday" /> 
@@ -91,7 +93,8 @@
                 </h:selectOneMenu>
                 <br/>
                 <h:commandButton action="#{configuration.generateConfiguration()}" class="btn" value="Proceed to Data Selection"/>
-                <h:commandButton action="setSettings.xhtml" class="btn" value="Back"/>
+                <h:commandButton action="setSettings?faces-redirect=true" class="btn" value="Back" immediate="true"/><br/>
+                <p:message for="blockStart" id="msg" display="text" style="width:50%"/>
             </h:form>
         </div>
     </h:body>
