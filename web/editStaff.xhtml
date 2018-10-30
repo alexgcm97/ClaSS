@@ -8,7 +8,7 @@
             body{
                 background-color: #a6dff4;
             }
-            form{
+            .form{
                 background-color: white;
                 height: 500px;
             }
@@ -27,7 +27,7 @@
     <h:body>
         <div align="center">
             <h1>Update Staff</h1>
-            <h:form>
+            <h:form class="form">
                 <table>
                     <tr>
                         <td><h1>Staff Information</h1></td>
@@ -61,7 +61,7 @@
                     </tr>
                     <tr>
                         <td>Block Duration:</td>
-                        <td><h:selectOneMenu value="#{staffManage.s.blockDuration}" >
+                        <td><h:selectOneMenu value="#{staffManage.s.blockDurations}" >
                                 <f:selectItem itemValue="1" itemLabel="1 hours" />
                                 <f:selectItem itemValue="2" itemLabel="2 hours"/>
                                 <f:selectItem itemValue="3" itemLabel="3 hours"/>     
@@ -75,25 +75,28 @@
                     </tr>
                     <tr>
                         <td>Course Code List: </td>
-                        <td><h:inputText value="#{staffManage.s.courseCodeList}" /><br/></td>
+                        <td><h:inputText value="#{staffManage.s.courseCodeListS}" /><br/></td>
                     </tr>
                     <tr>
                         <td>Lecture Group: </td>
-                        <td><h:inputText value="#{staffManage.s.lecGroupList}" /><br/></td>
+                        <td><h:inputText value="#{staffManage.s.lecGroupListS}" /><br/></td>
                     </tr>
                     <tr>
                         <td>Tutorial Group: </td>
-                        <td><h:inputText value="#{staffManage.s.tutGroupList}" /><br/></td>
+                        <td><h:inputText value="#{staffManage.s.tutGroupListS}" /><br/></td>
                     </tr>
                     <tr>
                         <td>Practical Group: </td>
-                        <td><h:inputText value="#{staffManage.s.pracGroupList}" /><br/></td>
+                        <td><h:inputText value="#{staffManage.s.pracGroupListS}" /><br/></td>
                     </tr>
 
 
                 </table>
                 <br/><h:commandButton action="#{staffManage.updateStaff()}" value="Submit"/>
 
+                
+            </h:form>
+            <h:form>
                 <h:commandButton action="EditInfo" value="Done"/><br/>
             </h:form>
         </div>

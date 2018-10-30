@@ -15,11 +15,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author Alex
  */
+@ManagedBean
+@SessionScoped
 public class StaffDA {
 
     private Connection connect;
@@ -165,13 +169,13 @@ public class StaffDA {
                 staffID = "S1001";
             }
 
-            PreparedStatement pstmt = connect.prepareStatement("INSERT INTO STAFF VALUES(?,?,?,?,?,?,?,?,?)");
+            PreparedStatement pstmt = connect.prepareStatement("INSERT INTO STAFF VALUES (?,?,?,?,?,?,?,?,?)");
 
             pstmt.setString(1, staffID);
             pstmt.setString(2, s.getStaffName());
-            pstmt.setDouble(3, s.getBlockDay());
+            pstmt.setInt(3, s.getBlockDay());
             pstmt.setDouble(4, s.getBlockStart());
-            pstmt.setDouble(5, s.getBlockDuration());
+            pstmt.setInt(5, s.getBlockDurations());
             pstmt.setString(6, s.getCourseCodeListS());
             pstmt.setString(7, s.getLecGroupListS());
             pstmt.setString(8, s.getTutGroupListS());
@@ -181,7 +185,7 @@ public class StaffDA {
 
             
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
+            System.out.println(e);
 
         }
 
@@ -202,7 +206,7 @@ public class StaffDA {
         return s;
     }
 
-    public Staff get(String staffID) throws SQLException {
+    public Staff get(String staffID) {
   
         Staff s = new Staff();
         try {
@@ -214,6 +218,9 @@ public class StaffDA {
             if (rs.next()) {
                 s = new Staff(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));             
             }   
+            else{
+                System.out.println("hello");
+            }
         } catch (SQLException e) {
             System.out.println(e);
             

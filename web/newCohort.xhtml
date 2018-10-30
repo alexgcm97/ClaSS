@@ -56,9 +56,12 @@
                             <h:message for="month" style="color: red" /></td>
                     </tr>
                  <tr>
-                        <td>Month:</td>
-                        <td><h:inputText id="entry" value="#{cohortManage.c.entryYear}" required="true"  requiredMessage="*Invalid Input" maxlength="4"/> *1 for January
-                            <h:message for="entry" style="color: red" /></td>
+                        <td>Entry Year:</td>
+                        <td><h:selectOneMenu value="#{cohortManage.c.entryYear}" >
+                                <f:selectItem itemValue="1" itemLabel="1" />
+                                <f:selectItem itemValue="2" itemLabel="2"/>
+                                <f:selectItem itemValue="3" itemLabel="3"/>
+                            </h:selectOneMenu></td>
                     </tr>
                     
                 </table><br/>

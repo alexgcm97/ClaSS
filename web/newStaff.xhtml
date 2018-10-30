@@ -75,7 +75,7 @@
                     </tr>
                     <tr>
                         <td>Block Duration: </td>
-                        <td><h:selectOneMenu value="#{staffManage.s.blockDuration}" >
+                        <td><h:selectOneMenu value="#{staffManage.s.blockDurations}" >
                                 <f:selectItem itemValue="0" itemLabel="0 hours" />
                                 <f:selectItem itemValue="1" itemLabel="1 hours" />
                                 <f:selectItem itemValue="2" itemLabel="2 hours"/>
@@ -91,19 +91,19 @@
                     </tr>
                     <tr>
                         <td>Course Code List: </td>
-                        <td><h:inputText value="#{staffManage.s.courseCodeList}" /><br/></td>
+                        <td><h:inputText value="#{staffManage.s.courseCodeListS}" /><br/></td>
                     </tr>
                     <tr>
                         <td>Lecture Group: </td>
-                        <td><h:inputText value="#{staffManage.s.lecGroupList}" /><br/></td>
+                        <td><h:inputText value="#{staffManage.s.lecGroupListS}" /><br/></td>
                     </tr>
                      <tr>
                         <td>Tutorial Group: </td>
-                        <td><h:inputText value="#{staffManage.s.tutGroupList}" /><br/></td>
+                        <td><h:inputText value="#{staffManage.s.tutGroupListS}" /><br/></td>
                     </tr>
                     <tr>
                         <td>Practical Group: </td>
-                        <td><h:inputText value="#{staffManage.s.pracGroupList}" /><br/></td>
+                        <td><h:inputText value="#{staffManage.s.pracGroupListS}" /><br/></td>
                     </tr>
                 </table>
                 
@@ -115,7 +115,7 @@
             </h:form>
               <h:form>
                   <br/>
-                  <h:commandButton action="selectCourse" value="Done" styleClass="btn blue"/><br/>
+                  <h:commandButton action="selectStaff" value="Done" styleClass="btn blue"/><br/>
               </h:form>
         </div>
 

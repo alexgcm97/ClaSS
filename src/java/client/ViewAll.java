@@ -243,9 +243,9 @@ public class ViewAll implements Serializable {
 
             Cohort c = new Cohort();
             c.setCohortID(rs.getString("cohortID"));
-            c.setYear(rs.getInt("year"));
-            c.setMonth(rs.getInt("month"));
-            c.setEntryYear(rs.getInt("entryYear"));
+            c.setYear(rs.getString("year"));
+            c.setMonth(rs.getString("month"));
+            c.setEntryYear(rs.getString("entryYear"));
 
             Cohort.add(c);
 

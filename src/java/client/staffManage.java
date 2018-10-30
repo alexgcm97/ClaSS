@@ -8,6 +8,7 @@ package client;
 import da.StaffDA;
 import domain.Staff;
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.SQLException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -19,7 +20,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-public class staffManage {
+public class staffManage implements Serializable {
 
     public StaffDA sda = new StaffDA();
 
@@ -42,7 +43,7 @@ public class staffManage {
 
     public void staffInsert() throws SQLException, IOException {
         sda.insertStaff(s);
-        FacesContext.getCurrentInstance().getExternalContext().redirect("step4Staff.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("selectStaff.xhtml");
     }
 
     public void retrieveStaff(String staffID) throws SQLException, IOException {

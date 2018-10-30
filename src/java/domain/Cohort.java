@@ -17,9 +17,9 @@ import javax.faces.bean.SessionScoped;
 public class Cohort {
 
     String cohortID;
-    int year, month, entryYear;
+    String year, month, entryYear;
 
-    public Cohort(String cohortID, int year, int month, int entryYear) {
+    public Cohort(String cohortID, String year, String month, String entryYear) {
         this.cohortID = cohortID;
         this.year = year;
         this.month = month;
@@ -39,27 +39,27 @@ public class Cohort {
         this.cohortID = cohortID;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
-    public int getMonth() {
+    public String getMonth() {
         return month;
     }
 
-    public void setMonth(int month) {
+    public void setMonth(String month) {
         this.month = month;
     }
 
-    public int getEntryYear() {
+    public String getEntryYear() {
         return entryYear;
     }
 
-    public void setEntryYear(int entryYear) {
+    public void setEntryYear(String entryYear) {
         this.entryYear = entryYear;
     }
 

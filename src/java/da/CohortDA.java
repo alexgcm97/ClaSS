@@ -77,9 +77,9 @@ public class CohortDA {
             PreparedStatement pstmt = connect.prepareStatement("INSERT INTO COHORT VALUES(?,?,?,?)");
 
             pstmt.setString(1, cohortID);
-            pstmt.setInt(2, c.getYear());
-            pstmt.setInt(3, c.getMonth());
-            pstmt.setInt(4, c.getEntryYear());
+            pstmt.setString(2, c.getYear());
+            pstmt.setString(3, c.getMonth());
+            pstmt.setString(4, c.getEntryYear());
 
             pstmt.executeUpdate();
             this.success = true;
@@ -115,7 +115,7 @@ public class CohortDA {
             pstmt.setString(1, cohortID);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                c = new Cohort(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
+                c = new Cohort(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -124,35 +124,17 @@ public class CohortDA {
 
     }
 
-    public Cohort editCohort(String cohortID) {
-        Connection connect;
-        Cohort c = new Cohort();
-        try {
-            connect = DBConnection.getConnection();
-            PreparedStatement pstmt = connect.prepareStatement("select * from COHORT where COHORTID = ?");
-            pstmt.setString(1, cohortID);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                c = new Cohort(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return c;
-
-    }
 
     public void updateCohort(Cohort c) {
         Connection connect;
         
         try {
             connect = DBConnection.getConnection();
-            PreparedStatement ps = connect.prepareStatement("update Cohort set year=?, month=?, entryYear=?  where cohortID=?");
+            PreparedStatement ps = connect.prepareStatement("update Cohort set YEAR=?, MONTH=?, ENTRYYEAR=?  where COHORTID=?");
             
-            ps.setInt(1, c.getYear());
-            ps.setInt(2, c.getMonth());
-            ps.setInt(3, c.getEntryYear());
+            ps.setString(1, c.getYear());
+            ps.setString(2, c.getMonth());
+            ps.setString(3, c.getEntryYear());
             ps.setString(4, c.getCohortID());
 
             ps.executeUpdate();

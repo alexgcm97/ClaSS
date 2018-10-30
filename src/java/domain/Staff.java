@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Staff  implements Serializable {
 
     private String staffID, staffName;
-    private int blockDay;
+    private int blockDay, blockDurations;
     private double blockStart, blockDuration;
     private ArrayList<Class> classList;
     private ArrayList<String> courseCodeList, tutGroupList, lecGroupList, pracGroupList;
@@ -36,6 +36,20 @@ public class Staff  implements Serializable {
         this.lecGroupListS = lecGroupListS;
         this.pracGroupListS = pracGroupListS;
     }
+
+    public Staff(String staffID, String staffName, int blockDay, double blockStart, int blockDurations, String courseCodeListS, String tutGroupListS, String lecGroupListS, String pracGroupListS) {
+        this.staffID = staffID;
+        this.staffName = staffName;
+        this.blockDay = blockDay;
+        this.blockDurations = blockDurations;
+        this.blockStart = blockStart;
+        this.courseCodeListS = courseCodeListS;
+        this.tutGroupListS = tutGroupListS;
+        this.lecGroupListS = lecGroupListS;
+        this.pracGroupListS = pracGroupListS;
+    }
+    
+    
 
     public Staff(String staffID, String staffName) {
         this.staffID = staffID;
@@ -187,4 +201,14 @@ public class Staff  implements Serializable {
     public void setClassList(ArrayList<Class> classList) {
         this.classList = classList;
     }
+
+    public int getBlockDurations() {
+        return blockDurations;
+    }
+
+    public void setBlockDurations(int blockDurations) {
+        this.blockDurations = blockDurations;
+    }
+    
+    
 }
