@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <style>
+            .btn{
+                transition-duration: 0.4s;
+                padding: 10px 24px;
+                border-radius: 12px;
+            }
+            .btn .green:hover{
+                background-color:  #4CAF50;
+                color: white;
+            }
+            body{
+                background-color: #a6dff4;
+            }
+            .form{
+                background-color: white;
+                height: 200px;
+            }
+             .btn .blue:hover{
+                background-color: dodgerblue;
+                color: white;
+            }
+        </style>
+        <title>New Venue</title>
+    </h:head>
+    <h:body>
+
+        <h:outputScript rendered="#{venueDA.success}">
+            alert("Successfully!!!");
+        </h:outputScript>
+        <h:outputScript rendered="#{venueDA.message}">
+            alert("Error!!!");
+        </h:outputScript>
+
+        <div align="center" class="btn">
+            <h1>New Venue</h1>
+            <h:form class="form">
+                <table>
+                    <br/>
+                    <tr>
+                        <td>Venue ID:</td>
+                        <td><h:inputText id="id" value="#{venueManage.v.venueID}" required="true" requiredMessage=" *Empty field"/>
+                            <h:message for="id" style="color:red"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Venue Type:</td>
+                        <td><h:selectOneMenu value="#{venueManage.v.venueType}" >
+                                <f:selectItem itemValue="Hall" itemLabel="Hall" />
+                                <f:selectItem itemValue="Room" itemLabel="Room"/>
+                                <f:selectItem itemValue="Lab" itemLabel="Lab"/>
+                                <f:ajax render="selectCourseCode"/>
+                                <f:ajax render="selectBlock"/>
+                            </h:selectOneMenu> </td>                        
+                    </tr>
+                    <tr>
+                        <td>Block:</td>
+                        <td><h:inputText id="block" value="#{venueManage.v.block}" required="true" requiredMessage=" *Empty field " maxlength="2"/>
+                               
+                            
+                           <h:message for="block" style="color: red"/></td>
+                    </tr>
+                    <tr>
+                        <td>Capacity:</td>
+                        <td><h:inputText value="#{venueManage.v.capacity}" required="true" id="capacity" requiredMessage=" *Empty field " converterMessage=" *Invalid input">
+                                <f:convertNumber integerOnly="true" />
+                            </h:inputText>
+                            <h:message for="capacity" style="color: red"/>
+
+                         </td>
+                    </tr>
+
+                </table>
+
+                <h:panelGroup  id="selectCourseCode">
+                    <table>
+                        <tr> 
+                            <h:panelGroup rendered="#{venueManage.v.venueType eq 'Lab'}">
+                                <td>
+                                    <h:outputLabel for="multiple" value="Course Code List: " />
+                                </td>
+                                <td>
+                                    <p:selectCheckboxMenu multiple="true" value="#{venueManage.courseCodeStr}" label="courseCode" filter="true" filterMatchMode="startsWith">
+                                        <f:selectItems value="#{venueManage.courseCodeList}" />
+                                    </p:selectCheckboxMenu>
+                                </td>
+                            </h:panelGroup>
+                        </tr>
+                    </table>
+                </h:panelGroup>
+                <h:commandButton action="#{venueManage.venueInsert()}" value="Submit" styleClass="btn green">
+                   
+
+                </h:commandButton>
+            </h:form>
+            <h:form>
+                <br/>
+                <h:commandButton action="selectVenue" value="Done" styleClass="btn blue"/>
+            </h:form>
+
+        </div>
+    </h:body>
+</html>
+

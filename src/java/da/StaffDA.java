@@ -11,7 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import domain.Class;
 import domain.Staff;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -120,5 +122,158 @@ public class StaffDA {
         }
         DBConnection.close(connect);
         return output;
+    }
+      boolean success, message;
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public boolean isMessage() {
+        return message;
+    }
+
+    public void setMessage(boolean message) {
+        this.message = message;
+    }
+
+    public void insertStaff(Staff s) throws SQLException {
+        String staffID = getMaxID();
+        try {
+            connect = DBConnection.getConnection();
+            Statement stmt = connect.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT STAFFID FROM STAFF");
+
+            ArrayList<Integer> ls = new ArrayList<>();
+
+            while (rs.next()) {
+                try {
+                    ls.add(Integer.parseInt(rs.getString(1).split("S")[1]));
+                } catch (Exception ex) {
+                    System.out.println("Invalid Exception");
+                }
+            }
+
+            if (ls.size() > 0) {
+                int max = Collections.max(ls) + 1;
+                staffID = "S" + max;
+            } else {
+                staffID = "S1001";
+            }
+
+            PreparedStatement pstmt = connect.prepareStatement("INSERT INTO STAFF VALUES(?,?,?,?,?,?,?,?,?)");
+
+            pstmt.setString(1, staffID);
+            pstmt.setString(2, s.getStaffName());
+            pstmt.setDouble(3, s.getBlockDay());
+            pstmt.setDouble(4, s.getBlockStart());
+            pstmt.setDouble(5, s.getBlockDuration());
+            pstmt.setString(6, s.getCourseCodeListS());
+            pstmt.setString(7, s.getLecGroupListS());
+            pstmt.setString(8, s.getTutGroupListS());
+            pstmt.setString(9, s.getPracGroupListS());
+           
+            pstmt.executeUpdate();
+
+            
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+
+        }
+
+    }
+
+  public Staff deleteStaff(String staffID) {
+      
+        Staff s = new Staff();
+        try {
+            connect = DBConnection.getConnection();
+            PreparedStatement ps = connect.prepareStatement("delete from Staff where StaffID = ?");
+            ps.setString(1, staffID);
+            System.out.println(ps);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return s;
+    }
+
+    public Staff get(String staffID) throws SQLException {
+  
+        Staff s = new Staff();
+        try {
+            connect = DBConnection.getConnection();
+            PreparedStatement pstmt = connect.prepareStatement("select * from Staff where staffID = ?");
+            pstmt.setString(1, staffID);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                s = new Staff(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));             
+            }   
+        } catch (SQLException e) {
+            System.out.println(e);
+            
+        }
+        return s;
+    }
+        
+    public void updateStaff(Staff s) {
+  
+        try {
+            connect = DBConnection.getConnection();
+            PreparedStatement ps = connect.prepareStatement("update Staff set staffName=?, blockday=?, blockstart=?, blockduration=?, coursecodelist=?, lecgrouplist=?, tutgrouplist=?, pracgrouplist=? where staffID=?");
+            
+            ps.setString(1, s.getStaffName());
+            ps.setInt(2, s.getBlockDay());
+            ps.setDouble(3, s.getBlockStart());
+            ps.setDouble(4, s.getBlockDuration());
+            ps.setString(5, s.getCourseCodeListS());
+            ps.setString(6, s.getLecGroupListS());
+            ps.setString(7, s.getTutGroupListS());
+            ps.setString(8, s.getPracGroupListS());         
+            ps.setString(9, s.getStaffID());
+            
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+    }
+
+    public String getMaxID() {
+     
+        String staffID = "";
+        try {
+            connect = DBConnection.getConnection();
+            Statement stmt = connect.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT STAFFID FROM STAFF");
+
+            ArrayList<Integer> ls = new ArrayList<>();
+
+            while (rs.next()) {
+                try {
+                    ls.add(Integer.parseInt(rs.getString(1).split("S")[1]));
+                } catch (Exception ex) {
+                    System.out.println("Invalid Exception");
+                }
+            }
+
+            if (ls.size() > 0) {
+                int max = Collections.max(ls) + 1;
+                staffID = "S" + max;
+            } else {
+                staffID = "S";
+            }
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+        }
+        System.out.println(staffID);
+        return staffID;
     }
 }

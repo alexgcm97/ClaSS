@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <style>
+            .order-table{   
+                border-collapse:collapse;
+
+            }
+            .order-table-header{
+                text-align:center;
+                background:none repeat scroll 0 0 #E5E5E5;
+                border-bottom:1px solid #BBBBBB;
+                padding:16px;
+            }
+            .order-table-odd-row{
+                text-align:center;
+                background:none repeat scroll 0 0 #FFFFFFF;
+                border-top:1px solid #BBBBBB;
+            }
+            .order-table-even-row{
+                text-align:center;
+                background:none repeat scroll 0 0 #F9F9F9;
+                border-top:1px solid #BBBBBB;
+            }
+
+            body{
+                background-color: #a6dff4;
+            }
+            .form{
+                background-color: white;
+                height: 300px;
+                
+            }
+             .btn{
+                transition-duration: 0.4s;
+                padding: 10px 24px;
+                border-radius: 12px;
+            }
+            .btn .green:hover{
+                background-color:  #4CAF50;
+                color: white;
+            }
+
+        </style>
+        <title>Select Programme and Cohort</title>
+    </h:head>
+    <h:body>
+        <div align="center" class="btn">
+            <h1>Available Programme</h1>
+              <div style="float: left; width: 200px">
+                    <h:form>
+                        <br/>
+                        <h:commandButton value="Create New Programme" action="newProgramme" styleClass="btn green"/>
+                    </h:form>   
+                </div>
+            <h:form class="form" >
+                <br/>
+              
+                <div style="height: 200px; overflow: auto;">
+                    <h:dataTable value = "#{viewAll.allProgramme}" var = "p"
+                                 styleClass="order-table"
+                                 headerClass="order-table-header"
+                                 rowClasses="order-table-odd-row,order-table-even-row">
+
+                        <h:column> 	
+                            <f:facet name="header">Programme ID</f:facet>
+                                #{p.programmeID}
+                        </h:column>
+                        <h:column> 	
+                            <f:facet name="header">Programme Code</f:facet>
+                                #{p.programmeCode}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Programme Name</f:facet>
+                                #{p.programmeName}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Edit</f:facet>
+                            <h:commandButton value="Edit" action="#{programmeManage.retrieveProgramme(p.programmeID)}" style="background-color: green; color: white"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Delete</f:facet>
+                            <h:commandButton value="Delete" action="#{programmeManage.deleteProgramme(p.programmeID)}" style="background-color: red; color: white"/>
+
+                        </h:column>
+                    </h:dataTable>
+                </div>
+                <br/>
+
+                <h:commandButton value="Done" action="EditInfo" styleClass="btn green"/>
+            </h:form>
+            <h1>Available Cohort</h1>
+            
+              <div style="float: left; width: 150px">
+                    <h:form>
+                        <br/>
+                        <h:commandButton value="Create New Cohort" action="newCohort" styleClass="btn green"/>
+                    </h:form>   
+                </div>
+            <h:form  class="form">
+                <br/>
+                <div style="height: 200px; overflow: auto;">
+                    <h:dataTable value = "#{viewAll.allCohort}" var = "c"
+                                 styleClass="order-table"
+                                 headerClass="order-table-header"
+                                 rowClasses="order-table-odd-row,order-table-even-row">
+
+                        <h:column> 	
+                            <f:facet name="header">Cohort ID</f:facet>
+                                #{c.cohortID}
+                        </h:column>
+                        <h:column> 	
+                            <f:facet name="header">Year</f:facet>
+                                #{c.year}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">month</f:facet>
+                                #{c.month}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Entry Year</f:facet>
+                                #{c.entryYear}
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">Edit</f:facet>
+                            <h:commandButton value="Edit" action="#{cohortManage.retrieveCohort(c.cohortID)}" style="background-color: green; color: white"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Delete</f:facet>
+                            <h:commandButton value="Delete" action="#{cohortManage.deleteCohort(c.cohortID)}" style="background-color: red; color: white">
+                                <f:param name="action" value="#{c.cohortID}" />
+                            </h:commandButton>
+                        </h:column>
+                    </h:dataTable>
+                </div>
+                <br/>
+                <h:commandButton value="Done" action="EditInfo" styleClass="btn green"/>
+
+            </h:form>
+
+            <br/><br/>
+        </div>
+    </h:body>
+</html>
+

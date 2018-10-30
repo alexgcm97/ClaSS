@@ -5,7 +5,7 @@
  */
 package da;
 
-import domain.Programme;
+import domain.Cohort;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -22,35 +21,16 @@ import javax.faces.context.FacesContext;
 
 /**
  *
- * @author REPUBLIC
+ * @author DEREK
  */
-@ManagedBean
+@ManagedBean(name = "cohortDA")
 @SessionScoped
-public class ProgrammeDA {
-    
-    public List<Programme> getAllProgrammeRecords() throws SQLException {
+public class CohortDA {
 
-        Connection connect = null;
+    String year = "";
+    String month = "";
 
-        List<Programme> output = new ArrayList<Programme>();
-        try {
-            connect = DBConnection.getConnection();
-            PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM programme");
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                Programme p = new Programme(rs.getString(1), rs.getString(2), rs.getString(3));
-                output.add(p);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }
-
-        DBConnection.close(connect);
-        return output;
-
-    }
-     boolean success, message;
+    boolean success, message;
 
     public boolean isSuccess() {
         return success;
@@ -67,20 +47,21 @@ public class ProgrammeDA {
     public void setMessage(boolean message) {
         this.message = message;
     }
-    public void insertProgramme(Programme p) throws SQLException {
-        String programmeID = getMaxID();
-        Connection connect = null;
-        
+
+    public void insertCohort(Cohort c) throws SQLException {
+        String cohortID = getMaxID();
+        Connection connect;
+
         try {
             connect = DBConnection.getConnection();
             Statement stmt = connect.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT PROGRAMMEID FROM PROGRAMME");
+            ResultSet rs = stmt.executeQuery("SELECT COHORTID FROM COHORT");
 
             ArrayList<Integer> ls = new ArrayList<>();
 
             while (rs.next()) {
                 try {
-                    ls.add(Integer.parseInt(rs.getString(1).split("P")[1]));
+                    ls.add(Integer.parseInt(rs.getString(1).split("CH")[1]));
                 } catch (Exception ex) {
                     System.out.println("Invalid Exception");
                 }
@@ -88,78 +69,97 @@ public class ProgrammeDA {
 
             if (ls.size() > 0) {
                 int max = Collections.max(ls) + 1;
-                programmeID = "P" + max;
+                cohortID = "CH" + max;
             } else {
-                programmeID = "P1001";
+                cohortID = "CH1001";
             }
 
-            PreparedStatement pstmt = connect.prepareStatement("INSERT INTO PROGRAMME VALUES(?,?,?)");
+            PreparedStatement pstmt = connect.prepareStatement("INSERT INTO COHORT VALUES(?,?,?,?)");
 
-            pstmt.setString(1, programmeID);
-            pstmt.setString(2, p.getProgrammeCode());
-            pstmt.setString(3, p.getProgrammeName());
-            this.success = true;
-            System.out.println(success);
+            pstmt.setString(1, cohortID);
+            pstmt.setInt(2, c.getYear());
+            pstmt.setInt(3, c.getMonth());
+            pstmt.setInt(4, c.getEntryYear());
+
             pstmt.executeUpdate();
-        
-            
+            this.success = true;
+
         } catch (SQLException ex) {
-   
+            this.message = true;
             System.out.println(ex.getMessage());
         }
 
     }
 
-    public Programme deleteProgramme(String programmeID) {
+   public Cohort deleteCohort(String cohortID) {
         Connection connect;
-        Programme p = new Programme();
+        Cohort c = new Cohort();
         try {
             connect = DBConnection.getConnection();
-            PreparedStatement ps = connect.prepareStatement("delete from PROGRAMME where PROGRAMMEID = ?");
-            ps.setString(1, programmeID);
+            PreparedStatement ps = connect.prepareStatement("delete from COHORT where COHORTID = ?");
+            ps.setString(1, cohortID);
             System.out.println(ps);
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }
-        return p;
+        return c;
     }
 
-    public Programme get(String programmeID) {
+    public Cohort get(String cohortID) {
         Connection connect;
-        Programme p = new Programme();
+        Cohort c = new Cohort();
         try {
             connect = DBConnection.getConnection();
-            PreparedStatement pstmt = connect.prepareStatement("select * from PROGRAMME where PROGRAMMEID = ?");
-            pstmt.setString(1, programmeID);
+            PreparedStatement pstmt = connect.prepareStatement("select * from COHORT where COHORTID = ?");
+            pstmt.setString(1, cohortID);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                p = new Programme(rs.getString(1), rs.getString(2), rs.getString(3));
+                c = new Cohort(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return c;
+
+    }
+
+    public Cohort editCohort(String cohortID) {
+        Connection connect;
+        Cohort c = new Cohort();
+        try {
+            connect = DBConnection.getConnection();
+            PreparedStatement pstmt = connect.prepareStatement("select * from COHORT where COHORTID = ?");
+            pstmt.setString(1, cohortID);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                c = new Cohort(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
             }
 
         } catch (Exception e) {
             System.out.println(e);
         }
-        return p;
+        return c;
 
     }
 
-    public void updateProgramme(Programme p) {
-        Connection connect = null;
-
+    public void updateCohort(Cohort c) {
+        Connection connect;
+        
         try {
             connect = DBConnection.getConnection();
-            PreparedStatement ps = connect.prepareStatement("update PROGRAMME set PROGRAMMECODE=?, PROGEAMMENAME=? where PROGRAMMEID=?");
-            ps.setString(1, p.getProgrammeCode());
-            ps.setString(2, p.getProgrammeName());
-            ps.setString(3, p.getProgrammeID());
+            PreparedStatement ps = connect.prepareStatement("update Cohort set year=?, month=?, entryYear=?  where cohortID=?");
+            
+            ps.setInt(1, c.getYear());
+            ps.setInt(2, c.getMonth());
+            ps.setInt(3, c.getEntryYear());
+            ps.setString(4, c.getCohortID());
 
             ps.executeUpdate();
 
         } catch (Exception e) {
             System.out.println(e);
         }
-
     }
 
     public String getMaxID() {
@@ -172,19 +172,19 @@ public class ProgrammeDA {
         String url = "jdbc:derby://localhost:1527/schedule";
         String username = "schedule";
         String password = "schedule";
-        String programmeID = "";
+        String cohortID = "";
 
         try {
 
             connect = DriverManager.getConnection(url, username, password);
             Statement stmt = connect.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT PROGRAMMEID FROM PROGRAMME");
+            ResultSet rs = stmt.executeQuery("SELECT COHORTID FROM COHORT");
 
             ArrayList<Integer> ls = new ArrayList<>();
 
             while (rs.next()) {
                 try {
-                    ls.add(Integer.parseInt(rs.getString(1).split("P")[1]));
+                    ls.add(Integer.parseInt(rs.getString(1).split("CH")[1]));
                 } catch (Exception ex) {
                     System.out.println("Invalid Exception");
                 }
@@ -192,16 +192,16 @@ public class ProgrammeDA {
 
             if (ls.size() > 0) {
                 int max = Collections.max(ls) + 1;
-                programmeID = "P" + max;
+                cohortID = "CH" + max;
             } else {
-                programmeID = "P";
+                cohortID = "CH1001";
             }
 
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.println(programmeID);
-        return programmeID;
+        System.out.println(cohortID);
+        return cohortID;
     }
 }

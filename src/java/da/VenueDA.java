@@ -124,4 +124,118 @@ public class VenueDA {
         return output;
 
     }
+    
+    //Get the alert message
+    boolean success, message, update, delete;
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public boolean isMessage() {
+        return message;
+    }
+
+    public void setMessage(boolean message) {
+        this.message = message;
+    }
+
+    public boolean isUpdate() {
+        return update;
+    }
+
+    public void setUpdate(boolean update) {
+        this.update = update;
+    }
+
+    public boolean isDelete() {
+        return delete;
+    }
+
+    public void setDelete(boolean delete) {
+        this.delete = delete;;
+    }
+
+    public void insertVenue(Venue v) throws SQLException {
+        Connection connect = null;
+
+        try {
+            connect = DBConnection.getConnection();
+
+            PreparedStatement pstmt = connect.prepareStatement("INSERT INTO VENUE(venueID,block,venueType,capacity,courseCodeList) VALUES(?,?,?,?,?)");
+
+            pstmt.setString(1, v.getVenueID());
+            pstmt.setString(2, v.getBlock());
+            pstmt.setString(3, v.getVenueType());
+            pstmt.setInt(4, v.getCapacity());
+            pstmt.setString(5, v.getCourseCodeList());
+            pstmt.executeUpdate();
+            this.success = true;
+            this.message = false;
+
+        } catch (SQLException ex) {
+
+            this.success = false;
+            this.message = true;
+            System.out.println(ex.getMessage());
+        }
+        DBConnection.close(connect);
+
+    }
+
+    public Venue get(String venueID) {
+        Connection connect;
+        Venue v = new Venue();
+        try {
+            connect = DBConnection.getConnection();
+            PreparedStatement pstmt = connect.prepareStatement("select * from VENUE where VENUEID = ?");
+            pstmt.setString(1, venueID);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                v = new Venue(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return v;
+    }
+
+    public void updateVenue(Venue v) {
+        Connection connect;
+        try {
+            connect = DBConnection.getConnection();
+            PreparedStatement ps = connect.prepareStatement("update VENUE set block=?, venueType=?, capacity=?, courseCodeList=? where venueID=?");
+            ps.setString(1, v.getBlock());
+            ps.setString(2, v.getVenueType());
+            ps.setInt(3, v.getCapacity());
+            ps.setString(4, v.getCourseCodeList());
+            ps.setString(5, v.getVenueID());
+            ps.executeUpdate();
+
+            this.update = true;
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public Venue deleteVenue(String venueID) {
+        Connection connect;
+        Venue v = new Venue();
+        try {
+            connect = DBConnection.getConnection();
+            PreparedStatement ps = connect.prepareStatement("delete from VENUE where VenueID = ?");
+            ps.setString(1, venueID);
+            System.out.println(ps);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return v;
+    }
 }

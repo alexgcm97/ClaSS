@@ -5,21 +5,29 @@
  */
 package da;
 
+import domain.Course;
 import domain.CourseDetails;
 import domain.CourseType;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author REPUBLIC
  */
+@ManagedBean
+@SessionScoped
 public class CourseDA {
-     public List<CourseDetails> getAllCourseRecords() throws SQLException {
+
+    public List<CourseDetails> getAllCourseRecords() throws SQLException {
         Connection connect = null;
         boolean found;
         List<CourseDetails> output = new ArrayList<CourseDetails>();
@@ -81,8 +89,8 @@ public class CourseDA {
         return output;
 
     }
-     
-         public List<CourseType> getSelectedRecords(String courseCode) throws SQLException {
+
+    public List<CourseType> getSelectedRecords(String courseCode) throws SQLException {
 
         Connection connect = null;
         List<CourseType> output = new ArrayList<CourseType>();
@@ -109,5 +117,234 @@ public class CourseDA {
         DBConnection.close(connect);
         return output;
 
+    }
+
+    public List<Course> getAllRecords() throws SQLException {
+
+        Connection connect = null;
+
+        List<Course> output = new ArrayList<>();
+        try {
+            connect = DBConnection.getConnection();
+            PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM course");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Course C = new Course();
+                C.setCourseCode(rs.getString(1));
+                C.setCourseName(rs.getString(2));
+                C.setCreditHour(rs.getInt(3));
+
+                output.add(C);
+            }
+        } catch (SQLException e) {
+
+        }
+
+        DBConnection.close(connect);
+        return output;
+
+    }
+
+     boolean success, message;
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public boolean isMessage() {
+        return message;
+    }
+
+    public void setMessage(boolean message) {
+        this.message = message;
+    }
+
+    public void insertCourse(Course c) {
+        Connection connect = null;
+
+        try {
+
+            connect = DBConnection.getConnection();
+
+            PreparedStatement pstmt = connect.prepareStatement("INSERT INTO COURSE VALUES(?,?,?)");
+
+            pstmt.setString(1, c.getCourseCode());
+            pstmt.setString(2, c.getCourseName());
+            pstmt.setDouble(3, c.getCreditHour());
+
+            pstmt.executeUpdate();
+            this.success = true;
+            this.message = false;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        DBConnection.close(connect);
+    }
+
+    public void insertCourseType(CourseType ct) throws SQLException {
+        Connection connect = null;
+        String courseID = getMaxID();
+
+        try {
+            connect = DBConnection.getConnection();
+            Statement stmt = connect.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT courseID FROM courseType");
+
+            ArrayList<Integer> ls = new ArrayList<>();
+
+            while (rs.next()) {
+                try {
+                    ls.add(Integer.parseInt(rs.getString(1).split("C")[1]));
+                } catch (NumberFormatException | SQLException ex) {
+                    System.out.println("Invalid Exception");
+                }
+            }
+
+            if (ls.size() > 0) {
+                int max = Collections.max(ls) + 1;
+                courseID = "C" + max;
+            } else {
+                courseID = "C1001";
+            }
+
+            connect = DBConnection.getConnection();
+
+            PreparedStatement pstmt = connect.prepareStatement("INSERT INTO COURSETYPE VALUES(?,?,?,?)");
+
+            pstmt.setString(1, ct.getCourseID());
+            pstmt.setString(2, ct.getCourseType());
+            pstmt.setString(3, ct.getCourseDuration());
+            pstmt.setString(4, ct.getCourseCode());
+
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        DBConnection.close(connect);
+
+    }
+
+    public List<CourseType> getCourseType(String courseCode) {
+        Connection connect;
+        List<CourseType> list = new ArrayList<>();
+        try {
+            connect = DBConnection.getConnection();
+            PreparedStatement stmt = connect.prepareStatement("select * from CourseType where courseCode = ?");
+            stmt.setString(1, courseCode);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                CourseType ct = new CourseType();
+                ct.setCourseID(rs.getString(1));
+                ct.setCourseType(rs.getString(2));
+                ct.setCourseDuration(rs.getString(3));
+                ct.setCourseCode(rs.getString(4));
+                list.add(ct);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public Course getCourse(String courseCode) {
+        Connection connect;
+        Course c = new Course();
+
+        try {
+            connect = DBConnection.getConnection();
+            PreparedStatement pstmt = connect.prepareStatement("select * from Course where courseCode = ?");
+            pstmt.setString(1, courseCode);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                c = new Course(rs.getString(1), rs.getString(2), rs.getDouble(3));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return c;
+    }
+
+    public void updateCourse(Course c) {
+        Connection connect;
+        try {
+            connect = DBConnection.getConnection();
+            PreparedStatement ps = connect.prepareStatement("update Course set courseName=?, creditHour=? where courseCode=?");
+            ps.setString(1, c.getCourseName());
+            ps.setDouble(2, c.getCreditHour());
+            ps.setString(3, c.getCourseCode());
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public Course deleteCourse(String courseCode) {
+        Connection connect;
+        Course c = new Course();
+        try {
+            connect = DBConnection.getConnection();
+            PreparedStatement ps = connect.prepareStatement("delete from Course where courseID = ?");
+            ps.setString(1, courseCode);
+            System.out.println(ps);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return c;
+    }
+
+    public void deleteCourseType(String courseID) {
+        Connection connect;
+        Course c = new Course();
+        try {
+            connect = DBConnection.getConnection();
+
+            PreparedStatement ps = connect.prepareStatement("delete from CourseType where courseID = ?");
+            ps.setString(1, courseID);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public String getMaxID() {
+        Connection connect;
+        String courseID = "";
+        try {
+            connect = DBConnection.getConnection();
+            Statement stmt = connect.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT COURSEID FROM COURSETYPE");
+
+            ArrayList<Integer> ls = new ArrayList<>();
+
+            while (rs.next()) {
+                try {
+                    ls.add(Integer.parseInt(rs.getString(1).split("C")[1]));
+                } catch (NumberFormatException | SQLException ex) {
+                    System.out.println("Invalid Exception");
+                }
+            }
+
+            if (ls.size() > 0) {
+                int max = Collections.max(ls) + 1;
+                courseID = "C" + max;
+            } else {
+                courseID = "C";
+            }
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+        }
+        return courseID;
     }
 }

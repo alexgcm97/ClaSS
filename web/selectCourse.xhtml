@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <style>
+            .order-table{   
+            border-collapse:collapse;
+        }
+        .order-table-header{
+            text-align:center;
+            background:none repeat scroll 0 0 #E5E5E5;
+            border-bottom:1px solid #BBBBBB;
+            padding:16px;
+        }
+        .order-table-odd-row{
+            text-align:center;
+            background:none repeat scroll 0 0 #FFFFFFF;
+            border-top:1px solid #BBBBBB;
+        }
+        .order-table-even-row{
+            text-align:center;
+            background:none repeat scroll 0 0 #F9F9F9;
+            border-top:1px solid #BBBBBB;
+        }
+
+        body{
+            background-color: #a6dff4;
+        }
+        .form{
+            background-color: white;
+            height: 500px;
+        }
+         .btn{
+                transition-duration: 0.4s;
+                padding: 10px 24px;
+                border-radius: 12px;
+            }
+            .btn .green:hover{
+                background-color:  #4CAF50;
+                color: white;
+            }
+        </style>
+        <title>Select Course</title>
+    </h:head>
+    <h:body>
+        <div align="center" class="btn">
+            <h1>Available Course</h1>
+            <div style="float: left; width: 150px">
+                <h:form class="btn">
+                    <br/>
+                    <h:commandButton value="Create New" action="newCourse" styleClass="btn green"/>
+                </h:form>   
+            </div>
+
+            <h:form class="form">
+               <br/>
+                <div style="height: 350px; overflow: auto;">
+                    <h:dataTable value = "#{courseDA.allCourseRecords}" var = "c"
+                                 styleClass="order-table"
+                                 headerClass="order-table-header"
+                                 rowClasses="order-table-odd-row,order-table-even-row" >
+
+                        <h:column> 
+                            <f:facet name="header">Course Code</f:facet>
+                                #{c.courseCode}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Course Name</f:facet>
+                                #{c.courseName}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Lecture Hours</f:facet>
+                                #{c.lecHours}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Tutorial Hours</f:facet>
+                                #{c.tutHours}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Practical Hours</f:facet>
+                                #{c.pracHours}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Edit</f:facet>
+                            <h:commandButton value="Edit" action="#{courseManage.retrieveCourse(c.courseCode)}" style="background-color: green; color: white"/>
+
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Delete</f:facet>
+                            <h:commandButton value="Delete" action="#{courseManage.deleteVenue(c.courseCode)}" style="background-color: red; color: white"/>
+                        </h:column>
+                    </h:dataTable>
+                    <br/>
+                    <h:commandButton value="Done" action="EditInfo" styleClass="btn green"/>
+                </div>
+                <br/>
+            </h:form>
+           
+            
+        </div>
+    </h:body>
+</html>
+

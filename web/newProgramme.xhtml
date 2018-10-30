@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <style>
+            .btn{
+                transition-duration: 0.4s;
+                padding: 10px 24px;
+                border-radius: 12px;
+            }
+            .btn .green:hover{
+                background-color:  #4CAF50;
+                color: white;
+            }
+            body{
+                background-color: #a6dff4;
+            }
+            .form{
+                background-color: white;
+                height: 200px;
+            }
+             .btn .blue:hover{
+                background-color: dodgerblue;
+                color: white;
+            }
+        </style>
+        <title>Add New Programme</title>
+    </h:head>
+    <h:body>
+        <h:outputScript rendered="#{programmeDA.success}">
+            alert("Successfully!!!");
+        </h:outputScript>
+        <h:outputScript rendered="#{programmeDA.message}">
+            alert("Error!!!");
+        </h:outputScript>
+        <div align="center" class="btn">
+            <h1>New Programme</h1>
+            <h:form class="form">
+               
+                <table>
+                    <br/>
+                    <tr>
+                        <td>Programme ID:</td>
+                        <td><h:outputText value="#{programmeDA.maxID}" /><br/></td>
+                    </tr>
+                    <tr>
+                        <td>Programme Code:</td>
+                        <td><h:inputText id="code" value="#{programmeManage.p.programmeCode}" required="true" requiredMessage="*Empty field" />
+                             <h:message for="code" style="color: red" /></td>
+                    </tr>
+                    <tr>
+                        <td>Programme Name:</td>
+                        <td><h:inputText id="name" value="#{programmeManage.p.programmeName}" required="true" requiredMessage="*Empty field"/>
+                             <h:message for="name" style="color: red"/></td>
+                    </tr>
+                </table><br/>
+                <h:commandButton action="#{programmeManage.insertProgramme()}" value="Submit" styleClass="btn green"/>
+
+            </h:form>
+            <h:form>
+                <br/>
+                 <h:commandButton action="selectProgrammeCohort" value="Done" styleClass="btn blue"/>
+            </h:form>
+
+        </div>
+    </h:body>
+</html>
+

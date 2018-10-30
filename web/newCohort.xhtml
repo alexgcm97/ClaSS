@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+             <style>
+            .btn{
+                transition-duration: 0.4s;
+                padding: 10px 24px;
+                border-radius: 12px;
+            }
+            .btn .green:hover{
+                background-color:  #4CAF50;
+                color: white;
+            }
+            body{
+                background-color: #a6dff4;
+            }
+            .form{
+                background-color: white;
+                height: 200px;
+            }
+             .btn .blue:hover{
+                background-color: dodgerblue;
+                color: white;
+            }
+        </style>
+        <title>Add New Cohort</title>
+    </h:head>
+    <h:body>
+        <h:outputScript rendered="#{cohortDA.success}">
+            alert("Successfully!!!");
+        </h:outputScript>
+        <h:outputScript rendered="#{cohortDA.message}">
+            alert("Failed! Please try again.");
+        </h:outputScript>
+         <div align="center" class="btn">
+                <h1>New Cohort</h1>
+            <h:form class="form">
+                <table>
+                <br/>
+                    <tr>
+                        <td>Cohort ID:</td>
+                        <td><h:outputText value="#{cohortDA.maxID}" /><br/></td>
+                    </tr>
+                    <tr>
+                        <td>Year:</td>
+                        <td><h:inputText id="year" value="#{cohortManage.c.year}" required="true"  requiredMessage="*Invalid Input" maxlength="4"/> *2018
+                        <h:message for="year" style="color: red" /></td>
+                    </tr>
+                    <tr>
+                        <td>Month:</td>
+                        <td><h:inputText id="month" value="#{cohortManage.c.month}" required="true"  requiredMessage="*Invalid Input" maxlength="2"/> *1 for January
+                            <h:message for="month" style="color: red" /></td>
+                    </tr>
+                 <tr>
+                        <td>Month:</td>
+                        <td><h:inputText id="entry" value="#{cohortManage.c.entryYear}" required="true"  requiredMessage="*Invalid Input" maxlength="4"/> *1 for January
+                            <h:message for="entry" style="color: red" /></td>
+                    </tr>
+                    
+                </table><br/>
+                <h:commandButton action="#{cohortManage.insertCohort()}" value="Submit" styleClass="btn green"/>
+                
+            </h:form>
+                <h:form>
+                    <br/>
+                    <h:commandButton action="selectProgrammeCohort" value="Done" styleClass="btn blue"/>
+                </h:form>
+
+        </div>
+    </h:body>
+</html>
+

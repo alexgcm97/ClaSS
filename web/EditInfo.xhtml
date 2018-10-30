@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <style>
+          
+            body{
+                background-color: #a6dff4;
+            }
+            form{
+                background-color: #a6dff4;
+                height: 400px;
+                width: 400px;
+            }
+            .btn{
+                transition-duration: 0.4s;
+                padding: 20px 40px;
+                border:none;
+                width: 250px;
+                position: relative;
+                margin: 0 auto auto ;
+            }
+            .btn .btn:hover{
+                background-color:  #4CAF50;
+                color: white;
+            }
+           
+        </style>
+        <title>Update Information</title>
+    </h:head>
+    <h:body>
+        <div class="btn" >
+            <h1>Select to Update</h1>
+                <h:form>
+                    <br/>
+                    <h:commandButton action="selectProgrammeCohort" value="Programme and Cohort" styleClass="btn" /><br/><br/>
+                    <h:commandButton action="selectCourse" value="Course" styleClass="btn"/><br/><br/>
+                    <h:commandButton action="selectGroups" value="Tutorial Group" styleClass="btn"/><br/><br/>
+                    <h:commandButton action="selectStaff" value="Staff" styleClass="btn"/><br/><br/>
+                    <h:commandButton action="selectVenue" value="Venue" styleClass="btn"/><br/><br/>
+                    <h:commandButton action="menu" value="Back to Menu" styleClass="btn"/>
+
+
+                </h:form>
+            </div>
+
+     
+    </h:body>
+</html>
+

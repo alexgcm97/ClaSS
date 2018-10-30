@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <style>
+          .btn{
+                transition-duration: 0.4s;
+                padding: 10px 24px;
+                border-radius: 12px;
+            }
+            .btn .green:hover{
+                background-color:  #4CAF50;
+                color: white;
+            }
+            body{
+                background-color: #a6dff4;
+            }
+            .form{
+                background-color: white;
+                height: 300px;
+            }
+             .btn .blue:hover{
+                background-color: dodgerblue;
+                color: white;
+            }
+        </style>
+        <title>New Group</title>
+    </h:head>
+    <h:body>
+        <h:outputScript rendered="#{tutorialGroupDA.success}">
+            alert("Successfully!!!");
+        </h:outputScript>
+        <h:outputScript rendered="#{tutorialGroupDA.message}">
+            alert("Failed! Please try again.");
+        </h:outputScript>
+        <div align="center" class="btn">
+            <h1>Add new group</h1>
+            <h:form class="form">
+                <table>
+                    <br/>
+                    <tr>
+                        <td>Group ID:</td>
+                        <td><h:outputText value="#{tutorialGroupDA.maxID}" /><br/></td>
+                    </tr>
+                    <tr>
+                        <td>Year of Study:</td>
+                        <td><h:selectOneMenu value="#{tutorialGroupManage.tg.studyYear}" >
+                                <f:selectItem itemValue="1" itemLabel="1" />
+                                <f:selectItem itemValue="2" itemLabel="2"/>
+                                <f:selectItem itemValue="3" itemLabel="3"/>
+                            </h:selectOneMenu>
+                            <br/></td>
+                    </tr>
+                    <tr>
+                        <td>Group Number:</td>
+                        <td> <h:inputText id="gnumber" value="#{tutorialGroupManage.tg.groupNumber}" required="true" requiredMessage="*Empty field" converterMessage="*Numbers only" maxlength="2">
+                                 <f:convertNumber integerOnly="true" />
+                            </h:inputText>
+                             <h:message for="gnumber" style="color: red"/></td>
+                    </tr>
+                    <tr>
+                        <td>Size:</td>
+                        <td><h:inputText id="size" value="#{tutorialGroupManage.tg.size}" required="true" requiredMessage="*Empty field" converterMessage="*Numbers only" maxlength="2">
+                            <f:convertNumber integerOnly="true" />
+                            </h:inputText>
+                             <h:message for="size" style="color: red"/><br/></td>
+                    </tr>
+                    <tr>
+                        <td>Programme ID</td>
+                        <td><h:selectOneMenu value="#{tutorialGroupManage.tg.programmeID}">
+                                <f:selectItems value="#{viewAll.getAllProgrammeID()}" var="p"
+                                               itemLabel="#{p.programmeID}" itemValue="#{p.programmeID}" />
+                            </h:selectOneMenu></td>
+                    </tr>
+                    <tr>
+                        <td>Cohort ID</td>
+                        <td><h:selectOneMenu value="#{tutorialGroupManage.tg.cohortID}">
+                                <f:selectItems value="#{viewAll.getAllCohortID()}" var="c"
+                                               itemLabel="#{c.cohortID}" itemValue="#{c.cohortID}" />
+                            </h:selectOneMenu></td>
+                    </tr>
+
+
+                </table>
+                <br/>
+                <h:commandButton action="#{tutorialGroupManage.staffInsert()}" value="Submit" styleClass="btn green"/>
+            </h:form>
+            
+            <h:form>
+                <br/>
+                <h:commandButton action="selectGroups" value="Done" styleClass="btn blue"/>
+            </h:form>
+        </div>
+    </h:body>
+</html>
+

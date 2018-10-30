@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <style>
+            .btn{
+                transition-duration: 0.4s;
+                padding: 10px 24px;
+                border-radius: 12px;
+            }
+            .btn .green:hover{
+                background-color:  #4CAF50;
+                color: white;
+            }
+            body{
+                background-color: #a6dff4;
+            }
+            .form{
+                background-color: white;
+                height: 300px;
+            }
+             .btn .blue:hover{
+                background-color: dodgerblue;
+                color: white;
+            }
+        </style>
+        <title>New Subject</title>
+    </h:head>
+    <body>
+        <h:outputScript rendered="#{courseDA.success}">
+            alert("Successfully!!!");
+        </h:outputScript>
+        <h:outputScript rendered="#{courseDA.message}">
+            alert("Failed! Please try again.");
+        </h:outputScript>
+        <div align="center" class="btn">
+            <h1>Course Information</h1>
+            <h:form class="form">
+
+                <table>
+                    <tr>
+                        <td>Course Code:</td>
+                        <td><h:inputText id="id" value="#{courseManage.c.courseCode}" required="true" requiredMessage="*Empty field"/>
+                            <h:message for="id" style="color:red"/><br/></td>
+                    </tr>
+                    <tr>
+                        <td>Course Name:</td>
+                        <td><h:inputText id="name" value="#{courseManage.c.courseName}" required="true" requiredMessage="*Empty field" />
+                            <h:message for="name" style="color:red"/><br/></td>
+                    </tr>
+                    <tr>
+                        <td>Credit Hour:</td>
+                        <td><h:selectOneMenu value="#{courseManage.c.creditHour}">
+                                <f:selectItem itemValue="1.0" itemLabel="1.0"/>
+                                <f:selectItem itemValue="2.0" itemLabel="2.0"/>
+                                <f:selectItem itemValue="3.0" itemLabel="3.0"/>
+                                <f:selectItem itemValue="4.0" itemLabel="4.0"/>
+                            </h:selectOneMenu><br/></td>
+                    </tr>
+                    <br/>
+                    <tr>
+                        <td>Lecture Hours :</td>
+                        <td><h:selectOneMenu value="#{courseManage.lecHours}">
+                                <f:selectItem itemValue="0.0" itemLabel="0.0 hours"/>
+                                <f:selectItem itemValue="1.0" itemLabel="1.0 hours"/>
+                                <f:selectItem itemValue="2.0" itemLabel="2.0 hours"/>
+                                <f:selectItem itemValue="3.0" itemLabel="3.0 hours"/>
+                            </h:selectOneMenu></td>
+                    </tr>
+                    <br/>
+                    <tr>
+                        <td>Tutorial Hours :</td>
+                        <td><h:selectOneMenu value="#{courseManage.tutHours}">
+                                <f:selectItem itemValue="0.0" itemLabel="0.0 hours"/>
+                                <f:selectItem itemValue="1.0" itemLabel="1.0 hours"/>            
+                                <f:selectItem itemValue="2.0" itemLabel="2.0 hours"/>
+                                <f:selectItem itemValue="3.0" itemLabel="3.0 hours"/>
+                            </h:selectOneMenu></td>
+                    </tr>
+                    <tr><td>Practical Hours :</td>
+                        <td>
+                            <h:selectOneMenu value="#{courseManage.pracHours}">
+                                <f:selectItem itemValue="0.0" itemLabel="0.0 hours"/>
+                                <f:selectItem itemValue="1.0" itemLabel="1.0 hours"/>
+                                <f:selectItem itemValue="2.0" itemLabel="2.0 hours"/>                
+                                <f:selectItem itemValue="3.0" itemLabel="3.0 hours"/>
+                            </h:selectOneMenu></td>
+                    </tr>
+                </table>
+                <br/>
+                <h:commandButton action="#{courseManage.InsertCourse(courseManage.c.courseCode)}" value="Submit" styleClass="btn green"/>
+
+            </h:form>
+            <h:form>
+                <br/>
+                <h:commandButton action="EditInfo" value="Done" styleClass="btn blue"/>
+            </h:form>
+        </div>
+    </body>
+</html>
+

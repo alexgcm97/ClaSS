@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+          <style>
+            .btn{
+                transition-duration: 0.4s;
+                padding: 10px 24px;
+                border-radius: 12px;
+            }
+            .btn .green:hover{
+                background-color:  #4CAF50;
+                color: white;
+            }
+            body{
+                background-color: #a6dff4;
+            }
+            .form{
+                background-color: white;
+                height: 550px;
+            }
+             .btn .blue:hover{
+                background-color: dodgerblue;
+                color: white;
+            }
+        </style>
+        <title>New Staff</title>
+    </h:head>
+    <h:body>
+        <h:outputScript rendered="#{StafDA.success}">
+            alert("Successfully!!!");
+        </h:outputScript>
+        <h:outputScript rendered="#{StaffDA.message}">
+            alert("Error!!!");
+        </h:outputScript>
+        <div align="center" class="btn">
+              <h1>Add New Staff</h1>
+            <h:form class="form">
+              
+                <table>
+                    <tr>
+                        <td><h1>Staff Information</h1></td>
+                    </tr>
+
+                    <tr>
+                        <td>Staff ID: </td>
+                        <td><h:outputText value="#{staffDA.maxID}" /><br/></td>
+                    </tr>
+                    <tr>
+                        <td>Staff Name: </td>
+                        <td><h:inputText id="id" value="#{staffManage.s.staffName}" required="true" requiredMessage=" *Empty field" />
+                            <h:message for="id" style="color:red"/></td>
+                    </tr>
+                    <tr>
+                        <td>Block Day: </td>
+                        <td><h:selectOneMenu value="#{staffManage.s.blockDay}" >
+                                <f:selectItem itemValue="0" itemLabel="None" />
+                                <f:selectItem itemValue="1" itemLabel="Monday" />
+                                <f:selectItem itemValue="2" itemLabel="Tuesday"/>
+                                <f:selectItem itemValue="3" itemLabel="Wednesday"/>     
+                                <f:selectItem itemValue="4" itemLabel="Thursday" />
+                                <f:selectItem itemValue="5" itemLabel="Friday"/>
+                               
+                            </h:selectOneMenu><br/></td>
+                    </tr>
+                    <tr>
+                        <td>Block Start: </td>
+                        <td><h:inputText id="blockstart" value="#{staffManage.s.blockStart}"  converterMessage=" *Invalid input" maxlength="3">
+                                  <f:convertNumber maxFractionDigits="1" maxIntegerDigits="3" type="number" />  
+                            </h:inputText>
+                             <h:message for="blockstart" style="color:red"/><br/></td>
+                    </tr>
+                    <tr>
+                        <td>Block Duration: </td>
+                        <td><h:selectOneMenu value="#{staffManage.s.blockDuration}" >
+                                <f:selectItem itemValue="0" itemLabel="0 hours" />
+                                <f:selectItem itemValue="1" itemLabel="1 hours" />
+                                <f:selectItem itemValue="2" itemLabel="2 hours"/>
+                                <f:selectItem itemValue="3" itemLabel="3 hours"/>     
+                                <f:selectItem itemValue="4" itemLabel="4 hours" />
+                                <f:selectItem itemValue="5" itemLabel="5 hours"/>
+                               
+                            </h:selectOneMenu><br/></td>
+                    </tr>
+                    
+                     <tr>
+                        <td><h1>Class Selection</h1></td>
+                    </tr>
+                    <tr>
+                        <td>Course Code List: </td>
+                        <td><h:inputText value="#{staffManage.s.courseCodeList}" /><br/></td>
+                    </tr>
+                    <tr>
+                        <td>Lecture Group: </td>
+                        <td><h:inputText value="#{staffManage.s.lecGroupList}" /><br/></td>
+                    </tr>
+                     <tr>
+                        <td>Tutorial Group: </td>
+                        <td><h:inputText value="#{staffManage.s.tutGroupList}" /><br/></td>
+                    </tr>
+                    <tr>
+                        <td>Practical Group: </td>
+                        <td><h:inputText value="#{staffManage.s.pracGroupList}" /><br/></td>
+                    </tr>
+                </table>
+                
+                <br/><h:commandButton action="#{staffManage.staffInsert()}" value="Submit" styleClass="btn green"/>
+        
+
+
+              
+            </h:form>
+              <h:form>
+                  <br/>
+                  <h:commandButton action="selectCourse" value="Done" styleClass="btn blue"/><br/>
+              </h:form>
+        </div>
+
+    </h:body>
+</html>
+
