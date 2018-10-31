@@ -7,15 +7,19 @@ package domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author Alex
  */
+@SessionScoped
+@ManagedBean
 public class Staff  implements Serializable {
 
     private String staffID, staffName;
-    private int blockDay, blockDurations;
+    private int blockDay;
     private double blockStart, blockDuration;
     private ArrayList<Class> classList;
     private ArrayList<String> courseCodeList, tutGroupList, lecGroupList, pracGroupList;
@@ -37,17 +41,17 @@ public class Staff  implements Serializable {
         this.pracGroupListS = pracGroupListS;
     }
 
-    public Staff(String staffID, String staffName, int blockDay, double blockStart, int blockDurations, String courseCodeListS, String tutGroupListS, String lecGroupListS, String pracGroupListS) {
-        this.staffID = staffID;
-        this.staffName = staffName;
-        this.blockDay = blockDay;
-        this.blockDurations = blockDurations;
-        this.blockStart = blockStart;
-        this.courseCodeListS = courseCodeListS;
-        this.tutGroupListS = tutGroupListS;
-        this.lecGroupListS = lecGroupListS;
-        this.pracGroupListS = pracGroupListS;
-    }
+//    public Staff(String staffID, String staffName, int blockDay, double blockStart, double blockDuration, String courseCodeListS, String tutGroupListS, String lecGroupListS, String pracGroupListS) {
+//        this.staffID = staffID;
+//        this.staffName = staffName;
+//        this.blockDay = blockDay;
+//        this.blockDuration = blockDuration;
+//        this.blockStart = blockStart;
+//        this.courseCodeListS = courseCodeListS;
+//        this.tutGroupListS = tutGroupListS;
+//        this.lecGroupListS = lecGroupListS;
+//        this.pracGroupListS = pracGroupListS;
+//    }
     
     
 
@@ -202,13 +206,5 @@ public class Staff  implements Serializable {
         this.classList = classList;
     }
 
-    public int getBlockDurations() {
-        return blockDurations;
-    }
-
-    public void setBlockDurations(int blockDurations) {
-        this.blockDurations = blockDurations;
-    }
-    
     
 }

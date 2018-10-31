@@ -54,7 +54,7 @@ public class staffManage implements Serializable {
 
     public void updateStaff() throws SQLException, IOException {
         sda.updateStaff(s);
-        FacesContext.getCurrentInstance().getExternalContext().redirect("step4Staff.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("selectStaff.xhtml");
     }
 
     public void deleteStaff(String staffID) throws SQLException, IOException {

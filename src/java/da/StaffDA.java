@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import domain.Class;
 import domain.Staff;
+import java.io.Serializable;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +25,7 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-public class StaffDA {
+public class StaffDA implements Serializable{
 
     private Connection connect;
 
@@ -175,7 +176,7 @@ public class StaffDA {
             pstmt.setString(2, s.getStaffName());
             pstmt.setInt(3, s.getBlockDay());
             pstmt.setDouble(4, s.getBlockStart());
-            pstmt.setInt(5, s.getBlockDurations());
+            pstmt.setDouble(5, s.getBlockDuration());
             pstmt.setString(6, s.getCourseCodeListS());
             pstmt.setString(7, s.getLecGroupListS());
             pstmt.setString(8, s.getTutGroupListS());
@@ -207,20 +208,19 @@ public class StaffDA {
     }
 
     public Staff get(String staffID) {
-  
+       
         Staff s = new Staff();
         try {
             connect = DBConnection.getConnection();
+            
             PreparedStatement pstmt = connect.prepareStatement("select * from Staff where staffID = ?");
             pstmt.setString(1, staffID);
             ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                s = new Staff(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));             
+            while (rs.next()) {
+                s = new Staff(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));             
+                
             }   
-            else{
-                System.out.println("hello");
-            }
+           
         } catch (SQLException e) {
             System.out.println(e);
             

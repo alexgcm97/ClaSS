@@ -33,7 +33,7 @@ public class tutorialGroupManage {
     
    
     
-    public void staffInsert() throws SQLException, IOException {
+    public void GroupInsert() throws SQLException, IOException {
        
         tgDA.insertTutorialGroup(tg);
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectGroups.xhtml");
@@ -43,7 +43,6 @@ public class tutorialGroupManage {
         FacesContext.getCurrentInstance().getExternalContext().redirect("editGroup.xhtml");
 
     }
-
     public void updateGroup() throws SQLException, IOException {
         tgDA.updateTutorialGroup(tg);
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectGroups.xhtml");
