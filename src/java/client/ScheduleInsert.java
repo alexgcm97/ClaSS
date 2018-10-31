@@ -37,7 +37,7 @@ public class ScheduleInsert implements Serializable {
     String sTime = "", eTime = "";
     private Connection connect;
     
-    private final String filePath = "C:\\Users\\Alex\\Documents\\NetBeansProjects\\ClaSS\\src\\java\\xml\\Configuration.xml";
+    private final String filePath = "C:\\Users\\Teck Siong\\Documents\\ClaSS\\src\\java\\xml\\Configuration.xml";
 
     //Generate staff timetable for view
     public String view_Staff() throws SQLException, ParserConfigurationException, SAXException, IOException {

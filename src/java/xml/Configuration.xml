@@ -6,9 +6,9 @@
   <constraints>
     <balanceClass>true</balanceClass>
     <block>
-      <day>2</day>
+      <day>1</day>
       <startTime>12</startTime>
-      <endTime>13.0</endTime>
+      <endTime>14.0</endTime>
     </block>
     <maxBreak>2.0</maxBreak>
   </constraints>
