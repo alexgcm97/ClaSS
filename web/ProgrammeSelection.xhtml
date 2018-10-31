@@ -13,6 +13,7 @@
         <div align="center" class="btn">
             <h1>Programme</h1>
             <h:form>
+                <h:commandButton action="menu?faces-redirect=true" value="Back" immediate="true"/>
                 <h:commandButton action="#{selection.programmeButton()}" value="Next"/><br/>
                 <br/>
                 <p:dataTable id="programmeTable"  value="#{selection.allProgrammeRecords}" var="p" selection="#{selection.selectedProgramme}" rowKey="#{p.programmeID}" style="margin-bottom:0">

@@ -5,6 +5,7 @@
  */
 package client;
 
+import domain.XMLPath;
 import da.*;
 import domain.Class;
 import domain.*;
@@ -1302,6 +1303,7 @@ public class SchedulingAlgorithm implements Serializable {
         if (runCount < exitLimit) {
             storeData();
             printClass();
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
             FacesContext.getCurrentInstance().getExternalContext().redirect("ViewTimetable.xhtml");
         } else {
             errorCode = 1;

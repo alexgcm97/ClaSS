@@ -2,6 +2,7 @@
 //This page is to get the class table data and insert to schedule table for display purpose
 package client;
 
+import domain.XMLPath;
 import da.DBConnection;
 import domain.CourseType;
 import domain.Programme;

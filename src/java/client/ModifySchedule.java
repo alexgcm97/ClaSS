@@ -315,6 +315,6 @@ public class ModifySchedule implements Serializable {
     public String back1() {
         this.message = false;
         this.success = false;
-        return "setConstraints.xhtml?faces-redirect=true";
+        return "menu.xhtml?faces-redirect=true";
     }
 }

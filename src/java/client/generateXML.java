@@ -1,5 +1,6 @@
 package client;
 
+import domain.XMLPath;
 import da.CourseDA;
 import domain.CourseType;
 import da.StaffDA;
