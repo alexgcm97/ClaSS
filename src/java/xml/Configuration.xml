@@ -6,10 +6,10 @@
   <constraints>
     <balanceClass>true</balanceClass>
     <block>
-      <day>1</day>
+      <day>3</day>
       <startTime>12</startTime>
       <endTime>14.0</endTime>
     </block>
-    <maxBreak>2.0</maxBreak>
+    <maxBreak>1.0</maxBreak>
   </constraints>
 </configuration>

@@ -37,7 +37,7 @@ public class ScheduleInsert implements Serializable {
     String sTime = "", eTime = "";
     private Connection connect;
     
-    private final String filePath = "C:\\Users\\Teck Siong\\Documents\\ClaSS\\src\\java\\xml\\Configuration.xml";
+    private final String filePath = XMLPath.getXMLPath();
 
     //Generate staff timetable for view
     public String view_Staff() throws SQLException, ParserConfigurationException, SAXException, IOException {
@@ -55,7 +55,7 @@ public class ScheduleInsert implements Serializable {
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Element e;
 
-        Document doc = dBuilder.parse(filePath);
+        Document doc = dBuilder.parse(filePath + "Configuration.xml");
         NodeList nodes = doc.getElementsByTagName("configuration");
 
         e = (Element) nodes.item(0);
@@ -231,7 +231,7 @@ public class ScheduleInsert implements Serializable {
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Element e;
 
-        Document doc = dBuilder.parse(filePath);
+        Document doc = dBuilder.parse(filePath + "Configuration.xml");
         NodeList nodes = doc.getElementsByTagName("configuration");
 
         e = (Element) nodes.item(0);
@@ -386,7 +386,7 @@ public class ScheduleInsert implements Serializable {
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Element e;
 
-        Document doc = dBuilder.parse(filePath);
+        Document doc = dBuilder.parse(filePath + "Configuration.xml");
         NodeList nodes = doc.getElementsByTagName("configuration");
 
         e = (Element) nodes.item(0);

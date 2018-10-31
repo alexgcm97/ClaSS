@@ -46,7 +46,7 @@ public class generateXML implements Serializable {
     //Tutorial Group
     private TutorialGroupDA tgda = new TutorialGroupDA();
 
-    private final String filePath = "C:\\Users\\Teck Siong\\Documents\\ClaSS\\src\\java\\xml\\";
+    private final String filePath = XMLPath.getXMLPath();
 
     public void generateCourseXML(List<String> courseList) {
         List<CourseType> list = new ArrayList<CourseType>();

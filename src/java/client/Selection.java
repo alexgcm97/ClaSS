@@ -31,7 +31,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean(name = "selection")
 @SessionScoped
-public class Selection{
+public class Selection {
 
     private generateXML xml = new generateXML();
     private VenueDA vda = new VenueDA();
@@ -156,6 +156,8 @@ public class Selection{
         xml.generateTutorialGroupXML(selectedGroups);
         xml.generateStaffXML(selectedStaff);
         xml.generateVenueXML(selectedVenueID);
+        FacesContext.getCurrentInstance().getExternalContext().redirect("setSettings.xhtml");
+
     }
 
     public void generateXML() {

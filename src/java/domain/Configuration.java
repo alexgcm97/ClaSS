@@ -5,6 +5,7 @@
  */
 package domain;
 
+import client.XMLPath;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -38,7 +39,7 @@ public class Configuration implements Serializable {
     private double maxBreak, blockDuration, startTime, endTime;
     private boolean toBalanceClass, toBlockTime, setBreak;
 
-    private final String filePath = "C:\\Users\\Teck Siong\\Documents\\ClaSS\\src\\java\\xml\\";
+    private final String filePath = XMLPath.getXMLPath();
 
     public void generateConfiguration() throws ParserConfigurationException, TransformerConfigurationException, TransformerException, FileNotFoundException, UnsupportedEncodingException, IOException {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
