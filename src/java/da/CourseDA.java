@@ -58,9 +58,6 @@ public class CourseDA {
                                 case "P":
                                     output.get(i).setPracHours(rs1.getDouble(5));
                                     break;
-                                case "B":
-                                    output.get(i).setBlendHours(rs1.getDouble(5));
-                                    break;
                             }
                             found = true;
                         }
@@ -75,9 +72,6 @@ public class CourseDA {
                                 break;
                             case "P":
                                 cd.setPracHours(rs1.getDouble(5));
-                                break;
-                            case "B":
-                                cd.setBlendHours(rs1.getDouble(5));
                                 break;
                         }
                         output.add(cd);

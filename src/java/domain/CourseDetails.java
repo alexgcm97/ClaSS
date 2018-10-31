@@ -11,7 +11,7 @@ package domain;
  */
 public class CourseDetails {
      private String courseCode, courseName;
-     double lecHours,tutHours,pracHours, blendHours;
+     double lecHours,tutHours,pracHours;
 
     public String getCourseCode() {
         return courseCode;
@@ -53,24 +53,15 @@ public class CourseDetails {
         this.pracHours = pracHours;
     }
 
-    public double getBlendHours() {
-        return blendHours;
-    }
-
-    public void setBlendHours(double blendHours) {
-        this.blendHours = blendHours;
-    }
-
     public CourseDetails() {
     }
 
-    public CourseDetails(String courseCode, String courseName, double lecHours, double tutHours, double pracHours, double blendHours) {
+    public CourseDetails(String courseCode, String courseName, double lecHours, double tutHours, double pracHours) {
         this.courseCode = courseCode;
         this.courseName = courseName;
         this.lecHours = lecHours;
         this.tutHours = tutHours;
         this.pracHours = pracHours;
-        this.blendHours = blendHours;
     }
 
     
