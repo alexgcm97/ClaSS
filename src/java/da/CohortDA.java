@@ -30,7 +30,7 @@ public class CohortDA {
     String year = "";
     String month = "";
 
-    boolean success, message;
+    boolean success, message, delete, update;
 
     public boolean isSuccess() {
         return success;
@@ -48,6 +48,23 @@ public class CohortDA {
         this.message = message;
     }
 
+    public boolean isDelete() {
+        return delete;
+    }
+
+    public void setDelete(boolean delete) {
+        this.delete = delete;
+    }
+
+    public boolean isUpdate() {
+        return update;
+    }
+
+    public void setUpdate(boolean update) {
+        this.update = update;
+    }
+
+    
     public void insertCohort(Cohort c) throws SQLException {
         String cohortID = getMaxID();
         Connection connect;
@@ -100,6 +117,7 @@ public class CohortDA {
             ps.setString(1, cohortID);
             System.out.println(ps);
             ps.executeUpdate();
+            this.delete = true;
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -136,9 +154,9 @@ public class CohortDA {
             ps.setString(2, c.getMonth());
             ps.setString(3, c.getEntryYear());
             ps.setString(4, c.getCohortID());
-
+            
             ps.executeUpdate();
-
+            this.update = true;
         } catch (Exception e) {
             System.out.println(e);
         }

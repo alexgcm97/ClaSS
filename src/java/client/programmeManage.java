@@ -31,6 +31,15 @@ public class programmeManage {
     public void setP(Programme p) {
         this.p = p;
     }
+
+    public ProgrammeDA getPda() {
+        return pda;
+    }
+
+    public void setPda(ProgrammeDA pda) {
+        this.pda = pda;
+    }
+    
     
     
 
@@ -45,12 +54,12 @@ public class programmeManage {
         p.setProgrammeCode("");
         p.setProgrammeID("");
         p.setProgrammeName("");
-        
+        pda.setUpdate(false);
         FacesContext.getCurrentInstance().getExternalContext().redirect("newProgramme.xhtml");
     }
 
     public void updateProgramme() throws SQLException, IOException {
-        pda.updateProgramme(p);
+        pda.updateProgramme(p); 
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectProgrammeCohort.xhtml");
     }
 
@@ -62,6 +71,11 @@ public class programmeManage {
     public void deleteProgramme(String programmeID) throws SQLException, IOException {
         pda.deleteProgramme(programmeID);
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectProgrammeCohort.xhtml");
+    }
+    public void goBackMenu() throws IOException{
+        
+    FacesContext.getCurrentInstance().getExternalContext().redirect("EditInfo.xhtml");
+    
     }
 
 }

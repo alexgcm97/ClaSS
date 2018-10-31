@@ -34,6 +34,15 @@ public class staffManage implements Serializable {
         this.s = s;
     }
 
+    public StaffDA getSda() {
+        return sda;
+    }
+
+    public void setSda(StaffDA sda) {
+        this.sda = sda;
+    }
+    
+
     public void goTonew() throws IOException {
        
         s.setBlockStart(0);

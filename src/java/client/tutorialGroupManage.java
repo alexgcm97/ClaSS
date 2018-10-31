@@ -30,6 +30,16 @@ public class tutorialGroupManage {
     public void setTg(TutorialGroup tg) {
         this.tg = tg;
     }
+
+    public TutorialGroupDA getTgDA() {
+        return tgDA;
+    }
+
+    public void setTgDA(TutorialGroupDA tgDA) {
+        this.tgDA = tgDA;
+    }
+
+ 
     
    
     

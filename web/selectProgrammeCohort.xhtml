@@ -48,12 +48,36 @@
         <title>Select Programme and Cohort</title>
     </h:head>
     <h:body>
+          <h:outputScript rendered="#{programmeManage.pda.success}">
+            alert("Successfully Updated!!!");
+        </h:outputScript>
+        <h:outputScript rendered="#{programmeManage.pda.message}">
+            alert("Error!!!");
+        </h:outputScript>
+        <h:outputScript rendered="#{programmeManage.pda.update}">
+            alert("Successfully Updated!!!");
+        </h:outputScript>
+        <h:outputScript rendered="#{programmeManage.pda.delete}">
+            alert("Record Deleted!");
+        </h:outputScript>
+        <h:outputScript rendered="#{cohortManage.cda.success}">
+            alert("Successfully Updated!!!");
+        </h:outputScript>
+        <h:outputScript rendered="#{cohortManage.cda.message}">
+            alert("Error!!!");
+        </h:outputScript>
+         <h:outputScript rendered="#{cohortManage.cda.update}">
+            alert("Successfully Updated!!!");
+        </h:outputScript>
+        <h:outputScript rendered="#{cohortManage.cda.delete}">
+            alert("Record Deleted!");
+        </h:outputScript>
         <div align="center" class="btn">
             <h1>Available Programme</h1>
               <div style="float: left; width: 200px">
                     <h:form>
                         <br/>
-                        <h:commandButton value="Create New Programme" action="newProgramme" styleClass="btn green"/>
+                        <h:commandButton value="Create New Programme" action="#{programmeManage.goToNew()}" styleClass="btn green"/>
                     </h:form>   
                 </div>
             <h:form class="form" >
@@ -90,7 +114,7 @@
                 </div>
                 <br/>
 
-                <h:commandButton value="Done" action="EditInfo" styleClass="btn green"/>
+                <h:commandButton value="Done" action="#{programmeManage.goBackMenu()}" styleClass="btn green"/>
             </h:form>
             <h1>Available Cohort</h1>
             

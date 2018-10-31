@@ -23,6 +23,15 @@ public class cohortManage {
     public CohortDA cda = new CohortDA();
     public Cohort c = new Cohort();
 
+    public CohortDA getCda() {
+        return cda;
+    }
+
+    public void setCda(CohortDA cda) {
+        this.cda = cda;
+    }
+
+    
     public Cohort getC() {
         return c;
     }

@@ -27,7 +27,7 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @SessionScoped
 public class ProgrammeDA {
-    
+
     public List<Programme> getAllProgrammeRecords() throws SQLException {
 
         Connection connect = null;
@@ -50,7 +50,7 @@ public class ProgrammeDA {
         return output;
 
     }
-     boolean success, message;
+    boolean success, message, delete, update;
 
     public boolean isSuccess() {
         return success;
@@ -64,13 +64,31 @@ public class ProgrammeDA {
         return message;
     }
 
+    public boolean isDelete() {
+        return delete;
+    }
+
+    public void setDelete(boolean delete) {
+        this.delete = delete;
+    }
+
+    public boolean isUpdate() {
+        return update;
+    }
+
+    public void setUpdate(boolean update) {
+        this.update = update;
+    }
+
     public void setMessage(boolean message) {
         this.message = message;
     }
+
     public void insertProgramme(Programme p) throws SQLException {
+      
         String programmeID = getMaxID();
         Connection connect = null;
-        
+
         try {
             connect = DBConnection.getConnection();
             Statement stmt = connect.createStatement();
@@ -98,19 +116,22 @@ public class ProgrammeDA {
             pstmt.setString(1, programmeID);
             pstmt.setString(2, p.getProgrammeCode());
             pstmt.setString(3, p.getProgrammeName());
+
             this.success = true;
-            System.out.println(success);
+            this.delete = false;
+            this.update = false;
+
             pstmt.executeUpdate();
-        
-            
+
         } catch (SQLException ex) {
-   
+
             System.out.println(ex.getMessage());
         }
 
     }
 
     public Programme deleteProgramme(String programmeID) {
+  
         Connection connect;
         Programme p = new Programme();
         try {
@@ -119,6 +140,10 @@ public class ProgrammeDA {
             ps.setString(1, programmeID);
             System.out.println(ps);
             ps.executeUpdate();
+            this.delete = true;
+            this.update = false;
+            this.success = false;
+
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -145,6 +170,7 @@ public class ProgrammeDA {
     }
 
     public void updateProgramme(Programme p) {
+   
         Connection connect = null;
 
         try {
@@ -153,7 +179,9 @@ public class ProgrammeDA {
             ps.setString(1, p.getProgrammeCode());
             ps.setString(2, p.getProgrammeName());
             ps.setString(3, p.getProgrammeID());
-
+            this.update = true;
+            this.success = false;
+            this.delete = false;
             ps.executeUpdate();
 
         } catch (Exception e) {

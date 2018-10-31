@@ -31,6 +31,32 @@ public class venueManage {
     private List<String> selectedCourseCodeList = new ArrayList();
     private String[] courseCodeStr;
 
+    public VenueDA getVda() {
+        return vda;
+    }
+
+    public void setVda(VenueDA vda) {
+        this.vda = vda;
+    }
+
+    public CourseDA getCda() {
+        return cda;
+    }
+
+    public void setCda(CourseDA cda) {
+        this.cda = cda;
+    }
+
+    public List<String> getSelectedCourseCodeList() {
+        return selectedCourseCodeList;
+    }
+
+    public void setSelectedCourseCodeList(List<String> selectedCourseCodeList) {
+        this.selectedCourseCodeList = selectedCourseCodeList;
+    }
+    
+    
+
     public String[] getCourseCodeStr() {
         return courseCodeStr;
     }

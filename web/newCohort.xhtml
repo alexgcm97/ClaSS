@@ -47,12 +47,16 @@
                     </tr>
                     <tr>
                         <td>Year:</td>
-                        <td><h:inputText id="year" value="#{cohortManage.c.year}" required="true"  requiredMessage="*Invalid Input" maxlength="4"/> *2018
+                        <td><h:inputText id="year" value="#{cohortManage.c.year}" required="true"  requiredMessage="*Invalid Input" maxlength="4" converterMessage="*Invalid Input! Example: 2018 ">
+                                <f:convertNumber maxFractionDigits="1" maxIntegerDigits="4" type="number" /> 
+                            </h:inputText>
                         <h:message for="year" style="color: red" /></td>
                     </tr>
                     <tr>
                         <td>Month:</td>
-                        <td><h:inputText id="month" value="#{cohortManage.c.month}" required="true"  requiredMessage="*Invalid Input" maxlength="2"/> *1 for January
+                        <td><h:inputText id="month" value="#{cohortManage.c.month}" required="true"  requiredMessage="*Invalid Input" maxlength="2" converterMessage="*Invalid Input! Example: 1 for January "> 
+                             <f:convertNumber maxFractionDigits="1" maxIntegerDigits="4" type="number" /> 
+                            </h:inputText>
                             <h:message for="month" style="color: red" /></td>
                     </tr>
                  <tr>

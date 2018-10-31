@@ -30,9 +30,33 @@ public class courseManage implements Serializable {
     public CourseTypeDA ctda = new CourseTypeDA();
     public Course c = new Course();
     public CourseType ct = new CourseType();
-
     private double lecHours, tutHours, pracHours;
 
+    public CourseDA getCda() {
+        return cda;
+    }
+
+    public void setCda(CourseDA cda) {
+        this.cda = cda;
+    }
+
+    public CourseTypeDA getCtda() {
+        return ctda;
+    }
+
+    public void setCtda(CourseTypeDA ctda) {
+        this.ctda = ctda;
+    }
+
+    public CourseType getCt() {
+        return ct;
+    }
+
+    public void setCt(CourseType ct) {
+        this.ct = ct;
+    }
+
+    
     public double getLecHours() {
         return lecHours;
     }
