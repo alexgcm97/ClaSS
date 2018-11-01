@@ -36,6 +36,7 @@
         <title>Main Menu</title>
     </h:head>
     <h:body>
+        <h:commandLink rendered="#{facesContext.externalContext.invalidateSession()}"/>
         <h:outputScript rendered="#{schedulingAlgorithm.errorCode == 1}">
             alert("Unable to generate schedule, possibly due to insufficient staff or venue provided.");
             #{schedulingAlgorithm.setErrorCode(0)}
@@ -60,6 +61,7 @@
             <h:form>
                 <br/>
                 <h:commandButton action ="ProgrammeSelection?faces-redirect=true" value = "Create New Timetable" styleClass="btn green"/><br/><br/>
+                <h:commandButton action ="ViewTimetable?faces-redirect=true" value = "View Timetable" styleClass="btn green"/><br/><br/>
                 <h:commandButton action="EditInfo?faces-redirect=true" value="Edit Information" styleClass="btn green"/><br/><br/>
                 <h:commandButton action ="#{login.goBackLogin()}" value="Log Out" styleClass="btn red"/>
                 <br/>

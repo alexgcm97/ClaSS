@@ -321,7 +321,7 @@ public class SchedulingAlgorithm implements Serializable {
     public boolean isClashWithOtherLists() {
         boolean isClash = false;
         for (int i = 0; i < scheduleList.size(); i++) {
-            for (int j = i + 1; j < scheduleList.size(); j++) {
+            for (int j = i + 1; j < scheduleList.size() - 1; j++) {
                 ArrayList<Class> list1 = scheduleList.get(i).getClassList();
                 ArrayList<Class> list2 = scheduleList.get(j).getClassList();
 
@@ -337,17 +337,33 @@ public class SchedulingAlgorithm implements Serializable {
                                 double startTime2 = class2.getStartTime();
                                 double endTime2 = class2.getEndTime();
                                 if (class1.getCourseType().equals("L") && class2.getCourseType().equals("L")) {
-                                    if (!class1.getCourseID().equals(class2.getCourseID()) || !class1.getStaffID().equals(class2.getStaffID())) {
+                                    if (!class1.getCourseID().equals(class2.getCourseID())) {
                                         if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1) || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2)) {
                                             if (class1.getVenueID().equals(class2.getVenueID()) || class1.getStaffID().equals(class2.getStaffID())) {
+                                                System.out.println("C1: " + class1.getCourseID());
+                                                System.out.println("C2: " + class2.getCourseID());
+                                                System.out.println("V1: " + class1.getVenueID());
+                                                System.out.println("V2: " + class2.getVenueID());
+                                                System.out.println("This");
                                                 isClash = true;
                                                 break;
+                                            }
+                                        }
+                                    } else {
+                                        if (class1.getStartTime() != class2.getStartTime() || class1.getEndTime() != class2.getEndTime()) {
+                                            if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1) || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2)) {
+                                                if (class1.getVenueID().equals(class2.getVenueID()) || class1.getStaffID().equals(class2.getStaffID())) {
+                                                    System.out.println("That");
+                                                    isClash = true;
+                                                    break;
+                                                }
                                             }
                                         }
                                     }
                                 } else {
                                     if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1) || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2)) {
                                         if (class1.getVenueID().equals(class2.getVenueID()) || class1.getStaffID().equals(class2.getStaffID())) {
+                                            System.out.println("Here");
                                             isClash = true;
                                             break;
                                         }
@@ -1075,7 +1091,7 @@ public class SchedulingAlgorithm implements Serializable {
         for (int i = 0; i < scheduleList.size(); i++) {
             ArrayList<Class> classList = scheduleList.get(i).getClassList();
             for (int index1 = 0; index1 < classList.size(); index1++) {
-                for (int index2 = index1 + 1; index2 < classList.size(); index2++) {
+                for (int index2 = index1 + 1; index2 < classList.size() - 1; index2++) {
                     Class class1 = classList.get(index1);
                     Class class2 = classList.get(index2);
                     if (class1.getDay() == class2.getDay()) {
@@ -1317,13 +1333,13 @@ public class SchedulingAlgorithm implements Serializable {
                 allocation();
                 runCount++;
                 System.out.println("Loop " + loopCount + " Run " + runCount + " (StudyDays: " + studyDays + " - MaxBreak: " + maxBreak + " h)");
+                System.out.println(isClassEnough() + "-" + hasInvalidTime() + "-" + hasInvalidNoOfClass() + "-" + hasLongDurationClass() + "-" + isClassListDataCompleted() + "-" + isClashWithinList() + "-" + isClashWithOtherLists() + "-" + isClashWithBlockClass() + "-" + isClashWithDB());
             }
         } while (toRestart || !isClassEnough() || hasInvalidTime() || hasInvalidNoOfClass() || hasLongDurationClass() || !isClassListDataCompleted() || isClashWithinList() || isClashWithOtherLists() || isClashWithBlockClass() || isClashWithDB());
 
         if (!isBreak) {
             storeData();
             printClass();
-            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
             FacesContext.getCurrentInstance().getExternalContext().redirect("ViewTimetable.xhtml");
         } else {
             errorCode = 1;
