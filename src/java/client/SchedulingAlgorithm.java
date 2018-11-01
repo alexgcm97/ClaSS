@@ -136,15 +136,14 @@ public class SchedulingAlgorithm implements Serializable {
         staffList = new ArrayList();
         nodes = doc.getElementsByTagName("staff");
 
-        for (int i = 0;
-                i < nodes.getLength();
-                i++) {
+        for (int i = 0; i < nodes.getLength(); i++) {
             e = (Element) nodes.item(i);
 
             Staff stf = new Staff(e.getAttribute("staffID"), e.getElementsByTagName("name").item(0).getTextContent());
             String tempStr = e.getElementsByTagName("courseCodeList").item(0).getTextContent();
+
             String[] tempArr;
-            if (tempStr.contains("\\|")) {
+            if (tempStr.contains("|")) {
                 tempArr = tempStr.split("\\|");
                 for (String s : tempArr) {
                     stf.addCourseCodeToList(s);
@@ -154,7 +153,7 @@ public class SchedulingAlgorithm implements Serializable {
             }
 
             tempStr = e.getElementsByTagName("lecGroupList").item(0).getTextContent();
-            if (tempStr.contains("\\|")) {
+            if (tempStr.contains("|")) {
                 tempArr = tempStr.split("\\|");
                 for (String s : tempArr) {
                     stf.addLecGroupToList(s);
@@ -164,7 +163,7 @@ public class SchedulingAlgorithm implements Serializable {
             }
 
             tempStr = e.getElementsByTagName("tutGroupList").item(0).getTextContent();
-            if (tempStr.contains("\\|")) {
+            if (tempStr.contains("|")) {
                 tempArr = tempStr.split("\\|");
                 for (String s : tempArr) {
                     stf.addTutGroupToList(s);
@@ -174,7 +173,7 @@ public class SchedulingAlgorithm implements Serializable {
             }
 
             String pracGroupStr = e.getElementsByTagName("pracGroupList").item(0).getTextContent();
-            if (pracGroupStr.contains("\\|")) {
+            if (pracGroupStr.contains("|")) {
                 String pracGroupArr[] = pracGroupStr.split("\\|");
                 for (String s : pracGroupArr) {
                     stf.addPracGroupToList(s);
@@ -599,8 +598,12 @@ public class SchedulingAlgorithm implements Serializable {
         int totalSize = 0;
         Staff s = searchStaff(staffID);
         for (int i = 0; i < groupList.size(); i++) {
-            if (groupList.get(i).getCourseCodeList().contains(courseCode) && s.getLecGroupList().contains(groupList.get(i).getGroupID())) {
-                totalSize += groupList.get(i).getSize();
+            if (groupList.get(i).getCourseCodeList().contains(courseCode)) {
+                for (String str : s.getLecGroupList()) {
+                    if (str.contains(courseCode) && str.contains(groupList.get(i).getGroupID())) {
+                        totalSize += groupList.get(i).getSize();
+                    }
+                }
             }
         }
         return totalSize;
@@ -898,7 +901,7 @@ public class SchedulingAlgorithm implements Serializable {
         return rand.nextInt(studyDays) + 1;
     }
 
-    public ArrayList<Staff> getLecStaffList(String courseType, String courseCode) {
+    public ArrayList<Staff> getLecStaffList(String courseType, String courseCode) throws IOException {
         ArrayList<Staff> qualifiedList = new ArrayList();
         for (Staff s : staffList) {
             for (String courseCodeList : s.getCourseCodeList()) {
@@ -906,6 +909,10 @@ public class SchedulingAlgorithm implements Serializable {
                     qualifiedList.add(s);
                 }
             }
+        }
+        if (qualifiedList.isEmpty()) {
+            errorCode = 2;
+            FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
         }
         return qualifiedList;
     }
@@ -959,7 +966,6 @@ public class SchedulingAlgorithm implements Serializable {
         if (qualifiedList.isEmpty()) {
             errorCode = 3;
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
-
         }
         return qualifiedList.get(rand.nextInt(qualifiedList.size()));
     }
@@ -1320,7 +1326,6 @@ public class SchedulingAlgorithm implements Serializable {
                 runCount++;
                 System.out.println("Loop " + loopCount + " Run " + runCount + " (StudyDays: " + studyDays + " - MaxBreak: " + maxBreak + " h)");
             }
-
         } while (toRestart || !isClassEnough() || hasInvalidTime() || hasInvalidNoOfClass() || hasLongDurationClass() || !isClassListDataCompleted() || isClashWithinList() || isClashWithOtherLists() || isClashWithBlockClass() || isClashWithDB());
 
         if (!isBreak) {
