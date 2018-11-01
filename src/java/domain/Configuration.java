@@ -35,7 +35,7 @@ import org.w3c.dom.Element;
 public class Configuration implements Serializable {
 
     private int blockDay, blockStart, studyDays;
-    private double maxBreak, blockDuration, startTime, endTime;
+    private double maxBreak, blockDuration, startTime = 8.00, endTime = 20.00;
     private boolean toBalanceClass, toBlockTime, setBreak;
 
     private final String filePath = XMLPath.getXMLPath();
