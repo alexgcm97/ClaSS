@@ -21,6 +21,10 @@
                 text-align: center;
             }
 
+            td{
+                min-width:30px;
+            }
+           
             .col-container {
                 display: table;
                 width: 100%;
@@ -72,7 +76,7 @@
                             </td>
                         </ui:repeat>
                     </tr>
-                    <tr>
+                    <tr style=" height: 70px">
                         <td><h:outputLabel><b>Mon</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.monList}" var="sch" >
                             <td colspan="#{sch.colspan}">
@@ -83,7 +87,7 @@
                             </td>
                         </ui:repeat>
                     </tr>
-                    <tr>
+                    <tr style=" height: 70px">
                         <td><h:outputLabel><b>Tue</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.tuesList}" var="sch" >
                             <td colspan="#{sch.colspan}">
@@ -94,7 +98,7 @@
                             </td>
                         </ui:repeat>
                     </tr>
-                    <tr>
+                    <tr style=" height: 70px">
                         <td><h:outputLabel><b>Wed</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.wedList}" var="sch" >
                             <td colspan="#{sch.colspan}">
@@ -105,7 +109,7 @@
                             </td>
                         </ui:repeat>
                     </tr>
-                    <tr>
+                    <tr style=" height: 70px">
                         <td><h:outputLabel><b>Thu</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.thursList}" var="sch" >
                             <td colspan="#{sch.colspan}">
@@ -116,7 +120,7 @@
                             </td>
                         </ui:repeat>
                     </tr>
-                    <tr>
+                    <tr style=" height: 70px">
                         <td><h:outputLabel><b>Fri</b></h:outputLabel></td>
                         <ui:repeat value="#{displayTimetable.friList}" var="sch" >
                             <td colspan="#{sch.colspan}">
