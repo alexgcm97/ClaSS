@@ -57,6 +57,7 @@ public class Selection {
     private Programme p = new Programme();
     private List<Programme> programmeList = new ArrayList<Programme>();
     private List<Programme> selectedProgramme = new ArrayList<Programme>();
+    private ArrayList<String> courseCodeList = new ArrayList();
 
     private StaffDA sda = new StaffDA();
     private Staff s = new Staff();
@@ -66,7 +67,7 @@ public class Selection {
     private Map<String, Boolean> checked = new HashMap<String, Boolean>();
 
     public List<CourseDetails> getAllCourseRecords() throws SQLException {
-        this.courseDetailsList = cda.getAllCourseRecords();
+        this.courseDetailsList = cda.getRelatedCourseRecords(courseCodeList);
         return this.courseDetailsList;
     }
 
@@ -97,6 +98,11 @@ public class Selection {
         System.out.println(selectedGroups.size());
         for (int k = 0; k < selectedGroups.size(); k++) {
             System.out.println(selectedGroups.get(k));
+            for (String s : tgda.getCourseCodeList(selectedGroups.get(k))) {
+                if (!courseCodeList.contains(s)) {
+                    courseCodeList.add(s);
+                }
+            }
         }
         FacesContext.getCurrentInstance().getExternalContext().redirect("CourseSelection.xhtml");
     }

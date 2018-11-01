@@ -50,6 +50,33 @@ public class TutorialGroupDA {
 
     }
 
+    public List<String> getCourseCodeList(String groupID) throws SQLException {
+
+        Connection connect = null;
+
+        List<String> output = new ArrayList();
+        try {
+            connect = DBConnection.getConnection();
+            PreparedStatement pstmt = connect.prepareStatement("SELECT courseCodeList FROM Tutorial_Group WHERE groupID = ?");
+            pstmt.setString(1, groupID);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                String strArr[] = rs.getString("courseCodeList").split(",");
+                for (String s : strArr) {
+                    output.add(s);
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+        DBConnection.close(connect);
+        return output;
+
+    }
+
     public List<String> getGroupIdViaProgrammeID(String programmeID) throws SQLException {
 
         Connection connect = null;
@@ -105,8 +132,8 @@ public class TutorialGroupDA {
         return output;
 
     }
-    
-      boolean success, message;
+
+    boolean success, message;
 
     public boolean isSuccess() {
         return success;
@@ -130,7 +157,6 @@ public class TutorialGroupDA {
 //        this.groupNumber = 0;
 //        this.size = 0 ;
 //    }
-  
     public void insertTutorialGroup(TutorialGroup tg) throws SQLException {
         String tgID = getMaxID();
         Connection connect = null;

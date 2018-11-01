@@ -27,6 +27,71 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class CourseDA {
 
+    public List<CourseDetails> getRelatedCourseRecords(ArrayList<String> courseCodeList) throws SQLException {
+        Connection connect = null;
+        boolean found;
+        List<CourseDetails> output = new ArrayList<CourseDetails>();
+        connect = DBConnection.getConnection();
+        for (String courseCodeStr : courseCodeList) {
+            try {
+                PreparedStatement pstmt = connect.prepareStatement("SELECT courseCode FROM course WHERE courseCode = ?");
+                pstmt.setString(1, courseCodeStr);
+                ResultSet rs = pstmt.executeQuery();
+                while (rs.next()) {
+                    String courseCode = rs.getString(1);
+                    PreparedStatement stmt = connect.prepareStatement("SELECT c.courseCode,c.courseName,ct.courseID,ct.courseType,ct.courseDuration FROM course c, coursetype ct WHERE c.courseCode=? AND c.courseCode = ct.courseCode");
+                    stmt.setString(1, courseCode);
+                    ResultSet rs1 = stmt.executeQuery();
+                    while (rs1.next()) {
+                        CourseDetails cd = new CourseDetails();
+                        cd.setCourseCode(rs1.getString(1));
+                        cd.setCourseName(rs1.getString(2));
+
+                        found = false;
+                        for (int i = 0; i < output.size(); i++) {
+                            if (output.get(i).getCourseCode().equals(rs1.getString(1))) {
+                                switch (rs1.getString(4)) {
+                                    case "L":
+                                        output.get(i).setLecHours(rs1.getDouble(5));
+                                        break;
+                                    case "T":
+                                        output.get(i).setTutHours(rs1.getDouble(5));
+                                        break;
+                                    case "P":
+                                        output.get(i).setPracHours(rs1.getDouble(5));
+                                        break;
+                                }
+                                found = true;
+                            }
+                        }
+                        if (!found) {
+                            switch (rs1.getString(4)) {
+                                case "L":
+                                    cd.setLecHours(rs1.getDouble(5));
+                                    break;
+                                case "T":
+                                    cd.setTutHours(rs1.getDouble(5));
+                                    break;
+                                case "P":
+                                    cd.setPracHours(rs1.getDouble(5));
+                                    break;
+                            }
+                            output.add(cd);
+                        }
+
+                    }
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+
+            }
+        }
+        DBConnection.close(connect);
+        return output;
+
+    }
+
     public List<CourseDetails> getAllCourseRecords() throws SQLException {
         Connection connect = null;
         boolean found;
