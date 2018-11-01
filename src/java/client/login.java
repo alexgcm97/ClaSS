@@ -75,5 +75,12 @@ public class login {
            FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
         }
     }
+    public void goBackLogin() throws IOException{
+        this.message = false;
+        this.success = false;
+        username = "";
+        password = "";
+        FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+    }
 
 }

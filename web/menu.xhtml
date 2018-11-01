@@ -45,7 +45,7 @@
                 <br/>
                 <h:commandButton action ="ProgrammeSelection?faces-redirect=true" value = "Create New Timetable" styleClass="btn green"/><br/><br/>
                 <h:commandButton action="EditInfo?faces-redirect=true" value="Edit Information" styleClass="btn green"/><br/><br/>
-                <h:commandButton action ="login" value="Log Out" styleClass="btn red"/>
+                <h:commandButton action ="#{login.goBackLogin()}" value="Log Out" styleClass="btn red"/>
                 <br/>
             </h:form>
         </div>
