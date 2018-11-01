@@ -10,8 +10,10 @@ package domain;
  * @author REPUBLIC
  */
 public class CourseDetails {
-     private String courseCode, courseName;
-     double lecHours,tutHours,pracHours;
+
+    private String courseCode, courseName;
+    double lecHours, tutHours, pracHours;
+
 
     public String getCourseCode() {
         return courseCode;
@@ -64,5 +66,4 @@ public class CourseDetails {
         this.pracHours = pracHours;
     }
 
-    
 }

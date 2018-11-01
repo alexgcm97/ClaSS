@@ -46,7 +46,6 @@ public class CourseDA {
                         CourseDetails cd = new CourseDetails();
                         cd.setCourseCode(rs1.getString(1));
                         cd.setCourseName(rs1.getString(2));
-
                         found = false;
                         for (int i = 0; i < output.size(); i++) {
                             if (output.get(i).getCourseCode().equals(rs1.getString(1))) {
@@ -54,12 +53,13 @@ public class CourseDA {
                                     case "L":
                                         output.get(i).setLecHours(rs1.getDouble(5));
                                         break;
-                                    case "T":
-                                        output.get(i).setTutHours(rs1.getDouble(5));
-                                        break;
                                     case "P":
                                         output.get(i).setPracHours(rs1.getDouble(5));
                                         break;
+                                    default:
+                                        output.get(i).setTutHours(rs1.getDouble(5));
+                                        break;
+
                                 }
                                 found = true;
                             }
@@ -69,11 +69,11 @@ public class CourseDA {
                                 case "L":
                                     cd.setLecHours(rs1.getDouble(5));
                                     break;
-                                case "T":
-                                    cd.setTutHours(rs1.getDouble(5));
-                                    break;
                                 case "P":
                                     cd.setPracHours(rs1.getDouble(5));
+                                    break;
+                                default:
+                                    cd.setTutHours(rs1.getDouble(5));
                                     break;
                             }
                             output.add(cd);
