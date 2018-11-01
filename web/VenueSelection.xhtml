@@ -7,15 +7,34 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <style>
+            .btn{
+                transition-duration: 0.4s;
+                border:none;
+                width: 100px;
+                vertical-align:center;
+                height:40px;
+                position: relative;
+                margin: 0px 10px 0px 10px ;
+            }
+            
+            .green:hover{
+                background-color:  #4CAF50;
+                color: white;
+            }
+
+            .gray:hover{
+                background-color: gray;
+                color: white;
+            }
         </style>
         <title>Select Venues</title>
     </h:head>
     <h:body>
-        <div align="center" class="btn">
+        <div align="center">
             <h1>Venues</h1>
             <h:form>                
-                <h:commandButton action="CourseSelection?faces-redirect=true" value="Back" immediate="true"/>
-                <h:commandButton action="#{selection.venueButton()}" value="Proceed to Generate Schedule"/><br/>
+                <h:commandButton action="CourseSelection?faces-redirect=true" value="Back" class="btn gray" immediate="true"/>
+                <h:commandButton action="#{selection.venueButton()}" class="btn green" style="width:auto" value="Proceed to Generate Schedule"/><br/>
                 <br/>
                 <p:dataTable id="programmeTable"  value="#{selection.allVenueRecords}" var="v" disabledSelection="#{selection.checkValue(v.venueID)=='true'}" selection="#{selection.selectedVenue}" rowKey="#{v.venueID}" style="margin-bottom:0">
                     <f:facet name="header">

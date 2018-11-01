@@ -21,19 +21,24 @@
                 resize: vertical;
             }
 
-            .btn {
-                background-color: gray;
+            .btn{
+                transition-duration: 0.4s;
+                border:none;
+                width: 100px;
+                vertical-align:center;
+                height:40px;
+                position: relative;
+                margin: 10px 10px 0px 0px ;
+                font-size:15px;
+            }
+            .green:hover{
+                background-color:  #4CAF50;
                 color: white;
-                padding: 12px;
-                margin: 10px 0;
-                width: auto;
-                border-radius: 10px;
-                cursor: pointer;
-                font-size: 17px;
             }
 
-            .btn:hover {
-                background-color: #45a049;
+            .gray:hover{
+                background-color: gray;
+                color: white;
             }
         </style>
         <title>Scheduling Initial Setting</title>
@@ -61,9 +66,8 @@
                     <f:selectItem itemValue="19.00" itemLabel ="7 p.m."/>
                     <f:selectItem itemValue = "20.00" itemLabel = "8 p.m." /> 
                 </h:selectOneMenu><br/>
-                <h:commandButton action="setConstraints?faces-redirect=true" class="btn" value="Next"/>
-                <h:commandButton action="VenueSelection?faces-redirect=true" class="btn" value="Back" immediate="true"/>
-
+                <h:commandButton action="VenueSelection?faces-redirect=true" class="btn gray" value="Back" immediate="true"/>
+                <h:commandButton action="setConstraints?faces-redirect=true" class="btn green" value="Next"/><br/>
             </h:form>
         </div>
     </h:body>

@@ -10,6 +10,21 @@
                 padding-left: 30%;
                 font-size: 20px;
             }
+
+            .btn{
+                transition-duration: 0.4s;
+                border:none;
+                width: 100px;
+                vertical-align:center;
+                height:40px;
+                position: relative;
+                margin: 10px 10px 0px 0px ;
+                font-size:15px;
+            }
+            .red:hover{
+                background-color:  #e23f52;
+                color: white;
+            }
         </style>
         <title>Schedule Generation Page</title>
         <script>
@@ -38,7 +53,7 @@
                 <span id="seconds">0</span> seconds.
             </div>
             <br/>
-            <h:commandButton action="setSettings.xhtml" value="Cancel"/>
+            <h:commandButton action="menu.xhtml" immediate="true" class="btn red" value="Cancel"/>
         </h:form>
     </h:body>
 </html>
