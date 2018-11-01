@@ -29,12 +29,8 @@
         <title>New Group</title>
     </h:head>
     <h:body>
-        <h:outputScript rendered="#{tutorialGroupDA.success}">
-            alert("Successfully!!!");
-        </h:outputScript>
-        <h:outputScript rendered="#{tutorialGroupDA.message}">
-            alert("Failed! Please try again.");
-        </h:outputScript>
+        
+        
         <div align="center" class="btn">
             <h1>Add new group</h1>
             <h:form class="form">
@@ -90,7 +86,7 @@
             
             <h:form>
                 <br/>
-                <h:commandButton action="selectGroups" value="Done" styleClass="btn blue"/>
+                <h:commandButton action="#{tutorialGroupManage.goBacTutGroup()}" value="Done" styleClass="btn blue"/>
             </h:form>
         </div>
     </h:body>

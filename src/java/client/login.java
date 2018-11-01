@@ -22,12 +22,30 @@ public class login {
     String username;
     String password;
 
+    boolean success, message;
+
     public login(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
     public login() {
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public boolean isMessage() {
+        return message;
+    }
+
+    public void setMessage(boolean message) {
+        this.message = message;
     }
 
     public String getUsername() {
@@ -49,13 +67,13 @@ public class login {
     public void login() throws IOException {
 
         if (username.equals("admin") && password.equals("admin")) {
+            this.success = true;
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
 
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid Username or Password!", "Invalid Usernme or Password"));
+            this.message = true;
+           FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
         }
     }
-
-   
 
 }

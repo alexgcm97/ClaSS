@@ -36,6 +36,9 @@
         <title>Main Menu</title>
     </h:head>
     <h:body>
+          <h:outputScript rendered="#{login.success}">
+            alert("Login Success! Welcome!");
+        </h:outputScript>
         <div class="btn">
             <h1 align="center">Main Menu</h1>
             <h:form>

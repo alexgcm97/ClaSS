@@ -232,4 +232,9 @@ public class ProgrammeDA {
         System.out.println(programmeID);
         return programmeID;
     }
+      public void reset(){
+        this.success = false;
+        this.update = false;
+        this.delete = false;
+    }
 }

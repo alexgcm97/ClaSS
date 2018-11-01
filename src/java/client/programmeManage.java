@@ -77,5 +77,10 @@ public class programmeManage {
     FacesContext.getCurrentInstance().getExternalContext().redirect("EditInfo.xhtml");
     
     }
+      public void goBackSelectProgramme() throws IOException{
+        pda.reset();
+        FacesContext.getCurrentInstance().getExternalContext().redirect("selectProgrammeCohort.xhtml");
+
+    }
 
 }

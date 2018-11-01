@@ -238,4 +238,9 @@ public class VenueDA {
         }
         return v;
     }
+      public void reset(){
+        this.success = false;
+        this.update = false;
+        this.delete = false;
+    }
 }

@@ -56,13 +56,25 @@
         <title>Select Tutorial Group</title>
     </h:head>
     <h:body >
+        <h:outputScript rendered="#{tutorialGroupManage.tgDA.success}">
+            alert("Successfully Inserted!!!");
+        </h:outputScript>
+        <h:outputScript rendered="#{tutorialGroupManage.tgDA.message}">
+            alert("Failed! Please try again.");
+        </h:outputScript>
+        <h:outputScript rendered="#{tutorialGroupManage.tgDA.update}">
+            alert(" Record Updated!");
+        </h:outputScript>
+          <h:outputScript rendered="#{tutorialGroupManage.tgDA.delete}">
+            alert("Group Deleted!");
+        </h:outputScript>
        
         <div align="center" class="btn">
             <h1>Available Tutorial Group</h1>
              <div style="float: left; width: 150px">
                 <h:form >
                     <br/>
-                    <h:commandButton value="Create New Tutorial Group" action="newGroup" styleClass="btn green"/>
+                    <h:commandButton value="Create New Tutorial Group" action="#{tutorialGroupManage.goToNew()}" styleClass="btn green"/>
                 </h:form>   
             </div>
             <h:form class="form"><br/>
@@ -111,7 +123,7 @@
                     </h:dataTable>
                 </div>
                 <br/>
-                <h:commandButton value="Done" action="EditInfo" styleClass="btn green"/>
+                <h:commandButton value="Done" action="#{tutorialGroupManage.goBackMenu()}" styleClass="btn green"/>
 
 
             </h:form>

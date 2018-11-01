@@ -30,6 +30,9 @@
         <title>Login Page</title>
     </h:head>
     <h:body>
+        <h:outputScript rendered="#{login.message}">
+            alert("Invalid Username or Password!");
+        </h:outputScript>
        
         <div align="center" class="btn"> 
              <h1>Timetable Scheduling System</h1>

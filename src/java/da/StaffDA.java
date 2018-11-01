@@ -128,7 +128,7 @@ public class StaffDA implements Serializable{
         DBConnection.close(connect);
         return output;
     }
-      boolean success, message;
+      boolean success, message, delete, update;
 
     public boolean isSuccess() {
         return success;
@@ -145,6 +145,23 @@ public class StaffDA implements Serializable{
     public void setMessage(boolean message) {
         this.message = message;
     }
+
+    public boolean isDelete() {
+        return delete;
+    }
+
+    public void setDelete(boolean delete) {
+        this.delete = delete;
+    }
+
+    public boolean isUpdate() {
+        return update;
+    }
+
+    public void setUpdate(boolean update) {
+        this.update = update;
+    }
+    
 
     public void insertStaff(Staff s) throws SQLException {
         String staffID = getMaxID();
@@ -282,5 +299,10 @@ public class StaffDA implements Serializable{
         }
         System.out.println(staffID);
         return staffID;
+    }
+      public void reset(){
+        this.success = false;
+        this.update = false;
+        this.delete = false;
     }
 }

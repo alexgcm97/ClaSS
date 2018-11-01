@@ -115,4 +115,16 @@ public class venueManage {
         
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectVenue.xhtml");
     }
+     public void goBackMenu() throws IOException{
+    vda.reset();
+    FacesContext.getCurrentInstance().getExternalContext().redirect("EditInfo.xhtml");
+    }
+      public void goToNew() throws IOException{
+        v.setVenueID("");
+        v.setBlock("");
+        v.setVenueType("");
+        v.setCapacity(0);
+        v.setCourseCodeList("");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("newVenue.xhtml");
+    }
 }

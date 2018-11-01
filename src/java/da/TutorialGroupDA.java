@@ -133,7 +133,7 @@ public class TutorialGroupDA {
 
     }
 
-    boolean success, message;
+    boolean success, message, delete, update;
 
     public boolean isSuccess() {
         return success;
@@ -151,12 +151,22 @@ public class TutorialGroupDA {
         this.message = message;
     }
 
-//    public void reset(){
-//        this.groupID = "";
-//        this.studyYear = 0;
-//        this.groupNumber = 0;
-//        this.size = 0 ;
-//    }
+    public boolean isDelete() {
+        return delete;
+    }
+
+    public void setDelete(boolean delete) {
+        this.delete = delete;
+    }
+
+    public boolean isUpdate() {
+        return update;
+    }
+
+    public void setUpdate(boolean update) {
+        this.update = update;
+    }
+
     public void insertTutorialGroup(TutorialGroup tg) throws SQLException {
         String tgID = getMaxID();
         Connection connect = null;
@@ -290,5 +300,10 @@ public class TutorialGroupDA {
 
         }
         return groupID;
+    }
+      public void reset(){
+        this.success = false;
+        this.update = false;
+        this.delete = false;
     }
 }

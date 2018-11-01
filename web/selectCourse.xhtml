@@ -45,12 +45,21 @@
         <title>Select Course</title>
     </h:head>
     <h:body>
+        <h:outputScript rendered="#{courseManage.cda.update}">
+            alert("Updated!");
+        </h:outputScript>
+          <h:outputScript rendered="#{courseManage.cda.delete}">
+            alert("Venue Deleted!");
+        </h:outputScript>
+        <h:outputScript rendered="#{courseManage.cda.success}">
+            alert("Successfully Inserted!");
+        </h:outputScript>
         <div align="center" class="btn">
             <h1>Available Course</h1>
             <div style="float: left; width: 150px">
                 <h:form class="btn">
                     <br/>
-                    <h:commandButton value="Create New Course" action="newCourse" styleClass="btn green"/>
+                    <h:commandButton value="Create New Course" action="#{courseManage.goToNew()}" styleClass="btn green"/>
                 </h:form>   
             </div>
 
@@ -89,7 +98,7 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">Delete</f:facet>
-                            <h:commandButton value="Delete" action="#{courseManage.deleteVenue(c.courseCode)}" style="background-color: red; color: white"/>
+                            <h:commandButton value="Delete" action="#{courseManage.deleteCourse(c.courseCode)}" style="background-color: red; color: white"/>
                         </h:column>
                     </h:dataTable>
                     <br/>

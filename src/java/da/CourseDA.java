@@ -26,7 +26,7 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 public class CourseDA {
-
+    
     public List<CourseDetails> getRelatedCourseRecords(ArrayList<String> courseCodeList) throws SQLException {
         Connection connect = null;
         boolean found;
@@ -46,20 +46,19 @@ public class CourseDA {
                         CourseDetails cd = new CourseDetails();
                         cd.setCourseCode(rs1.getString(1));
                         cd.setCourseName(rs1.getString(2));
-                        found = false;
+                         found = false;
                         for (int i = 0; i < output.size(); i++) {
                             if (output.get(i).getCourseCode().equals(rs1.getString(1))) {
                                 switch (rs1.getString(4)) {
                                     case "L":
                                         output.get(i).setLecHours(rs1.getDouble(5));
                                         break;
+                                    case "T":
+                                        output.get(i).setTutHours(rs1.getDouble(5));
+                                        break;
                                     case "P":
                                         output.get(i).setPracHours(rs1.getDouble(5));
                                         break;
-                                    default:
-                                        output.get(i).setTutHours(rs1.getDouble(5));
-                                        break;
-
                                 }
                                 found = true;
                             }
@@ -69,28 +68,24 @@ public class CourseDA {
                                 case "L":
                                     cd.setLecHours(rs1.getDouble(5));
                                     break;
+                                case "T":
+                                    cd.setTutHours(rs1.getDouble(5));
+                                    break;
                                 case "P":
                                     cd.setPracHours(rs1.getDouble(5));
-                                    break;
-                                default:
-                                    cd.setTutHours(rs1.getDouble(5));
                                     break;
                             }
                             output.add(cd);
                         }
-
-                    }
+                     }
                 }
-
-            } catch (SQLException e) {
+             } catch (SQLException e) {
                 e.printStackTrace();
-
-            }
+             }
         }
         DBConnection.close(connect);
         return output;
-
-    }
+     }
 
     public List<CourseDetails> getAllCourseRecords() throws SQLException {
         Connection connect = null;
@@ -210,7 +205,7 @@ public class CourseDA {
 
     }
 
-    boolean success, message;
+    boolean success, message, delete, update;
 
     public boolean isSuccess() {
         return success;
@@ -228,6 +223,22 @@ public class CourseDA {
         this.message = message;
     }
 
+    public boolean isDelete() {
+        return delete;
+    }
+
+    public void setDelete(boolean delete) {
+        this.delete = delete;
+    }
+
+    public boolean isUpdate() {
+        return update;
+    }
+
+    public void setUpdate(boolean update) {
+        this.update = update;
+    }
+
     public void insertCourse(Course c) {
         Connection connect = null;
 
@@ -242,6 +253,7 @@ public class CourseDA {
             pstmt.setDouble(3, c.getCreditHour());
 
             pstmt.executeUpdate();
+            
             this.success = true;
             this.message = false;
         } catch (SQLException ex) {
@@ -346,7 +358,7 @@ public class CourseDA {
             ps.setDouble(2, c.getCreditHour());
             ps.setString(3, c.getCourseCode());
             ps.executeUpdate();
-
+            this.update = true;
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -361,7 +373,7 @@ public class CourseDA {
             ps.setString(1, courseCode);
             System.out.println(ps);
             ps.executeUpdate();
-
+            this.delete = true;
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -377,6 +389,7 @@ public class CourseDA {
             PreparedStatement ps = connect.prepareStatement("delete from CourseType where courseID = ?");
             ps.setString(1, courseID);
             ps.executeUpdate();
+           
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -411,5 +424,11 @@ public class CourseDA {
             // TODO Auto-generated catch block
         }
         return courseID;
+    }
+
+    public void reset() {
+        this.success = false;
+        this.update = false;
+        this.delete = false;
     }
 }

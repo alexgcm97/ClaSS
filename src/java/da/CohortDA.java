@@ -204,4 +204,9 @@ public class CohortDA {
         System.out.println(cohortID);
         return cohortID;
     }
+     public void reset(){
+        this.success = false;
+        this.update = false;
+        this.delete = false;
+    }
 }

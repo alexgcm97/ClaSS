@@ -30,10 +30,10 @@
         <title>New Staff</title>
     </h:head>
     <h:body>
-        <h:outputScript rendered="#{StafDA.success}">
-            alert("Successfully!!!");
+        <h:outputScript rendered="#{staffManage.sda.success}">
+            alert("Successfully Inserted!!!");
         </h:outputScript>
-        <h:outputScript rendered="#{StaffDA.message}">
+        <h:outputScript rendered="#{staffManage.sda.message}">
             alert("Error!!!");
         </h:outputScript>
         <div align="center" class="btn">
@@ -75,7 +75,7 @@
                     </tr>
                     <tr>
                         <td>Block Duration: </td>
-                        <td><h:selectOneMenu value="#{staffManage.s.blockDurations}" >
+                        <td><h:selectOneMenu value="#{staffManage.s.blockDuration}" >
                                 <f:selectItem itemValue="0" itemLabel="0 hours" />
                                 <f:selectItem itemValue="1" itemLabel="1 hours" />
                                 <f:selectItem itemValue="2" itemLabel="2 hours"/>

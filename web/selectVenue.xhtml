@@ -31,7 +31,7 @@
             .form{
                 background-color: white;
                 height: 450px;
-               
+
             }
             .btn{
                 transition-duration: 0.4s;
@@ -46,63 +46,66 @@
         <title>Select Venue</title>
     </h:head>
     <h:body>
-        <h:outputScript rendered="#{venueDA.update}">
+        <h:outputScript rendered="#{venueManage.vda.update}">
             alert("Updated!");
         </h:outputScript>
-          <h:outputScript rendered="#{venueDA.delete}">
+        <h:outputScript rendered="#{venueManage.vda.delete}">
             alert("Venue Deleted!");
+        </h:outputScript>
+        <h:outputScript rendered="#{venueManage.vda.success}">
+            alert("Successfully Inserted!");
         </h:outputScript>
         <div align="center" class="btn">
             <h1>Available Venue</h1>
             <div style="float: left; width: 150px" class="btn">
                 <h:form>
                     <br/>
-                    <h:commandButton value="Create New Venue" action="newVenue" styleClass="btn green"/>
+                    <h:commandButton value="Create New Venue" action="#{venueManage.goToNew()}" styleClass="btn green"/>
                 </h:form>   
             </div>
             <h:form class="form">
                 <br/>
                 <div style="height: 350px; overflow: auto;">
-                <h:dataTable value = "#{viewAll.allVenue}" var = "v"
-                             styleClass="order-table"
-                             headerClass="order-table-header"
-                             rowClasses="order-table-odd-row,order-table-even-row">
+                    <h:dataTable value = "#{viewAll.allVenue}" var = "v"
+                                 styleClass="order-table"
+                                 headerClass="order-table-header"
+                                 rowClasses="order-table-odd-row,order-table-even-row">
 
-                    <h:column> 	
-                        <f:facet name="header">Venue ID</f:facet>
-                            #{v.venueID}
-                    </h:column>
-                    <h:column> 	
-                        <f:facet name="header">Block</f:facet>
-                            #{v.block}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Venue Type</f:facet>
-                            #{v.venueType}
-                    </h:column>
-                    <h:column> 		
-                        <f:facet name="header">Capacity</f:facet>
-                            #{v.capacity}
-                    </h:column> 
-                    <h:column> 		
-                        <f:facet name="header">Course List</f:facet>
-                            #{v.courseCodeList}
-                    </h:column> 
-                    <h:column>
-                        <f:facet name="header">Edit</f:facet>
-                        <h:commandButton value="Edit" action="#{venueManage.retrieveVenue(v.venueID)}" style="background-color: green; color: white"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Delete</f:facet>
-                        <h:commandButton value="Delete" action="#{venueManage.deleteVenue(v.venueID)}" style="background-color: red; color: white"/>
-                    </h:column>
-                </h:dataTable>
+                        <h:column> 	
+                            <f:facet name="header">Venue ID</f:facet>
+                                #{v.venueID}
+                        </h:column>
+                        <h:column> 	
+                            <f:facet name="header">Block</f:facet>
+                                #{v.block}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Venue Type</f:facet>
+                                #{v.venueType}
+                        </h:column>
+                        <h:column> 		
+                            <f:facet name="header">Capacity</f:facet>
+                                #{v.capacity}
+                        </h:column> 
+                        <h:column> 		
+                            <f:facet name="header">Course List</f:facet>
+                                #{v.courseCodeList}
+                        </h:column> 
+                        <h:column>
+                            <f:facet name="header">Edit</f:facet>
+                            <h:commandButton value="Edit" action="#{venueManage.retrieveVenue(v.venueID)}" style="background-color: green; color: white"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Delete</f:facet>
+                            <h:commandButton value="Delete" action="#{venueManage.deleteVenue(v.venueID)}" style="background-color: red; color: white"/>
+                        </h:column>
+                    </h:dataTable>
                 </div>
                 <br/>
                 <div class="btn">
-                    <h:commandButton value="Done" action="EditInfo" styleClass="btn green"/>
+                    <h:commandButton value="Done" action="#{venueManage.goBackMenu()}" styleClass="btn green"/>
                 </div>
-                
+
             </h:form> 
         </div>
     </h:body>

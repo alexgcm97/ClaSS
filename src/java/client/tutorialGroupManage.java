@@ -20,8 +20,9 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @SessionScoped
 public class tutorialGroupManage {
+
     public TutorialGroupDA tgDA = new TutorialGroupDA();
-    public TutorialGroup tg  = new TutorialGroup();
+    public TutorialGroup tg = new TutorialGroup();
 
     public TutorialGroup getTg() {
         return tg;
@@ -39,28 +40,43 @@ public class tutorialGroupManage {
         this.tgDA = tgDA;
     }
 
- 
-    
-   
-    
     public void GroupInsert() throws SQLException, IOException {
-       
+
         tgDA.insertTutorialGroup(tg);
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectGroups.xhtml");
     }
-       public void retrieveGroup(String groupID) throws SQLException, IOException {
+
+    public void retrieveGroup(String groupID) throws SQLException, IOException {
         tg = tgDA.get(groupID);
         FacesContext.getCurrentInstance().getExternalContext().redirect("editGroup.xhtml");
 
     }
+
     public void updateGroup() throws SQLException, IOException {
         tgDA.updateTutorialGroup(tg);
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectGroups.xhtml");
     }
+
     public void deleteGroup(String groupID) throws SQLException, IOException {
         tgDA.deleteGroup(groupID);
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectGroups.xhtml");
     }
 
+    public void goBackMenu() throws IOException {
+        tgDA.reset();
+        FacesContext.getCurrentInstance().getExternalContext().redirect("EditInfo.xhtml");
+    }
+
+    public void goBacTutGroup() throws IOException {
+        tgDA.reset();
+        FacesContext.getCurrentInstance().getExternalContext().redirect("selectGroups.xhtml");
+    }
+
+    public void goToNew() throws IOException {
+        tg.setGroupNumber(0);
+        tg.setSize(0);
+        tg.setStudyYear(0);
+        FacesContext.getCurrentInstance().getExternalContext().redirect("newGroup.xhtml");
+    }
 
 }

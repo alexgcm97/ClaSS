@@ -172,4 +172,29 @@ public class courseManage implements Serializable {
         cda.deleteCourse(courseCode);
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectCourse.xhtml");
     }
+     public void backToCourse() throws SQLException, IOException {
+        cda.reset();
+        FacesContext.getCurrentInstance().getExternalContext().redirect("selectCourse.xhtml");
+    }
+
+    public void goBackMenu() throws IOException {
+        cda.reset();
+        FacesContext.getCurrentInstance().getExternalContext().redirect("EditInfo.xhtml");
+    }
+
+    public void goBackVenue() throws IOException {
+        cda.reset();
+        FacesContext.getCurrentInstance().getExternalContext().redirect("selectCourse.xhtml");
+    }
+
+    public void goToNew() throws IOException {
+        c.setCourseCode("");
+        c.setCourseName("");
+        c.setCreditHour(0);
+        pracHours = 0.0;
+        lecHours = 0.0;
+        tutHours = 0.0;
+        
+        FacesContext.getCurrentInstance().getExternalContext().redirect("newCourse.xhtml");
+    }
 }

@@ -41,10 +41,9 @@ public class staffManage implements Serializable {
     public void setSda(StaffDA sda) {
         this.sda = sda;
     }
-    
 
     public void goTonew() throws IOException {
-       
+
         s.setBlockStart(0);
         FacesContext.getCurrentInstance().getExternalContext().redirect("newStaff.xhtml");
 
@@ -71,4 +70,25 @@ public class staffManage implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectStaff.xhtml");
     }
 
+    public void goBackMenu() throws IOException {
+        sda.reset();
+        FacesContext.getCurrentInstance().getExternalContext().redirect("EditInfo.xhtml");
+    }
+
+    public void goBackStaff() throws IOException {
+        sda.reset();
+        FacesContext.getCurrentInstance().getExternalContext().redirect("selectStaff.xhtml");
+    }
+
+    public void goToNew() throws IOException {
+        s.setStaffName("");
+        s.setBlockDay(0);
+        s.setBlockDuration(0);
+        s.setBlockStart(0);
+        s.setCourseCodeListS("");
+        s.setLecGroupListS("");
+        s.setTutGroupListS("");
+        s.setPracGroupListS("");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("newStaff.xhtml");
+    }
 }

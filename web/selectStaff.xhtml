@@ -32,7 +32,7 @@
             .form{
                 background-color: white;
                 height: 450px;
-                
+
             }
             .btn{
                 transition-duration: 0.4s;
@@ -48,13 +48,21 @@
 
     </h:head>
     <h:body>
-
+        <h:outputScript rendered="#{staffManage.sda.update}">
+            alert("Updated!");
+        </h:outputScript>
+        <h:outputScript rendered="#{staffManage.sda.delete}">
+            alert("Venue Deleted!");
+        </h:outputScript>
+         <h:outputScript rendered="#{staffManage.sda.success}">
+            alert("Successfully Inserted!!!");
+        </h:outputScript>
         <div align="center">
             <h1>Available Staff</h1>
             <div style="float: left; width: 150px" class="btn">
                 <h:form>
                     <br/>
-                    <h:commandButton value="Create New Staff" action="newStaff" styleClass="btn green"/>
+                    <h:commandButton value="Create New Staff" action="#{staffManage.goToNew()}" styleClass="btn green"/>
                 </h:form>   
             </div>
             <h:form class="form">
@@ -85,7 +93,7 @@
                             <f:facet name="header">Block Duration</f:facet>
                                 #{s.blockDuration}
                         </h:column>
-                      
+
 
                         <h:column>
                             <f:facet name="header">Edit</f:facet>
@@ -102,9 +110,9 @@
                 </div>
                 <br/>
                 <div class="btn">
-                     <h:commandButton value="Done" action="EditInfo" styleClass="btn green"/>
+                    <h:commandButton value="Done" action="#{staffManage.goBackMenu()}" styleClass="btn green"/>
                 </div>
-               
+
             </h:form>
         </div>
     </h:body>

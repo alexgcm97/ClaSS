@@ -58,5 +58,10 @@ public class cohortManage {
         cda.deleteCohort(cohortID);
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectProgrammeCohort.xhtml");
     }
+     public void goBackSelectProgramme() throws IOException{
+        cda.reset();
+        FacesContext.getCurrentInstance().getExternalContext().redirect("selectProgrammeCohort.xhtml");
+
+    }
 
 }

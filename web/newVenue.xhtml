@@ -31,10 +31,10 @@
     </h:head>
     <h:body>
 
-        <h:outputScript rendered="#{venueDA.success}">
-            alert("Successfully!!!");
+        <h:outputScript rendered="#{venueManage.vda.success}">
+            alert("Successfully Inserted!!!");
         </h:outputScript>
-        <h:outputScript rendered="#{venueDA.message}">
+        <h:outputScript rendered="#{venueManage.vda.message}">
             alert("Error!!!");
         </h:outputScript>
 
@@ -101,7 +101,7 @@
             </h:form>
             <h:form>
                 <br/>
-                <h:commandButton action="selectVenue" value="Done" styleClass="btn blue"/>
+                <h:commandButton action="#{venueManage.goBackVenue()}" value="Done" styleClass="btn blue"/>
             </h:form>
 
         </div>
