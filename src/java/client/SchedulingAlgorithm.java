@@ -45,7 +45,7 @@ public class SchedulingAlgorithm implements Serializable {
     private Class blockClass;
     private ArrayList<Class> dbList = new ArrayList();
 
-    private final int assignLimit = 120, firstVLimit = 30, secondVLimit = 60, exitLimit = 10;
+    private final int assignLimit = 120, firstVLimit = 30, secondVLimit = 60, exitLimit = 140000;
     private final ClassDA cda = new ClassDA();
     private final VenueDA vda = new VenueDA();
     private final StaffDA sda = new StaffDA();
