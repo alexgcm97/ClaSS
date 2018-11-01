@@ -30,11 +30,11 @@ public class ClassDA {
         try {
             connect = DBConnection.getConnection();
 
-            PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM class WHERE groupID = ?");
+            PreparedStatement pstmt = connect.prepareStatement("SELECT c.courseID,c.venueID, c.groupID, c.staffID, c.day, c.startTime, c.endTime, ct.courseType FROM class c, courseType ct WHERE groupID = ? AND c.courseID = ct.courseID");
             pstmt.setString(1, groupID);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                Class c = new domain.Class(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7));
+                Class c = new domain.Class(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7), rs.getString(8));
                 classList.add(c);
             }
             rs.close();
@@ -111,15 +111,14 @@ public class ClassDA {
         return found;
     }
 
-    public void deleteRecords(String groupID, String courseID) throws SQLException {
+    public void deleteRecords(String groupID) throws SQLException {
         boolean found = true;
 
         try {
             connect = DBConnection.getConnection();
 
-            PreparedStatement pstmt = connect.prepareStatement("DELETE FROM class WHERE groupID = ? and courseID = ?");
+            PreparedStatement pstmt = connect.prepareStatement("DELETE FROM class WHERE groupID = ?");
             pstmt.setString(1, groupID);
-            pstmt.setString(2, courseID);
             pstmt.executeUpdate();
             pstmt.close();
         } catch (SQLException ex) {
