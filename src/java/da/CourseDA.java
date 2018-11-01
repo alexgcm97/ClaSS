@@ -27,7 +27,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class CourseDA {
 
-    public List<CourseDetails> getRelatedCourseRecords(ArrayList<String> courseCodeList) throws SQLException {
+    public List<CourseDetails> getRelatedCourseRecords(List<String> courseCodeList) throws SQLException {
         Connection connect = null;
         boolean found;
         List<CourseDetails> output = new ArrayList<CourseDetails>();

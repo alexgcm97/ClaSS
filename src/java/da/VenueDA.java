@@ -69,6 +69,30 @@ public class VenueDA {
 
     }
 
+        public List<String> getVenueType() throws SQLException {
+
+        Connection connect = null;
+
+        List<String> output = new ArrayList<String>();
+        try {
+            connect = DBConnection.getConnection();
+            PreparedStatement pstmt = connect.prepareStatement("SELECT venueType FROM venue");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                if(!output.contains(rs.getString(1))){
+                output.add(rs.getString(1));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+        DBConnection.close(connect);
+        return output;
+
+    }
+    
     public List<Venue> getAllVenueRecords() throws SQLException {
 
         Connection connect = null;

@@ -35,10 +35,18 @@ public class ProgrammeDA {
         List<Programme> output = new ArrayList<Programme>();
         try {
             connect = DBConnection.getConnection();
-            PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM programme");
+            PreparedStatement pstmt = connect.prepareStatement("SELECT p.programmeID,p.programmeCode,p.progeammeName,c.cohortID,c.\"YEAR\",c.\"MONTH\",c.entryYear FROM programme p, cohort c WHERE p.cohortID=c.cohortID");
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                Programme p = new Programme(rs.getString(1), rs.getString(2), rs.getString(3));
+                Programme p = new Programme();
+                p.setProgrammeID(rs.getString(1));
+                p.setProgrammeCode(rs.getString(2));
+                p.setProgrammeName(rs.getString(3));
+                p.setCohortID(rs.getString(4));
+                p.setYear(rs.getString(5));
+                p.setMonth(rs.getString(6));
+                p.setEntryYear(rs.getString(7));
+
                 output.add(p);
             }
         } catch (SQLException e) {
@@ -85,7 +93,7 @@ public class ProgrammeDA {
     }
 
     public void insertProgramme(Programme p) throws SQLException {
-      
+
         String programmeID = getMaxID();
         Connection connect = null;
 
@@ -131,7 +139,7 @@ public class ProgrammeDA {
     }
 
     public Programme deleteProgramme(String programmeID) {
-  
+
         Connection connect;
         Programme p = new Programme();
         try {
@@ -170,7 +178,7 @@ public class ProgrammeDA {
     }
 
     public void updateProgramme(Programme p) {
-   
+
         Connection connect = null;
 
         try {
@@ -232,7 +240,8 @@ public class ProgrammeDA {
         System.out.println(programmeID);
         return programmeID;
     }
-      public void reset(){
+
+    public void reset() {
         this.success = false;
         this.update = false;
         this.delete = false;

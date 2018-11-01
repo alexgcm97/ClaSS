@@ -40,20 +40,26 @@
                 <h:commandButton action="CourseSelection?faces-redirect=true" value="Back" class="btn gray" immediate="true"/>
                 <h:commandButton action="#{selection.venueButton()}" class="btn green" style="width:auto" value="Proceed to Generate Schedule"/><br/>
                 <br/>
-                <p:dataTable id="programmeTable"  value="#{selection.allVenueRecords}" var="v" disabledSelection="#{selection.checkValue(v.venueID)=='true'}" selection="#{selection.selectedVenue}" rowKey="#{v.venueID}" style="margin-bottom:0">
+                <p:dataTable  widgetVar="venueTable" filteredValue="#{selection.filteredVenues}" value="#{selection.allVenueRecords}" var="v" disabledSelection="#{selection.checkValue(v.venueID)=='true'}" selection="#{selection.selectedVenue}" rowKey="#{v.venueID}" style="margin-bottom:0">
                     <f:facet name="header">
                         Venues
                     </f:facet>
 
                     <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 
-                    <p:column headerText="Venue" style="width:200px;text-align:left">
+                    <p:column headerText="Venue" style="width:100px;text-align:left" filterBy="#{v.venueID}" filterMatchMode="contains">
                         <h:outputText value="#{v.venueID}" />
                     </p:column>
-                    <p:column headerText="Block" style="text-align:left">
+                    <p:column headerText="Block" style="width:100px;text-align:left" filterBy="#{v.block}" filterMatchMode="contains">
                         <h:outputText value="#{v.block}" />
                     </p:column>
-                    <p:column headerText="Venue Type" style="text-align:left">
+                    <p:column headerText="Venue Type" style="width:160px;text-align:left" filterBy="#{v.venueType}" filterMatchMode="equals">
+                        <f:facet name="filter">
+                            <p:selectOneMenu onchange="PF('venueTable').filter()" >
+                                <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItems value="#{selection.allVenueTypes}" />
+                            </p:selectOneMenu>
+                        </f:facet>                       
                         <h:outputText value="#{v.venueType}" />
                     </p:column>
                     <p:column headerText="Capacity" style="text-align:left">

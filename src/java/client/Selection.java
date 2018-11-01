@@ -41,6 +41,8 @@ public class Selection {
     private List<Venue> mustVenue = new ArrayList<Venue>();
     private List<Venue> mustVenueList = new ArrayList<Venue>();
     private List<String> selectedVenueID = new ArrayList<String>();
+    private List<String> allVenueTypes = new ArrayList<String>();
+    private List<Venue> filteredVenues = new ArrayList<Venue>();
 
     private TutorialGroupDA tgda = new TutorialGroupDA();
     private TutorialGroup tg = new TutorialGroup();
@@ -50,14 +52,12 @@ public class Selection {
     private CourseDA cda = new CourseDA();
     private CourseDetails c = new CourseDetails();
     private List<CourseDetails> courseDetailsList = new ArrayList<CourseDetails>();
-    private List<CourseDetails> selectedCourse = new ArrayList<CourseDetails>();
-    private List<String> selectedCourseCode = new ArrayList<String>();
+    private List<String> courseCodeList = new ArrayList();
 
     private ProgrammeDA pda = new ProgrammeDA();
     private Programme p = new Programme();
     private List<Programme> programmeList = new ArrayList<Programme>();
     private List<Programme> selectedProgramme = new ArrayList<Programme>();
-    private ArrayList<String> courseCodeList = new ArrayList();
 
     private StaffDA sda = new StaffDA();
     private Staff s = new Staff();
@@ -81,6 +81,31 @@ public class Selection {
         return this.courseDetailsList;
     }
 
+    public List<String> getAllVenueTypes() throws SQLException {
+        allVenueTypes = vda.getVenueType();
+        return allVenueTypes;
+    }
+
+    public List<Venue> getFilteredVenues() {
+        return filteredVenues;
+    }
+
+    public void setFilteredVenues(List<Venue> filteredVenues) {
+        this.filteredVenues = filteredVenues;
+    }
+
+    public void setAllVenueTypes(List<String> allVenueTypes) {
+        this.allVenueTypes = allVenueTypes;
+    }
+
+    public List<String> getCourseCodeList() {
+        return courseCodeList;
+    }
+
+    public void setCourseCodeList(List<String> courseCodeList) {
+        this.courseCodeList = courseCodeList;
+    }
+
     public List<Venue> getAllVenueRecords() throws SQLException {
         this.venueList = vda.getAllVenueRecords();
         return this.venueList;
@@ -89,6 +114,50 @@ public class Selection {
     public List<Programme> getAllProgrammeRecords() throws SQLException {
         this.programmeList = pda.getAllProgrammeRecords();
         return this.programmeList;
+    }
+
+    public String intakeMonth(String month) {
+        String output = "";
+        switch (month) {
+            case "01":
+                output = "January";
+                break;
+            case "02":
+                output = "February";
+                break;
+            case "03":
+                output = "March";
+                break;
+            case "04":
+                output = "April";
+                break;
+            case "05":
+                output = "May";
+                break;
+            case "06":
+                output = "June";
+                break;
+            case "07":
+                output = "July";
+                break;
+            case "08":
+                output = "August";
+                break;
+            case "09":
+                output = "September";
+                break;
+            case "10":
+                output = "October";
+                break;
+            case "11":
+                output = "November";
+                break;
+            case "12":
+                output = "December";
+                break;
+
+        }
+        return output;
     }
 
     public void programmeButton() throws SQLException, IOException {
@@ -114,39 +183,31 @@ public class Selection {
                 }
             }
         }
-        if (selectedGroups.isEmpty()) {
-            errorCode = 1;
-            FacesContext.getCurrentInstance().getExternalContext().redirect("ProgrammeSelection.xhtml");
-        } else {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("CourseSelection.xhtml");
+        System.out.println("courseCodeList size: " + courseCodeList.size());
+        for (int m = 0; m < courseCodeList.size(); m++) {
+            System.out.println(courseCodeList.get(m));
         }
-    }
 
-    public void courseButton() throws SQLException, IOException {
         selectedStaff.clear();
         mustVenue.clear();
         selectedVenue.clear();
-        List<String> tempList = new ArrayList<String>();
+        List<String> tempList1 = new ArrayList<String>();
 
-        for (int k = 0; k < selectedCourse.size(); k++) {
-            selectedCourseCode.add(selectedCourse.get(k).getCourseCode());
-        }
-
-        for (int i = 0; i < selectedCourseCode.size(); i++) {
+        for (int i = 0; i < courseCodeList.size(); i++) {
             for (int j = 0; j < selectedGroups.size(); j++) {
-                tempList = sda.getStaffIdViaGroupIdCourseCode(selectedCourseCode.get(i), selectedGroups.get(j));
-                for (int k = 0; k < tempList.size(); k++) {
-                    if (!selectedStaff.contains(tempList.get(k))) {
-                        selectedStaff.add(tempList.get(k));
+                tempList1 = sda.getStaffIdViaGroupIdCourseCode(courseCodeList.get(i), selectedGroups.get(j));
+                for (int k = 0; k < tempList1.size(); k++) {
+                    if (!selectedStaff.contains(tempList1.get(k))) {
+                        selectedStaff.add(tempList1.get(k));
                     }
                 }
             }
 
         }
-        System.out.println("selectedCourse size: " + selectedCourse.size());
-        for (int b = 0; b < selectedCourse.size(); b++) {
-            System.out.println(selectedCourse.get(b).getCourseCode());
-            mustVenue = vda.getVenueIdViaCourseCode(selectedCourse.get(b).getCourseCode());
+        System.out.println("selectedCourse size: " + courseCodeList.size());
+        for (int b = 0; b < courseCodeList.size(); b++) {
+            System.out.println(courseCodeList.get(b));
+            mustVenue = vda.getVenueIdViaCourseCode(courseCodeList.get(b));
             for (int c = 0; c < mustVenue.size(); c++) {
                 selectedVenue.add(mustVenue.get(c));
                 mustVenueList.add(mustVenue.get(c));
@@ -162,10 +223,9 @@ public class Selection {
         for (int a = 0; a < selectedStaff.size(); a++) {
             System.out.println(selectedStaff.get(a));
         }
-
-        if (selectedCourse.isEmpty()) {
+        if (selectedGroups.isEmpty()) {
             errorCode = 1;
-            FacesContext.getCurrentInstance().getExternalContext().redirect("CourseSelection.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("ProgrammeSelection.xhtml");
         } else {
             FacesContext.getCurrentInstance().getExternalContext().redirect("VenueSelection.xhtml");
         }
@@ -183,7 +243,7 @@ public class Selection {
             errorCode = 1;
             FacesContext.getCurrentInstance().getExternalContext().redirect("VenueSelection.xhtml");
         } else {
-            xml.generateCourseXML(selectedCourseCode);
+            xml.generateCourseXML(courseCodeList);
             xml.generateTutorialGroupXML(selectedGroups);
             xml.generateStaffXML(selectedStaff);
             xml.generateVenueXML(selectedVenueID);
@@ -192,7 +252,7 @@ public class Selection {
     }
 
     public void generateXML() {
-        xml.generateCourseXML(selectedCourseCode);
+        xml.generateCourseXML(courseCodeList);
         xml.generateTutorialGroupXML(selectedGroups);
         xml.generateStaffXML(selectedStaff);
         xml.generateVenueXML(selectedVenueID);
@@ -214,14 +274,6 @@ public class Selection {
 
     public void setSelectedVenueID(List<String> selectedVenueID) {
         this.selectedVenueID = selectedVenueID;
-    }
-
-    public List<String> getSelectedCourseCode() {
-        return selectedCourseCode;
-    }
-
-    public void setSelectedCourseCode(List<String> selectedCourseCode) {
-        this.selectedCourseCode = selectedCourseCode;
     }
 
     public List<Venue> getMustVenueList() {
@@ -278,14 +330,6 @@ public class Selection {
 
     public void setSelectedStaff(List<String> selectedStaff) {
         this.selectedStaff = selectedStaff;
-    }
-
-    public List<CourseDetails> getSelectedCourse() {
-        return selectedCourse;
-    }
-
-    public void setSelectedCourse(List<CourseDetails> selectedCourse) {
-        this.selectedCourse = selectedCourse;
     }
 
     public List<Programme> getSelectedProgramme() {
