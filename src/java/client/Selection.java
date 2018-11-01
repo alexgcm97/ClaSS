@@ -66,6 +66,16 @@ public class Selection {
 
     private Map<String, Boolean> checked = new HashMap<String, Boolean>();
 
+    private int errorCode = 0;
+
+    public int getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
+    }
+
     public List<CourseDetails> getAllCourseRecords() throws SQLException {
         this.courseDetailsList = cda.getRelatedCourseRecords(courseCodeList);
         return this.courseDetailsList;
@@ -104,7 +114,12 @@ public class Selection {
                 }
             }
         }
-        FacesContext.getCurrentInstance().getExternalContext().redirect("CourseSelection.xhtml");
+        if (selectedGroups.isEmpty()) {
+            errorCode = 1;
+            FacesContext.getCurrentInstance().getExternalContext().redirect("ProgrammeSelection.xhtml");
+        } else {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("CourseSelection.xhtml");
+        }
     }
 
     public void courseButton() throws SQLException, IOException {
@@ -147,7 +162,13 @@ public class Selection {
         for (int a = 0; a < selectedStaff.size(); a++) {
             System.out.println(selectedStaff.get(a));
         }
-        FacesContext.getCurrentInstance().getExternalContext().redirect("VenueSelection.xhtml");
+
+        if (selectedCourse.isEmpty()) {
+            errorCode = 1;
+            FacesContext.getCurrentInstance().getExternalContext().redirect("CourseSelection.xhtml");
+        } else {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("VenueSelection.xhtml");
+        }
     }
 
     public void venueButton() throws IOException {
@@ -158,12 +179,16 @@ public class Selection {
         for (int k = 0; k < selectedVenueID.size(); k++) {
             System.out.println(selectedVenueID.get(k));
         }
-        xml.generateCourseXML(selectedCourseCode);
-        xml.generateTutorialGroupXML(selectedGroups);
-        xml.generateStaffXML(selectedStaff);
-        xml.generateVenueXML(selectedVenueID);
-        FacesContext.getCurrentInstance().getExternalContext().redirect("setSettings.xhtml");
-
+        if (selectedVenueID.isEmpty()) {
+            errorCode = 1;
+            FacesContext.getCurrentInstance().getExternalContext().redirect("VenueSelection.xhtml");
+        } else {
+            xml.generateCourseXML(selectedCourseCode);
+            xml.generateTutorialGroupXML(selectedGroups);
+            xml.generateStaffXML(selectedStaff);
+            xml.generateVenueXML(selectedVenueID);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("setSettings.xhtml");
+        }
     }
 
     public void generateXML() {
