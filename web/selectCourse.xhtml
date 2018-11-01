@@ -6,33 +6,33 @@
     <h:head>
         <style>
             .order-table{   
-            border-collapse:collapse;
-        }
-        .order-table-header{
-            text-align:center;
-            background:none repeat scroll 0 0 #E5E5E5;
-            border-bottom:1px solid #BBBBBB;
-            padding:16px;
-        }
-        .order-table-odd-row{
-            text-align:center;
-            background:none repeat scroll 0 0 #FFFFFFF;
-            border-top:1px solid #BBBBBB;
-        }
-        .order-table-even-row{
-            text-align:center;
-            background:none repeat scroll 0 0 #F9F9F9;
-            border-top:1px solid #BBBBBB;
-        }
+                border-collapse:collapse;
+            }
+            .order-table-header{
+                text-align:center;
+                background:none repeat scroll 0 0 #E5E5E5;
+                border-bottom:1px solid #BBBBBB;
+                padding:16px;
+            }
+            .order-table-odd-row{
+                text-align:center;
+                background:none repeat scroll 0 0 #FFFFFF;
+                border-top:1px solid #BBBBBB;
+            }
+            .order-table-even-row{
+                text-align:center;
+                background:none repeat scroll 0 0 #F9F9F9;
+                border-top:1px solid #BBBBBB;
+            }
 
-        body{
-            background-color: #a6dff4;
-        }
-        .form{
-            background-color: white;
-            height: 500px;
-        }
-         .btn{
+            body{
+                background-color: #a6dff4;
+            }
+            .form{
+                background-color: white;
+                height: 500px;
+            }
+            .btn{
                 transition-duration: 0.4s;
                 padding: 10px 24px;
                 border-radius: 12px;
@@ -48,7 +48,7 @@
         <h:outputScript rendered="#{courseManage.cda.update}">
             alert("Updated!");
         </h:outputScript>
-          <h:outputScript rendered="#{courseManage.cda.delete}">
+        <h:outputScript rendered="#{courseManage.cda.delete}">
             alert("Venue Deleted!");
         </h:outputScript>
         <h:outputScript rendered="#{courseManage.cda.success}">
@@ -64,12 +64,12 @@
             </div>
 
             <h:form class="form">
-               <br/>
-                <div style="height: 350px; overflow: auto;">
+                <br/>
+                <div style="height: 380px; overflow: auto">
                     <h:dataTable value = "#{courseDA.allCourseRecords}" var = "c"
                                  styleClass="order-table"
                                  headerClass="order-table-header"
-                                 rowClasses="order-table-odd-row,order-table-even-row" >
+                                 rowClasses="order-table-odd-row,order-table-even-row">
 
                         <h:column> 
                             <f:facet name="header">Course Code</f:facet>
@@ -102,12 +102,12 @@
                         </h:column>
                     </h:dataTable>
                     <br/>
-                    <h:commandButton value="Done" action="EditInfo" styleClass="btn green"/>
                 </div>
+                <h:commandButton value="Done" action="EditInfo" styleClass="btn green" style="margin-top:30px"/>
                 <br/>
             </h:form>
-           
-            
+
+
         </div>
     </h:body>
 </html>
