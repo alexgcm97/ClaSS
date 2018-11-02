@@ -3,9 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
-             <style>
+        <style>
             .btn{
                 transition-duration: 0.4s;
                 padding: 10px 24px;
@@ -20,9 +20,9 @@
             }
             .form{
                 background-color: white;
-                height: 200px;
+                height: 300px;
             }
-             .btn .blue:hover{
+            .btn .blue:hover{
                 background-color: dodgerblue;
                 color: white;
             }
@@ -30,54 +30,64 @@
         <title>Add New Cohort</title>
     </h:head>
     <h:body>
-        <h:outputScript rendered="#{cohortDA.success}">
+        <h:outputScript rendered="#{programmeCohortDA.success}">
             alert("Successfully!!!");
         </h:outputScript>
-        <h:outputScript rendered="#{cohortDA.message}">
+        <h:outputScript rendered="#{programmeCohortDA.message}">
             alert("Failed! Please try again.");
         </h:outputScript>
-         <div align="center" class="btn">
-                <h1>New Cohort</h1>
+        <div align="center" class="btn">
+            <h1>New Cohort</h1>
             <h:form class="form">
                 <table>
-                <br/>
+                    <br/>
                     <tr>
                         <td>Cohort ID:</td>
-                        <td><h:outputText value="#{cohortDA.maxID}" /><br/></td>
+                        <td><h:outputText value="#{programmeCohortDA.maxID}" /><br/></td>
                     </tr>
                     <tr>
-                        <td>Year:</td>
-                        <td><h:inputText id="year" value="#{cohortManage.c.year}" required="true"  requiredMessage="*Invalid Input" maxlength="4" converterMessage="*Invalid Input! Example: 2018 ">
-                                <f:convertNumber maxFractionDigits="1" maxIntegerDigits="4" type="number" /> 
-                            </h:inputText>
-                        <h:message for="year" style="color: red" /></td>
+                        <td>Entry Year:</td>
+                        <td><h:inputText id="entryYear" value="#{programmeCohortManage.pc.entryYear}" required="true" /> </td>
                     </tr>
                     <tr>
-                        <td>Month:</td>
-                        <td><h:inputText id="month" value="#{cohortManage.c.month}" required="true"  requiredMessage="*Invalid Input" maxlength="2" converterMessage="*Invalid Input! Example: 1 for January "> 
-                             <f:convertNumber maxFractionDigits="1" maxIntegerDigits="4" type="number" /> 
-                            </h:inputText>
-                            <h:message for="month" style="color: red" /></td>
+                        <td>Programme Code:</td>
+                        <td><p:selectOneMenu filter="true" filterMatchMode="contains" filterPlaceholder="Filter" value="#{programmeCohortManage.pc.programmeCode}">
+                                <f:selectItems value="#{viewAll.getAllProgrammeCode()}" var="p"
+                                               itemLabel="#{p.programmeCode}" itemValue="#{p.programmeCode}" />
+                            </p:selectOneMenu></td>
+                    </tr><br/>
+                    <tr>
+                        <td>Intake Year:</td>
+                        <td><h:inputText id="intakeYear" value="#{programmeCohortManage.pc.intakeYear}" required="true"/> </td>
                     </tr>
-                 <tr>
+                    <tr>
                         <td>Study Year:</td>
-                        <td><h:selectOneMenu value="#{cohortManage.c.studyYear}" >
+                        <td><h:selectOneMenu value="#{programmeCohortManage.pc.studyYear}" >
                                 <f:selectItem itemValue="1" itemLabel="1" />
                                 <f:selectItem itemValue="2" itemLabel="2"/>
                                 <f:selectItem itemValue="3" itemLabel="3"/>
                                 <f:selectItem itemValue="4" itemLabel="4"/>
                             </h:selectOneMenu></td>
                     </tr>
-                    
-                </table><br/>
-                <h:commandButton action="#{cohortManage.insertCohort()}" value="Submit" styleClass="btn green"/>
-                
-            </h:form>
-                <h:form>
-                    <br/>
-                    <h:commandButton action="#{cohortManage.goBackSelectProgramme()}" value="Done" styleClass="btn blue"/>
-                </h:form>
 
+                    <tr> 
+                        <td>
+                            <h:outputLabel for="courseCode" value="Course Code List: " />
+                        </td>
+                        <td>
+                            <p:selectCheckboxMenu id="courseCode" panelStyle="width:280px;"  value="#{programmeCohortManage.courseCodeStr}" label="Course Code" filter="true" filterMatchMode="startsWith">
+                                <f:selectItems value="#{programmeCohortManage.courseCodeList}" />
+                            </p:selectCheckboxMenu>
+                        </td>
+                    </tr>
+                </table><br/>
+                <h:commandButton action="#{programmeCohortManage.insertProgrammeCohort()}" value="Submit" styleClass="btn green"/>
+
+            </h:form>
+            <h:form>
+                <br/>
+                <h:commandButton action="#{programmeCohortManage.goBackSelectProgramme()}" value="Done" styleClass="btn blue"/>
+            </h:form>
         </div>
     </h:body>
 </html>

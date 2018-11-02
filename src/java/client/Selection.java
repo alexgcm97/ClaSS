@@ -112,8 +112,8 @@ public class Selection {
         return this.venueList;
     }
 
-    public List<ProgrammeCohort> getAllProgrammeRecords() throws SQLException {
-        this.programmeList = pda.getAllProgrammeRecords();
+    public List<ProgrammeCohort> getAllProgrammeCohortRecords() throws SQLException {
+        this.programmeList = pda.getAllProgrammeCohortRecords();
         return this.programmeList;
     }
 

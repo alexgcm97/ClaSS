@@ -15,6 +15,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 
 /**
  *
@@ -29,6 +30,12 @@ public class venueManage {
     public Venue v = new Venue();
     private List<String> selectedCourseCodeList = new ArrayList();
     private String[] courseCodeStr;
+
+    public void venueTypeChangeListener(ValueChangeEvent event) {
+        if (event.getNewValue().equals("Hall")) {
+            v.setBlock("DK");
+        }
+    }
 
     public VenueDA getVda() {
         return vda;
@@ -78,9 +85,18 @@ public class venueManage {
         this.v = v;
     }
 
+    public List<String> getBlockList() {
+        List<String> blockList = new ArrayList();
+        for (Character c : "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray()) {
+            blockList.add(c + "");
+        }
+        return blockList;
+    }
+
     public void venueInsert() throws SQLException, IOException {
         String tempStr = "-";
-        if (courseCodeStr != null) {
+        if (courseCodeStr != null && courseCodeStr.length > 0) {
+            tempStr = "";
             for (String s : courseCodeStr) {
                 if (tempStr.length() == 0) {
                     tempStr = s;
@@ -90,6 +106,12 @@ public class venueManage {
             }
         }
         v.setCourseCodeList(tempStr);
+        if (v.getVenueType().equals("Hall")) {
+            v.setBlock("DK");
+            v.setVenueID("DK " + v.getVenueID());
+        } else {
+            v.setVenueID(v.getBlock() + v.getVenueID());
+        }
         vda.insertVenue(v);
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectVenue.xhtml");
     }
@@ -124,7 +146,7 @@ public class venueManage {
     public void goToNew() throws IOException {
         v.setVenueID("");
         v.setBlock("");
-        v.setVenueType("");
+        v.setVenueType("Hall");
         v.setCapacity(0);
         v.setCourseCodeList("");
         FacesContext.getCurrentInstance().getExternalContext().redirect("newVenue.xhtml");

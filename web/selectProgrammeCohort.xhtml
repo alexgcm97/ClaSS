@@ -64,23 +64,23 @@
             alert("Record Deleted!");
             #{programmeManage.pda.setDelete(false)}
         </h:outputScript>
-        <h:outputScript rendered="#{cohortManage.cda.success}">
+        <h:outputScript rendered="#{programmeCohortManage.pcda.success}">
             alert("Successfully Inserted!!!");
-            #{cohortManage.cda.setSuccess(false)}
+            #{programmeCohortManage.pcda.setSuccess(false)}
         </h:outputScript>
-        <h:outputScript rendered="#{cohortManage.cda.message}">
+        <h:outputScript rendered="#{programmeCohortManage.pcda.message}">
             alert("Error!!!");
-            #{cohortManage.cda.setMessage(false)}
+            #{programmeCohortManage.pcda.setMessage(false)}
         </h:outputScript>
-        <h:outputScript rendered="#{cohortManage.cda.update}">
+        <h:outputScript rendered="#{programmeCohortManage.pcda.update}">
             alert("Successfully Updated!!!");
-            #{cohortManage.cda.setUpdate(false)}
+            #{programmeCohortManage.pcda.setUpdate(false)}
         </h:outputScript>
-        <h:outputScript rendered="#{cohortManage.cda.delete}">
+        <h:outputScript rendered="#{programmeCohortManage.pcda.delete}">
             alert("Record Deleted!");
-            #{cohortManage.cda.setDelete(false)}
-
+            #{programmeCohortManage.pcda.setDelete(false)}
         </h:outputScript>
+        <h:commandLink rendered="#{facesContext.externalContext.invalidateSession()}"/>
         <div align="center" class="btn">
             <h1>Available Programme</h1>
             <div style="float: left; width: 200px">
@@ -97,11 +97,6 @@
                                  styleClass="order-table"
                                  headerClass="order-table-header"
                                  rowClasses="order-table-odd-row,order-table-even-row">
-
-                        <h:column> 	
-                            <f:facet name="header">Programme ID</f:facet>
-                                #{p.programmeID}
-                        </h:column>
                         <h:column> 	
                             <f:facet name="header">Programme Code</f:facet>
                                 #{p.programmeCode}
@@ -111,17 +106,12 @@
                                 #{p.programmeName}
                         </h:column>
                         <h:column>
-                            <f:facet name="header">Cohort ID</f:facet>
-                                #{p.cohortID}
-                        </h:column>
-                        <h:column>
                             <f:facet name="header">Edit</f:facet>
-                            <h:commandButton value="Edit" action="#{programmeManage.retrieveProgramme(p.programmeID)}" style="background-color: green; color: white"/>
+                            <h:commandButton value="Edit" action="#{programmeManage.retrieveProgramme(p.programmeCode)}" style="background-color: green; color: white"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">Delete</f:facet>
-                            <h:commandButton value="Delete" action="#{programmeManage.deleteProgramme(p.programmeID)}" style="background-color: red; color: white"/>
-
+                            <h:commandButton value="Delete" action="#{programmeManage.deleteProgramme(p.programmeCode)}" style="background-color: red; color: white"/>
                         </h:column>
                     </h:dataTable>
                 </div>
@@ -133,51 +123,57 @@
             <div style="float: left; width: 150px">
                 <h:form>
                     <br/>
-                    <h:commandButton value="Create New Cohort" action="#{cohortManage.goToNew()}" styleClass="btn green"/>
+                    <h:commandButton value="Create New Cohort" action="#{programmeCohortManage.goToNew()}" styleClass="btn green"/>
                 </h:form>   
             </div>
             <h:form  class="form">
                 <br/>
                 <div style="height: 200px; overflow: auto;">
-                    <h:dataTable value = "#{viewAll.allCohort}" var = "c"
+                    <h:dataTable value = "#{viewAll.allProgrammeCohort}" var = "pc"
                                  styleClass="order-table"
                                  headerClass="order-table-header"
                                  rowClasses="order-table-odd-row,order-table-even-row">
 
                         <h:column> 	
                             <f:facet name="header">Cohort ID</f:facet>
-                                #{c.cohortID}
-                        </h:column>
-                        <h:column> 	
-                            <f:facet name="header">Year</f:facet>
-                                #{c.year}
+                                #{pc.cohortID}
                         </h:column>
                         <h:column>
-                            <f:facet name="header">Month</f:facet>
-                                #{c.month}
+                            <f:facet name="header">Entry Year</f:facet>
+                                #{pc.entryYear}
+                        </h:column>
+                        <h:column> 	
+                            <f:facet name="header">Intake Year</f:facet>
+                                #{pc.intakeYear}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Study Year</f:facet>
-                                #{c.studyYear}
+                                #{pc.studyYear}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Course Code List</f:facet>
+                                #{pc.courseCodeList}
                         </h:column>
 
                         <h:column>
                             <f:facet name="header">Edit</f:facet>
-                            <h:commandButton value="Edit" action="#{cohortManage.retrieveCohort(c.cohortID)}" style="background-color: green; color: white"/>
+                            <h:commandButton value="Edit" action="#{programmeCohortManage.retrieveProgrammeCohort(pc.cohortID)}" style="background-color: green; color: white"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">Delete</f:facet>
-                            <h:commandButton value="Delete" action="#{cohortManage.deleteCohort(c.cohortID)}" style="background-color: red; color: white">
-                                <f:param name="action" value="#{c.cohortID}" />
+                            <h:commandButton value="Delete" action="#{programmeCohortManage.deleteProgrammeCohort(pc.cohortID)}" style="background-color: red; color: white">
+                                <f:param name="action" value="#{pc.cohortID}" />
                             </h:commandButton>
                         </h:column>
                     </h:dataTable>
                 </div>
                 <br/>
-                <h:commandButton value="Done" action="#{programmeManage.goBackMenu()}" styleClass="btn green"/>
 
             </h:form>
-
+            <h:form>
+                <br/>
+                <h:commandButton value="Done" action="#{programmeManage.goBackMenu()}" styleClass="btn green"/>
+            </h:form>
             <br/><br/>
         </div>
     </h:body>

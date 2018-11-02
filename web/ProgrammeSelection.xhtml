@@ -38,7 +38,7 @@
                 <h:commandButton action="menu?faces-redirect=true" value="Back" immediate="true" class="btn gray"/>
                 <h:commandButton action="#{selection.programmeButton()}" value="Next" class="btn green" /><br/>
                 <br/>
-                <p:dataTable id="programmeTable"  value="#{selection.allProgrammeRecords}" var="p" selection="#{selection.selectedProgramme}" rowKey="#{p.cohortID}" style="margin-bottom:0">
+                <p:dataTable id="programmeTable"  value="#{selection.allProgrammeCohortRecords}" var="p" selection="#{selection.selectedProgramme}" rowKey="#{p.cohortID}" style="margin-bottom:0">
                     <f:facet name="header">
                         Programmes
                     </f:facet>

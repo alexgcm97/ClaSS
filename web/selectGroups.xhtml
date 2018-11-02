@@ -72,6 +72,7 @@
             alert("Group Deleted!");
             #{tutorialGroupManage.tgDA.setDelete(false)}
         </h:outputScript>
+        <h:commandLink rendered="#{facesContext.externalContext.invalidateSession()}"/>
 
         <div align="center" class="btn">
             <h1>Available Tutorial Group</h1>
@@ -125,8 +126,6 @@
                 </div>
                 <br/>
                 <h:commandButton value="Done" action="#{tutorialGroupManage.goBackMenu()}" styleClass="btn green"/>
-
-
             </h:form>
         </div>
     </h:body>

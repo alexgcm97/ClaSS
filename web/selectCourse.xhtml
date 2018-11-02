@@ -57,6 +57,7 @@
             alert("Successfully Inserted!");
             #{courseManage.cda.setSuccess(false)}
         </h:outputScript>
+        <h:commandLink rendered="#{facesContext.externalContext.invalidateSession()}"/>
         <div align="center" class="btn">
             <h1>Available Course</h1>
             <div style="float: left; width: 150px">

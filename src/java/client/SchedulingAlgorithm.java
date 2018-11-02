@@ -968,17 +968,20 @@ public class SchedulingAlgorithm implements Serializable {
 
     public Venue getCourseVenue(String courseType, String courseCode) throws IOException {
         Venue venue = new Venue();
-        ArrayList<Venue> qualifiedList = new ArrayList();
+        ArrayList<Venue> qualifiedList = new ArrayList(), otherList = new ArrayList();
+
         int index;
         if (courseType.equals("P")) {
             for (Venue v : labList) {
                 if (v.getCourseCodeList().contains(courseCode)) {
                     qualifiedList.add(v);
                 }
+                if (v.getCourseCodeList().equals("-")) {
+                    otherList.add(v);
+                }
             }
             if (qualifiedList.isEmpty()) {
-                errorCode = 4;
-                FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
+                venue = otherList.get(rand.nextInt(otherList.size()));
             } else {
                 venue = qualifiedList.get(rand.nextInt(qualifiedList.size()));
             }

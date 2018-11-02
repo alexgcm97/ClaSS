@@ -5,7 +5,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <style>
-          
+
             body{
                 background-color: #a6dff4;
             }
@@ -26,27 +26,25 @@
                 background-color:  #4CAF50;
                 color: white;
             }
-           
+
         </style>
         <title>Update Information</title>
     </h:head>
     <h:body>
         <div class="btn" >
             <h1>Select to Update</h1>
-                <h:form>
-                    <br/>
-                    <h:commandButton action="selectProgrammeCohort" value="Programme and Cohort" styleClass="btn" /><br/><br/>
-                    <h:commandButton action="selectCourse" value="Course" styleClass="btn"/><br/><br/>
-                    <h:commandButton action="selectGroups" value="Tutorial Group" styleClass="btn"/><br/><br/>
-                    <h:commandButton action="selectStaff" value="Staff" styleClass="btn"/><br/><br/>
-                    <h:commandButton action="selectVenue" value="Venue" styleClass="btn"/><br/><br/>
-                    <h:commandButton action="menu" value="Back to Menu" styleClass="btn"/>
+            <h:form>
+                <br/>
+                <h:commandButton action="selectProgrammeCohort?faces-redirect=true" value="Programme and Cohort" styleClass="btn" /><br/><br/>
+                <h:commandButton action="selectCourse?faces-redirect=true" value="Course" styleClass="btn"/><br/><br/>
+                <h:commandButton action="selectGroups?faces-redirect=true" value="Tutorial Group" styleClass="btn"/><br/><br/>
+                <h:commandButton action="selectStaff?faces-redirect=true" value="Staff" styleClass="btn"/><br/><br/>
+                <h:commandButton action="selectVenue?faces-redirect=true" value="Venue" styleClass="btn"/><br/><br/>
+                <h:commandButton action="menu?faces-redirect=true" value="Back to Menu" styleClass="btn"/>
+            </h:form>
+        </div>
 
 
-                </h:form>
-            </div>
-
-     
     </h:body>
 </html>
 

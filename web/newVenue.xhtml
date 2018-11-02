@@ -20,9 +20,9 @@
             }
             .form{
                 background-color: white;
-                height: 200px;
+                height: 250px;
             }
-             .btn .blue:hover{
+            .btn .blue:hover{
                 background-color: dodgerblue;
                 color: white;
             }
@@ -45,13 +45,16 @@
                     <br/>
                     <tr>
                         <td>Venue ID:</td>
-                        <td><h:inputText id="id" value="#{venueManage.v.venueID}" required="true" requiredMessage=" *Empty field"/>
+                        <td><h:selectOneMenu id="selectBlock" value="#{venueManage.v.block}" disabled="#{venueManage.v.venueType == 'Hall'}" style="margin-right:5px">
+                                <f:selectItems value="#{venueManage.blockList}"/>
+                            </h:selectOneMenu>
+                            <h:inputText title="Type only the venue number or ID, ex: DK ABA, type only ABA or K101, type only 101." id="id" value="#{venueManage.v.venueID}" required="true" requiredMessage=" *Empty field"/>
                             <h:message for="id" style="color:red"/>
                         </td>
                     </tr>
                     <tr>
                         <td>Venue Type:</td>
-                        <td><h:selectOneMenu value="#{venueManage.v.venueType}" >
+                        <td><h:selectOneMenu value="#{venueManage.v.venueType}" valueChangeListener="#{venueManage.venueTypeChangeListener}">
                                 <f:selectItem itemValue="Hall" itemLabel="Hall" />
                                 <f:selectItem itemValue="Room" itemLabel="Room"/>
                                 <f:selectItem itemValue="Lab" itemLabel="Lab"/>
@@ -60,23 +63,16 @@
                             </h:selectOneMenu> </td>                        
                     </tr>
                     <tr>
-                        <td>Block:</td>
-                        <td><h:inputText id="block" value="#{venueManage.v.block}" required="true" requiredMessage=" *Empty field " maxlength="2"/>
-                               
-                            
-                           <h:message for="block" style="color: red"/></td>
-                    </tr>
-                    <tr>
                         <td>Capacity:</td>
                         <td><h:inputText value="#{venueManage.v.capacity}" required="true" id="capacity" requiredMessage=" *Empty field " converterMessage=" *Invalid input">
                                 <f:convertNumber integerOnly="true" />
                             </h:inputText>
                             <h:message for="capacity" style="color: red"/>
 
-                         </td>
+                        </td>
                     </tr>
+                </table>        
 
-                </table>
 
                 <h:panelGroup  id="selectCourseCode">
                     <table>
@@ -94,14 +90,14 @@
                         </tr>
                     </table>
                 </h:panelGroup>
+                <br/>
                 <h:commandButton action="#{venueManage.venueInsert()}" value="Submit" styleClass="btn green">
-                   
 
                 </h:commandButton>
             </h:form>
             <h:form>
                 <br/>
-                <h:commandButton action="#{venueManage.goBackMenu()}" value="Done" styleClass="btn blue"/>
+                <h:commandButton action="selectVenue?faces-redirect=true" value="Done" styleClass="btn blue"/>
             </h:form>
 
         </div>

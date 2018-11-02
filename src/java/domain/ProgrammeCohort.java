@@ -19,14 +19,31 @@ public class ProgrammeCohort {
     String cohortID, entryYear, programmeCode, programmeName, intakeYear, courseCodeList;
     int studyYear;
 
-    public ProgrammeCohort(String cohortID, String entryYear, String programmeCode, String programmeName, String intakeYear, int studyYear, String courseCodeList) {
+    public ProgrammeCohort(String cohortID, String entryYear, String programmeCode, int studyYear, String intakeYear, String courseCodeList) {
         this.cohortID = cohortID;
         this.entryYear = entryYear;
-        this.programmeName = programmeName;
         this.programmeCode = programmeCode;
         this.intakeYear = intakeYear;
         this.courseCodeList = courseCodeList;
         this.studyYear = studyYear;
+    }
+
+    public ProgrammeCohort(String cohortID, String entryYear, String programmeCode, int studyYear, String intakeYear, String courseCodeList, String programmeName) {
+        this.cohortID = cohortID;
+        this.entryYear = entryYear;
+        this.programmeCode = programmeCode;
+        this.programmeName = programmeName;
+        this.intakeYear = intakeYear;
+        this.courseCodeList = courseCodeList;
+        this.studyYear = studyYear;
+    }
+
+    public String getProgrammeName() {
+        return programmeName;
+    }
+
+    public void setProgrammeName(String programmeName) {
+        this.programmeName = programmeName;
     }
 
     public ProgrammeCohort() {
@@ -79,15 +96,5 @@ public class ProgrammeCohort {
     public void setStudyYear(int studyYear) {
         this.studyYear = studyYear;
     }
-
-    public String getProgrammeName() {
-        return programmeName;
-    }
-
-    public void setProgrammeName(String programmeName) {
-        this.programmeName = programmeName;
-    }
-    
-    
 
 }

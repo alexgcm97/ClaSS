@@ -58,6 +58,7 @@
             alert("Successfully Inserted!");
             #{venueManage.vda.setSuccess(false)}
         </h:outputScript>
+        <h:commandLink rendered="#{facesContext.externalContext.invalidateSession()}"/>
         <div align="center" class="btn">
             <h1>Available Venue</h1>
             <div style="float: left; width: 150px" class="btn">

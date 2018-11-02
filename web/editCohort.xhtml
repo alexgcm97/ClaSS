@@ -2,70 +2,88 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"     
+      xmlns:p="http://primefaces.org/ui">
+
     <h:head>
         <style>
-            body{
-                background-color: #a6dff4;
-            }
-            .form{
-                background-color: white;
-                height: 200px;
-            }
             .btn{
                 transition-duration: 0.4s;
                 padding: 10px 24px;
                 border-radius: 12px;
             }
-            .btn .btn:hover{
+            .btn .green:hover{
                 background-color:  #4CAF50;
+                color: white;
+            }
+            body{
+                background-color: #a6dff4;
+            }
+            .form{
+                background-color: white;
+                height: 300px;
+            }
+            .btn .blue:hover{
+                background-color: dodgerblue;
                 color: white;
             }
         </style>
         <title>Update cohort</title>
     </h:head>
     <h:body>
-        <div align="center">
+        <div align="center" class="btn">
             <h1>Update Cohort</h1>
             <h:form class="form">
                 <table>
-
+                    <br/>
                     <tr>
                         <td>Cohort ID:</td>
-                        <td><h:inputText value="#{cohortManage.c.cohortID}" disabled="true" /><br/></td>
+                        <td><h:outputText value="#{programmeCohortDA.maxID}" /><br/></td>
                     </tr>
                     <tr>
-                        <td>Year:</td>
-                        <td><h:inputText id="year" value="#{cohortManage.c.year}"  required="true"  requiredMessage="*Invalid Input" maxlength="4" />
-                            <h:message for="year" style="color: red" /></td>
+                        <td>Entry Year:</td>
+                        <td><h:inputText id="entryYear" value="#{programmeCohortManage.pc.entryYear}" required="true" /> </td>
                     </tr>
                     <tr>
-                        <td>Month:</td>
-                        <td><h:inputText id="month" value="#{cohortManage.c.month}"  required="true"  requiredMessage="*Invalid Input" maxlength="2" />
-                            <h:message for="month" style="color: red" /></td>
+                        <td>Programme Code:</td>
+                        <td><p:selectOneMenu filter="true" filterMatchMode="contains" filterPlaceholder="Filter" value="#{programmeCohortManage.pc.programmeCode}">
+                                <f:selectItems value="#{viewAll.getAllProgrammeCode()}" var="p"
+                                               itemLabel="#{p.programmeCode}" itemValue="#{p.programmeCode}" />
+                            </p:selectOneMenu></td>
+                    </tr><br/>
+                    <tr>
+                        <td>Intake Year:</td>
+                        <td><h:inputText id="intakeYear" value="#{programmeCohortManage.pc.intakeYear}" required="true"/> </td>
                     </tr>
                     <tr>
                         <td>Study Year:</td>
-                        <td><h:selectOneMenu value="#{cohortManage.c.studyYear}" >
+                        <td><h:selectOneMenu value="#{programmeCohortManage.pc.studyYear}" >
                                 <f:selectItem itemValue="1" itemLabel="1" />
                                 <f:selectItem itemValue="2" itemLabel="2"/>
                                 <f:selectItem itemValue="3" itemLabel="3"/>
                                 <f:selectItem itemValue="4" itemLabel="4"/>
-                            </h:selectOneMenu>
-                        </td> 
+                            </h:selectOneMenu></td>
                     </tr>
 
+                    <tr> 
+                        <td>
+                            <h:outputLabel for="courseCode" value="Course Code List: " />
+                        </td>
+                        <td>
+                            <p:selectCheckboxMenu  id="courseCode" panelStyle="width:280px;"  value="#{programmeCohortManage.courseCodeStr}" label="Course Code" filter="true" filterMatchMode="startsWith">
+                                <f:selectItems value="#{programmeCohortManage.courseCodeList}" />
+                            </p:selectCheckboxMenu>
+                        </td>
+                    </tr>
                 </table><br/>
-                <h:commandButton action="#{cohortManage.updateCohort()}" value="Update"/>
+                <h:commandButton action="#{programmeCohortManage.updateProgrammeCohort()}" value="Update" styleClass="btn green"/>
 
 
             </h:form>
             <h:form>
-                <h:commandButton action="selectProgrammeCohort" immediate="true" value="Done"/>
+                <br/>
+                <h:commandButton action="#{programmeCohortManage.goBackSelectProgramme()}" value="Done" styleClass="btn blue"/>
             </h:form>
-
-
-
         </div>
     </h:body>
 </html>
