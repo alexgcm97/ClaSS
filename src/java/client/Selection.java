@@ -6,12 +6,13 @@
 package client;
 
 import da.CourseDA;
-import da.ProgrammeDA;
+import da.ProgrammeCohortDA;
 import da.StaffDA;
 import da.TutorialGroupDA;
 import da.VenueDA;
 import domain.CourseDetails;
 import domain.Programme;
+import domain.ProgrammeCohort;
 import domain.Staff;
 import domain.TutorialGroup;
 import domain.Venue;
@@ -54,10 +55,10 @@ public class Selection {
     private List<CourseDetails> courseDetailsList = new ArrayList<CourseDetails>();
     private List<String> courseCodeList = new ArrayList();
 
-    private ProgrammeDA pda = new ProgrammeDA();
+    private ProgrammeCohortDA pda = new ProgrammeCohortDA();
     private Programme p = new Programme();
-    private List<Programme> programmeList = new ArrayList<Programme>();
-    private List<Programme> selectedProgramme = new ArrayList<Programme>();
+    private List<ProgrammeCohort> programmeList = new ArrayList();
+    private List<ProgrammeCohort> selectedProgramme = new ArrayList();
 
     private StaffDA sda = new StaffDA();
     private Staff s = new Staff();
@@ -111,7 +112,7 @@ public class Selection {
         return this.venueList;
     }
 
-    public List<Programme> getAllProgrammeRecords() throws SQLException {
+    public List<ProgrammeCohort> getAllProgrammeRecords() throws SQLException {
         this.programmeList = pda.getAllProgrammeRecords();
         return this.programmeList;
     }
@@ -164,14 +165,14 @@ public class Selection {
         selectedGroups.clear();
         List<String> tempList = new ArrayList<String>();
         for (int i = 0; i < selectedProgramme.size(); i++) {
-            tempList = tgda.getGroupIdViaProgrammeID(selectedProgramme.get(i).getProgrammeID());
+            tempList = tgda.getGroupIdViaCohortID(selectedProgramme.get(i).getCohortID());
             for (int j = 0; j < tempList.size(); j++) {
                 selectedGroups.add(tempList.get(j));
             }
         }
         System.out.println("selectedProgramme size: " + selectedProgramme.size());
         for (int b = 0; b < selectedProgramme.size(); b++) {
-            System.out.println(selectedProgramme.get(b).getProgrammeID());
+            System.out.println(selectedProgramme.get(b).getProgrammeCode());
         }
         System.out.println("selectedGroups size: " + selectedGroups.size());
         System.out.println(selectedGroups.size());
@@ -332,11 +333,11 @@ public class Selection {
         this.selectedStaff = selectedStaff;
     }
 
-    public List<Programme> getSelectedProgramme() {
+    public List<ProgrammeCohort> getSelectedProgramme() {
         return selectedProgramme;
     }
 
-    public void setSelectedProgramme(List<Programme> selectedProgramme) {
+    public void setSelectedProgramme(List<ProgrammeCohort> selectedProgramme) {
         this.selectedProgramme = selectedProgramme;
     }
 
@@ -380,11 +381,11 @@ public class Selection {
         this.p = p;
     }
 
-    public List<Programme> getProgrammeList() {
+    public List<ProgrammeCohort> getProgrammeList() {
         return programmeList;
     }
 
-    public void setProgrammeList(List<Programme> programmeList) {
+    public void setProgrammeList(List<ProgrammeCohort> programmeList) {
         this.programmeList = programmeList;
     }
 

@@ -13,31 +13,35 @@ import java.io.Serializable;
 
 public class TutorialGroup implements Serializable {
 
-    private String groupID, programmeID, cohortID, programmeCode, month, year, courseCodeList;
+    private String groupID, cohortID, programmeCode, intakeYear, courseCodeList;
     private int studyYear, groupNumber, size;
 
     public TutorialGroup() {
     }
 
-    public TutorialGroup(String groupID, int studyYear, int groupNumber, int size, String programmeID,String courseCodeList) {
+    public TutorialGroup(String groupID, int groupNumber, int size, String cohortID) {
         this.groupID = groupID;
-        this.programmeID = programmeID;
-        this.studyYear = studyYear;
+        this.cohortID = cohortID;
+        this.groupNumber = groupNumber;
+        this.size = size;
+    }
+
+    public TutorialGroup(String groupID, int groupNumber, int size, String cohortID, String courseCodeList) {
+        this.groupID = groupID;
+        this.cohortID = cohortID;
         this.groupNumber = groupNumber;
         this.size = size;
         this.courseCodeList = courseCodeList;
     }
 
-    public TutorialGroup(String groupID, int studyYear, int groupNumber, int size, String programmeID, String cohortID, String programmeCode, String month, String year) {
+    public TutorialGroup(String groupID, int studyYear, int groupNumber, int size, String cohortID, String programmeCode, String month, String intakeYear) {
         this.groupID = groupID;
-        this.programmeID = programmeID;
         this.cohortID = cohortID;
-        this.studyYear = studyYear;
         this.groupNumber = groupNumber;
+        this.studyYear = studyYear;
         this.size = size;
         this.programmeCode = programmeCode;
-        this.month = month;
-        this.year = year;
+        this.intakeYear = intakeYear;
     }
 
     public String getGroupID() {
@@ -48,28 +52,12 @@ public class TutorialGroup implements Serializable {
         this.groupID = groupID;
     }
 
-    public String getProgrammeID() {
-        return programmeID;
-    }
-
-    public void setProgrammeID(String programmeID) {
-        this.programmeID = programmeID;
-    }
-
     public String getCohortID() {
         return cohortID;
     }
 
     public void setCohortID(String cohortID) {
         this.cohortID = cohortID;
-    }
-
-    public int getStudyYear() {
-        return studyYear;
-    }
-
-    public void setStudyYear(int studyYear) {
-        this.studyYear = studyYear;
     }
 
     public int getGroupNumber() {
@@ -96,20 +84,12 @@ public class TutorialGroup implements Serializable {
         this.programmeCode = programmeCode;
     }
 
-    public String getMonth() {
-        return month;
+    public String getIntakeYear() {
+        return intakeYear;
     }
 
-    public void setMonth(String month) {
-        this.month = month;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
+    public void setYear(String intakeYear) {
+        this.intakeYear = intakeYear;
     }
 
     public String getCourseCodeList() {
@@ -118,6 +98,14 @@ public class TutorialGroup implements Serializable {
 
     public void setCourseCodeList(String courseCodeList) {
         this.courseCodeList = courseCodeList;
+    }
+
+    public int getStudyYear() {
+        return studyYear;
+    }
+
+    public void setStudyYear(int studyYear) {
+        this.studyYear = studyYear;
     }
 
 }

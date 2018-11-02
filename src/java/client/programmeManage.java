@@ -5,7 +5,7 @@
  */
 package client;
 
-import da.ProgrammeDA;
+import da.ProgrammeCohortDA;
 import domain.Programme;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -21,7 +21,7 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class programmeManage {
     
-    public ProgrammeDA pda = new ProgrammeDA();
+    public ProgrammeCohortDA pda = new ProgrammeCohortDA();
     public Programme p = new Programme();
     
     public Programme getP() {
@@ -32,11 +32,11 @@ public class programmeManage {
         this.p = p;
     }
     
-    public ProgrammeDA getPda() {
+    public ProgrammeCohortDA getPda() {
         return pda;
     }
     
-    public void setPda(ProgrammeDA pda) {
+    public void setPda(ProgrammeCohortDA pda) {
         this.pda = pda;
     }
     

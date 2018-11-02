@@ -178,7 +178,7 @@ public class generateXML implements Serializable {
 
                 // courseCodeList element
                 Element courseCodeList = document.createElement("courseCodeList");
-                if (item.getCourseCodeList() == "") {
+                if (item.getCourseCodeList().equals("")) {
                     courseCodeList.appendChild(document.createTextNode("-"));
                 } else {
                     courseCodeList.appendChild(document.createTextNode(item.getCourseCodeList()));
@@ -346,7 +346,7 @@ public class generateXML implements Serializable {
             for (String id : tgList) {
                 list = tgda.getSelectedRecords(id);
                 for (TutorialGroup item : list) {
-                    TutorialGroup record = new TutorialGroup(item.getGroupID(), item.getStudyYear(), item.getGroupNumber(), item.getSize(), item.getProgrammeID(), item.getCourseCodeList());
+                    TutorialGroup record = new TutorialGroup(item.getGroupID(), item.getGroupNumber(), item.getSize(), item.getCohortID(), item.getCourseCodeList());
                     recordList.add(record);
                 }
             }
@@ -375,11 +375,6 @@ public class generateXML implements Serializable {
                 attr.setValue(item.getGroupID());
                 tutorialGroup.setAttributeNode(attr);
 
-                // studyYear element
-                Element studyYear = document.createElement("studyYear");
-                studyYear.appendChild(document.createTextNode(String.valueOf(item.getStudyYear())));
-                tutorialGroup.appendChild(studyYear);
-
                 // groupNumber element
                 Element groupNumber = document.createElement("groupNumber");
                 groupNumber.appendChild(document.createTextNode(String.valueOf(item.getGroupNumber())));
@@ -391,9 +386,9 @@ public class generateXML implements Serializable {
                 tutorialGroup.appendChild(size);
 
                 // programmeID element
-                Element programmeID = document.createElement("programmeID");
-                programmeID.appendChild(document.createTextNode(item.getProgrammeID()));
-                tutorialGroup.appendChild(programmeID);
+                Element cohortID = document.createElement("cohortID");
+                cohortID.appendChild(document.createTextNode(item.getCohortID()));
+                tutorialGroup.appendChild(cohortID);
 
                 //courseCodeList element
                 Element courseCodeList = document.createElement("courseCodeList");

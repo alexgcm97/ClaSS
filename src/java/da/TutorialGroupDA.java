@@ -24,15 +24,15 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 public class TutorialGroupDA {
-
+    
     public List<TutorialGroup> getAllTutorialGroupRecords() throws SQLException {
-
+        
         Connection connect = null;
-
+        
         List<TutorialGroup> output = new ArrayList<TutorialGroup>();
         try {
             connect = DBConnection.getConnection();
-            PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM Tutorial_Group");
+            PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM TutorialGroup");
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 TutorialGroup tg = new TutorialGroup();
@@ -42,22 +42,22 @@ public class TutorialGroupDA {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-
+            
         }
-
+        
         DBConnection.close(connect);
         return output;
-
+        
     }
-
+    
     public List<String> getCourseCodeList(String groupID) throws SQLException {
-
+        
         Connection connect = null;
-
+        
         List<String> output = new ArrayList();
         try {
             connect = DBConnection.getConnection();
-            PreparedStatement pstmt = connect.prepareStatement("SELECT courseCodeList FROM Tutorial_Group WHERE groupID = ?");
+            PreparedStatement pstmt = connect.prepareStatement("SELECT pc.courseCodeList FROM ProgrammeCohort pc, TutorialGroup tg WHERE groupID = ? AND tg.cohortID = pc.cohortID");
             pstmt.setString(1, groupID);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -65,63 +65,58 @@ public class TutorialGroupDA {
                 for (String s : strArr) {
                     output.add(s);
                 }
-
+                
             }
         } catch (SQLException e) {
             e.printStackTrace();
-
+            
         }
-
+        
         DBConnection.close(connect);
         return output;
-
+        
     }
-
-    public List<String> getGroupIdViaProgrammeID(String programmeID) throws SQLException {
-
+    
+    public List<String> getGroupIdViaCohortID(String cohortID) throws SQLException {
+        
         Connection connect = null;
-
+        
         List<String> output = new ArrayList<String>();
         try {
             connect = DBConnection.getConnection();
-            PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM Tutorial_Group where programmeID = ?");
-            pstmt.setString(1, programmeID);
+            PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM TutorialGroup where cohortID = ?");
+            pstmt.setString(1, cohortID);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 output.add(rs.getString(1));
             }
         } catch (SQLException e) {
             e.printStackTrace();
-
+            
         }
-
+        
         DBConnection.close(connect);
         return output;
-
+        
     }
-
+    
     public List<TutorialGroup> getSelectedRecords(String groupID) throws SQLException {
-
+        
         Connection connect = null;
         List<TutorialGroup> output = new ArrayList<TutorialGroup>();
-
+        
         try {
             connect = DBConnection.getConnection();
-            PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM tutorial_group WHERE groupID=? ");
+            PreparedStatement pstmt = connect.prepareStatement("SELECT tg.groupID, tg.groupNumber, tg.size, tg.cohortID, pc.courseCodeList FROM tutorialgroup tg, programmeCohort pc WHERE groupID=? AND tg.cohortID = pc.cohortID");
             pstmt.setString(1, groupID);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 TutorialGroup TG = new TutorialGroup();
                 TG.setGroupID(rs.getString(1));
-                TG.setStudyYear(rs.getInt(2));
-                TG.setGroupNumber(rs.getInt(3));
-                TG.setSize(rs.getInt(4));
-                TG.setProgrammeID(rs.getString(5));
-                if (rs.getString(6) == null || rs.getString(6).equals("")) {
-                    TG.setCourseCodeList("");
-                } else {
-                    TG.setCourseCodeList(rs.getString(6));
-                }
+                TG.setGroupNumber(rs.getInt(2));
+                TG.setSize(rs.getInt(3));
+                TG.setCohortID(rs.getString(4));
+                TG.setCourseCodeList(rs.getString(5));
                 output.add(TG);
             }
         } catch (SQLException ex) {
@@ -129,54 +124,54 @@ public class TutorialGroupDA {
         }
         DBConnection.close(connect);
         return output;
-
+        
     }
-
+    
     boolean success, message, delete, update;
-
+    
     public boolean isSuccess() {
         return success;
     }
-
+    
     public void setSuccess(boolean success) {
         this.success = success;
     }
-
+    
     public boolean isMessage() {
         return message;
     }
-
+    
     public void setMessage(boolean message) {
         this.message = message;
     }
-
+    
     public boolean isDelete() {
         return delete;
     }
-
+    
     public void setDelete(boolean delete) {
         this.delete = delete;
     }
-
+    
     public boolean isUpdate() {
         return update;
     }
-
+    
     public void setUpdate(boolean update) {
         this.update = update;
     }
-
+    
     public void insertTutorialGroup(TutorialGroup tg) throws SQLException {
         String tgID = getMaxID();
         Connection connect = null;
-
+        
         try {
             connect = DBConnection.getConnection();
             Statement stmt = connect.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT GroupID FROM TUTORIAL_GROUP");
-
+            ResultSet rs = stmt.executeQuery("SELECT GroupID FROM TUTORIALGROUP");
+            
             ArrayList<Integer> ls = new ArrayList<>();
-
+            
             while (rs.next()) {
                 try {
                     ls.add(Integer.parseInt(rs.getString(1).split("G")[1]));
@@ -184,56 +179,54 @@ public class TutorialGroupDA {
                     System.out.println("Invalid Exception");
                 }
             }
-
+            
             if (ls.size() > 0) {
                 int max = Collections.max(ls) + 1;
                 tgID = "G" + max;
             } else {
                 tgID = "G1001";
             }
-
-            PreparedStatement pstmt = connect.prepareStatement("INSERT INTO TUTORIAL_GROUP VALUES(?,?,?,?,?,?)");
-
+            
+            PreparedStatement pstmt = connect.prepareStatement("INSERT INTO TUTORIALGROUP VALUES(?,?,?,?)");
+            
             pstmt.setString(1, tgID);
-            pstmt.setInt(2, tg.getStudyYear());
-            pstmt.setInt(3, tg.getGroupNumber());
-            pstmt.setInt(4, tg.getSize());
-            pstmt.setString(5, tg.getProgrammeID());
-            pstmt.setString(6, tg.getCourseCodeList());
-
+            pstmt.setInt(2, tg.getGroupNumber());
+            pstmt.setInt(3, tg.getSize());
+            pstmt.setString(4, tg.getCohortID());
+            
             pstmt.executeUpdate();
             this.success = true;
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
+        
     }
-
+    
     public TutorialGroup get(String groupID) {
         Connection connect;
         TutorialGroup tg = new TutorialGroup();
         try {
             connect = DBConnection.getConnection();
-            PreparedStatement pstmt = connect.prepareStatement("select * from TUTORIAL_GROUP where GROUPID = ?");
+            PreparedStatement pstmt = connect.prepareStatement("select * from TUTORIALGROUP where GROUPID = ?");
             pstmt.setString(1, groupID);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                tg = new TutorialGroup(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getString(5), rs.getString(6));
+                tg = new TutorialGroup(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getString(4));
             }
-
+            
         } catch (SQLException e) {
             System.out.println(e);
         }
         return tg;
     }
-
+    
     public TutorialGroup deleteGroup(String groupID) {
         Connection connect;
         TutorialGroup tg = new TutorialGroup();
         try {
             connect = DBConnection.getConnection();
-            PreparedStatement ps = connect.prepareStatement("delete from TUTORIAL_GROUP where GROUPID = ?");
+            PreparedStatement ps = connect.prepareStatement("delete from TUTORIALGROUP where GROUPID = ?");
             ps.setString(1, groupID);
             System.out.println(ps);
             ps.executeUpdate();
@@ -243,41 +236,39 @@ public class TutorialGroupDA {
         }
         return tg;
     }
-
+    
     public void updateTutorialGroup(TutorialGroup tg) {
-
+        
         Connection connect;
         try {
             connect = DBConnection.getConnection();;
-            PreparedStatement ps = connect.prepareStatement("update TUTORIAL_GROUP set studyYear=?, groupNumber=?, size=?, programmeID=?, coursecodelist=? where groupID=?");
-
-            ps.setInt(1, tg.getStudyYear());
-            ps.setInt(2, tg.getGroupNumber());
-            ps.setInt(3, tg.getSize());
-            ps.setString(4, tg.getProgrammeID());
-            ps.setString(5, tg.getCourseCodeList());
-            ps.setString(6, tg.getGroupID());
+            PreparedStatement ps = connect.prepareStatement("update TUTORIALGROUP set groupNumber=?, size=?, cohortID=? where groupID=?");
+            
+            ps.setInt(1, tg.getGroupNumber());
+            ps.setInt(2, tg.getSize());
+            ps.setString(3, tg.getCohortID());
+            ps.setString(4, tg.getGroupID());
             ps.executeUpdate();
             this.update = true;
         } catch (Exception e) {
             System.out.println(e);
         }
     }
-
+    
     public String getMaxID() {
-
+        
         Connection connect;
-
+        
         String groupID = "";
-
+        
         try {
-
+            
             connect = DBConnection.getConnection();;
             Statement stmt = connect.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT GROUPID FROM TUTORIAL_GROUP");
-
+            ResultSet rs = stmt.executeQuery("SELECT GROUPID FROM TUTORIALGROUP");
+            
             ArrayList<Integer> ls = new ArrayList<>();
-
+            
             while (rs.next()) {
                 try {
                     ls.add(Integer.parseInt(rs.getString(1).split("G")[1]));
@@ -285,21 +276,21 @@ public class TutorialGroupDA {
                     System.out.println("Invalid Exception");
                 }
             }
-
+            
             if (ls.size() > 0) {
                 int max = Collections.max(ls) + 1;
                 groupID = "G" + max;
             } else {
                 groupID = "G1001";
             }
-
+            
         } catch (SQLException e) {
             // TODO Auto-generated catch block
 
         }
         return groupID;
     }
-
+    
     public void reset() {
         this.success = false;
         this.update = false;
