@@ -599,7 +599,8 @@ public class ScheduleInsert implements Serializable {
         connect = DBConnection.getConnection();
 
         List<scheduleDetail> schedule = new ArrayList<scheduleDetail>();
-        PreparedStatement pstmt = connect.prepareStatement("SELECT venueID, cohort FROM schedule WHERE venueID = '" + venueID + "' GROUP BY venueID, cohort");
+        PreparedStatement pstmt = connect.prepareStatement("SELECT venueID, cohort FROM schedule WHERE venueID = ? GROUP BY venueID, cohort");
+        pstmt.setString(1, venueID);
         ResultSet rs = pstmt.executeQuery();
 
         if (rs.next()) {

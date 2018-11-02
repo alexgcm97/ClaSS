@@ -136,7 +136,8 @@ public class ModifySchedule implements Serializable {
 
         List<Venue> venue = new ArrayList<Venue>();
         List<Venue> venueNew = new ArrayList<Venue>();
-        PreparedStatement pstmt = connect.prepareStatement("SELECT venueID, venueType FROM venue WHERE venueType='" + venueType + "'");
+        PreparedStatement pstmt = connect.prepareStatement("SELECT venueID, venueType FROM venue WHERE venueType=?");
+        pstmt.setString(1, venueType);
         ResultSet rs2 = pstmt.executeQuery();
         while (rs2.next()) {
             Venue vn = new Venue();
@@ -146,14 +147,20 @@ public class ModifySchedule implements Serializable {
             venue.add(vn);
         }
 
-        pstmt = connect.prepareStatement("SELECT venueID FROM class WHERE day=" + day + " AND ((startTime>=" + startTime + " AND startTime<" + endTime + ") OR (endTime>=" + startTime + " AND endTime<" + endTime + "))");
+        pstmt = connect.prepareStatement("SELECT venueID FROM class WHERE day= ? AND ((startTime>= ? AND startTime< ?) OR (endTime>= ? AND endTime< ?))");
+        pstmt.setInt(1, day);
+        pstmt.setDouble(2, startTime);
+        pstmt.setDouble(3, endTime);
+        pstmt.setDouble(4, startTime);
+        pstmt.setDouble(5, endTime);
         ResultSet rs = pstmt.executeQuery();
 
         if (rs.next()) {
             do {
                 Class cl = new Class();
                 cl.setVenueID(rs.getString("venueID"));
-                pstmt = connect.prepareStatement("SELECT venueID, venueType FROM venue WHERE venueID='" + cl.getVenueID() + "'");
+                pstmt = connect.prepareStatement("SELECT venueID, venueType FROM venue WHERE venueID= ?");
+                pstmt.setString(1, cl.getVenueID());
                 ResultSet rs1 = pstmt.executeQuery();
                 while (rs1.next()) {
                     Venue vn = new Venue();
@@ -250,7 +257,17 @@ public class ModifySchedule implements Serializable {
         connect = DBConnection.getConnection();
 
         //Check validation
-        PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM class WHERE staffID='" + staffID + "' AND day=" + day + " AND ((startTime>=" + startTime + " AND startTime<" + endTime + ") OR (endTime>=" + startTime + " AND endTime<" + endTime + "))");
+        PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM class WHERE staffID=?AND day=? AND ((startTime>=? AND startTime<?) OR (endTime>=? AND endTime<?)) OR ((?>=startTime AND ?<startTime) OR (?>=endTime AND ?<endTime))");
+        pstmt.setString(1, staffID);
+        pstmt.setInt(2, day);
+        pstmt.setDouble(3, startTime);
+        pstmt.setDouble(4, endTime);
+        pstmt.setDouble(5, startTime);
+        pstmt.setDouble(6, endTime);
+        pstmt.setDouble(7, startTime);
+        pstmt.setDouble(8, endTime);
+        pstmt.setDouble(9, startTime);
+        pstmt.setDouble(10, endTime);
         ResultSet rs = pstmt.executeQuery();
 
         if (rs.next()) {
@@ -259,7 +276,17 @@ public class ModifySchedule implements Serializable {
             stfID = staffID;
         }
 
-        pstmt = connect.prepareStatement("SELECT * FROM class WHERE groupID='" + groupID + "' AND day=" + day + " AND ((startTime>=" + startTime + " AND startTime<" + endTime + ") OR (endTime>=" + startTime + " AND endTime<" + endTime + "))");
+        pstmt = connect.prepareStatement("SELECT * FROM class WHERE groupID=?AND day=? AND ((startTime>=? AND startTime<?) OR (endTime>=? AND endTime<?)) OR ((?>=startTime AND ?<startTime) OR (?>=endTime AND ?<endTime))");
+        pstmt.setString(1, groupID);
+        pstmt.setInt(2, day);
+        pstmt.setDouble(3, startTime);
+        pstmt.setDouble(4, endTime);
+        pstmt.setDouble(5, startTime);
+        pstmt.setDouble(6, endTime);
+        pstmt.setDouble(7, startTime);
+        pstmt.setDouble(8, endTime);
+        pstmt.setDouble(9, startTime);
+        pstmt.setDouble(10, endTime);
         ResultSet rs2 = pstmt.executeQuery();
 
         if (rs2.next()) {
@@ -268,7 +295,17 @@ public class ModifySchedule implements Serializable {
             grpID = groupID;
         }
 
-        pstmt = connect.prepareStatement("SELECT * FROM class WHERE venueID='" + venueID + "' AND day=" + day + " AND ((startTime>=" + startTime + " AND startTime<" + endTime + ") OR (endTime>=" + startTime + " AND endTime<" + endTime + "))");
+        pstmt = connect.prepareStatement("SELECT * FROM class WHERE venueID=?AND day=? AND ((startTime>=? AND startTime<?) OR (endTime>=? AND endTime<?)) OR ((?>=startTime AND ?<startTime) OR (?>=endTime AND ?<endTime))");
+        pstmt.setString(1, venueID);
+        pstmt.setInt(2, day);
+        pstmt.setDouble(3, startTime);
+        pstmt.setDouble(4, endTime);
+        pstmt.setDouble(5, startTime);
+        pstmt.setDouble(6, endTime);
+        pstmt.setDouble(7, startTime);
+        pstmt.setDouble(8, endTime);
+        pstmt.setDouble(9, startTime);
+        pstmt.setDouble(10, endTime);
         ResultSet rs3 = pstmt.executeQuery();
 
         if (rs3.next()) {
@@ -279,7 +316,12 @@ public class ModifySchedule implements Serializable {
 
         if (!stfID.equals("") && !grpID.equals("") && !venID.equals("") && !venID.equals("null")) {
 
-            pstmt = connect.prepareStatement("DELETE FROM class WHERE courseID='" + courseID + "' AND venueID='" + oldVenueID + "' AND groupID='" + grpID + "' AND staffID='" + oldStaffID + "'");
+            pstmt = connect.prepareStatement("DELETE FROM class WHERE courseID= ? AND venueID= ? AND groupID= ? AND staffID= ?");
+            pstmt.setString(1, courseID);
+            pstmt.setString(2, oldVenueID);
+            pstmt.setString(3, grpID);
+            pstmt.setString(4, oldStaffID);
+
             pstmt.executeUpdate();
 
             pstmt = connect.prepareStatement("INSERT INTO class (courseID, venueID, groupID, staffID, day, startTime, endTime) VALUES (?,?,?,?,?,?,?)");
