@@ -88,7 +88,7 @@ public class TutorialGroup implements Serializable {
         return intakeYear;
     }
 
-    public void setYear(String intakeYear) {
+    public void setIntakeYear(String intakeYear) {
         this.intakeYear = intakeYear;
     }
 

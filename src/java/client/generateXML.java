@@ -385,7 +385,7 @@ public class generateXML implements Serializable {
                 size.appendChild(document.createTextNode(String.valueOf(item.getSize())));
                 tutorialGroup.appendChild(size);
 
-                // programmeID element
+                // cohortID element
                 Element cohortID = document.createElement("cohortID");
                 cohortID.appendChild(document.createTextNode(item.getCohortID()));
                 tutorialGroup.appendChild(cohortID);
