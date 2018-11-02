@@ -179,6 +179,7 @@ public class courseManage implements Serializable {
 
     public void deleteCourse(String courseCode) throws SQLException, IOException {
         cda.deleteCourse(courseCode);
+        cda.deleteCourseType(courseCode);
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectCourse.xhtml");
     }
 

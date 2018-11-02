@@ -369,7 +369,11 @@ public class CourseDA {
         Course c = new Course();
         try {
             connect = DBConnection.getConnection();
-            PreparedStatement ps = connect.prepareStatement("delete from Course where courseID = ?");
+            PreparedStatement ps = connect.prepareStatement("delete from Course where courseCode = ?");
+            ps.setString(1, courseCode);
+            System.out.println(ps);
+            ps.executeUpdate();
+            ps = connect.prepareStatement("delete from CourseType where courseCode = ?");
             ps.setString(1, courseCode);
             System.out.println(ps);
             ps.executeUpdate();
