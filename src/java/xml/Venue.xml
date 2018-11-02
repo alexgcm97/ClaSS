@@ -54,6 +54,84 @@
     <capacity>24</capacity>
     <courseCodeList>BACS2103</courseCodeList>
   </venue>
+  <venue venueID="B101">
+    <block>B</block>
+    <venueType>Lab</venueType>
+    <capacity>24</capacity>
+    <courseCodeList>BAIT3343</courseCodeList>
+  </venue>
+  <venue venueID="B102">
+    <block>B</block>
+    <venueType>Lab</venueType>
+    <capacity>24</capacity>
+    <courseCodeList>BAIT3343</courseCodeList>
+  </venue>
+  <venue venueID="B103">
+    <block>B</block>
+    <venueType>Lab</venueType>
+    <capacity>24</capacity>
+    <courseCodeList>BACS2063</courseCodeList>
+  </venue>
+  <venue venueID="B104">
+    <block>B</block>
+    <venueType>Lab</venueType>
+    <capacity>24</capacity>
+    <courseCodeList>BACS2063</courseCodeList>
+  </venue>
+  <venue venueID="B105">
+    <block>B</block>
+    <venueType>Lab</venueType>
+    <capacity>24</capacity>
+    <courseCodeList>BACS2163,BACS2053</courseCodeList>
+  </venue>
+  <venue venueID="B107">
+    <block>B</block>
+    <venueType>Lab</venueType>
+    <capacity>24</capacity>
+    <courseCodeList>BACS2163,BACS2053</courseCodeList>
+  </venue>
+  <venue venueID="B201">
+    <block>B</block>
+    <venueType>Lab</venueType>
+    <capacity>24</capacity>
+    <courseCodeList>BACS2163,BACS2053</courseCodeList>
+  </venue>
+  <venue venueID="B223">
+    <block>B</block>
+    <venueType>Lab</venueType>
+    <capacity>24</capacity>
+    <courseCodeList>BAIT3094,BAIT2164</courseCodeList>
+  </venue>
+  <venue venueID="B224">
+    <block>B</block>
+    <venueType>Lab</venueType>
+    <capacity>24</capacity>
+    <courseCodeList>BAIT3094,BAIT2164</courseCodeList>
+  </venue>
+  <venue venueID="B225">
+    <block>B</block>
+    <venueType>Lab</venueType>
+    <capacity>24</capacity>
+    <courseCodeList>BAIT3094,BAIT2164</courseCodeList>
+  </venue>
+  <venue venueID="B105">
+    <block>B</block>
+    <venueType>Lab</venueType>
+    <capacity>24</capacity>
+    <courseCodeList>BACS2163,BACS2053</courseCodeList>
+  </venue>
+  <venue venueID="B107">
+    <block>B</block>
+    <venueType>Lab</venueType>
+    <capacity>24</capacity>
+    <courseCodeList>BACS2163,BACS2053</courseCodeList>
+  </venue>
+  <venue venueID="B201">
+    <block>B</block>
+    <venueType>Lab</venueType>
+    <capacity>24</capacity>
+    <courseCodeList>BACS2163,BACS2053</courseCodeList>
+  </venue>
   <venue venueID="D303A">
     <block>D</block>
     <venueType>Lab</venueType>
@@ -131,42 +209,6 @@
     <venueType>Hall</venueType>
     <capacity>260</capacity>
     <courseCodeList>-</courseCodeList>
-  </venue>
-  <venue venueID="B101">
-    <block>B</block>
-    <venueType>Lab</venueType>
-    <capacity>24</capacity>
-    <courseCodeList>BAIT3343</courseCodeList>
-  </venue>
-  <venue venueID="B102">
-    <block>B</block>
-    <venueType>Lab</venueType>
-    <capacity>24</capacity>
-    <courseCodeList>BAIT3343</courseCodeList>
-  </venue>
-  <venue venueID="B103">
-    <block>B</block>
-    <venueType>Lab</venueType>
-    <capacity>24</capacity>
-    <courseCodeList>BACS2063</courseCodeList>
-  </venue>
-  <venue venueID="B104">
-    <block>B</block>
-    <venueType>Lab</venueType>
-    <capacity>24</capacity>
-    <courseCodeList>BACS2063</courseCodeList>
-  </venue>
-  <venue venueID="B105">
-    <block>B</block>
-    <venueType>Lab</venueType>
-    <capacity>24</capacity>
-    <courseCodeList>BACS2163,BACS2053</courseCodeList>
-  </venue>
-  <venue venueID="B107">
-    <block>B</block>
-    <venueType>Lab</venueType>
-    <capacity>24</capacity>
-    <courseCodeList>BACS2163,BACS2053</courseCodeList>
   </venue>
   <venue venueID="K101">
     <block>K</block>
@@ -251,12 +293,6 @@
     <venueType>Room</venueType>
     <capacity>30</capacity>
     <courseCodeList>-</courseCodeList>
-  </venue>
-  <venue venueID="B201">
-    <block>B</block>
-    <venueType>Lab</venueType>
-    <capacity>24</capacity>
-    <courseCodeList>BACS2163,BACS2053</courseCodeList>
   </venue>
   <venue venueID="D303E">
     <block>D</block>

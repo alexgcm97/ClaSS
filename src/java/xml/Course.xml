@@ -75,4 +75,74 @@
     <courseDuration>2.0</courseDuration>
     <courseCode>BHEL2023</courseCode>
   </course>
+  <course courseID="C1019">
+    <courseType>L</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>BAIT3343</courseCode>
+  </course>
+  <course courseID="C1020">
+    <courseType>P</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>BAIT3343</courseCode>
+  </course>
+  <course courseID="C1021">
+    <courseType>L</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>BACS2063</courseCode>
+  </course>
+  <course courseID="C1022">
+    <courseType>P</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>BACS2063</courseCode>
+  </course>
+  <course courseID="C1023">
+    <courseType>L</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>BACS2163</courseCode>
+  </course>
+  <course courseID="C1024">
+    <courseType>T</courseType>
+    <courseDuration>1.0</courseDuration>
+    <courseCode>BACS2163</courseCode>
+  </course>
+  <course courseID="C1025">
+    <courseType>P</courseType>
+    <courseDuration>1.0</courseDuration>
+    <courseCode>BACS2163</courseCode>
+  </course>
+  <course courseID="C1006">
+    <courseType>L</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>MPU-3322</courseCode>
+  </course>
+  <course courseID="C1007">
+    <courseType>T</courseType>
+    <courseDuration>1.0</courseDuration>
+    <courseCode>MPU-3322</courseCode>
+  </course>
+  <course courseID="C2026">
+    <courseType>L</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>BAIT2164</courseCode>
+  </course>
+  <course courseID="C2027">
+    <courseType>P</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>BAIT2164</courseCode>
+  </course>
+  <course courseID="C1018">
+    <courseType>B</courseType>
+    <courseDuration>1.0</courseDuration>
+    <courseCode>MPU-3123</courseCode>
+  </course>
+  <course courseID="C2028">
+    <courseType>L</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>BACS2053</courseCode>
+  </course>
+  <course courseID="C2029">
+    <courseType>P</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>BACS2053</courseCode>
+  </course>
 </courses>
