@@ -2,13 +2,13 @@
 //This page is to get the class table data and insert to schedule table for display purpose
 package client;
 
-import domain.XMLPath;
 import da.DBConnection;
+import domain.Class;
 import domain.CourseType;
 import domain.Programme;
 import domain.Staff;
 import domain.TutorialGroup;
-import domain.Class;
+import domain.XMLPath;
 import domain.scheduleDetail;
 import java.io.IOException;
 import java.io.Serializable;

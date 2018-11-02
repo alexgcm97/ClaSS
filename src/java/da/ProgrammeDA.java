@@ -184,10 +184,11 @@ public class ProgrammeDA {
 
         try {
             connect = DBConnection.getConnection();
-            PreparedStatement ps = connect.prepareStatement("update PROGRAMME set PROGRAMMECODE=?, PROGRAMMENAME=? where PROGRAMMEID=?");
+            PreparedStatement ps = connect.prepareStatement("update PROGRAMME set PROGRAMMECODE=?, PROGRAMMENAME=?, COHORTID = ? where PROGRAMMEID=?");
             ps.setString(1, p.getProgrammeCode());
             ps.setString(2, p.getProgrammeName());
-            ps.setString(3, p.getProgrammeID());
+            ps.setString(3, p.getCohortID());
+            ps.setString(4, p.getProgrammeID());
             this.update = true;
             this.success = false;
             this.delete = false;

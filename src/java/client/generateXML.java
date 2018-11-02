@@ -1,14 +1,14 @@
 package client;
 
-import domain.XMLPath;
 import da.CourseDA;
-import domain.CourseType;
 import da.StaffDA;
-import domain.Staff;
-import da.VenueDA;
-import domain.Venue;
 import da.TutorialGroupDA;
+import da.VenueDA;
+import domain.CourseType;
+import domain.Staff;
 import domain.TutorialGroup;
+import domain.Venue;
+import domain.XMLPath;
 import java.io.File;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -28,8 +28,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 @ManagedBean
 @SessionScoped

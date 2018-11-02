@@ -5,10 +5,9 @@
  */
 package client;
 
-import domain.XMLPath;
 import da.*;
-import domain.Class;
 import domain.*;
+import domain.Class;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;

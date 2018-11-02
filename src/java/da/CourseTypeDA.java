@@ -5,7 +5,6 @@
  */
 package da;
 
-import domain.Course;
 import domain.CourseType;
 import java.io.Serializable;
 import java.sql.Connection;

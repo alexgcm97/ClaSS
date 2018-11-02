@@ -5,7 +5,6 @@
  */
 package client;
 
-import domain.Venue;
 import da.CourseDA;
 import da.VenueDA;
 import domain.*;

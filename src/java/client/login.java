@@ -6,7 +6,6 @@
 package client;
 
 import java.io.IOException;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -72,10 +71,11 @@ public class login {
 
         } else {
             this.message = true;
-           FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
         }
     }
-    public void goBackLogin() throws IOException{
+
+    public void goBackLogin() throws IOException {
         this.message = false;
         this.success = false;
         username = "";

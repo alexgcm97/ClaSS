@@ -5,13 +5,13 @@
  */
 package da;
 
+import domain.Class;
+import domain.Venue;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import domain.Class;
-import domain.Venue;
 import java.util.List;
 
 /**

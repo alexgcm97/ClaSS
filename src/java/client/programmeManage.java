@@ -55,7 +55,7 @@ public class programmeManage {
         p.setProgrammeName("");
         p.setCohortID("");
         pda.setUpdate(false);
-        FacesContext.getCurrentInstance().getExternalContext().redirect("newProgramme.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("selectProgrammeCohort.xhtml");
     }
     
     public void updateProgramme() throws SQLException, IOException {
