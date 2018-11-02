@@ -22,7 +22,7 @@
                 background-color: white;
                 height: 200px;
             }
-             .btn .blue:hover{
+            .btn .blue:hover{
                 background-color: dodgerblue;
                 color: white;
             }
@@ -39,7 +39,7 @@
         <div align="center" class="btn">
             <h1>New Programme</h1>
             <h:form class="form">
-               
+
                 <table>
                     <br/>
                     <tr>
@@ -49,13 +49,20 @@
                     <tr>
                         <td>Programme Code:</td>
                         <td><h:inputText id="code" value="#{programmeManage.p.programmeCode}" required="true" requiredMessage="*Empty field" />
-                             <h:message for="code" style="color: red" /></td>
+                            <h:message for="code" style="color: red" /></td>
                     </tr>
                     <tr>
                         <td>Programme Name:</td>
                         <td><h:inputText id="name" value="#{programmeManage.p.programmeName}" required="true" requiredMessage="*Empty field"/>
-                             <h:message for="name" style="color: red"/></td>
+                            <h:message for="name" style="color: red"/></td>
                     </tr>
+                    <tr>
+                        <td>Cohort ID:</td>
+                        <td><h:selectOneMenu value="#{programmeManage.p.cohortID}">
+                                <f:selectItems value="#{viewAll.getAllCohortID()}" var="p"
+                                               itemLabel="#{p.cohortID}" itemValue="#{p.cohortID}" />
+                            </h:selectOneMenu></td>
+                    </tr><br/>
                 </table><br/>
                 <h:commandButton action="#{programmeManage.insertProgramme()}" value="Submit" styleClass="btn green"/>
 

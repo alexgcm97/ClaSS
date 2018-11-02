@@ -1,43 +1,80 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <tutorialGroups>
-  <tutorialGroup groupID="G1001">
+  <tutorialGroup groupID="G1015">
     <studyYear>3</studyYear>
     <groupNumber>1</groupNumber>
     <size>24</size>
-    <programmeID>P1001</programmeID>
-    <cohortID>CH1001</cohortID>
-    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+    <programmeID>P1003</programmeID>
+    <courseCodeList>BAIT3343,BACS2063,BACS2163,MPU-3322,BAIT2164</courseCodeList>
   </tutorialGroup>
-  <tutorialGroup groupID="G1002">
+  <tutorialGroup groupID="G1016">
     <studyYear>3</studyYear>
     <groupNumber>2</groupNumber>
     <size>24</size>
-    <programmeID>P1001</programmeID>
-    <cohortID>CH1001</cohortID>
-    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+    <programmeID>P1003</programmeID>
+    <courseCodeList>BAIT3343,BACS2063,BACS2163,MPU-3322,BAIT2164</courseCodeList>
   </tutorialGroup>
-  <tutorialGroup groupID="G1003">
+  <tutorialGroup groupID="G1017">
     <studyYear>3</studyYear>
     <groupNumber>3</groupNumber>
     <size>24</size>
-    <programmeID>P1001</programmeID>
-    <cohortID>CH1001</cohortID>
-    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+    <programmeID>P1003</programmeID>
+    <courseCodeList>BAIT3343,BACS2063,BACS2163,MPU-3322,BAIT2164</courseCodeList>
   </tutorialGroup>
-  <tutorialGroup groupID="G1004">
+  <tutorialGroup groupID="G1018">
     <studyYear>3</studyYear>
     <groupNumber>4</groupNumber>
     <size>24</size>
-    <programmeID>P1001</programmeID>
-    <cohortID>CH1001</cohortID>
-    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+    <programmeID>P1003</programmeID>
+    <courseCodeList>BAIT3343,BACS2063,BACS2163,MPU-3322,BAIT2164</courseCodeList>
   </tutorialGroup>
-  <tutorialGroup groupID="G1005">
+  <tutorialGroup groupID="G1019">
     <studyYear>3</studyYear>
     <groupNumber>5</groupNumber>
     <size>24</size>
-    <programmeID>P1001</programmeID>
-    <cohortID>CH1001</cohortID>
-    <courseCodeList>BAIT2123,BACS3033,BAIT3094,MPU-3232,BAIT3173</courseCodeList>
+    <programmeID>P1003</programmeID>
+    <courseCodeList>BAIT3343,BACS2063,BACS2163,MPU-3322,BAIT2164</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1009">
+    <studyYear>3</studyYear>
+    <groupNumber>1</groupNumber>
+    <size>24</size>
+    <programmeID>P1002</programmeID>
+    <courseCodeList>BACS3033,BAIT3094,BACS2103,BNEL2022,BHEL2023</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1010">
+    <studyYear>3</studyYear>
+    <groupNumber>2</groupNumber>
+    <size>24</size>
+    <programmeID>P1002</programmeID>
+    <courseCodeList>BACS3033,BAIT3094,BACS2103,BNEL2022,BHEL2023</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1011">
+    <studyYear>3</studyYear>
+    <groupNumber>3</groupNumber>
+    <size>24</size>
+    <programmeID>P1002</programmeID>
+    <courseCodeList>BACS3033,BAIT3094,BACS2103,BNEL2022,BHEL2023</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1012">
+    <studyYear>3</studyYear>
+    <groupNumber>4</groupNumber>
+    <size>24</size>
+    <programmeID>P1002</programmeID>
+    <courseCodeList>BACS3033,BAIT3094,BACS2103,BNEL2022,BHEL2023</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1013">
+    <studyYear>3</studyYear>
+    <groupNumber>5</groupNumber>
+    <size>24</size>
+    <programmeID>P1002</programmeID>
+    <courseCodeList>BACS3033,BAIT3094,BACS2103,BNEL2022,BHEL2023</courseCodeList>
+  </tutorialGroup>
+  <tutorialGroup groupID="G1014">
+    <studyYear>3</studyYear>
+    <groupNumber>6</groupNumber>
+    <size>24</size>
+    <programmeID>P1002</programmeID>
+    <courseCodeList>BACS3033,BAIT3094,BACS2103,BNEL2022,BHEL2023</courseCodeList>
   </tutorialGroup>
 </tutorialGroups>

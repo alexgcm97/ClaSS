@@ -54,8 +54,6 @@ public class venueManage {
     public void setSelectedCourseCodeList(List<String> selectedCourseCodeList) {
         this.selectedCourseCodeList = selectedCourseCodeList;
     }
-    
-    
 
     public String[] getCourseCodeStr() {
         return courseCodeStr;
@@ -94,10 +92,10 @@ public class venueManage {
         }
         v.setCourseCodeList(tempStr);
         vda.insertVenue(v);
-        FacesContext.getCurrentInstance().getExternalContext().redirect("VenueSelection.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("selectVenue.xhtml");
     }
 
-       public void retrieveVenue(String venueID) throws SQLException, IOException {
+    public void retrieveVenue(String venueID) throws SQLException, IOException {
         v = vda.get(venueID);
         FacesContext.getCurrentInstance().getExternalContext().redirect("editVenue.xhtml");
 
@@ -105,21 +103,26 @@ public class venueManage {
 
     public void updateVenue() throws SQLException, IOException {
         vda.updateVenue(v);
+
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectVenue.xhtml");
     }
+
     public void deleteVenue(String venueID) throws SQLException, IOException {
         vda.deleteVenue(venueID);
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectVenue.xhtml");
     }
+
     public void backToVenue() throws SQLException, IOException {
-        
+
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectVenue.xhtml");
     }
-     public void goBackMenu() throws IOException{
-    vda.reset();
-    FacesContext.getCurrentInstance().getExternalContext().redirect("EditInfo.xhtml");
+
+    public void goBackMenu() throws IOException {
+        vda.reset();
+        FacesContext.getCurrentInstance().getExternalContext().redirect("EditInfo.xhtml");
     }
-      public void goToNew() throws IOException{
+
+    public void goToNew() throws IOException {
         v.setVenueID("");
         v.setBlock("");
         v.setVenueType("");

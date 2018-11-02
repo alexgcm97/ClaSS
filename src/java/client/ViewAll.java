@@ -111,7 +111,6 @@ public class ViewAll implements Serializable {
             tg.setGroupNumber(rs.getInt("groupNumber"));
             tg.setSize(rs.getInt("size"));
             tg.setProgrammeID(rs.getString("programmeID"));
-            tg.setCohortID(rs.getString("cohortID"));
 
             TutorialGroup.add(tg);
         }
@@ -218,7 +217,8 @@ public class ViewAll implements Serializable {
             Programme p = new Programme();
             p.setProgrammeID(rs.getString("programmeID"));
             p.setProgrammeCode(rs.getString("programmeCode"));
-            p.setProgrammeName(rs.getString("progeammeName"));
+            p.setProgrammeName(rs.getString("programmeName"));
+            p.setCohortID(rs.getString("cohortID"));
             Programme.add(p);
 
         }
@@ -245,7 +245,7 @@ public class ViewAll implements Serializable {
             c.setCohortID(rs.getString("cohortID"));
             c.setYear(rs.getString("year"));
             c.setMonth(rs.getString("month"));
-            c.setEntryYear(rs.getString("entryYear"));
+            c.setStudyYear(rs.getString("studyYear"));
 
             Cohort.add(c);
 

@@ -11,7 +11,7 @@ package domain;
 
 import java.io.Serializable;
 
-public class TutorialGroup  implements Serializable {
+public class TutorialGroup implements Serializable {
 
     private String groupID, programmeID, cohortID, programmeCode, month, year, courseCodeList;
     private int studyYear, groupNumber, size;
@@ -19,10 +19,9 @@ public class TutorialGroup  implements Serializable {
     public TutorialGroup() {
     }
 
-    public TutorialGroup(String groupID, int studyYear, int groupNumber, int size, String programmeID, String cohortID, String courseCodeList) {
+    public TutorialGroup(String groupID, int studyYear, int groupNumber, int size, String programmeID,String courseCodeList) {
         this.groupID = groupID;
         this.programmeID = programmeID;
-        this.cohortID = cohortID;
         this.studyYear = studyYear;
         this.groupNumber = groupNumber;
         this.size = size;

@@ -65,20 +65,6 @@
                         <td><h:inputText value="#{venueManage.v.courseCodeList}"/><br/></td>
                     </tr>
                 </table><br/>
-                <h:panelGroup  id="selectCourseCode">
-                    <table>
-                        <tr> 
-                            <h:panelGroup rendered="#{venueManage.v.venueType eq 'Lab'}">
-                                <td><h:outputLabel for="multiple" value="Course Code List: " /> </td>
-                                <td>
-                                    <p:selectCheckboxMenu multiple="true" value="#{venueManage.courseCodeStr}" label="courseCode" filter="true" filterMatchMode="startsWith">
-                                        <f:selectItems value="#{venueManage.courseCodeList}" />
-                                    </p:selectCheckboxMenu>
-                                </td>
-                            </h:panelGroup>
-                        </tr>
-                    </table>
-                </h:panelGroup>
                 <h:commandButton action="#{venueManage.updateVenue()}" value="Update">   
                 </h:commandButton>
               

@@ -117,11 +117,10 @@ public class TutorialGroupDA {
                 TG.setGroupNumber(rs.getInt(3));
                 TG.setSize(rs.getInt(4));
                 TG.setProgrammeID(rs.getString(5));
-                TG.setCohortID(rs.getString(6));
-                if (rs.getString(7) == null || rs.getString(7) == "") {
+                if (rs.getString(6) == null || rs.getString(6).equals("")) {
                     TG.setCourseCodeList("");
                 } else {
-                    TG.setCourseCodeList(rs.getString(7));
+                    TG.setCourseCodeList(rs.getString(6));
                 }
                 output.add(TG);
             }
@@ -193,18 +192,17 @@ public class TutorialGroupDA {
                 tgID = "G1001";
             }
 
-            PreparedStatement pstmt = connect.prepareStatement("INSERT INTO TUTORIAL_GROUP VALUES(?,?,?,?,?,?,?)");
+            PreparedStatement pstmt = connect.prepareStatement("INSERT INTO TUTORIAL_GROUP VALUES(?,?,?,?,?,?)");
 
             pstmt.setString(1, tgID);
             pstmt.setInt(2, tg.getStudyYear());
             pstmt.setInt(3, tg.getGroupNumber());
             pstmt.setInt(4, tg.getSize());
             pstmt.setString(5, tg.getProgrammeID());
-            pstmt.setString(6, tg.getCohortID());
-            pstmt.setString(7, tg.getCourseCodeList());
+            pstmt.setString(6, tg.getCourseCodeList());
 
             pstmt.executeUpdate();
-
+            this.success = true;
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -221,7 +219,7 @@ public class TutorialGroupDA {
             pstmt.setString(1, groupID);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                tg = new TutorialGroup(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                tg = new TutorialGroup(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getString(5), rs.getString(6));
             }
 
         } catch (SQLException e) {
@@ -239,6 +237,7 @@ public class TutorialGroupDA {
             ps.setString(1, groupID);
             System.out.println(ps);
             ps.executeUpdate();
+            this.delete = true;
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -250,17 +249,16 @@ public class TutorialGroupDA {
         Connection connect;
         try {
             connect = DBConnection.getConnection();;
-            PreparedStatement ps = connect.prepareStatement("update TUTORIAL_GROUP set studyYear=?, groupNumber=?, size=?, programmeID=?, cohortID=?, coursecodelist=? where groupID=?");
+            PreparedStatement ps = connect.prepareStatement("update TUTORIAL_GROUP set studyYear=?, groupNumber=?, size=?, programmeID=?, coursecodelist=? where groupID=?");
 
             ps.setInt(1, tg.getStudyYear());
             ps.setInt(2, tg.getGroupNumber());
             ps.setInt(3, tg.getSize());
             ps.setString(4, tg.getProgrammeID());
-            ps.setString(5, tg.getCohortID());
-            ps.setString(6, tg.getCourseCodeList());
-            ps.setString(7, tg.getGroupID());
+            ps.setString(5, tg.getCourseCodeList());
+            ps.setString(6, tg.getGroupID());
             ps.executeUpdate();
-
+            this.update = true;
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -301,7 +299,8 @@ public class TutorialGroupDA {
         }
         return groupID;
     }
-      public void reset(){
+
+    public void reset() {
         this.success = false;
         this.update = false;
         this.delete = false;

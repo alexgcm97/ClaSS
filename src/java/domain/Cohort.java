@@ -17,13 +17,13 @@ import javax.faces.bean.SessionScoped;
 public class Cohort {
 
     String cohortID;
-    String year, month, entryYear;
+    String year, month, studyYear;
 
-    public Cohort(String cohortID, String year, String month, String entryYear) {
+    public Cohort(String cohortID, String year, String month, String studyYear) {
         this.cohortID = cohortID;
         this.year = year;
         this.month = month;
-        this.entryYear = entryYear;
+        this.studyYear = studyYear;
     }
 
     public Cohort() {
@@ -55,12 +55,12 @@ public class Cohort {
         this.month = month;
     }
 
-    public String getEntryYear() {
-        return entryYear;
+    public String getStudyYear() {
+        return studyYear;
     }
 
-    public void setEntryYear(String entryYear) {
-        this.entryYear = entryYear;
+    public void setStudyYear(String studyYear) {
+        this.studyYear = studyYear;
     }
 
     

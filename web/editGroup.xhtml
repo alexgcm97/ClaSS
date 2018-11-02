@@ -27,7 +27,7 @@
     <h:body>
          <div align="center">
             <h1>Update Group</h1>
-            <h:form class="form">
+            <h:form class="form">  
                 <table>
                     <tr>
                         <td>Group ID:</td>
@@ -63,13 +63,6 @@
                                                itemLabel="#{p.programmeID}" itemValue="#{p.programmeID}" />
                             </h:selectOneMenu></td>
                     </tr><br/>
-                    <tr>
-                        <td>Cohort ID:</td>
-                        <td><h:selectOneMenu value="#{tutorialGroupManage.tg.cohortID}">
-                                <f:selectItems value="#{viewAll.getAllCohortID()}" var="c"
-                                               itemLabel="#{c.cohortID}" itemValue="#{c.cohortID}" />
-                            </h:selectOneMenu><br/></td>
-                    </tr>
                 </table><br/>
 
                 <h:commandButton action="#{tutorialGroupManage.updateGroup()}" value="Update"/>

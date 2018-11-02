@@ -257,6 +257,7 @@ public class VenueDA {
             ps.setString(1, venueID);
             System.out.println(ps);
             ps.executeUpdate();
+            this.delete = true;
         } catch (SQLException e) {
             System.out.println(e);
         }

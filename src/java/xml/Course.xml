@@ -1,19 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <courses>
-  <course courseID="C1012">
+  <course courseID="C1019">
     <courseType>L</courseType>
     <courseDuration>2.0</courseDuration>
-    <courseCode>BACS2103</courseCode>
+    <courseCode>BAIT3343</courseCode>
   </course>
-  <course courseID="C1013">
-    <courseType>T</courseType>
-    <courseDuration>1.0</courseDuration>
-    <courseCode>BACS2103</courseCode>
-  </course>
-  <course courseID="C1014">
+  <course courseID="C1020">
     <courseType>P</courseType>
     <courseDuration>2.0</courseDuration>
-    <courseCode>BACS2103</courseCode>
+    <courseCode>BAIT3343</courseCode>
+  </course>
+  <course courseID="C1021">
+    <courseType>L</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>BACS2063</courseCode>
+  </course>
+  <course courseID="C1022">
+    <courseType>P</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>BACS2063</courseCode>
+  </course>
+  <course courseID="C1023">
+    <courseType>L</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>BACS2163</courseCode>
+  </course>
+  <course courseID="C1024">
+    <courseType>T</courseType>
+    <courseDuration>1.0</courseDuration>
+    <courseCode>BACS2163</courseCode>
+  </course>
+  <course courseID="C1025">
+    <courseType>P</courseType>
+    <courseDuration>1.0</courseDuration>
+    <courseCode>BACS2163</courseCode>
+  </course>
+  <course courseID="C1006">
+    <courseType>L</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>MPU-3322</courseCode>
+  </course>
+  <course courseID="C1007">
+    <courseType>T</courseType>
+    <courseDuration>1.0</courseDuration>
+    <courseCode>MPU-3322</courseCode>
+  </course>
+  <course courseID="C2026">
+    <courseType>L</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>BAIT2164</courseCode>
+  </course>
+  <course courseID="C2027">
+    <courseType>P</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>BAIT2164</courseCode>
   </course>
   <course courseID="C1010">
     <courseType>L</courseType>
@@ -24,16 +64,6 @@
     <courseType>T</courseType>
     <courseDuration>1.0</courseDuration>
     <courseCode>BACS3033</courseCode>
-  </course>
-  <course courseID="C1001">
-    <courseType>L</courseType>
-    <courseDuration>2.0</courseDuration>
-    <courseCode>BAIT2123</courseCode>
-  </course>
-  <course courseID="C1002">
-    <courseType>P</courseType>
-    <courseDuration>2.0</courseDuration>
-    <courseCode>BAIT2123</courseCode>
   </course>
   <course courseID="C1003">
     <courseType>L</courseType>
@@ -50,24 +80,29 @@
     <courseDuration>2.0</courseDuration>
     <courseCode>BAIT3094</courseCode>
   </course>
-  <course courseID="C1008">
+  <course courseID="C1012">
     <courseType>L</courseType>
     <courseDuration>2.0</courseDuration>
-    <courseCode>BAIT3173</courseCode>
+    <courseCode>BACS2103</courseCode>
   </course>
-  <course courseID="C1009">
-    <courseType>P</courseType>
-    <courseDuration>2.0</courseDuration>
-    <courseCode>BAIT3173</courseCode>
-  </course>
-  <course courseID="C1006">
-    <courseType>L</courseType>
-    <courseDuration>2.0</courseDuration>
-    <courseCode>MPU-3232</courseCode>
-  </course>
-  <course courseID="C1007">
+  <course courseID="C1013">
     <courseType>T</courseType>
     <courseDuration>1.0</courseDuration>
-    <courseCode>MPU-3232</courseCode>
+    <courseCode>BACS2103</courseCode>
+  </course>
+  <course courseID="C1014">
+    <courseType>P</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>BACS2103</courseCode>
+  </course>
+  <course courseID="C1015">
+    <courseType>B</courseType>
+    <courseDuration>1.0</courseDuration>
+    <courseCode>BNEL2022</courseCode>
+  </course>
+  <course courseID="C1016">
+    <courseType>B</courseType>
+    <courseDuration>2.0</courseDuration>
+    <courseCode>BHEL2023</courseCode>
   </course>
 </courses>

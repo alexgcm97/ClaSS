@@ -112,11 +112,11 @@ public class CourseDA {
                                 case "L":
                                     output.get(i).setLecHours(rs1.getDouble(5));
                                     break;
-                                case "T":
-                                    output.get(i).setTutHours(rs1.getDouble(5));
-                                    break;
                                 case "P":
                                     output.get(i).setPracHours(rs1.getDouble(5));
+                                    break;
+                                default:
+                                    output.get(i).setTutHours(rs1.getDouble(5));
                                     break;
                             }
                             found = true;
@@ -127,11 +127,11 @@ public class CourseDA {
                             case "L":
                                 cd.setLecHours(rs1.getDouble(5));
                                 break;
-                            case "T":
-                                cd.setTutHours(rs1.getDouble(5));
-                                break;
                             case "P":
                                 cd.setPracHours(rs1.getDouble(5));
+                                break;
+                            default:
+                                cd.setTutHours(rs1.getDouble(5));
                                 break;
                         }
                         output.add(cd);

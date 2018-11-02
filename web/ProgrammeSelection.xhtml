@@ -44,7 +44,7 @@
                     </f:facet>
                     <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                     <p:column headerText="Programme Code" style="width:150px;text-align:left" filterBy="#{p.programmeCode}" filterMatchMode="contains"  >
-                        <h:outputText value="#{p.programmeCode}#{p.year}" />
+                        <h:outputText value="#{p.programmeCode}#{p.studyYear}" />
                     </p:column>
                     <p:column headerText="Programme Name" style=";text-align:left" filterBy="#{p.programmeName}" filterMatchMode="contains">
                         <h:outputText value="#{p.programmeName}" />
@@ -55,8 +55,8 @@
                     <p:column headerText="Intake" style="width:150px;text-align:left">
                         <h:outputText value="#{selection.intakeMonth(p.month)}"/>
                     </p:column>
-                    <p:column headerText="Year of Entry" style="width:150px;text-align:left">
-                        <h:outputText value="#{p.entryYear}"/>
+                    <p:column headerText="Study Year" style="width:150px;text-align:left">
+                        <h:outputText value="#{p.studyYear}"/>
                     </p:column>
                 </p:dataTable>
             </h:form>

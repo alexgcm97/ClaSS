@@ -130,13 +130,13 @@ public class ScheduleInsert implements Serializable {
                     tg.setStudyYear(rs2.getInt("studyYear"));
                     tg.setGroupNumber(rs2.getInt("groupNumber"));
                     tg.setProgrammeID(rs2.getString("programmeID"));
-                    tg.setCohortID(rs2.getString("cohortID"));
 
                     stmt = connect.prepareStatement("SELECT * FROM Programme WHERE programmeID = '" + tg.getProgrammeID() + "'");
                     ResultSet rs3 = stmt.executeQuery();
                     while (rs3.next()) {
                         Programme pd = new Programme();
                         pd.setProgrammeCode(rs3.getString("programmeCode"));
+                        pd.setCohortID(rs3.getString("cohortID"));
 
                         stmt = connect.prepareStatement("SELECT * FROM CourseType WHERE courseID = '" + cd.getCourseID() + "'");
                         ResultSet rs4 = stmt.executeQuery();
@@ -145,7 +145,7 @@ public class ScheduleInsert implements Serializable {
                             ct.setCourseCode(rs4.getString("courseCode"));
                             ct.setCourseType(rs4.getString("courseType"));
 
-                            stmt = connect.prepareStatement("SELECT * FROM cohort WHERE cohortID = '" + tg.getCohortID() + "'");
+                            stmt = connect.prepareStatement("SELECT * FROM cohort WHERE cohortID = '" + pd.getCohortID() + "'");
                             ResultSet rs5 = stmt.executeQuery();
                             while (rs5.next()) {
                                 tg.setYear(rs5.getString("year"));
@@ -304,13 +304,13 @@ public class ScheduleInsert implements Serializable {
                     tg.setStudyYear(rs2.getInt("studyYear"));
                     tg.setGroupNumber(rs2.getInt("groupNumber"));
                     tg.setProgrammeID(rs2.getString("programmeID"));
-                    tg.setCohortID(rs2.getString("cohortID"));
 
                     stmt = connect.prepareStatement("SELECT * FROM Programme WHERE programmeID = '" + tg.getProgrammeID() + "'");
                     ResultSet rs3 = stmt.executeQuery();
                     while (rs3.next()) {
                         Programme pd = new Programme();
                         pd.setProgrammeCode(rs3.getString("programmeCode"));
+                        pd.setCohortID(rs3.getString("cohortID"));
 
                         stmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = '" + cd.getCourseID() + "'");
                         ResultSet rs4 = stmt.executeQuery();
@@ -319,7 +319,7 @@ public class ScheduleInsert implements Serializable {
                             ct.setCourseCode(rs4.getString("courseCode"));
                             ct.setCourseType(rs4.getString("courseType"));
 
-                            stmt = connect.prepareStatement("SELECT * FROM cohort WHERE cohortID = '" + tg.getCohortID() + "'");
+                            stmt = connect.prepareStatement("SELECT * FROM cohort WHERE cohortID = '" + pd.getCohortID() + "'");
                             ResultSet rs5 = stmt.executeQuery();
                             while (rs5.next()) {
                                 tg.setYear(rs5.getString("year"));
@@ -459,13 +459,13 @@ public class ScheduleInsert implements Serializable {
                     tg.setStudyYear(rs2.getInt("studyYear"));
                     tg.setGroupNumber(rs2.getInt("groupNumber"));
                     tg.setProgrammeID(rs2.getString("programmeID"));
-                    tg.setCohortID(rs2.getString("cohortID"));
 
                     stmt = connect.prepareStatement("SELECT * FROM Programme WHERE programmeID = '" + tg.getProgrammeID() + "'");
                     ResultSet rs3 = stmt.executeQuery();
                     while (rs3.next()) {
                         Programme pd = new Programme();
                         pd.setProgrammeCode(rs3.getString("programmeCode"));
+                        pd.setCohortID(rs3.getString("cohortID"));
 
                         stmt = connect.prepareStatement("SELECT * FROM CourseType WHERE courseID = '" + cd.getCourseID() + "'");
                         ResultSet rs4 = stmt.executeQuery();
@@ -474,7 +474,7 @@ public class ScheduleInsert implements Serializable {
                             ct.setCourseCode(rs4.getString("courseCode"));
                             ct.setCourseType(rs4.getString("courseType"));
 
-                            stmt = connect.prepareStatement("SELECT * FROM cohort WHERE cohortID = '" + tg.getCohortID() + "'");
+                            stmt = connect.prepareStatement("SELECT * FROM cohort WHERE cohortID = '" + pd.getCohortID() + "'");
                             ResultSet rs5 = stmt.executeQuery();
                             while (rs5.next()) {
                                 tg.setYear(rs5.getString("year"));

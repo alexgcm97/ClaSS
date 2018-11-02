@@ -20,6 +20,7 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @SessionScoped
 public class cohortManage {
+
     public CohortDA cda = new CohortDA();
     public Cohort c = new Cohort();
 
@@ -31,7 +32,6 @@ public class cohortManage {
         this.cda = cda;
     }
 
-    
     public Cohort getC() {
         return c;
     }
@@ -39,11 +39,19 @@ public class cohortManage {
     public void setC(Cohort c) {
         this.c = c;
     }
+    
+    public void goToNew() throws IOException {
+        c.setMonth("");
+        c.setYear("");
+        c.setStudyYear("");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("newCohort.xhtml");
+    }
 
     public void insertCohort() throws SQLException, IOException {
         cda.insertCohort(c);
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectProgrammeCohort.xhtml");
     }
+
     public void updateCohort() throws SQLException, IOException {
         cda.updateCohort(c);
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectProgrammeCohort.xhtml");
@@ -54,11 +62,13 @@ public class cohortManage {
         FacesContext.getCurrentInstance().getExternalContext().redirect("editCohort.xhtml");
 
     }
+
     public void deleteCohort(String cohortID) throws SQLException, IOException {
         cda.deleteCohort(cohortID);
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectProgrammeCohort.xhtml");
     }
-     public void goBackSelectProgramme() throws IOException{
+
+    public void goBackSelectProgramme() throws IOException {
         cda.reset();
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectProgrammeCohort.xhtml");
 

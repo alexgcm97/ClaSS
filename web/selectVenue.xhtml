@@ -48,12 +48,15 @@
     <h:body>
         <h:outputScript rendered="#{venueManage.vda.update}">
             alert("Updated!");
+            #{venueManage.vda.setUpdate(false)}
         </h:outputScript>
         <h:outputScript rendered="#{venueManage.vda.delete}">
             alert("Venue Deleted!");
+            #{venueManage.vda.setDelete(false)}
         </h:outputScript>
         <h:outputScript rendered="#{venueManage.vda.success}">
             alert("Successfully Inserted!");
+            #{venueManage.vda.setSuccess(false)}
         </h:outputScript>
         <div align="center" class="btn">
             <h1>Available Venue</h1>

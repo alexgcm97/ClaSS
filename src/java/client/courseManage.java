@@ -56,7 +56,6 @@ public class courseManage implements Serializable {
         this.ct = ct;
     }
 
-    
     public double getLecHours() {
         return lecHours;
     }
@@ -100,11 +99,19 @@ public class courseManage implements Serializable {
         }
 
         if (tutHours > 0.0) {
-            ct.setCourseType("T");
-            ct.setCourseDuration(Double.toString(tutHours));
-            ct.setCourseID(cda.getMaxID());
-            cda.insertCourseType(ct);
+            if (lecHours > 0.0) {
+                ct.setCourseType("T");
+                ct.setCourseDuration(Double.toString(tutHours));
+                ct.setCourseID(cda.getMaxID());
+                cda.insertCourseType(ct);
+            } else {
+                ct.setCourseType("B");
+                ct.setCourseDuration(Double.toString(tutHours));
+                ct.setCourseID(cda.getMaxID());
+                cda.insertCourseType(ct);
+            }
         }
+
         if (pracHours > 0.0) {
             ct.setCourseType("P");
             ct.setCourseDuration(Double.toString(lecHours));
@@ -115,13 +122,13 @@ public class courseManage implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectCourse.xhtml");
     }
 
-    public void updateCourseType(String courseCode) throws SQLException, IOException{
-            cda.updateCourse(c);
-            List<CourseType> ctList = new ArrayList<>();
-            ctList= cda.getCourseType(courseCode);
-            for(int i=0;i<ctList.size();i++){
-                cda.deleteCourseType(ctList.get(i).getCourseID());
-            }
+    public void updateCourseType(String courseCode) throws SQLException, IOException {
+        cda.updateCourse(c);
+        List<CourseType> ctList = new ArrayList<>();
+        ctList = cda.getCourseType(courseCode);
+        for (int i = 0; i < ctList.size(); i++) {
+            cda.deleteCourseType(ctList.get(i).getCourseID());
+        }
         if (lecHours > 0.0) {
             ct.setCourseType("L");
             ct.setCourseDuration(Double.toString(lecHours));
@@ -134,45 +141,48 @@ public class courseManage implements Serializable {
             ct.setCourseType("T");
             ct.setCourseDuration(Double.toString(tutHours));
             ct.setCourseID(cda.getMaxID());
-             ct.setCourseCode(c.getCourseCode());
+            ct.setCourseCode(c.getCourseCode());
             cda.insertCourseType(ct);
         }
         if (pracHours > 0.0) {
             ct.setCourseType("P");
             ct.setCourseDuration(Double.toString(pracHours));
             ct.setCourseID(cda.getMaxID());
-             ct.setCourseCode(c.getCourseCode());
+            ct.setCourseCode(c.getCourseCode());
             cda.insertCourseType(ct);
         }
-         FacesContext.getCurrentInstance().getExternalContext().redirect("selectCourse.xhtml");
-        
+        FacesContext.getCurrentInstance().getExternalContext().redirect("selectCourse.xhtml");
+
     }
-    
+
     public void retrieveCourse(String courseCode) throws SQLException, IOException {
         c = cda.getCourse(courseCode);
         List<CourseType> ctList = new ArrayList<>();
         ctList = cda.getCourseType(courseCode);
         System.out.println(ctList.size());
         for (int i = 0; i < ctList.size(); i++) {
-            if (ctList.get(i).getCourseType().equals("L")) {
-                lecHours = Double.parseDouble(ctList.get(i).getCourseDuration());
-            }
-            if (ctList.get(i).getCourseType().equals("T")) {
-                tutHours = Double.parseDouble(ctList.get(i).getCourseDuration());
-            }
-            if (ctList.get(i).getCourseType().equals("P")) {
-                pracHours = Double.parseDouble(ctList.get(i).getCourseDuration());
+            switch (ctList.get(i).getCourseType()) {
+                case "L":
+                    lecHours = Double.parseDouble(ctList.get(i).getCourseDuration());
+                    break;
+                case "P":
+                    pracHours = Double.parseDouble(ctList.get(i).getCourseDuration());
+                    break;
+                default:
+                    tutHours = Double.parseDouble(ctList.get(i).getCourseDuration());
+                    break;
             }
         }
 
         FacesContext.getCurrentInstance().getExternalContext().redirect("editCourse.xhtml");
     }
 
-    public void deleteVenue(String courseCode) throws SQLException, IOException {
+    public void deleteCourse(String courseCode) throws SQLException, IOException {
         cda.deleteCourse(courseCode);
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectCourse.xhtml");
     }
-     public void backToCourse() throws SQLException, IOException {
+
+    public void backToCourse() throws SQLException, IOException {
         cda.reset();
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectCourse.xhtml");
     }
@@ -194,7 +204,7 @@ public class courseManage implements Serializable {
         pracHours = 0.0;
         lecHours = 0.0;
         tutHours = 0.0;
-        
+
         FacesContext.getCurrentInstance().getExternalContext().redirect("newCourse.xhtml");
     }
 }

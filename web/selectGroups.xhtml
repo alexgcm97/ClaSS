@@ -38,7 +38,7 @@
                 background-color: white;
                 height: 500px;
             }
-             .btn{
+            .btn{
                 transition-duration: 0.4s;
                 padding: 10px 24px;
                 border-radius: 12px;
@@ -58,20 +58,24 @@
     <h:body >
         <h:outputScript rendered="#{tutorialGroupManage.tgDA.success}">
             alert("Successfully Inserted!!!");
+            #{tutorialGroupManage.tgDA.setSuccess(false)}
         </h:outputScript>
         <h:outputScript rendered="#{tutorialGroupManage.tgDA.message}">
             alert("Failed! Please try again.");
+            #{tutorialGroupManage.tgDA.setMessage(false)}
         </h:outputScript>
         <h:outputScript rendered="#{tutorialGroupManage.tgDA.update}">
             alert(" Record Updated!");
+            #{tutorialGroupManage.tgDA.setUpdate(false)}
         </h:outputScript>
-          <h:outputScript rendered="#{tutorialGroupManage.tgDA.delete}">
+        <h:outputScript rendered="#{tutorialGroupManage.tgDA.delete}">
             alert("Group Deleted!");
+            #{tutorialGroupManage.tgDA.setDelete(false)}
         </h:outputScript>
-       
+
         <div align="center" class="btn">
             <h1>Available Tutorial Group</h1>
-             <div style="float: left; width: 150px">
+            <div style="float: left; width: 150px">
                 <h:form >
                     <br/>
                     <h:commandButton value="Create New Tutorial Group" action="#{tutorialGroupManage.goToNew()}" styleClass="btn green"/>
@@ -104,10 +108,7 @@
                             <f:facet name="header">Programme ID</f:facet>
                                 #{g.programmeID}
                         </h:column>
-                        <h:column> 	
-                            <f:facet name="header">Cohort ID</f:facet>
-                                #{g.cohortID}
-                        </h:column>
+
 
                         <h:column>
                             <f:facet name="header">Edit</f:facet>

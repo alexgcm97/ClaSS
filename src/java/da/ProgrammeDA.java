@@ -35,7 +35,7 @@ public class ProgrammeDA {
         List<Programme> output = new ArrayList<Programme>();
         try {
             connect = DBConnection.getConnection();
-            PreparedStatement pstmt = connect.prepareStatement("SELECT p.programmeID,p.programmeCode,p.progeammeName,c.cohortID,c.\"YEAR\",c.\"MONTH\",c.entryYear FROM programme p, cohort c WHERE p.cohortID=c.cohortID");
+            PreparedStatement pstmt = connect.prepareStatement("SELECT p.programmeID,p.programmeCode,p.programmeName,c.cohortID,c.\"YEAR\",c.\"MONTH\",c.studyYear FROM programme p, cohort c WHERE p.cohortID=c.cohortID");
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 Programme p = new Programme();
@@ -45,7 +45,7 @@ public class ProgrammeDA {
                 p.setCohortID(rs.getString(4));
                 p.setYear(rs.getString(5));
                 p.setMonth(rs.getString(6));
-                p.setEntryYear(rs.getString(7));
+                p.setStudyYear(rs.getString(7));
 
                 output.add(p);
             }
@@ -119,11 +119,12 @@ public class ProgrammeDA {
                 programmeID = "P1001";
             }
 
-            PreparedStatement pstmt = connect.prepareStatement("INSERT INTO PROGRAMME VALUES(?,?,?)");
+            PreparedStatement pstmt = connect.prepareStatement("INSERT INTO PROGRAMME VALUES(?,?,?,?)");
 
             pstmt.setString(1, programmeID);
             pstmt.setString(2, p.getProgrammeCode());
             pstmt.setString(3, p.getProgrammeName());
+            pstmt.setString(4, p.getCohortID());
 
             this.success = true;
             this.delete = false;
@@ -167,7 +168,7 @@ public class ProgrammeDA {
             pstmt.setString(1, programmeID);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                p = new Programme(rs.getString(1), rs.getString(2), rs.getString(3));
+                p = new Programme(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4));
             }
 
         } catch (Exception e) {
@@ -183,7 +184,7 @@ public class ProgrammeDA {
 
         try {
             connect = DBConnection.getConnection();
-            PreparedStatement ps = connect.prepareStatement("update PROGRAMME set PROGRAMMECODE=?, PROGEAMMENAME=? where PROGRAMMEID=?");
+            PreparedStatement ps = connect.prepareStatement("update PROGRAMME set PROGRAMMECODE=?, PROGRAMMENAME=? where PROGRAMMEID=?");
             ps.setString(1, p.getProgrammeCode());
             ps.setString(2, p.getProgrammeName());
             ps.setString(3, p.getProgrammeID());

@@ -37,7 +37,7 @@
                 #{selection.setErrorCode(0)}
             </h:outputScript>
             <h:form>                
-                <h:commandButton action="CourseSelection?faces-redirect=true" value="Back" class="btn gray" immediate="true"/>
+                <h:commandButton action="ProgrammeSelection?faces-redirect=true" value="Back" class="btn gray" immediate="true"/>
                 <h:commandButton action="#{selection.venueButton()}" class="btn green" style="width:auto" value="Proceed to Generate Schedule"/><br/>
                 <br/>
                 <p:dataTable  widgetVar="venueTable" filteredValue="#{selection.filteredVenues}" value="#{selection.allVenueRecords}" var="v" disabledSelection="#{selection.checkValue(v.venueID)=='true'}" selection="#{selection.selectedVenue}" rowKey="#{v.venueID}" style="margin-bottom:0">

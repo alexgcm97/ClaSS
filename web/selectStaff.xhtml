@@ -50,12 +50,15 @@
     <h:body>
         <h:outputScript rendered="#{staffManage.sda.update}">
             alert("Updated!");
+            #{staffManage.sda.setUpdate(false)}
         </h:outputScript>
         <h:outputScript rendered="#{staffManage.sda.delete}">
             alert("Venue Deleted!");
+            #{staffManage.sda.setDelete(false)}
         </h:outputScript>
-         <h:outputScript rendered="#{staffManage.sda.success}">
+        <h:outputScript rendered="#{staffManage.sda.success}">
             alert("Successfully Inserted!!!");
+            #{staffManage.sda.setSuccess(false)}
         </h:outputScript>
         <div align="center">
             <h1>Available Staff</h1>

@@ -64,7 +64,6 @@ public class CohortDA {
         this.update = update;
     }
 
-    
     public void insertCohort(Cohort c) throws SQLException {
         String cohortID = getMaxID();
         Connection connect;
@@ -96,7 +95,7 @@ public class CohortDA {
             pstmt.setString(1, cohortID);
             pstmt.setString(2, c.getYear());
             pstmt.setString(3, c.getMonth());
-            pstmt.setString(4, c.getEntryYear());
+            pstmt.setString(4, c.getStudyYear());
 
             pstmt.executeUpdate();
             this.success = true;
@@ -108,7 +107,7 @@ public class CohortDA {
 
     }
 
-   public Cohort deleteCohort(String cohortID) {
+    public Cohort deleteCohort(String cohortID) {
         Connection connect;
         Cohort c = new Cohort();
         try {
@@ -142,19 +141,18 @@ public class CohortDA {
 
     }
 
-
     public void updateCohort(Cohort c) {
         Connection connect;
-        
+
         try {
             connect = DBConnection.getConnection();
-            PreparedStatement ps = connect.prepareStatement("update Cohort set YEAR=?, MONTH=?, ENTRYYEAR=?  where COHORTID=?");
-            
+            PreparedStatement ps = connect.prepareStatement("update Cohort set \"YEAR\"=?, MONTH=?, StudyYear=?  where COHORTID=?");
+
             ps.setString(1, c.getYear());
             ps.setString(2, c.getMonth());
-            ps.setString(3, c.getEntryYear());
+            ps.setString(3, c.getStudyYear());
             ps.setString(4, c.getCohortID());
-            
+
             ps.executeUpdate();
             this.update = true;
         } catch (Exception e) {
@@ -204,7 +202,8 @@ public class CohortDA {
         System.out.println(cohortID);
         return cohortID;
     }
-     public void reset(){
+
+    public void reset() {
         this.success = false;
         this.update = false;
         this.delete = false;

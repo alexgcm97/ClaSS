@@ -44,26 +44,27 @@
                         <td><h:inputText id="month" value="#{cohortManage.c.month}"  required="true"  requiredMessage="*Invalid Input" maxlength="2" />
                             <h:message for="month" style="color: red" /></td>
                     </tr>
-                     <tr>
-                        <td>Entry Year:</td>
-                        <td><h:selectOneMenu value="#{cohortManage.c.entryYear}" >
+                    <tr>
+                        <td>Study Year:</td>
+                        <td><h:selectOneMenu value="#{cohortManage.c.studyYear}" >
                                 <f:selectItem itemValue="1" itemLabel="1" />
                                 <f:selectItem itemValue="2" itemLabel="2"/>
                                 <f:selectItem itemValue="3" itemLabel="3"/>
+                                <f:selectItem itemValue="4" itemLabel="4"/>
                             </h:selectOneMenu>
-                            </td> 
+                        </td> 
                     </tr>
 
                 </table><br/>
                 <h:commandButton action="#{cohortManage.updateCohort()}" value="Update"/>
 
-              
+
             </h:form>
             <h:form>
-                  <h:commandButton action="EditInfo" value="Done"/>
+                <h:commandButton action="selectProgrammeCohort" immediate="true" value="Done"/>
             </h:form>
-                
-               
+
+
 
         </div>
     </h:body>

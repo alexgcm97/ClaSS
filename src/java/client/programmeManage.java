@@ -20,67 +20,70 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @SessionScoped
 public class programmeManage {
-
+    
     public ProgrammeDA pda = new ProgrammeDA();
     public Programme p = new Programme();
-
+    
     public Programme getP() {
         return p;
     }
-
+    
     public void setP(Programme p) {
         this.p = p;
     }
-
+    
     public ProgrammeDA getPda() {
         return pda;
     }
-
+    
     public void setPda(ProgrammeDA pda) {
         this.pda = pda;
     }
     
-    
-    
-
-    public void goToNew() throws IOException{
+    public void goToNew() throws IOException {
         p.setProgrammeCode("");
         p.setProgrammeID("");
         p.setProgrammeName("");
-    FacesContext.getCurrentInstance().getExternalContext().redirect("newProgramme.xhtml");
+        p.setCohortID("");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("newProgramme.xhtml");
     }
+    
     public void insertProgramme() throws SQLException, IOException {
         pda.insertProgramme(p);
         p.setProgrammeCode("");
         p.setProgrammeID("");
         p.setProgrammeName("");
+        p.setCohortID("");
         pda.setUpdate(false);
         FacesContext.getCurrentInstance().getExternalContext().redirect("newProgramme.xhtml");
     }
-
+    
     public void updateProgramme() throws SQLException, IOException {
-        pda.updateProgramme(p); 
+        pda.updateProgramme(p);        
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectProgrammeCohort.xhtml");
     }
-
+    
     public void retrieveProgramme(String programmeID) throws SQLException, IOException {
         p = pda.get(programmeID);
         FacesContext.getCurrentInstance().getExternalContext().redirect("editProgramme.xhtml");
-
+        
     }
+    
     public void deleteProgramme(String programmeID) throws SQLException, IOException {
         pda.deleteProgramme(programmeID);
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectProgrammeCohort.xhtml");
     }
-    public void goBackMenu() throws IOException{
-        
-    FacesContext.getCurrentInstance().getExternalContext().redirect("EditInfo.xhtml");
     
+    public void goBackMenu() throws IOException {
+        
+        FacesContext.getCurrentInstance().getExternalContext().redirect("EditInfo.xhtml");
+        
     }
-      public void goBackSelectProgramme() throws IOException{
+    
+    public void goBackSelectProgramme() throws IOException {
         pda.reset();
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectProgrammeCohort.xhtml");
-
+        
     }
-
+    
 }

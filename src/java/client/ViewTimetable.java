@@ -54,7 +54,6 @@ public class ViewTimetable {
             TutorialGroup grp = new TutorialGroup();
             grp.setGroupID(rs.getString("groupID"));
             grp.setProgrammeID(rs.getString("programmeID"));
-            grp.setCohortID(rs.getString("cohortID"));
             grp.setStudyYear(rs.getInt("studyYear"));
             grp.setGroupNumber(rs.getInt("groupNumber"));
 
@@ -62,6 +61,7 @@ public class ViewTimetable {
             ResultSet rs2 = pstmt.executeQuery();
             while (rs2.next()) {
                 grp.setProgrammeCode(rs2.getString("programmeCode"));
+                grp.setCohortID(rs2.getString("cohortID"));
 
                 pstmt = connect.prepareStatement("SELECT * FROM cohort WHERE cohortID = '" + grp.getCohortID() + "'");
                 ResultSet rs3 = pstmt.executeQuery();

@@ -11,7 +11,7 @@ package domain;
  */
 public class XMLPath {
 
-    private static String filePath = "C:\\Users\\REPUBLIC\\Documents\\NetBeansProjects\\FYPFinal\\New Folder\\xml";
+    private static String filePath = "C:\\Users\\Teck Siong\\Documents\\ClaSS\\src\\java\\xml\\";
 
     public static String getXMLPath() {
         return XMLPath.filePath;

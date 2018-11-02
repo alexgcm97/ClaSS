@@ -16,24 +16,25 @@ public class Programme  implements Serializable {
     String programmeID;
     String programmeCode;
     String programmeName;
-    String cohortID,year,month,entryYear;
+    String cohortID,year,month,studyYear;
     public Programme() {
     }
 
-    public Programme(String programmeID, String programmeCode, String programmeName, String cohortID, String year, String month, String entryYear) {
+    public Programme(String programmeID, String programmeCode, String programmeName, String cohortID, String year, String month, String studyYear) {
         this.programmeID = programmeID;
         this.programmeCode = programmeCode;
         this.programmeName = programmeName;
         this.cohortID = cohortID;
         this.year = year;
         this.month = month;
-        this.entryYear = entryYear;
+        this.studyYear = studyYear;
     }
 
-    public Programme(String programmeID, String programmeCode, String programmeName) {
+    public Programme(String programmeID, String programmeCode, String programmeName, String cohortID) {
         this.programmeID = programmeID;
         this.programmeCode = programmeCode;
         this.programmeName = programmeName;
+        this.cohortID = cohortID;
     }
 
     public String getCohortID() {
@@ -60,12 +61,12 @@ public class Programme  implements Serializable {
         this.month = month;
     }
 
-    public String getEntryYear() {
-        return entryYear;
+    public String getStudyYear() {
+        return studyYear;
     }
 
-    public void setEntryYear(String entryYear) {
-        this.entryYear = entryYear;
+    public void setStudyYear(String studyYear) {
+        this.studyYear = studyYear;
     }
 
     public String getProgrammeID() {

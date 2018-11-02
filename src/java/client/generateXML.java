@@ -346,7 +346,7 @@ public class generateXML implements Serializable {
             for (String id : tgList) {
                 list = tgda.getSelectedRecords(id);
                 for (TutorialGroup item : list) {
-                    TutorialGroup record = new TutorialGroup(item.getGroupID(), item.getStudyYear(), item.getGroupNumber(), item.getSize(), item.getProgrammeID(), item.getCohortID(), item.getCourseCodeList());
+                    TutorialGroup record = new TutorialGroup(item.getGroupID(), item.getStudyYear(), item.getGroupNumber(), item.getSize(), item.getProgrammeID(), item.getCourseCodeList());
                     recordList.add(record);
                 }
             }
@@ -394,11 +394,6 @@ public class generateXML implements Serializable {
                 Element programmeID = document.createElement("programmeID");
                 programmeID.appendChild(document.createTextNode(item.getProgrammeID()));
                 tutorialGroup.appendChild(programmeID);
-
-                //cohortID element
-                Element cohortID = document.createElement("cohortID");
-                cohortID.appendChild(document.createTextNode(item.getCohortID()));
-                tutorialGroup.appendChild(cohortID);
 
                 //courseCodeList element
                 Element courseCodeList = document.createElement("courseCodeList");
