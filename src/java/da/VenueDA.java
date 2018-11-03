@@ -69,7 +69,7 @@ public class VenueDA {
 
     }
 
-        public List<String> getVenueType() throws SQLException {
+    public List<String> getVenueType() throws SQLException {
 
         Connection connect = null;
 
@@ -79,8 +79,8 @@ public class VenueDA {
             PreparedStatement pstmt = connect.prepareStatement("SELECT venueType FROM venue");
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                if(!output.contains(rs.getString(1))){
-                output.add(rs.getString(1));
+                if (!output.contains(rs.getString(1))) {
+                    output.add(rs.getString(1));
                 }
             }
         } catch (SQLException e) {
@@ -92,7 +92,7 @@ public class VenueDA {
         return output;
 
     }
-    
+
     public List<Venue> getAllVenueRecords() throws SQLException {
 
         Connection connect = null;
@@ -132,7 +132,7 @@ public class VenueDA {
                 v.setBlock(rs.getString(2));
                 v.setVenueType(rs.getString(3));
                 v.setCapacity(rs.getInt(4));
-                if (rs.getString(5) == null  || rs.getString(5)=="") {
+                if (rs.getString(5) == null || rs.getString(5) == "") {
                     v.setCourseCodeList("");
                 } else {
                     v.setCourseCodeList(rs.getString(5));
@@ -148,7 +148,7 @@ public class VenueDA {
         return output;
 
     }
-    
+
     //Get the alert message
     boolean success, message, update, delete;
 
@@ -229,16 +229,17 @@ public class VenueDA {
         return v;
     }
 
-    public void updateVenue(Venue v) {
+    public void updateVenue(String oriVenueID, Venue v) {
         Connection connect;
         try {
             connect = DBConnection.getConnection();
-            PreparedStatement ps = connect.prepareStatement("update VENUE set block=?, venueType=?, capacity=?, courseCodeList=? where venueID=?");
-            ps.setString(1, v.getBlock());
-            ps.setString(2, v.getVenueType());
-            ps.setInt(3, v.getCapacity());
-            ps.setString(4, v.getCourseCodeList());
-            ps.setString(5, v.getVenueID());
+            PreparedStatement ps = connect.prepareStatement("update VENUE set venueID = ?, block=?, venueType=?, capacity=?, courseCodeList=? where venueID=?");
+            ps.setString(1, v.getVenueID());
+            ps.setString(2, v.getBlock());
+            ps.setString(3, v.getVenueType());
+            ps.setInt(4, v.getCapacity());
+            ps.setString(5, v.getCourseCodeList());
+            ps.setString(6, oriVenueID);
             ps.executeUpdate();
 
             this.update = true;
@@ -263,7 +264,8 @@ public class VenueDA {
         }
         return v;
     }
-      public void reset(){
+
+    public void reset() {
         this.success = false;
         this.update = false;
         this.delete = false;

@@ -6,71 +6,88 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <style>
-            body{
-                background-color: #a6dff4;
-            }
-            .form{
-                background-color: white;
-                height: 500px;
-            }
             .btn{
                 transition-duration: 0.4s;
                 padding: 10px 24px;
                 border-radius: 12px;
             }
-            .btn .btn:hover{
+            .btn .green:hover{
                 background-color:  #4CAF50;
+                color: white;
+            }
+            body{
+                background-color: #a6dff4;
+            }
+            .form{
+                background-color: white;
+                height: 250px;
+            }
+            .btn .blue:hover{
+                background-color: dodgerblue;
                 color: white;
             }
         </style>
         <title>Update Venue</title>
     </h:head>
     <h:body>
-        <div align="center">
+        <div align="center" class="btn">
             <h1>Update Venue</h1>
             <h:form class="form">
                 <table>
-                    <tr>
-                        <td>Venue ID:</td>
-                        <td><h:inputText id="id" value="#{venueManage.v.venueID}" required="true" requiredMessage=" empty field" />
-                            <p:message for="id" style="color:red" /></td>
-                    </tr>
+                    <br/>
                     <tr>
                         <td>Venue Type:</td>
-                        <td><h:selectOneMenu value="#{venueManage.v.venueType}" >
+                        <td><h:selectOneMenu value="#{venueManage.v.venueType}" valueChangeListener="#{venueManage.venueTypeChangeListener}">
                                 <f:selectItem itemValue="Hall" itemLabel="Hall" />
                                 <f:selectItem itemValue="Room" itemLabel="Room"/>
                                 <f:selectItem itemValue="Lab" itemLabel="Lab"/>
                                 <f:ajax render="selectCourseCode"/>
                                 <f:ajax render="selectBlock"/>
+                            </h:selectOneMenu> </td>                        
+                    </tr>
+                    <tr>
+                        <td>Venue ID:</td>
+                        <td><h:selectOneMenu id="selectBlock" value="#{venueManage.v.block}" style="margin-right:5px">
+                                <f:selectItems value="#{venueManage.blockList}"/>
                             </h:selectOneMenu>
+                            <h:inputText title="Type only the venue number or ID, ex: DK ABA, type only ABA or K101, type only 101." id="id" value="#{venueManage.v.venueID}" required="true" requiredMessage=" *Empty field"/>
+                            <h:message for="id" style="color:red"/>
                         </td>
                     </tr>
                     <tr>
-                        <td>Block:</td>
-                        <td><h:inputText id="block" value="#{venueManage.v.block}" required="true" requiredMessage=" *Empty field " maxlength="2"/>
-     
-                            <p:message for="block" style="color: red"/></td>
-                    </tr>
-                    <tr>
                         <td>Capacity:</td>
-                        <td><h:inputText value="#{venueManage.v.capacity}" required="true" id="capacity" requiredMessage=" *Empty field " converterMessage=" Invalid input">
+                        <td><h:inputText value="#{venueManage.v.capacity}" required="true" id="capacity" requiredMessage=" *Empty field " converterMessage=" *Invalid input">
                                 <f:convertNumber integerOnly="true" />
-                            </h:inputText> 
-                             <p:message for="capacity" style="color: red"/>
-                            </td>
+                            </h:inputText>
+                            <h:message for="capacity" style="color: red"/>
+
+                        </td>
                     </tr>
-                    <tr>
-                        <td>Course Code List:</td>
-                        <td><h:inputText value="#{venueManage.v.courseCodeList}"/><br/></td>
-                    </tr>
-                </table><br/>
-                <h:commandButton action="#{venueManage.updateVenue()}" value="Update">   
+                </table> 
+
+                <h:panelGroup  id="selectCourseCode">
+                    <table>
+                        <tr> 
+                            <h:panelGroup rendered="#{venueManage.v.venueType eq 'Lab'}">
+                                <td>
+                                    <h:outputLabel for="multiple" value="Course Code List: " />
+                                </td>
+                                <td>
+                                    <p:selectCheckboxMenu multiple="true" value="#{venueManage.courseCodeStr}" label="courseCode" filter="true" filterMatchMode="startsWith">
+                                        <f:selectItems value="#{venueManage.courseCodeList}" />
+                                    </p:selectCheckboxMenu>
+                                </td>
+                            </h:panelGroup>
+                        </tr>
+                    </table>
+                </h:panelGroup>
+                <br/>
+                <h:commandButton action="#{venueManage.updateVenue()}" value="Update" styleClass="btn green">   
                 </h:commandButton>
-              
+
             </h:form>
             <h:form>
-                  <h:commandButton action="selectVenue.xhtml" value="Done"/>
+                <h:commandButton action="selectVenue.xhtml" value="Done" styleClass="btn blue"/>
             </h:form>
 
         </div>

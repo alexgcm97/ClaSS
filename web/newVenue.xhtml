@@ -44,15 +44,6 @@
                 <table>
                     <br/>
                     <tr>
-                        <td>Venue ID:</td>
-                        <td><h:selectOneMenu id="selectBlock" value="#{venueManage.v.block}" disabled="#{venueManage.v.venueType == 'Hall'}" style="margin-right:5px">
-                                <f:selectItems value="#{venueManage.blockList}"/>
-                            </h:selectOneMenu>
-                            <h:inputText title="Type only the venue number or ID, ex: DK ABA, type only ABA or K101, type only 101." id="id" value="#{venueManage.v.venueID}" required="true" requiredMessage=" *Empty field"/>
-                            <h:message for="id" style="color:red"/>
-                        </td>
-                    </tr>
-                    <tr>
                         <td>Venue Type:</td>
                         <td><h:selectOneMenu value="#{venueManage.v.venueType}" valueChangeListener="#{venueManage.venueTypeChangeListener}">
                                 <f:selectItem itemValue="Hall" itemLabel="Hall" />
@@ -61,6 +52,15 @@
                                 <f:ajax render="selectCourseCode"/>
                                 <f:ajax render="selectBlock"/>
                             </h:selectOneMenu> </td>                        
+                    </tr>
+                    <tr>
+                        <td>Venue ID:</td>
+                        <td><h:selectOneMenu id="selectBlock" value="#{venueManage.v.block}" style="margin-right:5px">
+                                <f:selectItems value="#{venueManage.blockList}"/>
+                            </h:selectOneMenu>
+                            <h:inputText title="Type only the venue number or ID, ex: DK ABA, type only ABA or K101, type only 101." id="id" value="#{venueManage.v.venueID}" required="true" requiredMessage=" *Empty field"/>
+                            <h:message for="id" style="color:red"/>
+                        </td>
                     </tr>
                     <tr>
                         <td>Capacity:</td>

@@ -28,12 +28,19 @@ public class venueManage {
     public VenueDA vda = new VenueDA();
     private CourseDA cda = new CourseDA();
     public Venue v = new Venue();
-    private List<String> selectedCourseCodeList = new ArrayList();
+    private String oriVenueID = "";
+    private List<String> selectedCourseCodeList = new ArrayList(), blockList = new ArrayList();
     private String[] courseCodeStr;
 
     public void venueTypeChangeListener(ValueChangeEvent event) {
         if (event.getNewValue().equals("Hall")) {
-            v.setBlock("DK");
+            blockList.clear();
+            blockList.add("DK");
+        } else {
+            blockList.clear();
+            for (Character c : "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray()) {
+                blockList.add(c + "");
+            }
         }
     }
 
@@ -86,10 +93,6 @@ public class venueManage {
     }
 
     public List<String> getBlockList() {
-        List<String> blockList = new ArrayList();
-        for (Character c : "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray()) {
-            blockList.add(c + "");
-        }
         return blockList;
     }
 
@@ -107,7 +110,6 @@ public class venueManage {
         }
         v.setCourseCodeList(tempStr);
         if (v.getVenueType().equals("Hall")) {
-            v.setBlock("DK");
             v.setVenueID("DK " + v.getVenueID());
         } else {
             v.setVenueID(v.getBlock() + v.getVenueID());
@@ -118,13 +120,39 @@ public class venueManage {
 
     public void retrieveVenue(String venueID) throws SQLException, IOException {
         v = vda.get(venueID);
+        oriVenueID = venueID;
+        if (v.getVenueType().equals("Hall")) {
+            blockList.add("DK");
+            v.setVenueID(v.getVenueID().replace("DK ", ""));
+        } else {
+            for (Character c : "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray()) {
+                blockList.add(c + "");
+            }
+            v.setVenueID(v.getVenueID().replace(v.getBlock(), ""));
+        }
         FacesContext.getCurrentInstance().getExternalContext().redirect("editVenue.xhtml");
 
     }
 
     public void updateVenue() throws SQLException, IOException {
-        vda.updateVenue(v);
-
+        String tempStr = "-";
+        if (courseCodeStr != null && courseCodeStr.length > 0) {
+            tempStr = "";
+            for (String s : courseCodeStr) {
+                if (tempStr.length() == 0) {
+                    tempStr = s;
+                } else {
+                    tempStr += "," + s;
+                }
+            }
+        }
+        v.setCourseCodeList(tempStr);
+        if (v.getVenueType().equals("Hall")) {
+            v.setVenueID("DK " + v.getVenueID());
+        } else {
+            v.setVenueID(v.getBlock() + v.getVenueID());
+        }
+        vda.updateVenue(oriVenueID, v);
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectVenue.xhtml");
     }
 
@@ -134,7 +162,6 @@ public class venueManage {
     }
 
     public void backToVenue() throws SQLException, IOException {
-
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectVenue.xhtml");
     }
 
@@ -149,6 +176,7 @@ public class venueManage {
         v.setVenueType("Hall");
         v.setCapacity(0);
         v.setCourseCodeList("");
+        blockList.add("DK");
         FacesContext.getCurrentInstance().getExternalContext().redirect("newVenue.xhtml");
     }
 }
