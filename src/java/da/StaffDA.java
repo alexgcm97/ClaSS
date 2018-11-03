@@ -25,7 +25,7 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-public class StaffDA implements Serializable{
+public class StaffDA implements Serializable {
 
     private Connection connect;
 
@@ -128,7 +128,7 @@ public class StaffDA implements Serializable{
         DBConnection.close(connect);
         return output;
     }
-      boolean success, message, delete, update;
+    boolean success, message, delete, update;
 
     public boolean isSuccess() {
         return success;
@@ -161,7 +161,6 @@ public class StaffDA implements Serializable{
     public void setUpdate(boolean update) {
         this.update = update;
     }
-    
 
     public void insertStaff(Staff s) throws SQLException {
         String staffID = getMaxID();
@@ -198,10 +197,9 @@ public class StaffDA implements Serializable{
             pstmt.setString(7, s.getLecGroupListS());
             pstmt.setString(8, s.getTutGroupListS());
             pstmt.setString(9, s.getPracGroupListS());
-           
-            pstmt.executeUpdate();
 
-            
+            pstmt.executeUpdate();
+            this.success = true;
         } catch (SQLException e) {
             System.out.println(e);
 
@@ -209,8 +207,8 @@ public class StaffDA implements Serializable{
 
     }
 
-  public Staff deleteStaff(String staffID) {
-      
+    public Staff deleteStaff(String staffID) {
+
         Staff s = new Staff();
         try {
             connect = DBConnection.getConnection();
@@ -218,6 +216,7 @@ public class StaffDA implements Serializable{
             ps.setString(1, staffID);
             System.out.println(ps);
             ps.executeUpdate();
+            this.delete = true;
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -225,32 +224,32 @@ public class StaffDA implements Serializable{
     }
 
     public Staff get(String staffID) {
-       
+
         Staff s = new Staff();
         try {
             connect = DBConnection.getConnection();
-            
+
             PreparedStatement pstmt = connect.prepareStatement("select * from Staff where staffID = ?");
             pstmt.setString(1, staffID);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                s = new Staff(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));             
-                
-            }   
-           
+                s = new Staff(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
+
+            }
+
         } catch (SQLException e) {
             System.out.println(e);
-            
+
         }
         return s;
     }
-        
+
     public void updateStaff(Staff s) {
-  
+
         try {
             connect = DBConnection.getConnection();
             PreparedStatement ps = connect.prepareStatement("update Staff set staffName=?, blockday=?, blockstart=?, blockduration=?, coursecodelist=?, lecgrouplist=?, tutgrouplist=?, pracgrouplist=? where staffID=?");
-            
+
             ps.setString(1, s.getStaffName());
             ps.setInt(2, s.getBlockDay());
             ps.setDouble(3, s.getBlockStart());
@@ -258,11 +257,11 @@ public class StaffDA implements Serializable{
             ps.setString(5, s.getCourseCodeListS());
             ps.setString(6, s.getLecGroupListS());
             ps.setString(7, s.getTutGroupListS());
-            ps.setString(8, s.getPracGroupListS());         
+            ps.setString(8, s.getPracGroupListS());
             ps.setString(9, s.getStaffID());
-            
-            ps.executeUpdate();
 
+            ps.executeUpdate();
+            this.update = true;
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -270,7 +269,7 @@ public class StaffDA implements Serializable{
     }
 
     public String getMaxID() {
-     
+
         String staffID = "";
         try {
             connect = DBConnection.getConnection();
@@ -300,7 +299,8 @@ public class StaffDA implements Serializable{
         System.out.println(staffID);
         return staffID;
     }
-      public void reset(){
+
+    public void reset() {
         this.success = false;
         this.update = false;
         this.delete = false;

@@ -57,9 +57,6 @@ public class DisplayTimetable {
             sch.seteTime(rs.getString("eTime"));
 
             switch (sch.getDay()) {
-                case 0:
-                    this.sunList.add(sch);
-                    break;
                 case 1:
                     this.monList.add(sch);
                     break;
@@ -77,6 +74,9 @@ public class DisplayTimetable {
                     break;
                 case 6:
                     this.satList.add(sch);
+                    break;
+                case 7:
+                    this.sunList.add(sch);
                     break;
             }
         }

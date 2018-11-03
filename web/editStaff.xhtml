@@ -5,27 +5,31 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <style>
-            body{
-                background-color: #a6dff4;
-            }
-            .form{
-                background-color: white;
-                height: 500px;
-            }
             .btn{
                 transition-duration: 0.4s;
                 padding: 10px 24px;
                 border-radius: 12px;
             }
-            .btn .btn:hover{
+            .btn .green:hover{
                 background-color:  #4CAF50;
+                color: white;
+            }
+            body{
+                background-color: #a6dff4;
+            }
+            .form{
+                background-color: white;
+                height: 550px;
+            }
+            .btn .blue:hover{
+                background-color: dodgerblue;
                 color: white;
             }
         </style>
         <title>Edit Staff</title>
     </h:head>
     <h:body>
-        <div align="center">
+        <div align="center" class="btn">
             <h1>Update Staff</h1>
             <h:form class="form">
                 <table>
@@ -45,29 +49,34 @@
                     <tr>
                         <td>Block Day:</td>
                         <td><h:selectOneMenu value="#{staffManage.s.blockDay}" >
+                                <f:selectItem itemValue="0" itemLabel="None" />
                                 <f:selectItem itemValue="1" itemLabel="Monday" />
                                 <f:selectItem itemValue="2" itemLabel="Tuesday"/>
                                 <f:selectItem itemValue="3" itemLabel="Wednesday"/>     
                                 <f:selectItem itemValue="4" itemLabel="Thursday" />
                                 <f:selectItem itemValue="5" itemLabel="Friday"/>
-
+                                <f:selectItem itemValue="6" itemLabel="Saturday" />
                             </h:selectOneMenu><br/></td>
                     </tr>
                     <tr>
-                        <td>Block Start:</td>
-                        <td><h:inputText value="#{staffManage.s.blockStart}"  converterMessage=" *Invalid input" maxlength="3">
-                                <f:convertNumber maxFractionDigits="1" maxIntegerDigits="3" type="number" />  
-                            </h:inputText><br/></td>
+                        <td>Block Start: </td>
+                        <td><h:inputText id="blockStart" value="#{staffManage.blockStart}" validatorMessage="Please enter time between 8 am to 8 pm." >
+                                <f:validateLongRange for="blockStart" minimum="8" maximum="20"/>
+                            </h:inputText><br/>
+                            <h:message for="blockStart" style="color:red"/><br/></td>
                     </tr>
                     <tr>
                         <td>Block Duration:</td>
-                        <td><h:selectOneMenu value="#{staffManage.s.blockDuration}" >
-                                <f:selectItem itemValue="1" itemLabel="1 hours" />
-                                <f:selectItem itemValue="2" itemLabel="2 hours"/>
-                                <f:selectItem itemValue="3" itemLabel="3 hours"/>     
+                        <td><h:selectOneMenu value="#{staffManage.s.blockDuration}">
+                                <f:selectItem itemValue="0" itemLabel="0 hours" />
+                                <f:selectItem itemValue="0.5" itemLabel="30 mins" />
+                                <f:selectItem itemValue="1" itemLabel="1 hour"/>
+                                <f:selectItem itemValue="1.5" itemLabel="1 hour 30 mins"/>     
+                                <f:selectItem itemValue="2" itemLabel="2 hours" />
+                                <f:selectItem itemValue="2.5" itemLabel="2 hours 30 mins"/>
+                                <f:selectItem itemValue="3" itemLabel="3 hours" />
+                                <f:selectItem itemValue="3.5" itemLabel="3 hours 30 mins"/>
                                 <f:selectItem itemValue="4" itemLabel="4 hours" />
-                                <f:selectItem itemValue="5" itemLabel="5 hours"/>
-
                             </h:selectOneMenu><br/></td>
                     </tr>           
                     <tr>
@@ -92,12 +101,11 @@
 
 
                 </table>
-                <br/><h:commandButton action="#{staffManage.updateStaff()}" value="Submit"/>
+                <br/><h:commandButton action="#{staffManage.updateStaff()}" value="Submit" styleClass="btn green"/>
 
-                
             </h:form>
             <h:form>
-                <h:commandButton action="EditInfo" value="Done"/><br/>
+                <h:commandButton action="EditInfo" value="Done" styleClass="btn blue"/><br/>
             </h:form>
         </div>
     </h:body>

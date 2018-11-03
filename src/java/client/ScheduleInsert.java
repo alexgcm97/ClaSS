@@ -59,7 +59,7 @@ public class ScheduleInsert implements Serializable {
         double studyStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
         double studyEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
 
-        for (int d = 0; d < 7; d++) {
+        for (int d = 1; d <= 7; d++) {
             double a = studyStart;
             for (double t = studyStart; t < studyEnd; t += 0.5) {
 
@@ -234,7 +234,7 @@ public class ScheduleInsert implements Serializable {
         double studyStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
         double studyEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
 
-        for (int d = 0; d < 7; d++) {
+        for (int d = 1; d <= 7; d++) {
             double a = studyStart;
             for (double t = studyStart; t < studyEnd; t += 0.5) {
 
@@ -387,7 +387,7 @@ public class ScheduleInsert implements Serializable {
         double studyStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
         double studyEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
 
-        for (int d = 0; d < 7; d++) {
+        for (int d = 1; d <= 7; d++) {
             double a = studyStart;
             for (double t = studyStart; t < studyEnd; t += 0.5) {
 

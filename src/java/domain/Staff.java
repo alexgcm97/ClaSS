@@ -40,21 +40,7 @@ public class Staff  implements Serializable {
         this.lecGroupListS = lecGroupListS;
         this.pracGroupListS = pracGroupListS;
     }
-
-//    public Staff(String staffID, String staffName, int blockDay, double blockStart, double blockDuration, String courseCodeListS, String tutGroupListS, String lecGroupListS, String pracGroupListS) {
-//        this.staffID = staffID;
-//        this.staffName = staffName;
-//        this.blockDay = blockDay;
-//        this.blockDuration = blockDuration;
-//        this.blockStart = blockStart;
-//        this.courseCodeListS = courseCodeListS;
-//        this.tutGroupListS = tutGroupListS;
-//        this.lecGroupListS = lecGroupListS;
-//        this.pracGroupListS = pracGroupListS;
-//    }
-    
-    
-
+ 
     public Staff(String staffID, String staffName) {
         this.staffID = staffID;
         this.staffName = staffName;

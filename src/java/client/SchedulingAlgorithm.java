@@ -38,7 +38,7 @@ public class SchedulingAlgorithm implements Serializable {
     private ArrayList<Venue> roomList, labList, hallList;
     private ArrayList<Schedule> scheduleList;
 
-    private int studyDays, blockDay = 99, errorCode = 0;
+    private int studyDays, blockDay = 0, errorCode = 0;
     private boolean toBalance = false;
     private double studyStart, studyEnd, blockStart, blockEnd, maxBreak = 99, noOfClassPerDay = 99;
     private Class blockClass;
@@ -173,11 +173,12 @@ public class SchedulingAlgorithm implements Serializable {
                 stf.addPracGroupToList(pracGroupStr);
             }
 
-            if (!e.getElementsByTagName("blockDay").item(0).getTextContent().equals("-")) {
+            if (e.getElementsByTagName("blockDay").getLength() > 0) {
                 stf.setBlockDay(Integer.parseInt(e.getElementsByTagName("blockDay").item(0).getTextContent()));
                 stf.setBlockStart(Double.parseDouble(e.getElementsByTagName("blockStart").item(0).getTextContent()));
                 stf.setBlockDuration(Double.parseDouble(e.getElementsByTagName("blockDuration").item(0).getTextContent()));
             }
+
             stf.setClassList(sda.getClassList(stf.getStaffID()));
             staffList.add(stf);
         }
@@ -234,7 +235,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
 
         //If insert blockClass is selected, it will insert a block class with no data to block the time
-        if (blockDay != 99) {
+        if (blockDay > 0) {
             blockClass = new Class("-", "-", "-", "-", blockDay, blockStart, blockEnd, "BLK");
             for (int i = 0; i < scheduleList.size(); i++) {
                 scheduleList.get(i).addClassToList(blockClass);
@@ -271,7 +272,7 @@ public class SchedulingAlgorithm implements Serializable {
             optimizeBreak(4);
         }
         //Remove the block class added previously
-        if (blockDay != 99) {
+        if (blockDay > 0) {
             clearBlock();
         }
 

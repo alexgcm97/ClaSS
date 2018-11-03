@@ -248,32 +248,17 @@ public class generateXML implements Serializable {
 
                 // blockDay element
                 Element blockDay = document.createElement("blockDay");
-                if (item.getBlockDay() == 0) {
-                    blockDay.appendChild(document.createTextNode("-"));
-
-                } else {
-                    blockDay.appendChild(document.createTextNode(Integer.toString(item.getBlockDay())));
-                }
+                blockDay.appendChild(document.createTextNode(Integer.toString(item.getBlockDay())));
                 staff.appendChild(blockDay);
 
                 // blockStart element
                 Element blockStart = document.createElement("blockStart");
-                if (item.getBlockStart() == 0.0) {
-                    blockStart.appendChild(document.createTextNode("-"));
-
-                } else {
-                    blockStart.appendChild(document.createTextNode(Double.toString(item.getBlockStart())));
-                }
+                blockStart.appendChild(document.createTextNode(Double.toString(item.getBlockStart())));
                 staff.appendChild(blockStart);
 
                 // blockDuration element
                 Element blockDuration = document.createElement("blockDuration");
-                if (item.getBlockDuration() == 0.0) {
-                    blockDuration.appendChild(document.createTextNode("-"));
-
-                } else {
-                    blockDuration.appendChild(document.createTextNode(Double.toString(item.getBlockDuration())));
-                }
+                blockDuration.appendChild(document.createTextNode(Double.toString(item.getBlockDuration())));
                 staff.appendChild(blockDuration);
 
                 // courseCodeList element

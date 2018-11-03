@@ -32,9 +32,9 @@
   </staff>
   <staff staffID="S1037">
     <name>Donald</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BAIT3094-T</courseCodeList>
     <lecGroupList>-</lecGroupList>
     <tutGroupList>BAIT3094-G1001,G1002,G1003</tutGroupList>
@@ -42,9 +42,9 @@
   </staff>
   <staff staffID="S1006">
     <name>Jonathan</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BAIT3094-P</courseCodeList>
     <lecGroupList>-</lecGroupList>
     <tutGroupList>-</tutGroupList>
@@ -62,9 +62,9 @@
   </staff>
   <staff staffID="S1025">
     <name>Jerry</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BAIT3094-P</courseCodeList>
     <lecGroupList>-</lecGroupList>
     <tutGroupList>-</tutGroupList>
@@ -72,9 +72,9 @@
   </staff>
   <staff staffID="S1036">
     <name>Ken</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BAIT3094-T</courseCodeList>
     <lecGroupList>-</lecGroupList>
     <tutGroupList>BAIT3094-G1006,G1007,G1008,G1009,G1010</tutGroupList>
@@ -82,9 +82,9 @@
   </staff>
   <staff staffID="S1028">
     <name>Janny</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BAIT3094-P</courseCodeList>
     <lecGroupList>-</lecGroupList>
     <tutGroupList>-</tutGroupList>
@@ -92,9 +92,9 @@
   </staff>
   <staff staffID="S1007">
     <name>Lizzie</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BAIT2123-L|BAIT3094-P </courseCodeList>
     <lecGroupList>BAIT2123-G1001,G1002,G1003,G1004,G1005,G1006,G1007,G1008</lecGroupList>
     <tutGroupList>-</tutGroupList>
@@ -102,9 +102,9 @@
   </staff>
   <staff staffID="S1005">
     <name>Lily</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BAIT3094-T</courseCodeList>
     <lecGroupList>-</lecGroupList>
     <tutGroupList>BAIT3094-G1011,G1012,G1013,G1014</tutGroupList>
@@ -112,9 +112,9 @@
   </staff>
   <staff staffID="S1008">
     <name>Jesicca</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BAIT2123-P</courseCodeList>
     <lecGroupList>-</lecGroupList>
     <tutGroupList>-</tutGroupList>
@@ -122,9 +122,9 @@
   </staff>
   <staff staffID="S1026">
     <name>Tom</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BAIT2123-P</courseCodeList>
     <lecGroupList>-</lecGroupList>
     <tutGroupList>-</tutGroupList>
@@ -132,9 +132,9 @@
   </staff>
   <staff staffID="S1009">
     <name>Jasmine</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BAIT3173-L,P</courseCodeList>
     <lecGroupList>BAIT3173-G1001,G1002,G1003,G1004,G1005,G1006,G1007,G1008</lecGroupList>
     <tutGroupList>-</tutGroupList>
@@ -142,9 +142,9 @@
   </staff>
   <staff staffID="S1010">
     <name>Aron</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BAIT3173-P</courseCodeList>
     <lecGroupList>-</lecGroupList>
     <tutGroupList>-</tutGroupList>
@@ -152,9 +152,9 @@
   </staff>
   <staff staffID="S1029">
     <name>Simon</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BAIT3173-P</courseCodeList>
     <lecGroupList>-</lecGroupList>
     <tutGroupList>-</tutGroupList>
@@ -162,9 +162,9 @@
   </staff>
   <staff staffID="S1011">
     <name>Jonny</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>MPU-3232-B</courseCodeList>
     <lecGroupList>-</lecGroupList>
     <tutGroupList>MPU-3232-G1001,G1002,G1003,G1004</tutGroupList>
@@ -172,9 +172,9 @@
   </staff>
   <staff staffID="S1030">
     <name>Jack</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>MPU-3232-B</courseCodeList>
     <lecGroupList>-</lecGroupList>
     <tutGroupList>MPU-3232-G1005,G1006,G1007,G1008</tutGroupList>
@@ -182,9 +182,9 @@
   </staff>
   <staff staffID="S1024">
     <name>Anne</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BACS2103-P</courseCodeList>
     <lecGroupList>-</lecGroupList>
     <tutGroupList>-</tutGroupList>
@@ -192,9 +192,9 @@
   </staff>
   <staff staffID="S1012">
     <name>Johswa</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BACS2103-L,T</courseCodeList>
     <lecGroupList>BACS2103-G1009,G1010,G1011,G1012,G1013,G1014</lecGroupList>
     <tutGroupList>BACS2103-G1009,G1010</tutGroupList>
@@ -202,9 +202,9 @@
   </staff>
   <staff staffID="S1031">
     <name>Esmand</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BACS2103-T</courseCodeList>
     <lecGroupList>-</lecGroupList>
     <tutGroupList>BACS2103-G1011,G1012,G1013,G1014</tutGroupList>
@@ -212,9 +212,9 @@
   </staff>
   <staff staffID="S1038">
     <name>Zacky</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BACS2103-P</courseCodeList>
     <lecGroupList>-</lecGroupList>
     <tutGroupList>-</tutGroupList>
@@ -222,9 +222,9 @@
   </staff>
   <staff staffID="S1013">
     <name>Mellisa</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BNEL2022-B</courseCodeList>
     <lecGroupList>-</lecGroupList>
     <tutGroupList>BNEL2022-G1009,G1010,G1011</tutGroupList>
@@ -232,9 +232,9 @@
   </staff>
   <staff staffID="S1032">
     <name>Asyia</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BNEL2022-B</courseCodeList>
     <lecGroupList>-</lecGroupList>
     <tutGroupList>BNEL2022-G1012,G1013,G1014</tutGroupList>
@@ -242,9 +242,9 @@
   </staff>
   <staff staffID="S1014">
     <name>Melvin</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BHEL2023-B</courseCodeList>
     <lecGroupList>-</lecGroupList>
     <tutGroupList>BHEL2023-G1009,G1010,G1011</tutGroupList>
@@ -252,132 +252,12 @@
   </staff>
   <staff staffID="S1027">
     <name>Mickey</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
+    <blockDay>0</blockDay>
+    <blockStart>0.0</blockStart>
+    <blockDuration>0.0</blockDuration>
     <courseCodeList>BHEL2023-B</courseCodeList>
     <lecGroupList>-</lecGroupList>
     <tutGroupList>BHEL2023-G1012,G1013,G1014</tutGroupList>
     <pracGroupList>-</pracGroupList>
-  </staff>
-  <staff staffID="S1015">
-    <name>Alvin</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
-    <courseCodeList>BAIT3343-L,P</courseCodeList>
-    <lecGroupList>BAIT3343-G1015,G1016,G1017,G1018,G1019,G1020,G1021,G1022,G1023,G1024</lecGroupList>
-    <tutGroupList>-</tutGroupList>
-    <pracGroupList>BAIT3343-G1015,G1016</pracGroupList>
-  </staff>
-  <staff staffID="S1033">
-    <name>Sam</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
-    <courseCodeList>BAIT3343-P</courseCodeList>
-    <lecGroupList>-</lecGroupList>
-    <tutGroupList>-</tutGroupList>
-    <pracGroupList>BAIT3343-G1017,G1018,G1019,G1020,G1021</pracGroupList>
-  </staff>
-  <staff staffID="S1016">
-    <name>Yanny</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
-    <courseCodeList>BACS2063-L|BAIT3343-P</courseCodeList>
-    <lecGroupList>BACS2063-G1015,G1016,G1017,G1018,G1019,G1020,G1021,G1022,G1023,G1024</lecGroupList>
-    <tutGroupList>-</tutGroupList>
-    <pracGroupList>BAIT3343-G1022,G1023,G1024</pracGroupList>
-  </staff>
-  <staff staffID="S1034">
-    <name>Jonyyva</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
-    <courseCodeList>BACS2063-P</courseCodeList>
-    <lecGroupList>-</lecGroupList>
-    <tutGroupList>-</tutGroupList>
-    <pracGroupList>BACS2063-G1015,G1016,G1017,G1018,G1019</pracGroupList>
-  </staff>
-  <staff staffID="S1017">
-    <name>Winnie</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
-    <courseCodeList>BACS2063-P</courseCodeList>
-    <lecGroupList>-</lecGroupList>
-    <tutGroupList>-</tutGroupList>
-    <pracGroupList>BACS2063-G1020,G1021,G1022,G1023,G1024</pracGroupList>
-  </staff>
-  <staff staffID="S1018">
-    <name>Jolin</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
-    <courseCodeList>BACS2163-L,T</courseCodeList>
-    <lecGroupList>BACS2163-G1015,G1016,G1017,G1018,G1019</lecGroupList>
-    <tutGroupList>BACS2163-G1015,G1016</tutGroupList>
-    <pracGroupList>-</pracGroupList>
-  </staff>
-  <staff staffID="S1019">
-    <name>Cindy</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
-    <courseCodeList>BACS2163-T,P</courseCodeList>
-    <lecGroupList>-</lecGroupList>
-    <tutGroupList>BACS2163-G1017,G1018,G1019</tutGroupList>
-    <pracGroupList>BACS2163-G1015</pracGroupList>
-  </staff>
-  <staff staffID="S1035">
-    <name>Aling</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
-    <courseCodeList>BACS2163-P</courseCodeList>
-    <lecGroupList>-</lecGroupList>
-    <tutGroupList>-</tutGroupList>
-    <pracGroupList>BACS2163-G1016,G1017,G1018,G1019</pracGroupList>
-  </staff>
-  <staff staffID="S1020">
-    <name>Maslina</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
-    <courseCodeList>MPU-3322-L,T</courseCodeList>
-    <lecGroupList>MPU-3322-G1015,G1016,G1017,G1018,G1019</lecGroupList>
-    <tutGroupList>MPU-3322-G1015,G1016,G1017,G1018,G1019</tutGroupList>
-    <pracGroupList>-</pracGroupList>
-  </staff>
-  <staff staffID="S1021">
-    <name>Alawati</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
-    <courseCodeList>BAIT2164-L,P</courseCodeList>
-    <lecGroupList>BAIT2164-G1015,G1016,G1017,G1018,G1019</lecGroupList>
-    <tutGroupList>-</tutGroupList>
-    <pracGroupList>BAIT2164-G1015,G1016,G1017,G1018,G1019</pracGroupList>
-  </staff>
-  <staff staffID="S1022">
-    <name>Rezuaw</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
-    <courseCodeList>MPU-3123-B</courseCodeList>
-    <lecGroupList>-</lecGroupList>
-    <tutGroupList>MPU-3123-G1020,G1021,G1022,G1023,G1024</tutGroupList>
-    <pracGroupList>-</pracGroupList>
-  </staff>
-  <staff staffID="S1023">
-    <name>Kitty</name>
-    <blockDay>-</blockDay>
-    <blockStart>-</blockStart>
-    <blockDuration>-</blockDuration>
-    <courseCodeList>BACS2053-L,P</courseCodeList>
-    <lecGroupList>BACS2053-G1020,G1021,G1022,G1023,G1024</lecGroupList>
-    <tutGroupList>-</tutGroupList>
-    <pracGroupList>BACS2053-G1020,G1021,G1022,G1023,G1024</pracGroupList>
   </staff>
 </staffs>
