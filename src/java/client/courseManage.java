@@ -122,13 +122,9 @@ public class courseManage implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().redirect("selectCourse.xhtml");
     }
 
-    public void updateCourseType(String courseCode) throws SQLException, IOException {
+    public void updateCourseType() throws SQLException, IOException {
         cda.updateCourse(c);
-        List<CourseType> ctList = new ArrayList<>();
-        ctList = cda.getCourseType(courseCode);
-        for (int i = 0; i < ctList.size(); i++) {
-            cda.deleteCourseType(ctList.get(i).getCourseID());
-        }
+        cda.deleteCourseType(c.getCourseCode());
         if (lecHours > 0.0) {
             ct.setCourseType("L");
             ct.setCourseDuration(Double.toString(lecHours));
@@ -136,7 +132,6 @@ public class courseManage implements Serializable {
             ct.setCourseCode(c.getCourseCode());
             cda.insertCourseType(ct);
         }
-
         if (tutHours > 0.0) {
             ct.setCourseType("T");
             ct.setCourseDuration(Double.toString(tutHours));

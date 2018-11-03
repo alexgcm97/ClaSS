@@ -384,14 +384,13 @@ public class CourseDA {
         return c;
     }
 
-    public void deleteCourseType(String courseID) {
+    public void deleteCourseType(String courseCode) {
         Connection connect;
-        Course c = new Course();
         try {
             connect = DBConnection.getConnection();
 
-            PreparedStatement ps = connect.prepareStatement("delete from CourseType where courseID = ?");
-            ps.setString(1, courseID);
+            PreparedStatement ps = connect.prepareStatement("delete from CourseType where courseCode = ?");
+            ps.setString(1, courseCode);
             ps.executeUpdate();
 
         } catch (SQLException e) {
