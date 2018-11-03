@@ -945,6 +945,8 @@ public class SchedulingAlgorithm implements Serializable {
                 }
             }
         }
+        System.out.println(groupID);
+        System.out.println(courseCode);
         if (qualifiedList.isEmpty()) {
             errorCode = 2;
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
