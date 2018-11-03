@@ -63,6 +63,16 @@
                                 </h:selectOneMenu></td>
                         </tr>
 
+                        <tr><td></td><td></td><td><h:commandButton value="Check" action="#{modifySchedule.forward()}" class="btn"></h:commandButton></td></tr>
+
+                        <tr><td><b>Course</b></td>
+                            <td><b> : </b></td>
+                            <td><h:selectOneMenu value="#{modifySchedule.courseID}" class="ddl">
+                                    <f:selectItems value="#{modifySchedule.oldCourse}" var="oc"
+                                                   itemLabel="#{oc.courseCode} (#{oc.courseType})" itemValue="#{oc.courseID}" />
+                                </h:selectOneMenu></td>
+                        </tr>
+
                         <tr><td><b>Tutorial Group</b></td>
                             <td><b> : </b></td>
                             <td><h:selectOneMenu value="#{modifySchedule.groupID}" class="ddl">
@@ -79,13 +89,7 @@
                                 </h:selectOneMenu></td>
                         </tr>
 
-                        <tr><td><b>Course</b></td>
-                            <td><b> : </b></td>
-                            <td><h:selectOneMenu value="#{modifySchedule.courseID}" class="ddl">
-                                    <f:selectItems value="#{modifySchedule.oldCourse}" var="oc"
-                                                   itemLabel="#{oc.courseCode}(#{oc.courseType})" itemValue="#{oc.courseID}" />
-                                </h:selectOneMenu></td>
-                        </tr>
+
                     </table>
                 </div>
                 <div class="column">
