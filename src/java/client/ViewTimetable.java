@@ -21,6 +21,36 @@ import javax.faces.bean.RequestScoped;
 public class ViewTimetable {
     
     private Connection connect;
+    
+    private List<TutorialGroup> filterGroup;
+
+    public List<TutorialGroup> getFilterGroup() {
+        return filterGroup;
+    }
+
+    public void setFilterGroup(List<TutorialGroup> filterGroup) {
+        this.filterGroup = filterGroup;
+    }
+
+    private List<Staff> filterStaff;
+
+    public List<Staff> getFilterStaff() {
+        return filterStaff;
+    }
+
+    public void setFilterStaff(List<Staff> filterStaff) {
+        this.filterStaff = filterStaff;
+    }
+    
+    private List<Venue> filterVenue;
+
+    public List<Venue> getFilterVenue() {
+        return filterVenue;
+    }
+
+    public void setFilterVenue(List<Venue> filterVenue) {
+        this.filterVenue = filterVenue;
+    }
 
     //Get the staff list
     public List<Staff> getAllStaff() throws ClassNotFoundException, SQLException {

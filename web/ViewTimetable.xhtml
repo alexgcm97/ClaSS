@@ -4,55 +4,51 @@
 
 <html xmlns = "http://www.w3.org/1999/xhtml"   
       xmlns:h = "http://java.sun.com/jsf/html"
-      xmlns:f = "http://java.sun.com/jsf/core">
+      xmlns:f = "http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <style>
             .columns {
                 display: flex;
                 flex-flow: row wrap;
-                justify-content: center;
-                margin-left:auto; 
-                margin-right:auto;
+                font-size: 12px;
             }
 
             .column {
                 flex: 1;
-                padding-left: 10%;
                 border-collapse: collapse;
                 border: 1px black solid;
-                height: 650px;
+                height: 660px;
                 overflow: auto;
             }
 
             .btn {
-                background-color: gray;
-                color: white;
-                padding: 8px;
-                margin-left: 30px;
-                width: 100%;
+                color: black;
+                padding:5px;
+                margin-left: 50px;
+                width: 50%;
                 border-radius: 10px;
                 cursor: pointer;
                 font-size: 11px;
             }
 
             .btn1 {
-                background-color: gray;
-                color: white;
+                color: black;
                 padding: 12px;
-                margin: 10px 0;
-                width: 50%;
+                margin: 10px 10px;
+                width: 48%;
                 border-radius: 10px;
                 cursor: pointer;
                 font-size: 17px;
             }
 
             .btn:hover {
-                background-color: #45a049;
+                color: green;
             }
 
             .btn1:hover {
-                background-color: #45a049;
+                color: green;
             }
         </style>
 
@@ -69,68 +65,53 @@
             </h:outputScript>
             <section class="columns">
                 <div class="column">
-                    <h3>Student Timetable</h3>
-                    <h:dataTable value = "#{viewTimetable.allGroup}" var = "grp">
-                        <h:column> 				
-                            #{grp.programmeCode}#{grp.studyYear}
-                        </h:column>
-                        <h:column>
-                            (G#{grp.groupNumber})
-                        </h:column>
-                        <h:column> 				
-                            #{grp.intakeYear}
-                        </h:column>
-                        <h:column>
-                            <h:commandButton value="View" action="#{scheduleInsert.view_Group}" class="btn">
+                    <p:dataTable value = "#{viewTimetable.allGroup}" filteredValue="#{viewTimetable.filterGroup}" var = "grp">
+                        <p:column headerText="Student Timetable" filterBy="#{grp.programmeCode}#{grp.studyYear}" filterMatchMode="contains" > 				
+                            #{grp.programmeCode}#{grp.studyYear} (G#{grp.groupNumber}) - #{grp.intakeYear}
+                        </p:column>
+                        <p:column>
+                            <p:commandButton value="View" action="#{scheduleInsert.view_Group}" class="btn">
                                 <f:param name="action" value="#{grp.groupID}" />
-                            </h:commandButton>
-                        </h:column>
-                    </h:dataTable>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
                 </div>
 
                 <div class="column">
-                    <h3>Staff Timetable</h3>
-                    <h:dataTable value = "#{viewTimetable.allStaff}" var = "stf">
-                        <h:column>    	  				
-                            #{stf.staffID}
-                        </h:column>
-                        <h:column>
-                            #{stf.staffName}
-                        </h:column>
-                        <h:column>
-                            <h:commandButton value="View" action="#{scheduleInsert.view_Staff}" class="btn">
+                    <p:dataTable value = "#{viewTimetable.allStaff}" filteredValue="#{viewTimetable.filterStaff}" var = "stf">
+                        <p:column headerText="Staff Timetable" filterBy="#{stf.staffID} #{stf.staffName}" filterMatchMode="contains" >    	  				
+                            #{stf.staffID} - #{stf.staffName}
+                        </p:column>
+                        <p:column>
+                            <p:commandButton value="View" action="#{scheduleInsert.view_Staff}" class="btn">
                                 <f:param name="action" value="#{stf.staffID}" />
-                            </h:commandButton>
-                        </h:column>
-                    </h:dataTable>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
                 </div>
 
                 <div class="column">
-                    <h3>Venue Timetable</h3>
-                    <h:dataTable value = "#{viewTimetable.allVenue}" var = "vn">
-                        <h:column>    	  				
-                            #{vn.venueID}
-                        </h:column>
-                        <h:column>
-                            #{vn.venueType}
-                        </h:column>
-                        <h:column>
-                            <h:commandButton value="View" action="#{scheduleInsert.view_Venue()}" class="btn">
+                    <p:dataTable value = "#{viewTimetable.allVenue}" filteredValue="#{viewTimetable.filterVenue}" var = "vn">
+                        <p:column headerText="Venue Timetable" filterBy="#{vn.venueID} #{vn.venueType}" filterMatchMode="contains" >    	  				
+                            #{vn.venueID} #{vn.venueType}
+                        </p:column>
+                        <p:column>
+                            <p:commandButton value="View" action="#{scheduleInsert.view_Venue()}" class="btn">
                                 <f:param name="action" value="#{vn.venueID}" />
-                            </h:commandButton>
-                        </h:column>
-                    </h:dataTable>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
                 </div>
             </section>
 
-            <h:column>
-                <h:commandButton value="Edit" action="#{modifySchedule.forward()}" class="btn1">
+            <p:column>
+                <p:commandButton value="Edit" action="#{modifySchedule.forward()}" class="btn1">
                     <f:param name="staffID" value="#{stf.staffID}" />
-                </h:commandButton>
-                <h:commandButton value="Back to Main Menu" action="#{modifySchedule.back1()}" class="btn1">
+                </p:commandButton>
+                <p:commandButton value="Back to Main Menu" action="#{modifySchedule.back1()}" class="btn1">
                     <f:param name="staffID" value="#{stf.staffID}" />
-                </h:commandButton>
-            </h:column>
+                </p:commandButton>
+            </p:column>
         </h:form>
     </h:body>
 </html>
