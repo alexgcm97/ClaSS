@@ -96,13 +96,12 @@ public class ViewAll implements Serializable {
         List<TutorialGroup> TutorialGroup = new ArrayList<TutorialGroup>();
 
         PreparedStatement pstmt = connect
-                .prepareStatement("SELECT * FROM Tutorial_Group");
+                .prepareStatement("SELECT * FROM TutorialGroup");
         ResultSet rs = pstmt.executeQuery();
         while (rs.next()) {
 
             TutorialGroup tg = new TutorialGroup();
             tg.setGroupID(rs.getString("groupID"));
-            tg.setStudyYear(rs.getInt("studyYear"));
             tg.setGroupNumber(rs.getInt("groupNumber"));
             tg.setSize(rs.getInt("size"));
             tg.setCohortID(rs.getString("cohortID"));
@@ -181,12 +180,10 @@ public class ViewAll implements Serializable {
         Connection connect;
         connect = DBConnection.getConnection();
         List<ProgrammeCohort> ProgrammeCohort = new ArrayList<ProgrammeCohort>();
-        PreparedStatement pstmt = connect
-                .prepareStatement("SELECT * FROM ProgrammeCohort ORDER BY COHORTID");
+        PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM ProgrammeCohort ORDER BY COHORTID");
         ResultSet rs = pstmt.executeQuery();
         while (rs.next()) {
-            ProgrammeCohort pc = new ProgrammeCohort();
-            pc.setCohortID(rs.getString("cohortID"));
+            ProgrammeCohort pc = new ProgrammeCohort(rs.getString("cohortID"), rs.getString("entryYear"), rs.getString("programmeCode"), rs.getInt("studyYear"), rs.getString("intakeYear"));
             ProgrammeCohort.add(pc);
         }
         // close resources

@@ -18,6 +18,14 @@ public class ProgrammeCohort {
 
     String cohortID, entryYear, programmeCode, programmeName, intakeYear, courseCodeList;
     int studyYear;
+    
+    public ProgrammeCohort(String cohortID, String entryYear, String programmeCode, int studyYear, String intakeYear) {
+        this.cohortID = cohortID;
+        this.entryYear = entryYear;
+        this.programmeCode = programmeCode;
+        this.intakeYear = intakeYear;
+        this.studyYear = studyYear;
+    }
 
     public ProgrammeCohort(String cohortID, String entryYear, String programmeCode, int studyYear, String intakeYear, String courseCodeList) {
         this.cohortID = cohortID;
