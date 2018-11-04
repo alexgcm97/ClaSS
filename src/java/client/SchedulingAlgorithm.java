@@ -607,7 +607,7 @@ public class SchedulingAlgorithm implements Serializable {
 
         String courseID = course.getCourseID(), courseType = course.getCourseType(), courseCode = course.getCourseCode();
         Venue v;
-        ArrayList<Staff> lecStaffList = getLecStaffList(courseType, courseCode);
+        ArrayList<Staff> lecStaffList = getLecStaffList(courseCode);
         double startTime = 0, endTime = 0;
         int day = 0;
         Class c = new Class();
@@ -926,11 +926,11 @@ public class SchedulingAlgorithm implements Serializable {
         return rand.nextInt(studyDays) + 1;
     }
 
-    public ArrayList<Staff> getLecStaffList(String courseType, String courseCode) throws IOException {
+    public ArrayList<Staff> getLecStaffList(String courseCode) throws IOException {
         ArrayList<Staff> qualifiedList = new ArrayList();
         for (Staff s : staffList) {
             for (String courseCodeList : s.getCourseCodeList()) {
-                if (courseCodeList.contains(courseCode) && courseCodeList.contains(courseType)) {
+                if (courseCodeList.contains(courseCode) && courseCodeList.contains("L")) {
                     qualifiedList.add(s);
                 }
             }
