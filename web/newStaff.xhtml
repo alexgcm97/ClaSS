@@ -51,8 +51,10 @@
                     </tr>
                     <tr>
                         <td>Staff Name: </td>
-                        <td><h:inputText id="id" value="#{staffManage.s.staffName}" required="true" requiredMessage=" *Empty field" />
-                            <h:message for="id" style="color:red"/></td>
+                        <td><h:inputText id="id" value="#{staffManage.s.staffName}" required="true" requiredMessage=" *Empty field" /></td>
+                    </tr>
+                    <tr>                         
+                        <td><h:message for="id" style="color:red"/></td>
                     </tr>
                     <tr>
                         <td>Block Day: </td>
@@ -70,10 +72,12 @@
                     </tr>
                     <tr>
                         <td>Block Start: </td>
-                        <td><h:inputText id="blockStart" value="#{staffManage.blockStart}" disabled="#{staffManage.s.blockDay == 0}" validatorMessage="Please enter time between 8 am to 8 pm." >
+                        <td><h:inputText id="blockStart" value="#{staffManage.blockStart}" disabled="#{staffManage.s.blockDay == 0}" validatorMessage="*Please enter time between 8 am to 8 pm." >
                                 <f:validateLongRange for="blockStart" minimum="8" maximum="20"/>
-                            </h:inputText><br/>
-                            <h:message for="blockStart" style="color:red"/><br/></td>
+                            </h:inputText><br/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><h:message for="blockStart" style="color:red;text-align:right"/></td>
                     </tr>
                     <tr>
                         <td>Block Duration: </td>
