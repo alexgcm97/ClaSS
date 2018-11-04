@@ -616,7 +616,7 @@ public class SchedulingAlgorithm implements Serializable {
             for (Class dbClass : dbList) {
                 if (course.getCourseID().equals(dbClass.getCourseID()) && s.getStaffID().equals(dbClass.getStaffID())) {
                     for (String str : s.getLecGroupList()) {
-                        if (str.contains(dbClass.getCohortID())) {
+                        if (str.contains(courseCode) && str.contains(dbClass.getCohortID())) {
                             c = new Class(dbClass.getCourseID(), dbClass.getVenueID(), "-", dbClass.getStaffID(), dbClass.getDay(), dbClass.getStartTime(), dbClass.getEndTime(), dbClass.getCourseType());
                             found = true;
                             break;
@@ -628,7 +628,7 @@ public class SchedulingAlgorithm implements Serializable {
             if (found) {
                 for (String str : s.getLecGroupList()) {
                     for (int i = 0; i < scheduleList.size(); i++) {
-                        if (str.contains(scheduleList.get(i).getCohortID())) {
+                        if (str.contains(courseCode) && str.contains(scheduleList.get(i).getCohortID())) {
                             Class temp = new Class(c.getCourseID(), c.getVenueID(), scheduleList.get(i).getGroupID(), c.getStaffID(), c.getDay(), c.getStartTime(), c.getEndTime(), c.getCourseType());
                             temp.setMoveFlag(false);
                             scheduleList.get(i).addClassToList(temp);
