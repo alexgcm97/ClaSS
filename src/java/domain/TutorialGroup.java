@@ -13,7 +13,7 @@ import java.io.Serializable;
 
 public class TutorialGroup implements Serializable {
 
-    private String groupID, cohortID, programmeCode, intakeYear, courseCodeList;
+    private String groupID, cohortID, programmeCode, intakeYear, courseCodeList, entryYear;
     private int studyYear, groupNumber, size;
 
     public TutorialGroup() {
@@ -47,6 +47,16 @@ public class TutorialGroup implements Serializable {
         this.size = size;
         this.programmeCode = programmeCode;
         this.intakeYear = intakeYear;
+    }
+    
+    public TutorialGroup(String groupID, int studyYear, int groupNumber, String cohortID, String programmeCode, String intakeYear, String entryYear) {
+        this.groupID = groupID;
+        this.cohortID = cohortID;
+        this.groupNumber = groupNumber;
+        this.studyYear = studyYear;
+        this.programmeCode = programmeCode;
+        this.intakeYear = intakeYear;
+        this.entryYear = entryYear;
     }
 
     public String getGroupID() {
@@ -111,6 +121,14 @@ public class TutorialGroup implements Serializable {
 
     public void setStudyYear(int studyYear) {
         this.studyYear = studyYear;
+    }
+
+    public String getEntryYear() {
+        return entryYear;
+    }
+
+    public void setEntryYear(String entryYear) {
+        this.entryYear = entryYear;
     }
 
 }

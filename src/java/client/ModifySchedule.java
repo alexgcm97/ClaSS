@@ -6,8 +6,10 @@ import da.DBConnection;
 import domain.Class;
 import domain.CourseType;
 import domain.Staff;
+import domain.TutorialGroup;
 import domain.Venue;
 import domain.scheduleDetail;
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 @ManagedBean
 @SessionScoped
@@ -182,27 +185,6 @@ public class ModifySchedule implements Serializable {
                     venue.remove(a);
                 }
             }
-        }
-        rs.close();
-        pstmt.close();
-        connect.close();
-
-        return venue;
-    }
-
-    //get the previous venueID and show in drop down list
-    public List<Venue> getOldVenue() throws ClassNotFoundException, SQLException {
-        connect = DBConnection.getConnection();
-
-        List<Venue> venue = new ArrayList<Venue>();
-        PreparedStatement pstmt = connect.prepareStatement("SELECT venueID, venueType FROM venue WHERE venueType!='Hall' ORDER BY venueID");
-        ResultSet rs = pstmt.executeQuery();
-        while (rs.next()) {
-            Venue vn = new Venue();
-            vn.setVenueID(rs.getString("venueID"));
-            vn.setVenueType(rs.getString("venueType"));
-
-            venue.add(vn);
         }
         rs.close();
         pstmt.close();
@@ -438,6 +420,76 @@ public class ModifySchedule implements Serializable {
         return cType;
     }
 
+    public List<TutorialGroup> getAllGroup() throws ClassNotFoundException, SQLException {
+        connect = DBConnection.getConnection();
+
+        List<TutorialGroup> group = new ArrayList<TutorialGroup>();
+        PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM class WHERE staffID = ? AND courseID = ?");
+        pstmt.setString(1, oldStaffID);
+        pstmt.setString(2, courseID);
+        ResultSet rs = pstmt.executeQuery();
+        while (rs.next()) {
+            TutorialGroup grp = new TutorialGroup();
+            grp.setGroupID(rs.getString("groupID"));
+
+            pstmt = connect.prepareStatement("SELECT * FROM tutorialGroup WHERE groupID = ? ORDER BY groupID");
+            pstmt.setString(1, grp.getGroupID());
+            ResultSet rs2 = pstmt.executeQuery();
+            while (rs2.next()) {
+                grp.setCohortID(rs2.getString("cohortID"));
+                grp.setGroupNumber(rs2.getInt("groupNumber"));
+
+                pstmt = connect.prepareStatement("SELECT * FROM programmeCohort WHERE cohortID = ?");
+                pstmt.setString(1, grp.getCohortID());
+                ResultSet rs3 = pstmt.executeQuery();
+                while (rs3.next()) {
+                    grp.setProgrammeCode(rs3.getString("programmeCode"));
+                    grp.setStudyYear(rs3.getInt("studyYear"));
+                    grp.setEntryYear(rs3.getString("entryYear"));
+                }
+            }
+            group.add(grp);
+        }
+        rs.close();
+        pstmt.close();
+        connect.close();
+
+        return group;
+    }
+
+    //get the previous venueID and show in drop down list
+    public List<Venue> getCurrentVenue() throws ClassNotFoundException, SQLException {
+        connect = DBConnection.getConnection();
+
+        Class cls = new Class();
+        List<Venue> venue = new ArrayList<Venue>();
+
+        PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM class WHERE staffID = ? AND courseID = ? AND groupID = ?");
+        pstmt.setString(1, oldStaffID);
+        pstmt.setString(2, courseID);
+        pstmt.setString(3, groupID);
+        ResultSet rs = pstmt.executeQuery();
+        while (rs.next()) {
+            cls.setVenueID(rs.getString("venueID"));
+
+            pstmt = connect.prepareStatement("SELECT venueID, venueType FROM venue WHERE venueID = ? ORDER BY venueID");
+            pstmt.setString(1, cls.getVenueID());
+            ResultSet rs1 = pstmt.executeQuery();
+            while (rs1.next()) {
+                Venue vn = new Venue();
+                vn.setVenueID(rs1.getString("venueID"));
+                vn.setVenueType(rs1.getString("venueType"));
+
+                venue.add(vn);
+            }
+        }
+        rs.close();
+        pstmt.close();
+        connect.close();
+
+        return venue;
+    }
+
     //Get the alert message
     boolean success, message;
 
@@ -549,8 +601,8 @@ public class ModifySchedule implements Serializable {
     }
 
     //Call by ModifySchedule to check the available venue
-    public String forward() {
-        return "modifySchedule.xhtml?faces-redirect=true";
+    public void forward() throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().redirect("modifySchedule.xhtml");
     }
 
     //Call by the ViewTimetable.xhtml (back)

@@ -3,8 +3,5 @@
   <studyDays>5</studyDays>
   <startTime>8.0</startTime>
   <endTime>20.0</endTime>
-  <constraints>
-    <balanceClass>true</balanceClass>
-    <maxBreak>2.0</maxBreak>
-  </constraints>
+  <constraints/>
 </configuration>

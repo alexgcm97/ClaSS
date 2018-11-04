@@ -2,20 +2,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <style>
-            .ddl {
-                width: 150%;
-                padding: 12px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                box-sizing: border-box;
-                margin-top: 6px;
-                margin-bottom: 16px;
-                resize: vertical;
-            }
-
             .columns {
                 display: flex;
                 flex-flow: row wrap;
@@ -57,36 +47,41 @@
                         <h1>Current Information</h1>
                         <tr><td><b>Current Staff</b></td>
                             <td><b> : </b></td>
-                            <td><h:selectOneMenu value="#{modifySchedule.oldStaffID}" class="ddl">
+                            <td><p:selectOneMenu value="#{modifySchedule.oldStaffID}">
+                                    <p:ajax listener="#{modifySchedule.forward()}" />
+                                    <f:selectItem itemLabel="Select" itemValue="null" />
                                     <f:selectItems value="#{viewTimetable.allStaff}" var="as"
                                                    itemLabel="#{as.staffID} - #{as.staffName}" itemValue="#{as.staffID}" />
-                                </h:selectOneMenu></td>
+                                </p:selectOneMenu></td>
                         </tr>
-
-                        <tr><td></td><td></td><td><h:commandButton value="Check" action="#{modifySchedule.forward()}" class="btn"></h:commandButton></td></tr>
 
                         <tr><td><b>Course</b></td>
                             <td><b> : </b></td>
-                            <td><h:selectOneMenu value="#{modifySchedule.courseID}" class="ddl">
+                            <td><p:selectOneMenu value="#{modifySchedule.courseID}" class="ddl">
+                                    <p:ajax listener="#{modifySchedule.forward()}" />
+                                    <f:selectItem itemLabel="Select" itemValue="null" />
                                     <f:selectItems value="#{modifySchedule.oldCourse}" var="oc"
                                                    itemLabel="#{oc.courseCode} (#{oc.courseType})" itemValue="#{oc.courseID}" />
-                                </h:selectOneMenu></td>
+                                </p:selectOneMenu></td>
                         </tr>
 
                         <tr><td><b>Tutorial Group</b></td>
                             <td><b> : </b></td>
-                            <td><h:selectOneMenu value="#{modifySchedule.groupID}" class="ddl">
-                                    <f:selectItems value="#{viewTimetable.allGroup}" var="ag"
-                                                   itemLabel="#{ag.programmeCode}#{ag.studyYear} (G#{ag.groupNumber}) - #{ag.intakeYear}" itemValue="#{ag.groupID}" />
-                                </h:selectOneMenu></td>
+                            <td><p:selectOneMenu value="#{modifySchedule.groupID}" class="ddl">
+                                    <p:ajax listener="#{modifySchedule.forward()}" />
+                                    <f:selectItem itemLabel="Select" itemValue="null" />
+                                    <f:selectItems value="#{modifySchedule.allGroup}" var="ag"
+                                                   itemLabel="#{ag.programmeCode}#{ag.studyYear} (G#{ag.groupNumber}) - #{ag.entryYear}" itemValue="#{ag.groupID}" />
+                                </p:selectOneMenu></td>
                         </tr>
 
                         <tr><td><b>Current Venue</b></td>
                             <td><b> : </b></td>
-                            <td><h:selectOneMenu value="#{modifySchedule.oldVenueID}" class="ddl">
-                                    <f:selectItems value="#{modifySchedule.oldVenue}" var="ava"
+                            <td><p:selectOneMenu value="#{modifySchedule.oldVenueID}" class="ddl">
+                                    <f:selectItems value="#{modifySchedule.currentVenue}" var="ava"
                                                    itemLabel="#{ava.venueID} - #{ava.venueType}" itemValue="#{ava.venueID}" />
-                                </h:selectOneMenu></td>
+                                    <f:selectItem itemLabel="Select" itemValue="null" />
+                                </p:selectOneMenu></td>
                         </tr>
 
 
@@ -97,67 +92,72 @@
                         <h1>Update Information</h1>
                         <tr><td><b>Day</b></td>
                             <td><b> : </b></td>
-                            <td><h:selectOneMenu value="#{modifySchedule.day}" class="ddl">
+                            <td><p:selectOneMenu value="#{modifySchedule.day}" class="ddl">
+                                    <f:selectItem itemLabel="Select" itemValue="null" />
                                     <f:selectItem itemLabel="Monday" itemValue="1" />
                                     <f:selectItem itemLabel="Tuesday" itemValue="2" />
                                     <f:selectItem itemLabel="Wednesday" itemValue="3" />
                                     <f:selectItem itemLabel="Thursday" itemValue="4" />
                                     <f:selectItem itemLabel="Friday" itemValue="5" />
                                     <f:selectItem itemLabel="Saturday" itemValue="6"/>
-                                    <f:selectItem itemLabel="Sunday" itemValue="0" />
-                                </h:selectOneMenu></td>
+                                    <f:selectItem itemLabel="Sunday" itemValue="7" />
+                                </p:selectOneMenu></td>
                         </tr>
 
                         <tr><td><b>Start Time</b></td>
                             <td><b> : </b></td>
-                            <td><h:selectOneMenu value="#{modifySchedule.startTime}" class="ddl">
+                            <td><p:selectOneMenu value="#{modifySchedule.startTime}" class="ddl">
+                                    <f:selectItem itemLabel="Select" itemValue="null" />
                                     <f:selectItems value="#{modifySchedule.time}" var="vas"
                                                    itemLabel="#{vas.getsTime()}" itemValue="#{vas.startTime}" />
-                                </h:selectOneMenu></td>
+                                </p:selectOneMenu></td>
                         </tr>
 
                         <tr><td><b>End Time</b></td>
                             <td><b> : </b></td>
-                            <td><h:selectOneMenu value="#{modifySchedule.endTime}" class="ddl">
+                            <td><p:selectOneMenu value="#{modifySchedule.endTime}" class="ddl">
+                                    <f:selectItem itemLabel="Select" itemValue="null" />
                                     <f:selectItems value="#{modifySchedule.time}" var="vas"
                                                    itemLabel="#{vas.geteTime()}" itemValue="#{vas.endTime}" />
-                                </h:selectOneMenu></td>
+                                </p:selectOneMenu></td>
                         </tr>
 
                         <tr><td><b>Venue Type</b></td>
                             <td><b> : </b></td>
-                            <td><h:selectOneMenu value="#{modifySchedule.venueType}" class="ddl">
+                            <td><p:selectOneMenu value="#{modifySchedule.venueType}" class="ddl">
+                                    <f:selectItem itemLabel="Select" itemValue="null" />
                                     <f:selectItem itemLabel="Room" itemValue="Room" />
                                     <f:selectItem itemLabel="Lab" itemValue="Lab" />
-                                </h:selectOneMenu></td>
+                                </p:selectOneMenu></td>
                         </tr>
 
-                        <tr><td></td><td></td><td><h:commandButton value="Check" action="#{modifySchedule.forward()}" class="btn"></h:commandButton></td></tr>
+                        <tr><td></td><td></td><td><p:commandButton value="Check" action="#{modifySchedule.forward()}" class="btn"></p:commandButton></td></tr>
 
                         <tr><td><b>Venue</b></td>
                             <td><b> : </b></td>
-                            <td><h:selectOneMenu value="#{modifySchedule.venueID}" class="ddl">
+                            <td><p:selectOneMenu value="#{modifySchedule.venueID}" class="ddl">
                                     <f:selectItem itemLabel="Select" itemValue="null" />
                                     <f:selectItems value="#{modifySchedule.avaVenue}" var="ava"
                                                    itemLabel="#{ava.venueID} - #{ava.venueType}" itemValue="#{ava.venueID}" />
-                                </h:selectOneMenu></td>
+                                </p:selectOneMenu></td>
                         </tr>
 
                         <tr><td><b>Staff</b></td>
                             <td><b> : </b></td>
-                            <td><h:selectOneMenu value="#{modifySchedule.staffID}" class="ddl">
+                            <td><p:selectOneMenu value="#{modifySchedule.staffID}" class="ddl">
+                                    <f:selectItem itemLabel="Select" itemValue="null" />
                                     <f:selectItems value="#{viewTimetable.allStaff}" var="as"
                                                    itemLabel="#{as.staffID} - #{as.staffName}" itemValue="#{as.staffID}" />
-                                </h:selectOneMenu></td>
+                                </p:selectOneMenu></td>
                         </tr>
                     </table>
                 </div>
             </session>
 
-            <h:commandButton value="Update" action="#{modifySchedule.updateModify()}" class="btn" style="width:50%">
-            </h:commandButton>
-            <h:commandButton value="Cancel" action="#{modifySchedule.back()}" class="btn" style="width:50%">
-            </h:commandButton>
+            <p:commandButton value="Update" action="#{modifySchedule.updateModify()}" class="btn" style="width:50%">
+            </p:commandButton>
+            <p:commandButton value="Cancel" action="#{modifySchedule.back()}" class="btn" style="width:50%">
+            </p:commandButton>
         </h:form>
     </h:body>
 </html>
