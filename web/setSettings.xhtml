@@ -56,15 +56,15 @@
                 </h:selectOneMenu><br/>
                 <h:outputText value="Daily Start Time: " style="margin-left:5px"/>
                 <h:selectOneMenu class="ddl" value="#{configuration.startTime}">
-                    <f:selectItem itemValue = "8.00" itemLabel = "8 a.m."/> 
-                    <f:selectItem itemValue="9.00" itemLabel ="9 a.m."/>
-                    <f:selectItem itemValue = "10.00" itemLabel = "10 a.m." /> 
+                    <f:selectItem itemValue = "8.0" itemLabel = "8 a.m."/> 
+                    <f:selectItem itemValue="9.0" itemLabel ="9 a.m."/>
+                    <f:selectItem itemValue = "10.0" itemLabel = "10 a.m." /> 
                 </h:selectOneMenu><br/>
                 <h:outputText value="Daily End Time: " style="margin-left:5px"/>
                 <h:selectOneMenu  class="ddl" value="#{configuration.endTime}">
-                    <f:selectItem itemValue = "18.00" itemLabel = "6 p.m."/> 
-                    <f:selectItem itemValue="19.00" itemLabel ="7 p.m."/>
-                    <f:selectItem itemValue = "20.00" itemLabel = "8 p.m."  /> 
+                    <f:selectItem itemValue = "18.0" itemLabel = "6 p.m."/> 
+                    <f:selectItem itemValue="19.0" itemLabel ="7 p.m."/>
+                    <f:selectItem itemValue = "20.0" itemLabel = "8 p.m."  /> 
                 </h:selectOneMenu><br/>
                 <h:commandButton action="VenueSelection?faces-redirect=true" class="btn gray" value="Back" immediate="true"/>
                 <h:commandButton action="setConstraints?faces-redirect=true" class="btn green" value="Next"/><br/>

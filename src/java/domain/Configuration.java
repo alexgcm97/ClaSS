@@ -34,8 +34,8 @@ import org.w3c.dom.Element;
 @SessionScoped
 public class Configuration implements Serializable {
 
-    private int blockDay, blockStart, studyDays;
-    private double maxBreak, blockDuration, startTime = 8.00, endTime = 20.00;
+    private int blockDay, blockStart, studyDays = 5;
+    private double maxBreak = 2.0, blockDuration, startTime = 8.0, endTime = 20.0;
     private boolean toBalanceClass, toBlockTime, setBreak;
 
     private final String filePath = XMLPath.getXMLPath();
