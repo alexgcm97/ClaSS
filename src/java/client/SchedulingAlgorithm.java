@@ -272,6 +272,7 @@ public class SchedulingAlgorithm implements Serializable {
             sortList();
             optimizeBreak(4);
         }
+
         //Remove the block class added previously
         if (blockDay > 0) {
             clearBlock();
@@ -463,14 +464,15 @@ public class SchedulingAlgorithm implements Serializable {
                     for (Class c : classList) {
                         for (Class d : classCheckList) {
                             if (c.getDay() == d.getDay() && c.getCourseID().equals(d.getCourseID()) && c.getStaffID().equals(d.getStaffID()) && d.getOriStartTime() == c.getStartTime() && d.getOriEndTime() == c.getEndTime()) {
-                                c.setStartTime(d.getStartTime());
-                                c.setEndTime(d.getEndTime());
+                                if (c.isMoveFlag()) {
+                                    c.setStartTime(d.getStartTime());
+                                    c.setEndTime(d.getEndTime());
+                                }
                             }
                         }
                     }
                 }
                 break;
-
             case 3:
                 for (int i = 1; i <= studyDays; i++) {
                     for (int index = 0; index < scheduleList.size(); index++) {
@@ -613,9 +615,13 @@ public class SchedulingAlgorithm implements Serializable {
             found = false;
             for (Class dbClass : dbList) {
                 if (course.getCourseID().equals(dbClass.getCourseID()) && s.getStaffID().equals(dbClass.getStaffID())) {
-                    c = new Class(dbClass.getCourseID(), dbClass.getVenueID(), "-", dbClass.getStaffID(), dbClass.getDay(), dbClass.getStartTime(), dbClass.getEndTime(), dbClass.getCourseType());
-                    found = true;
-                    break;
+                    for (String str : s.getLecGroupList()) {
+                        if (str.contains(dbClass.getCohortID())) {
+                            c = new Class(dbClass.getCourseID(), dbClass.getVenueID(), "-", dbClass.getStaffID(), dbClass.getDay(), dbClass.getStartTime(), dbClass.getEndTime(), dbClass.getCourseType());
+                            found = true;
+                            break;
+                        }
+                    }
                 }
             }
 
@@ -624,6 +630,7 @@ public class SchedulingAlgorithm implements Serializable {
                     for (int i = 0; i < scheduleList.size(); i++) {
                         if (str.contains(scheduleList.get(i).getCohortID())) {
                             Class temp = new Class(c.getCourseID(), c.getVenueID(), scheduleList.get(i).getGroupID(), c.getStaffID(), c.getDay(), c.getStartTime(), c.getEndTime(), c.getCourseType());
+                            temp.setMoveFlag(false);
                             scheduleList.get(i).addClassToList(temp);
                         }
                     }

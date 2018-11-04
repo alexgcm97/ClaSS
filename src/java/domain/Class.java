@@ -14,6 +14,7 @@ public class Class {
     private String courseID, venueID, groupID, staffID, courseType, cohortID;
     private int day;
     private double startTime, endTime, oriStartTime, oriEndTime;
+    private boolean moveFlag;
 
     public Class() {
     }
@@ -25,6 +26,7 @@ public class Class {
         this.startTime = startTime;
         this.endTime = endTime;
         this.courseType = courseType;
+        this.moveFlag = true;
     }
 
     public Class(String courseID, String venueID, String groupID, String staffID, int day, double startTime, double endTime) {
@@ -35,8 +37,9 @@ public class Class {
         this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.moveFlag = true;
     }
-    
+
     public Class(String courseID, String venueID, String groupID, String staffID, int day, double startTime, double endTime, String courseType, String cohortID) {
         this.courseID = courseID;
         this.venueID = venueID;
@@ -47,6 +50,8 @@ public class Class {
         this.endTime = endTime;
         this.courseType = courseType;
         this.cohortID = cohortID;
+        this.moveFlag = true;
+
     }
 
     public Class(String courseID, String venueID, String groupID, String staffID, int day, double startTime, double endTime, String courseType) {
@@ -58,6 +63,7 @@ public class Class {
         this.startTime = startTime;
         this.endTime = endTime;
         this.courseType = courseType;
+        this.moveFlag = true;
     }
 
     public String getCourseID() {
@@ -152,6 +158,22 @@ public class Class {
 
     public void setOriEndTime(double oriEndTime) {
         this.oriEndTime = oriEndTime;
+    }
+
+    public String getCohortID() {
+        return cohortID;
+    }
+
+    public void setCohortID(String cohortID) {
+        this.cohortID = cohortID;
+    }
+
+    public boolean isMoveFlag() {
+        return moveFlag;
+    }
+
+    public void setMoveFlag(boolean moveFlag) {
+        this.moveFlag = moveFlag;
     }
 
 }

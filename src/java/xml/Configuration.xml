@@ -5,5 +5,6 @@
   <endTime>20.0</endTime>
   <constraints>
     <balanceClass>true</balanceClass>
+    <maxBreak>2.0</maxBreak>
   </constraints>
 </configuration>
