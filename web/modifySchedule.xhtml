@@ -10,6 +10,7 @@
                 display: flex;
                 flex-flow: row wrap;
                 justify-content: center;
+                margin-top: 50px;
                 margin-left:auto; 
                 margin-right:auto;
             }
@@ -19,21 +20,21 @@
                 padding-left: 15%;
                 border-collapse: collapse;
                 border: 1px black solid;
+                margin-bottom: 50px;
             }
 
             .btn {
-                background-color: gray;
-                color: white;
+                color: black;
                 padding: 12px;
-                margin: 10px 0;
-                width: 150%;
+                margin: 10px 35px;
+                width: 45%;
                 border-radius: 10px;
                 cursor: pointer;
                 font-size: 17px;
             }
 
             .btn:hover {
-                background-color: #45a049;
+                color: green;
             }
         </style>
 
@@ -43,11 +44,11 @@
         <h:form>
             <session class="columns">
                 <div class="column">
-                    <table>
+                    <table cellpadding="15px">
                         <h1>Current Information</h1>
                         <tr><td><b>Current Staff</b></td>
                             <td><b> : </b></td>
-                            <td><p:selectOneMenu value="#{modifySchedule.oldStaffID}">
+                            <td><p:selectOneMenu value="#{modifySchedule.oldStaffID}" filter="true" filterPlaceholder="ID No / Name" filterMatchMode="contains">
                                     <p:ajax listener="#{modifySchedule.forward()}" />
                                     <f:selectItem itemLabel="Select" itemValue="null" />
                                     <f:selectItems value="#{viewTimetable.allStaff}" var="as"
@@ -88,11 +89,12 @@
                     </table>
                 </div>
                 <div class="column">
-                    <table>
+                    <table cellpadding="15px">
                         <h1>Update Information</h1>
                         <tr><td><b>Day</b></td>
                             <td><b> : </b></td>
                             <td><p:selectOneMenu value="#{modifySchedule.day}" class="ddl">
+                                    <p:ajax listener="#{modifySchedule.forward()}" />
                                     <f:selectItem itemLabel="Select" itemValue="null" />
                                     <f:selectItem itemLabel="Monday" itemValue="1" />
                                     <f:selectItem itemLabel="Tuesday" itemValue="2" />
@@ -106,7 +108,8 @@
 
                         <tr><td><b>Start Time</b></td>
                             <td><b> : </b></td>
-                            <td><p:selectOneMenu value="#{modifySchedule.startTime}" class="ddl">
+                            <td><p:selectOneMenu value="#{modifySchedule.startTime}" class="ddl" filter="true" filterPlaceholder="Start Time" filterMatchMode="contains">
+                                    <p:ajax listener="#{modifySchedule.forward()}" />
                                     <f:selectItem itemLabel="Select" itemValue="null" />
                                     <f:selectItems value="#{modifySchedule.time}" var="vas"
                                                    itemLabel="#{vas.getsTime()}" itemValue="#{vas.startTime}" />
@@ -115,7 +118,8 @@
 
                         <tr><td><b>End Time</b></td>
                             <td><b> : </b></td>
-                            <td><p:selectOneMenu value="#{modifySchedule.endTime}" class="ddl">
+                            <td><p:selectOneMenu value="#{modifySchedule.endTime}" class="ddl" filter="true" filterPlaceholder="End Time" filterMatchMode="contains">
+                                    <p:ajax listener="#{modifySchedule.forward()}" />
                                     <f:selectItem itemLabel="Select" itemValue="null" />
                                     <f:selectItems value="#{modifySchedule.time}" var="vas"
                                                    itemLabel="#{vas.geteTime()}" itemValue="#{vas.endTime}" />
@@ -125,13 +129,12 @@
                         <tr><td><b>Venue Type</b></td>
                             <td><b> : </b></td>
                             <td><p:selectOneMenu value="#{modifySchedule.venueType}" class="ddl">
+                                    <p:ajax listener="#{modifySchedule.forward()}" />
                                     <f:selectItem itemLabel="Select" itemValue="null" />
                                     <f:selectItem itemLabel="Room" itemValue="Room" />
                                     <f:selectItem itemLabel="Lab" itemValue="Lab" />
                                 </p:selectOneMenu></td>
                         </tr>
-
-                        <tr><td></td><td></td><td><p:commandButton value="Check" action="#{modifySchedule.forward()}" class="btn"></p:commandButton></td></tr>
 
                         <tr><td><b>Venue</b></td>
                             <td><b> : </b></td>
@@ -144,7 +147,7 @@
 
                         <tr><td><b>Staff</b></td>
                             <td><b> : </b></td>
-                            <td><p:selectOneMenu value="#{modifySchedule.staffID}" class="ddl">
+                            <td><p:selectOneMenu value="#{modifySchedule.staffID}" class="ddl" filter="true" filterPlaceholder="ID No / Name" filterMatchMode="contains">
                                     <f:selectItem itemLabel="Select" itemValue="null" />
                                     <f:selectItems value="#{viewTimetable.allStaff}" var="as"
                                                    itemLabel="#{as.staffID} - #{as.staffName}" itemValue="#{as.staffID}" />
@@ -153,11 +156,13 @@
                     </table>
                 </div>
             </session>
-
-            <p:commandButton value="Update" action="#{modifySchedule.updateModify()}" class="btn" style="width:50%">
-            </p:commandButton>
-            <p:commandButton value="Cancel" action="#{modifySchedule.back()}" class="btn" style="width:50%">
-            </p:commandButton>
         </h:form>
+        <p:column>
+            <p:commandButton value="Update" action="#{modifySchedule.updateModify()}" class="btn">
+            </p:commandButton>
+            <p:commandButton value="Cancel" action="#{modifySchedule.cancel()}" class="btn">
+                <p:ajax listener="#{modifySchedule.cancel()}" />
+            </p:commandButton>
+        </p:column>
     </h:body>
 </html>

@@ -214,207 +214,422 @@ public class ModifySchedule implements Serializable {
             String stfList = stf.getCourseCodeListS();
             int chk = 0;
 
-            if (stfList.contains("-")) {
-                String[] splitFirst = stfList.split("-");
-                List<String> firstSplit1 = Arrays.asList(splitFirst);
-                List<String> firstSplit = new ArrayList<String>();
+            if (stfList.contains("|")) {
+                System.out.println("nfksgfksjdbfklasksbfkl");
+                String[] splitF = stfList.split("\\|");
+                List<String> FSplit = Arrays.asList(splitF);
+                System.out.println("split | :" + FSplit);
 
-                if (firstSplit1.size() > 2) {
-                    firstSplit.add(0, firstSplit1.get(0) + "-" + firstSplit1.get(1));
-                    firstSplit.add(1, firstSplit1.get(2));
-                } else {
-                    firstSplit.add(0, firstSplit1.get(0));
-                    firstSplit.add(1, firstSplit1.get(1));
-                }
+                for (int al = 0; al < FSplit.size(); al++) {
+                    chk = 0;
+                    List<String> FSplit1 = new ArrayList<String>();
+                    FSplit1.add(FSplit.get(al));
 
-                String a = firstSplit.get(0);
-                System.out.println("course=" + a);
+                    for (String stfList1 : FSplit1) {
+                        if (stfList1.contains("-")) {
+                            String[] splitFirst = stfList1.split("-");
+                            List<String> firstSplit1 = Arrays.asList(splitFirst);
+                            List<String> firstSplit = new ArrayList<String>();
 
-                for (String stfList2 : firstSplit) {
-
-                    System.out.println("split - =" + stfList2);
-                    if (stfList2.contains(",")) {
-
-                        String[] splitSec = stfList2.split(",");
-                        List<String> SecSplit = Arrays.asList(splitSec);
-                        System.out.println("split , =" + SecSplit);
-                        for (int i = 0; i < SecSplit.size(); i++) {
-                            System.out.println("size=" + SecSplit.size());
-                            if (SecSplit.get(i).equals("T")) {
-                                System.out.println("type=" + SecSplit.get(i));
-                                pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseCode = ? AND courseType = ?");
-                                pstmt.setString(1, a);
-                                pstmt.setString(2, SecSplit.get(i));
-                                ResultSet rs1 = pstmt.executeQuery();
-
-                                while (rs1.next()) {
-                                    ctt.setCourseID(rs1.getString("courseID"));
-
-                                    System.out.println("course=" + ctt.getCourseID());
-
-                                    pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
-                                    pstmt.setString(1, ctt.getCourseID());
-                                    ResultSet rs2 = pstmt.executeQuery();
-
-                                    while (rs2.next()) {
-                                        ctt.setCourseCode(rs2.getString("courseCode"));
-                                        ctt.setCourseType(rs2.getString("courseType"));
-
-                                        System.out.println("zzz" + ctt.getCourseCode());
-                                        System.out.println("zzz" + ctt.getCourseType());
-
-                                        cType.add(ctt);
-                                    }
-                                }
+                            if (firstSplit1.size() > 2) {
+                                firstSplit.add(0, firstSplit1.get(0) + "-" + firstSplit1.get(1));
+                                firstSplit.add(1, firstSplit1.get(2));
+                            } else {
+                                firstSplit.add(0, firstSplit1.get(0));
+                                firstSplit.add(1, firstSplit1.get(1));
                             }
 
-                            if (SecSplit.get(i).equals("P")) {
-                                System.out.println("type=" + SecSplit.get(i));
-                                pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseCode = ? AND courseType = ?");
-                                pstmt.setString(1, a);
-                                pstmt.setString(2, SecSplit.get(i));
-                                ResultSet rs1 = pstmt.executeQuery();
+                            String a = firstSplit.get(0);
+                            System.out.println("course=" + a);
 
-                                while (rs1.next()) {
-                                    ctp.setCourseID(rs1.getString("courseID"));
+                            for (String stfList2 : firstSplit) {
 
-                                    System.out.println("course=" + ctp.getCourseID());
+                                System.out.println("split - =" + stfList2);
+                                if (stfList2.contains(",")) {
 
-                                    pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
-                                    pstmt.setString(1, ctp.getCourseID());
-                                    ResultSet rs2 = pstmt.executeQuery();
+                                    String[] splitSec = stfList2.split(",");
+                                    List<String> SecSplit = Arrays.asList(splitSec);
+                                    System.out.println("split , =" + SecSplit);
+                                    for (int i = 0; i < SecSplit.size(); i++) {
+                                        System.out.println("size=" + SecSplit.size());
+                                        if (SecSplit.get(i).equals("T")) {
+                                            System.out.println("type=" + SecSplit.get(i));
+                                            pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseCode = ? AND courseType = ?");
+                                            pstmt.setString(1, a);
+                                            pstmt.setString(2, SecSplit.get(i));
+                                            ResultSet rs1 = pstmt.executeQuery();
 
-                                    while (rs2.next()) {
-                                        ctp.setCourseCode(rs2.getString("courseCode"));
-                                        ctp.setCourseType(rs2.getString("courseType"));
+                                            while (rs1.next()) {
+                                                ctt.setCourseID(rs1.getString("courseID"));
 
-                                        System.out.println("zzz" + ctp.getCourseCode());
-                                        System.out.println("zzz" + ctp.getCourseType());
+                                                System.out.println("course=" + ctt.getCourseID());
 
-                                        cType.add(ctp);
-                                    }
-                                }
-                            }
+                                                pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
+                                                pstmt.setString(1, ctt.getCourseID());
+                                                ResultSet rs2 = pstmt.executeQuery();
 
-                            if (SecSplit.get(i).equals("B")) {
-                                System.out.println("type=" + SecSplit.get(i));
-                                pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseCode = ? AND courseType = ?");
-                                pstmt.setString(1, a);
-                                pstmt.setString(2, SecSplit.get(i));
-                                ResultSet rs1 = pstmt.executeQuery();
+                                                while (rs2.next()) {
+                                                    ctt.setCourseCode(rs2.getString("courseCode"));
+                                                    ctt.setCourseType(rs2.getString("courseType"));
 
-                                while (rs1.next()) {
-                                    ctp.setCourseID(rs1.getString("courseID"));
+                                                    System.out.println("zzz" + ctt.getCourseCode());
+                                                    System.out.println("zzz" + ctt.getCourseType());
 
-                                    System.out.println("course=" + ctp.getCourseID());
+                                                    cType.add(ctt);
+                                                }
+                                            }
+                                        }
 
-                                    pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
-                                    pstmt.setString(1, ctp.getCourseID());
-                                    ResultSet rs2 = pstmt.executeQuery();
+                                        if (SecSplit.get(i).equals("P")) {
+                                            System.out.println("type=" + SecSplit.get(i));
+                                            pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseCode = ? AND courseType = ?");
+                                            pstmt.setString(1, a);
+                                            pstmt.setString(2, SecSplit.get(i));
+                                            ResultSet rs1 = pstmt.executeQuery();
 
-                                    while (rs2.next()) {
-                                        ctp.setCourseCode(rs2.getString("courseCode"));
-                                        ctp.setCourseType(rs2.getString("courseType"));
+                                            while (rs1.next()) {
+                                                ctp.setCourseID(rs1.getString("courseID"));
 
-                                        System.out.println("zzz" + ctp.getCourseCode());
-                                        System.out.println("zzz" + ctp.getCourseType());
+                                                System.out.println("course=" + ctp.getCourseID());
 
-                                        cType.add(ctb);
-                                    }
-                                }
-                            }
-                        }
-                    } else {
+                                                pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
+                                                pstmt.setString(1, ctp.getCourseID());
+                                                ResultSet rs2 = pstmt.executeQuery();
 
-                        if (chk == 1) {
-                            for (int i = 0; i < firstSplit.size(); i++) {
-                                System.out.println("split:" + firstSplit);
-                                System.out.println("size:" + firstSplit.size());
-                                if (firstSplit.get(i).equals("T")) {
-                                    System.out.println("type=" + firstSplit.get(i));
-                                    pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseCode = ? AND courseType = ?");
-                                    pstmt.setString(1, a);
-                                    pstmt.setString(2, "T");
-                                    ResultSet rs3 = pstmt.executeQuery();
+                                                while (rs2.next()) {
+                                                    ctp.setCourseCode(rs2.getString("courseCode"));
+                                                    ctp.setCourseType(rs2.getString("courseType"));
 
-                                    while (rs3.next()) {
-                                        ct.setCourseID(rs3.getString("courseID"));
-                                        System.out.println("course=" + ct.getCourseID());
+                                                    System.out.println("zzz" + ctp.getCourseCode());
+                                                    System.out.println("zzz" + ctp.getCourseType());
 
-                                        pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
-                                        pstmt.setString(1, ct.getCourseID());
-                                        ResultSet rs4 = pstmt.executeQuery();
+                                                    cType.add(ctp);
+                                                }
+                                            }
+                                        }
 
-                                        while (rs4.next()) {
-                                            ct.setCourseCode(rs4.getString("courseCode"));
-                                            ct.setCourseType(rs4.getString("courseType"));
+                                        if (SecSplit.get(i).equals("B")) {
+                                            System.out.println("type=" + SecSplit.get(i));
+                                            pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseCode = ? AND courseType = ?");
+                                            pstmt.setString(1, a);
+                                            pstmt.setString(2, SecSplit.get(i));
+                                            ResultSet rs1 = pstmt.executeQuery();
 
-                                            System.out.println("sss" + ct.getCourseCode());
-                                            System.out.println("sss" + ct.getCourseType());
+                                            while (rs1.next()) {
+                                                ctp.setCourseID(rs1.getString("courseID"));
 
-                                            cType.add(ct);
+                                                System.out.println("course=" + ctp.getCourseID());
+
+                                                pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
+                                                pstmt.setString(1, ctp.getCourseID());
+                                                ResultSet rs2 = pstmt.executeQuery();
+
+                                                while (rs2.next()) {
+                                                    ctp.setCourseCode(rs2.getString("courseCode"));
+                                                    ctp.setCourseType(rs2.getString("courseType"));
+
+                                                    System.out.println("zzz" + ctp.getCourseCode());
+                                                    System.out.println("zzz" + ctp.getCourseType());
+
+                                                    cType.add(ctb);
+                                                }
+                                            }
                                         }
                                     }
-                                } else if (firstSplit.get(i).equals("P")) {
-                                    System.out.println("hlo");
-                                    System.out.println("AAA" + a);
-                                    System.out.println("aaa" + firstSplit.get(i));
-                                    pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseCode = ? AND courseType = ?");
-                                    pstmt.setString(1, a);
-                                    pstmt.setString(2, "P");
-                                    ResultSet rs3 = pstmt.executeQuery();
+                                } else {
 
-                                    while (rs3.next()) {
-                                        ct.setCourseID(rs3.getString("courseID"));
+                                    if (chk == 1) {
+                                        for (int i = 0; i < firstSplit.size(); i++) {
+                                            System.out.println("split:" + firstSplit);
+                                            System.out.println("size:" + firstSplit.size());
+                                            if (firstSplit.get(i).equals("T")) {
+                                                System.out.println("type=" + firstSplit.get(i));
+                                                pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseCode = ? AND courseType = ?");
+                                                pstmt.setString(1, a);
+                                                pstmt.setString(2, "T");
+                                                ResultSet rs3 = pstmt.executeQuery();
 
-                                        pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
-                                        pstmt.setString(1, ct.getCourseID());
-                                        ResultSet rs4 = pstmt.executeQuery();
+                                                while (rs3.next()) {
+                                                    ct.setCourseID(rs3.getString("courseID"));
+                                                    System.out.println("course=" + ct.getCourseID());
 
-                                        while (rs4.next()) {
-                                            ct.setCourseCode(rs4.getString("courseCode"));
-                                            ct.setCourseType(rs4.getString("courseType"));
+                                                    pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
+                                                    pstmt.setString(1, ct.getCourseID());
+                                                    ResultSet rs4 = pstmt.executeQuery();
 
-                                            cType.add(ct);
-                                        }
-                                    }
-                                } else if (firstSplit.get(i).equals("B")) {
+                                                    while (rs4.next()) {
+                                                        ct.setCourseCode(rs4.getString("courseCode"));
+                                                        ct.setCourseType(rs4.getString("courseType"));
 
-                                    System.out.println("type=" + firstSplit.get(i));
-                                    pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseCode = ? AND courseType = ?");
-                                    pstmt.setString(1, a);
-                                    pstmt.setString(2, "B");
-                                    ResultSet rs3 = pstmt.executeQuery();
+                                                        System.out.println("sss" + ct.getCourseCode());
+                                                        System.out.println("sss" + ct.getCourseType());
 
-                                    while (rs3.next()) {
-                                        ct.setCourseID(rs3.getString("courseID"));
-                                        System.out.println("course=" + ct.getCourseID());
+                                                        cType.add(ct);
+                                                    }
+                                                }
+                                            } else if (firstSplit.get(i).equals("P")) {
+                                                System.out.println("hlo");
+                                                System.out.println("AAA" + a);
+                                                System.out.println("aaa" + firstSplit.get(i));
+                                                pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseCode = ? AND courseType = ?");
+                                                pstmt.setString(1, a);
+                                                pstmt.setString(2, "P");
+                                                ResultSet rs3 = pstmt.executeQuery();
 
-                                        pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
-                                        pstmt.setString(1, ct.getCourseID());
-                                        ResultSet rs4 = pstmt.executeQuery();
+                                                while (rs3.next()) {
+                                                    ct.setCourseID(rs3.getString("courseID"));
 
-                                        while (rs4.next()) {
-                                            ct.setCourseCode(rs4.getString("courseCode"));
-                                            ct.setCourseType(rs4.getString("courseType"));
+                                                    pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
+                                                    pstmt.setString(1, ct.getCourseID());
+                                                    ResultSet rs4 = pstmt.executeQuery();
 
-                                            System.out.println("sss" + ct.getCourseCode());
-                                            System.out.println("sss" + ct.getCourseType());
+                                                    while (rs4.next()) {
+                                                        ct.setCourseCode(rs4.getString("courseCode"));
+                                                        ct.setCourseType(rs4.getString("courseType"));
 
-                                            cType.add(ct);
+                                                        cType.add(ct);
+                                                    }
+                                                }
+                                            } else if (firstSplit.get(i).equals("B")) {
+
+                                                System.out.println("type=" + firstSplit.get(i));
+                                                pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseCode = ? AND courseType = ?");
+                                                pstmt.setString(1, a);
+                                                pstmt.setString(2, "B");
+                                                ResultSet rs3 = pstmt.executeQuery();
+
+                                                while (rs3.next()) {
+                                                    ct.setCourseID(rs3.getString("courseID"));
+                                                    System.out.println("course=" + ct.getCourseID());
+
+                                                    pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
+                                                    pstmt.setString(1, ct.getCourseID());
+                                                    ResultSet rs4 = pstmt.executeQuery();
+
+                                                    while (rs4.next()) {
+                                                        ct.setCourseCode(rs4.getString("courseCode"));
+                                                        ct.setCourseType(rs4.getString("courseType"));
+
+                                                        System.out.println("sss" + ct.getCourseCode());
+                                                        System.out.println("sss" + ct.getCourseType());
+
+                                                        cType.add(ct);
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
+                                chk = 1;
                             }
                         }
                     }
-                    chk = 1;
+                }
+            } else {
+                if (stfList.contains("-")) {
+                    String[] splitFirst = stfList.split("-");
+                    List<String> firstSplit1 = Arrays.asList(splitFirst);
+                    List<String> firstSplit = new ArrayList<String>();
+
+                    if (firstSplit1.size() > 2) {
+                        firstSplit.add(0, firstSplit1.get(0) + "-" + firstSplit1.get(1));
+                        firstSplit.add(1, firstSplit1.get(2));
+                    } else {
+                        firstSplit.add(0, firstSplit1.get(0));
+                        firstSplit.add(1, firstSplit1.get(1));
+                    }
+
+                    String a = firstSplit.get(0);
+                    System.out.println("course=" + a);
+
+                    for (String stfList2 : firstSplit) {
+
+                        System.out.println("split - =" + stfList2);
+                        if (stfList2.contains(",")) {
+
+                            String[] splitSec = stfList2.split(",");
+                            List<String> SecSplit = Arrays.asList(splitSec);
+                            System.out.println("split , =" + SecSplit);
+                            for (int i = 0; i < SecSplit.size(); i++) {
+                                System.out.println("size=" + SecSplit.size());
+                                if (SecSplit.get(i).equals("T")) {
+                                    System.out.println("type=" + SecSplit.get(i));
+                                    pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseCode = ? AND courseType = ?");
+                                    pstmt.setString(1, a);
+                                    pstmt.setString(2, SecSplit.get(i));
+                                    ResultSet rs1 = pstmt.executeQuery();
+
+                                    while (rs1.next()) {
+                                        ctt.setCourseID(rs1.getString("courseID"));
+
+                                        System.out.println("course=" + ctt.getCourseID());
+
+                                        pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
+                                        pstmt.setString(1, ctt.getCourseID());
+                                        ResultSet rs2 = pstmt.executeQuery();
+
+                                        while (rs2.next()) {
+                                            ctt.setCourseCode(rs2.getString("courseCode"));
+                                            ctt.setCourseType(rs2.getString("courseType"));
+
+                                            System.out.println("zzz" + ctt.getCourseCode());
+                                            System.out.println("zzz" + ctt.getCourseType());
+
+                                            cType.add(ctt);
+                                        }
+                                    }
+                                }
+
+                                if (SecSplit.get(i).equals("P")) {
+                                    System.out.println("type=" + SecSplit.get(i));
+                                    pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseCode = ? AND courseType = ?");
+                                    pstmt.setString(1, a);
+                                    pstmt.setString(2, SecSplit.get(i));
+                                    ResultSet rs1 = pstmt.executeQuery();
+
+                                    while (rs1.next()) {
+                                        ctp.setCourseID(rs1.getString("courseID"));
+
+                                        System.out.println("course=" + ctp.getCourseID());
+
+                                        pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
+                                        pstmt.setString(1, ctp.getCourseID());
+                                        ResultSet rs2 = pstmt.executeQuery();
+
+                                        while (rs2.next()) {
+                                            ctp.setCourseCode(rs2.getString("courseCode"));
+                                            ctp.setCourseType(rs2.getString("courseType"));
+
+                                            System.out.println("zzz" + ctp.getCourseCode());
+                                            System.out.println("zzz" + ctp.getCourseType());
+
+                                            cType.add(ctp);
+                                        }
+                                    }
+                                }
+
+                                if (SecSplit.get(i).equals("B")) {
+                                    System.out.println("type=" + SecSplit.get(i));
+                                    pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseCode = ? AND courseType = ?");
+                                    pstmt.setString(1, a);
+                                    pstmt.setString(2, SecSplit.get(i));
+                                    ResultSet rs1 = pstmt.executeQuery();
+
+                                    while (rs1.next()) {
+                                        ctp.setCourseID(rs1.getString("courseID"));
+
+                                        System.out.println("course=" + ctp.getCourseID());
+
+                                        pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
+                                        pstmt.setString(1, ctp.getCourseID());
+                                        ResultSet rs2 = pstmt.executeQuery();
+
+                                        while (rs2.next()) {
+                                            ctp.setCourseCode(rs2.getString("courseCode"));
+                                            ctp.setCourseType(rs2.getString("courseType"));
+
+                                            System.out.println("zzz" + ctp.getCourseCode());
+                                            System.out.println("zzz" + ctp.getCourseType());
+
+                                            cType.add(ctb);
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+
+                            if (chk == 1) {
+                                for (int i = 0; i < firstSplit.size(); i++) {
+                                    System.out.println("split:" + firstSplit);
+                                    System.out.println("size:" + firstSplit.size());
+                                    if (firstSplit.get(i).equals("T")) {
+                                        System.out.println("type=" + firstSplit.get(i));
+                                        pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseCode = ? AND courseType = ?");
+                                        pstmt.setString(1, a);
+                                        pstmt.setString(2, "T");
+                                        ResultSet rs3 = pstmt.executeQuery();
+
+                                        while (rs3.next()) {
+                                            ct.setCourseID(rs3.getString("courseID"));
+                                            System.out.println("course=" + ct.getCourseID());
+
+                                            pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
+                                            pstmt.setString(1, ct.getCourseID());
+                                            ResultSet rs4 = pstmt.executeQuery();
+
+                                            while (rs4.next()) {
+                                                ct.setCourseCode(rs4.getString("courseCode"));
+                                                ct.setCourseType(rs4.getString("courseType"));
+
+                                                System.out.println("sss" + ct.getCourseCode());
+                                                System.out.println("sss" + ct.getCourseType());
+
+                                                cType.add(ct);
+                                            }
+                                        }
+                                    } else if (firstSplit.get(i).equals("P")) {
+                                        System.out.println("hlo");
+                                        System.out.println("AAA" + a);
+                                        System.out.println("aaa" + firstSplit.get(i));
+                                        pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseCode = ? AND courseType = ?");
+                                        pstmt.setString(1, a);
+                                        pstmt.setString(2, "P");
+                                        ResultSet rs3 = pstmt.executeQuery();
+
+                                        while (rs3.next()) {
+                                            ct.setCourseID(rs3.getString("courseID"));
+
+                                            pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
+                                            pstmt.setString(1, ct.getCourseID());
+                                            ResultSet rs4 = pstmt.executeQuery();
+
+                                            while (rs4.next()) {
+                                                ct.setCourseCode(rs4.getString("courseCode"));
+                                                ct.setCourseType(rs4.getString("courseType"));
+
+                                                cType.add(ct);
+                                            }
+                                        }
+                                    } else if (firstSplit.get(i).equals("B")) {
+
+                                        System.out.println("type=" + firstSplit.get(i));
+                                        pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseCode = ? AND courseType = ?");
+                                        pstmt.setString(1, a);
+                                        pstmt.setString(2, "B");
+                                        ResultSet rs3 = pstmt.executeQuery();
+
+                                        while (rs3.next()) {
+                                            ct.setCourseID(rs3.getString("courseID"));
+                                            System.out.println("course=" + ct.getCourseID());
+
+                                            pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
+                                            pstmt.setString(1, ct.getCourseID());
+                                            ResultSet rs4 = pstmt.executeQuery();
+
+                                            while (rs4.next()) {
+                                                ct.setCourseCode(rs4.getString("courseCode"));
+                                                ct.setCourseType(rs4.getString("courseType"));
+
+                                                System.out.println("sss" + ct.getCourseCode());
+                                                System.out.println("sss" + ct.getCourseType());
+
+                                                cType.add(ct);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        chk = 1;
+                    }
                 }
             }
         }
 
         rs.close();
+
         pstmt.close();
+
         connect.close();
 
         return cType;
@@ -610,6 +825,12 @@ public class ModifySchedule implements Serializable {
         this.message = false;
         this.success = false;
         return "ViewTimetable.xhtml?faces-redirect=true";
+    }
+    
+    public void cancel() throws IOException {
+        this.message = false;
+        this.success = false;
+        FacesContext.getCurrentInstance().getExternalContext().redirect("ViewTimetable.xhtml");
     }
 
     public String back1() {
