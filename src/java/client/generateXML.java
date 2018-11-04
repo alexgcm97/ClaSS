@@ -322,13 +322,14 @@ public class generateXML implements Serializable {
 
     }
 
-    public void generateTutorialGroupXML(List<String> tgList) {
+    public void generateTutorialGroupXML(List<TutorialGroup> tgList) {
         List<TutorialGroup> list = new ArrayList<TutorialGroup>();
         List<TutorialGroup> recordList = new ArrayList<TutorialGroup>();
         String xmlFilePath = filePath + "TutorialGroup.xml";
 
         try {
-            for (String id : tgList) {
+            for (int i = 0; i < tgList.size(); i++) {
+                String id = tgList.get(i).getGroupID();
                 list = tgda.getSelectedRecords(id);
                 for (TutorialGroup item : list) {
                     TutorialGroup record = new TutorialGroup(item.getGroupID(), item.getGroupNumber(), item.getSize(), item.getCohortID(), item.getCourseCodeList());

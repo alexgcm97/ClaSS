@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Schedule {
 
-    private String groupID;
+    private String groupID, cohortID;
     private int requiredNoOfClass;
     private ArrayList<Class> classList;
 
@@ -21,8 +21,9 @@ public class Schedule {
 
     }
 
-    public Schedule(String groupID, ArrayList<Class> classList) {
+    public Schedule(String groupID, String cohortID, ArrayList<Class> classList) {
         this.groupID = groupID;
+        this.cohortID = cohortID;
         this.classList = classList;
     }
 
@@ -32,6 +33,14 @@ public class Schedule {
 
     public void setGroupID(String groupID) {
         this.groupID = groupID;
+    }
+
+    public String getCohortID() {
+        return cohortID;
+    }
+
+    public void setCohortID(String cohortID) {
+        this.cohortID = cohortID;
     }
 
     public ArrayList<Class> getClassList() {

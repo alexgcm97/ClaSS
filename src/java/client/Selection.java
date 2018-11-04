@@ -48,7 +48,7 @@ public class Selection {
     private TutorialGroupDA tgda = new TutorialGroupDA();
     private TutorialGroup tg = new TutorialGroup();
     private List<TutorialGroup> tutorialGroupList = new ArrayList<TutorialGroup>();
-    private List<String> selectedGroups = new ArrayList<String>();
+    private List<TutorialGroup> selectedGroups = new ArrayList<>();
 
     private CourseDA cda = new CourseDA();
     private CourseDetails c = new CourseDetails();
@@ -167,7 +167,7 @@ public class Selection {
         for (int i = 0; i < selectedProgramme.size(); i++) {
             tempList = tgda.getGroupIdViaCohortID(selectedProgramme.get(i).getCohortID());
             for (int j = 0; j < tempList.size(); j++) {
-                selectedGroups.add(tempList.get(j));
+                selectedGroups.add(new TutorialGroup(tempList.get(j), selectedProgramme.get(i).getCohortID()));
             }
         }
         System.out.println("selectedProgramme size: " + selectedProgramme.size());
@@ -178,7 +178,7 @@ public class Selection {
         System.out.println(selectedGroups.size());
         for (int k = 0; k < selectedGroups.size(); k++) {
             System.out.println(selectedGroups.get(k));
-            for (String s : tgda.getCourseCodeList(selectedGroups.get(k))) {
+            for (String s : tgda.getCourseCodeList(selectedGroups.get(k).getGroupID())) {
                 if (!courseCodeList.contains(s)) {
                     courseCodeList.add(s);
                 }
@@ -196,7 +196,7 @@ public class Selection {
 
         for (int i = 0; i < courseCodeList.size(); i++) {
             for (int j = 0; j < selectedGroups.size(); j++) {
-                tempList1 = sda.getStaffIdViaGroupIdCourseCode(courseCodeList.get(i), selectedGroups.get(j));
+                tempList1 = sda.getStaffIdViaGroupIdCourseCode(courseCodeList.get(i), selectedGroups.get(j).getGroupID(), selectedGroups.get(j).getCohortID());
                 for (int k = 0; k < tempList1.size(); k++) {
                     if (!selectedStaff.contains(tempList1.get(k))) {
                         selectedStaff.add(tempList1.get(k));
@@ -317,11 +317,11 @@ public class Selection {
         this.selectedVenue = selectedVenue;
     }
 
-    public List<String> getSelectedGroups() {
+    public List<TutorialGroup> getSelectedGroups() {
         return selectedGroups;
     }
 
-    public void setSelectedGroups(List<String> selectedGroups) {
+    public void setSelectedGroups(List<TutorialGroup> selectedGroups) {
         this.selectedGroups = selectedGroups;
     }
 

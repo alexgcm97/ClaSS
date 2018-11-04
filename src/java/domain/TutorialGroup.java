@@ -19,6 +19,11 @@ public class TutorialGroup implements Serializable {
     public TutorialGroup() {
     }
 
+    public TutorialGroup(String groupID, String cohortID) {
+        this.groupID = groupID;
+        this.cohortID = cohortID;
+    }
+
     public TutorialGroup(String groupID, int groupNumber, int size, String cohortID) {
         this.groupID = groupID;
         this.cohortID = cohortID;

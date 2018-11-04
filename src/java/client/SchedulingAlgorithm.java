@@ -209,7 +209,7 @@ public class SchedulingAlgorithm implements Serializable {
         //Creating Schedule List for each Group
         for (int i = 0; i < groupList.size(); i++) {
             ArrayList<Class> classList = new ArrayList();
-            Schedule s = new Schedule(groupList.get(i).getGroupID(), classList);
+            Schedule s = new Schedule(groupList.get(i).getGroupID(), groupList.get(i).getCohortID(), classList);
             int count = 0;
             for (CourseType ct : courseList) {
                 if (groupList.get(i).getCourseCodeList().contains(ct.getCourseCode())) {
@@ -247,7 +247,7 @@ public class SchedulingAlgorithm implements Serializable {
             assignLecture(lecList.get(i));
         }
 
-//        Optimize Lecture Classes Break
+        //Optimize Lecture Classes Break
         if (maxBreak != 99) {
             sortList();
             optimizeBreak(1);
@@ -662,7 +662,7 @@ public class SchedulingAlgorithm implements Serializable {
                 for (String courseCodeList : s.getCourseCodeList()) {
                     if (courseCodeList.contains(courseCode) && courseCodeList.contains(courseType)) {
                         for (String lecGroupList : s.getLecGroupList()) {
-                            if (lecGroupList.contains(courseCode) && lecGroupList.contains(scheduleList.get(i).getGroupID())) {
+                            if (lecGroupList.contains(courseCode) && lecGroupList.contains(scheduleList.get(i).getCohortID())) {
                                 c = new Class(courseID, v.getVenueID(), scheduleList.get(i).getGroupID(), s.getStaffID(), day, startTime, endTime, courseType);
                                 scheduleList.get(i).addClassToList(c);
                             }

@@ -11,7 +11,7 @@ package domain;
  */
 public class Class {
 
-    private String courseID, venueID, groupID, staffID, courseType;
+    private String courseID, venueID, groupID, staffID, courseType, cohortID;
     private int day;
     private double startTime, endTime, oriStartTime, oriEndTime;
 
@@ -35,6 +35,18 @@ public class Class {
         this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+    
+    public Class(String courseID, String venueID, String groupID, String staffID, int day, double startTime, double endTime, String courseType, String cohortID) {
+        this.courseID = courseID;
+        this.venueID = venueID;
+        this.groupID = groupID;
+        this.staffID = staffID;
+        this.day = day;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.courseType = courseType;
+        this.cohortID = cohortID;
     }
 
     public Class(String courseID, String venueID, String groupID, String staffID, int day, double startTime, double endTime, String courseType) {

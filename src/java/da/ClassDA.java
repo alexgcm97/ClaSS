@@ -74,10 +74,10 @@ public class ClassDA {
         try {
             connect = DBConnection.getConnection();
 
-            PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM class");
+            PreparedStatement pstmt = connect.prepareStatement("SELECT c.courseID, c.venueID,c.groupID, c.staffID, c.day, c.startTime, c.endTime, ct.courseType, tg.cohortID FROM class c, courseType ct, tutorialGroup tg where c.courseID = ct.courseID AND c.groupID = tg.groupID");
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                Class c = new domain.Class(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7));
+                Class c = new domain.Class(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7), rs.getString(8), rs.getString(9));
                 classList.add(c);
             }
             rs.close();

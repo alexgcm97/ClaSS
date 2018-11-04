@@ -51,7 +51,7 @@ public class StaffDA implements Serializable {
         return classList;
     }
 
-    public List<String> getStaffIdViaGroupIdCourseCode(String courseCode, String groupId) throws SQLException {
+    public List<String> getStaffIdViaGroupIdCourseCode(String courseCode, String groupId, String cohortID) throws SQLException {
 
         Connection connect = null;
 
@@ -60,7 +60,7 @@ public class StaffDA implements Serializable {
             connect = DBConnection.getConnection();
             PreparedStatement pstmt = connect.prepareStatement("SELECT staffId FROM STAFF WHERE (lecGroupList LIKE ? and lecGroupList LIKE ?) or (tutGroupList LIKE ? and tutGroupList LIKE ?) or (pracGroupList LIKE ? and pracGroupList LIKE ?)");
             pstmt.setString(1, '%' + courseCode + '%');
-            pstmt.setString(2, '%' + groupId + '%');
+            pstmt.setString(2, '%' + cohortID + '%');
             pstmt.setString(3, '%' + courseCode + '%');
             pstmt.setString(4, '%' + groupId + '%');
             pstmt.setString(5, '%' + courseCode + '%');

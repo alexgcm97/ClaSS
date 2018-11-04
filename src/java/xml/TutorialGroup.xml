@@ -48,40 +48,4 @@
     <cohortID>PC1001</cohortID>
     <courseCodeList>BACS3033,BAIT3094,BAIT2123,BAIT3173,MPU-3232</courseCodeList>
   </tutorialGroup>
-  <tutorialGroup groupID="G1009">
-    <groupNumber>1</groupNumber>
-    <size>24</size>
-    <cohortID>PC1002</cohortID>
-    <courseCodeList>BACS3033,BAIT3094,BACS2103,BNEL2022,BHEL2023</courseCodeList>
-  </tutorialGroup>
-  <tutorialGroup groupID="G1010">
-    <groupNumber>2</groupNumber>
-    <size>24</size>
-    <cohortID>PC1002</cohortID>
-    <courseCodeList>BACS3033,BAIT3094,BACS2103,BNEL2022,BHEL2023</courseCodeList>
-  </tutorialGroup>
-  <tutorialGroup groupID="G1011">
-    <groupNumber>3</groupNumber>
-    <size>24</size>
-    <cohortID>PC1002</cohortID>
-    <courseCodeList>BACS3033,BAIT3094,BACS2103,BNEL2022,BHEL2023</courseCodeList>
-  </tutorialGroup>
-  <tutorialGroup groupID="G1012">
-    <groupNumber>4</groupNumber>
-    <size>24</size>
-    <cohortID>PC1002</cohortID>
-    <courseCodeList>BACS3033,BAIT3094,BACS2103,BNEL2022,BHEL2023</courseCodeList>
-  </tutorialGroup>
-  <tutorialGroup groupID="G1013">
-    <groupNumber>5</groupNumber>
-    <size>24</size>
-    <cohortID>PC1002</cohortID>
-    <courseCodeList>BACS3033,BAIT3094,BACS2103,BNEL2022,BHEL2023</courseCodeList>
-  </tutorialGroup>
-  <tutorialGroup groupID="G1014">
-    <groupNumber>6</groupNumber>
-    <size>24</size>
-    <cohortID>PC1002</cohortID>
-    <courseCodeList>BACS3033,BAIT3094,BACS2103,BNEL2022,BHEL2023</courseCodeList>
-  </tutorialGroup>
 </tutorialGroups>

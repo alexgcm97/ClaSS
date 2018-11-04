@@ -50,29 +50,4 @@
     <courseDuration>1.0</courseDuration>
     <courseCode>MPU-3232</courseCode>
   </course>
-  <course courseID="C1012">
-    <courseType>L</courseType>
-    <courseDuration>2.0</courseDuration>
-    <courseCode>BACS2103</courseCode>
-  </course>
-  <course courseID="C1013">
-    <courseType>T</courseType>
-    <courseDuration>1.0</courseDuration>
-    <courseCode>BACS2103</courseCode>
-  </course>
-  <course courseID="C1014">
-    <courseType>P</courseType>
-    <courseDuration>2.0</courseDuration>
-    <courseCode>BACS2103</courseCode>
-  </course>
-  <course courseID="C1015">
-    <courseType>B</courseType>
-    <courseDuration>1.0</courseDuration>
-    <courseCode>BNEL2022</courseCode>
-  </course>
-  <course courseID="C1016">
-    <courseType>B</courseType>
-    <courseDuration>2.0</courseDuration>
-    <courseCode>BHEL2023</courseCode>
-  </course>
 </courses>
