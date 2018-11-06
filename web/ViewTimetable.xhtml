@@ -93,7 +93,7 @@
                 <div class="column">
                     <p:dataTable value = "#{viewTimetable.allVenue}" filteredValue="#{viewTimetable.filterVenue}" var = "vn">
                         <p:column headerText="Venue Timetable" filterBy="#{vn.venueID} #{vn.venueType}" filterMatchMode="contains" >    	  				
-                            #{vn.venueID} #{vn.venueType}
+                            #{vn.venueID} (#{vn.venueType})
                         </p:column>
                         <p:column>
                             <p:commandButton value="View" action="#{scheduleInsert.view_Venue()}" class="btn">

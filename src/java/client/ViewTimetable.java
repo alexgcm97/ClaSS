@@ -23,31 +23,31 @@ public class ViewTimetable {
     private Connection connect;
     
     private List<TutorialGroup> filterGroup;
-
+    
     public List<TutorialGroup> getFilterGroup() {
         return filterGroup;
     }
-
+    
     public void setFilterGroup(List<TutorialGroup> filterGroup) {
         this.filterGroup = filterGroup;
     }
-
+    
     private List<Staff> filterStaff;
-
+    
     public List<Staff> getFilterStaff() {
         return filterStaff;
     }
-
+    
     public void setFilterStaff(List<Staff> filterStaff) {
         this.filterStaff = filterStaff;
     }
     
     private List<Venue> filterVenue;
-
+    
     public List<Venue> getFilterVenue() {
         return filterVenue;
     }
-
+    
     public void setFilterVenue(List<Venue> filterVenue) {
         this.filterVenue = filterVenue;
     }
@@ -93,6 +93,7 @@ public class ViewTimetable {
                 grp.setProgrammeCode(rs2.getString("programmeCode"));
                 grp.setIntakeYear(rs2.getString("intakeYear"));
                 grp.setStudyYear(rs2.getInt("studyYear"));
+                grp.setEntryYear(rs2.getString("entryYear"));
             }
             group.add(grp);
         }
