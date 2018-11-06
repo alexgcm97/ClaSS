@@ -588,15 +588,12 @@ public class SchedulingAlgorithm implements Serializable {
         }
     }
 
-    public int getTotalSize(String courseCode, String staffID) {
+    public int getTotalSize(String lecGroupStr, String courseCode, String staffID) {
         int totalSize = 0;
-        Staff s = searchStaff(staffID);
         ArrayList<TutorialGroup> tgList = tgda.getGroupsWithCourseCode(courseCode);
-        for (String str : s.getLecGroupList()) {
-            for (TutorialGroup tg : tgList) {
-                if (str.contains(courseCode) && str.contains(tg.getCohortID())) {
-                    totalSize += tg.getSize();
-                }
+        for (TutorialGroup tg : tgList) {
+            if (lecGroupStr.contains(courseCode) && lecGroupStr.contains(tg.getCohortID())) {
+                totalSize += tg.getSize();
             }
         }
         return totalSize;
@@ -668,7 +665,7 @@ public class SchedulingAlgorithm implements Serializable {
                                         }
                                     }
 
-                                    v = getLecVenue(courseCode, s.getStaffID());
+                                    v = getLecVenue(lecGroupStr, courseCode, s.getStaffID());
 
                                     ArrayList<Class> venueClassList = v.getClassList();
                                     if (venueClassList.size() > 0) {
@@ -980,9 +977,9 @@ public class SchedulingAlgorithm implements Serializable {
         return qualifiedList.get(rand.nextInt(qualifiedList.size()));
     }
 
-    public Venue getLecVenue(String courseCode, String staffID) throws IOException {
+    public Venue getLecVenue(String lecGroupStr, String courseCode, String staffID) throws IOException {
         ArrayList<Venue> qualifiedList = new ArrayList();
-        int totalSize = getTotalSize(courseCode, staffID);
+        int totalSize = getTotalSize(lecGroupStr, courseCode, staffID);
         Venue venue = new Venue();
         for (Venue v : hallList) {
             if (v.getCapacity() >= totalSize) {
