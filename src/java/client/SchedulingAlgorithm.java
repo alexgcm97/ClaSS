@@ -48,6 +48,7 @@ public class SchedulingAlgorithm implements Serializable {
     private final ClassDA cda = new ClassDA();
     private final VenueDA vda = new VenueDA();
     private final StaffDA sda = new StaffDA();
+    private final TutorialGroupDA tgda = new TutorialGroupDA();
 
     private final String filePath = XMLPath.getXMLPath();
 
@@ -590,12 +591,11 @@ public class SchedulingAlgorithm implements Serializable {
     public int getTotalSize(String courseCode, String staffID) {
         int totalSize = 0;
         Staff s = searchStaff(staffID);
-        for (int i = 0; i < groupList.size(); i++) {
-            if (groupList.get(i).getCourseCodeList().contains(courseCode)) {
-                for (String str : s.getLecGroupList()) {
-                    if (str.contains(courseCode) && str.contains(groupList.get(i).getGroupID())) {
-                        totalSize += groupList.get(i).getSize();
-                    }
+        ArrayList<TutorialGroup> tgList = tgda.getGroupsWithCourseCode(courseCode);
+        for (String str : s.getLecGroupList()) {
+            for (TutorialGroup tg : tgList) {
+                if (str.contains(courseCode) && str.contains(tg.getCohortID())) {
+                    totalSize += tg.getSize();
                 }
             }
         }
@@ -983,6 +983,7 @@ public class SchedulingAlgorithm implements Serializable {
     public Venue getLecVenue(String courseCode, String staffID) throws IOException {
         ArrayList<Venue> qualifiedList = new ArrayList();
         int totalSize = getTotalSize(courseCode, staffID);
+        Venue venue = new Venue();
         for (Venue v : hallList) {
             if (v.getCapacity() >= totalSize) {
                 qualifiedList.add(v);
@@ -991,8 +992,15 @@ public class SchedulingAlgorithm implements Serializable {
         if (qualifiedList.isEmpty()) {
             errorCode = 3;
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
+        } else {
+            venue = qualifiedList.get(0);
+            for (int i = 1; i < qualifiedList.size(); i++) {
+                if (qualifiedList.get(i).getCapacity() < venue.getCapacity()) {
+                    venue = qualifiedList.get(i);
+                }
+            }
         }
-        return qualifiedList.get(rand.nextInt(qualifiedList.size()));
+        return venue;
     }
 
     public Venue getCourseVenue(String courseType, String courseCode) throws IOException {
