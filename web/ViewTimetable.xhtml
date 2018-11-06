@@ -67,7 +67,7 @@
                 <div class="column">
                     <p:dataTable value = "#{viewTimetable.allGroup}" filteredValue="#{viewTimetable.filterGroup}" var = "grp">
                         <p:column headerText="Student Timetable" filterBy="#{grp.programmeCode}#{grp.studyYear}" filterMatchMode="contains" > 				
-                            #{grp.programmeCode}#{grp.studyYear} (G#{grp.groupNumber}) - #{grp.intakeYear}
+                            #{grp.programmeCode}#{grp.studyYear} (G#{grp.groupNumber}) - #{grp.entryYear}
                         </p:column>
                         <p:column>
                             <p:commandButton value="View" action="#{scheduleInsert.view_Group}" class="btn">

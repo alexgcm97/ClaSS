@@ -571,7 +571,7 @@ public class SchedulingAlgorithm implements Serializable {
         return count;
     }
 
-    public void storeData() throws SQLException {
+    public void insertData() throws SQLException {
         for (int i = 0; i < scheduleList.size(); i++) {
             ArrayList<Class> classList = scheduleList.get(i).getClassList();
 
@@ -607,91 +607,93 @@ public class SchedulingAlgorithm implements Serializable {
 
         String courseID = course.getCourseID(), courseType = course.getCourseType(), courseCode = course.getCourseCode();
         Venue v;
-        ArrayList<Staff> lecStaffList = getLecStaffList(courseCode);
+        ArrayList<Staff> lecStaffList = getLecStaffList(courseCode, courseType);
         double startTime = 0, endTime = 0;
         int day = 0;
         Class c = new Class();
 
         for (Staff s : lecStaffList) {
             for (String lecGroupStr : s.getLecGroupList()) {
-                found = false;
-                for (Class dbClass : dbList) {
-                    if (course.getCourseID().equals(dbClass.getCourseID()) && s.getStaffID().equals(dbClass.getStaffID())) {
-                        if (lecGroupStr.contains(courseCode) && lecGroupStr.contains(dbClass.getCohortID())) {
-                            c = new Class(dbClass.getCourseID(), dbClass.getVenueID(), "-", dbClass.getStaffID(), dbClass.getDay(), dbClass.getStartTime(), dbClass.getEndTime(), dbClass.getCourseType());
-                            found = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (found) {
-                    isSame = false;
-                    for (int i = 0; i < scheduleList.size(); i++) {
-                        if (lecGroupStr.contains(courseCode) && lecGroupStr.contains(scheduleList.get(i).getCohortID())) {
-                            isSame = true;
-                            Class temp = new Class(c.getCourseID(), c.getVenueID(), scheduleList.get(i).getGroupID(), c.getStaffID(), c.getDay(), c.getStartTime(), c.getEndTime(), c.getCourseType());
-                            temp.setMoveFlag(false);
-                            scheduleList.get(i).addClassToList(temp);
-                        }
-                    }
-                }
-                if (!isSame) {
-                    do {
-                        isClash = false;
-                        startTime = getRandomStartTime();
-                        endTime = startTime + Double.parseDouble(course.getCourseDuration());
-                        day = getRandomDay();
-
-                        if (s.getBlockDay() == day) {
-                            double startTime1 = s.getBlockStart(), endTime1 = s.getBlockStart() + s.getBlockDuration();
-                            if ((startTime >= startTime1 && startTime < endTime1) || (endTime > startTime1 && endTime <= endTime1) || (startTime1 >= startTime && startTime1 < endTime) || (endTime1 > startTime && endTime1 <= endTime)) {
-                                isClash = true;
+                if (lecGroupStr.contains(courseCode)) {
+                    found = false;
+                    for (Class dbClass : dbList) {
+                        if (course.getCourseID().equals(dbClass.getCourseID()) && s.getStaffID().equals(dbClass.getStaffID())) {
+                            if (lecGroupStr.contains(dbClass.getCohortID())) {
+                                c = new Class(dbClass.getCourseID(), dbClass.getVenueID(), "-", dbClass.getStaffID(), dbClass.getDay(), dbClass.getStartTime(), dbClass.getEndTime(), dbClass.getCourseType());
+                                found = true;
+                                break;
                             }
                         }
+                    }
 
-                        ArrayList<Class> staffClassList = s.getClassList();
-                        if (staffClassList.size() > 0) {
-                            for (int i = 0; i < staffClassList.size(); i++) {
-                                Class temp = staffClassList.get(i);
-                                if (temp.getDay() == day) {
-                                    double startTime1 = temp.getStartTime(), endTime1 = temp.getEndTime();
+                    if (found) {
+                        isSame = false;
+                        for (int i = 0; i < scheduleList.size(); i++) {
+                            if (lecGroupStr.contains(scheduleList.get(i).getCohortID())) {
+                                isSame = true;
+                                Class temp = new Class(c.getCourseID(), c.getVenueID(), scheduleList.get(i).getGroupID(), c.getStaffID(), c.getDay(), c.getStartTime(), c.getEndTime(), c.getCourseType());
+                                temp.setMoveFlag(false);
+                                scheduleList.get(i).addClassToList(temp);
+                            }
+                        }
+                    }
+                    if (!isSame) {
+                        do {
+                            isClash = false;
+                            startTime = getRandomStartTime();
+                            endTime = startTime + Double.parseDouble(course.getCourseDuration());
+                            day = getRandomDay();
 
-                                    if ((startTime >= startTime1 && startTime < endTime1) || (endTime > startTime1 && endTime <= endTime1) || (startTime1 >= startTime && startTime1 < endTime) || (endTime1 > startTime && endTime1 <= endTime)) {
-                                        if (temp.getStaffID().equals(s.getStaffID())) {
-                                            isClash = true;
-                                            break;
+                            if (s.getBlockDay() == day) {
+                                double startTime1 = s.getBlockStart(), endTime1 = s.getBlockStart() + s.getBlockDuration();
+                                if ((startTime >= startTime1 && startTime < endTime1) || (endTime > startTime1 && endTime <= endTime1) || (startTime1 >= startTime && startTime1 < endTime) || (endTime1 > startTime && endTime1 <= endTime)) {
+                                    isClash = true;
+                                }
+                            }
+
+                            ArrayList<Class> staffClassList = s.getClassList();
+                            if (staffClassList.size() > 0) {
+                                for (int i = 0; i < staffClassList.size(); i++) {
+                                    Class temp = staffClassList.get(i);
+                                    if (temp.getDay() == day) {
+                                        double startTime1 = temp.getStartTime(), endTime1 = temp.getEndTime();
+
+                                        if ((startTime >= startTime1 && startTime < endTime1) || (endTime > startTime1 && endTime <= endTime1) || (startTime1 >= startTime && startTime1 < endTime) || (endTime1 > startTime && endTime1 <= endTime)) {
+                                            if (temp.getStaffID().equals(s.getStaffID())) {
+                                                isClash = true;
+                                                break;
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
 
-                        v = getLecVenue(courseCode, s.getStaffID());
+                            v = getLecVenue(courseCode, s.getStaffID());
 
-                        ArrayList<Class> venueClassList = v.getClassList();
-                        if (venueClassList.size() > 0) {
-                            for (int i = 0; i < venueClassList.size(); i++) {
-                                Class temp = venueClassList.get(i);
-                                if (temp.getDay() == day) {
-                                    double startTime1 = temp.getStartTime(), endTime1 = temp.getEndTime();
-                                    if ((startTime >= startTime1 && startTime < endTime1) || (endTime > startTime1 && endTime <= endTime1) || (startTime1 >= startTime && startTime1 < endTime) || (endTime1 > startTime && endTime1 <= endTime)) {
-                                        if (temp.getVenueID().equals(v.getVenueID())) {
-                                            isClash = true;
-                                            break;
+                            ArrayList<Class> venueClassList = v.getClassList();
+                            if (venueClassList.size() > 0) {
+                                for (int i = 0; i < venueClassList.size(); i++) {
+                                    Class temp = venueClassList.get(i);
+                                    if (temp.getDay() == day) {
+                                        double startTime1 = temp.getStartTime(), endTime1 = temp.getEndTime();
+                                        if ((startTime >= startTime1 && startTime < endTime1) || (endTime > startTime1 && endTime <= endTime1) || (startTime1 >= startTime && startTime1 < endTime) || (endTime1 > startTime && endTime1 <= endTime)) {
+                                            if (temp.getVenueID().equals(v.getVenueID())) {
+                                                isClash = true;
+                                                break;
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                    } while (isClash);
+                        } while (isClash);
 
-                    for (int i = 0; i < scheduleList.size(); i++) {
-                        for (String courseCodeList : s.getCourseCodeList()) {
-                            if (courseCodeList.contains(courseCode) && courseCodeList.contains(courseType)) {
-                                if (lecGroupStr.contains(courseCode) && lecGroupStr.contains(scheduleList.get(i).getCohortID())) {
-                                    c = new Class(courseID, v.getVenueID(), scheduleList.get(i).getGroupID(), s.getStaffID(), day, startTime, endTime, courseType);
-                                    scheduleList.get(i).addClassToList(c);
+                        for (int i = 0; i < scheduleList.size(); i++) {
+                            for (String courseCodeList : s.getCourseCodeList()) {
+                                if (courseCodeList.contains(courseCode) && courseCodeList.contains(courseType)) {
+                                    if (lecGroupStr.contains(courseCode) && lecGroupStr.contains(scheduleList.get(i).getCohortID())) {
+                                        c = new Class(courseID, v.getVenueID(), scheduleList.get(i).getGroupID(), s.getStaffID(), day, startTime, endTime, courseType);
+                                        scheduleList.get(i).addClassToList(c);
+                                    }
                                 }
                             }
                         }
@@ -926,11 +928,11 @@ public class SchedulingAlgorithm implements Serializable {
         return rand.nextInt(studyDays) + 1;
     }
 
-    public ArrayList<Staff> getLecStaffList(String courseCode) throws IOException {
+    public ArrayList<Staff> getLecStaffList(String courseCode, String courseType) throws IOException {
         ArrayList<Staff> qualifiedList = new ArrayList();
         for (Staff s : staffList) {
             for (String courseCodeList : s.getCourseCodeList()) {
-                if (courseCodeList.contains(courseCode) && courseCodeList.contains("L")) {
+                if (courseCodeList.contains(courseCode) && courseCodeList.contains(courseType)) {
                     qualifiedList.add(s);
                 }
             }
@@ -1385,12 +1387,12 @@ public class SchedulingAlgorithm implements Serializable {
                 allocation();
                 runCount++;
                 System.out.println("Loop " + loopCount + " Run " + runCount + " (StudyDays: " + studyDays + " - MaxBreak: " + maxBreak + " h)");
-//                System.out.println(isClassEnough() + "-" + isClassListDataCompleted() + "-" + hasLongBreak() + "-" + hasInvalidTime() + "-" + hasInvalidNoOfClass() + "-" + hasLongDurationClass() + "-" + isClashWithinList() + "-" + isClashWithOtherLists() + "-" + isClashWithBlockClass() + "-" + isClashWithDB());
+                //System.out.println(isClassEnough() + "-" + isClassListDataCompleted() + "-" + hasLongBreak() + "-" + hasInvalidTime() + "-" + hasInvalidNoOfClass() + "-" + hasLongDurationClass() + "-" + isClashWithinList() + "-" + isClashWithOtherLists() + "-" + isClashWithBlockClass() + "-" + isClashWithDB());
             }
         } while (toRestart || !isClassEnough() || !isClassListDataCompleted() || hasInvalidTime() || hasInvalidNoOfClass() || hasLongDurationClass() || isClashWithinList() || isClashWithOtherLists() || isClashWithBlockClass() || isClashWithDB());
 
         if (!isBreak) {
-            storeData();
+            insertData();
             printClass();
             FacesContext.getCurrentInstance().getExternalContext().redirect("ViewTimetable.xhtml");
         } else {
