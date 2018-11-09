@@ -37,19 +37,7 @@
     </h:head>
     <h:body>
         <h:outputScript rendered="#{schedulingAlgorithm.errorCode == 1}">
-            alert("Unable to generate schedule, possibly due to insufficient staff or venue provided.");
-            #{schedulingAlgorithm.setErrorCode(0)}
-        </h:outputScript>
-        <h:outputScript rendered="#{schedulingAlgorithm.errorCode == 2}">
-            alert("Unable to generate schedule due to staff linking error");
-            #{schedulingAlgorithm.setErrorCode(0)}
-        </h:outputScript>
-        <h:outputScript rendered="#{schedulingAlgorithm.errorCode == 3}">
-            alert("Unable to generate schedule due to lecture hall capacity error.");
-            #{schedulingAlgorithm.setErrorCode(0)}
-        </h:outputScript>
-        <h:outputScript rendered="#{schedulingAlgorithm.errorCode == 4}">
-            alert("Unable to generate schedule due to lab linking error.");
+            alert("#{schedulingAlgorithm.errorMsg}");
             #{schedulingAlgorithm.setErrorCode(0)}
         </h:outputScript>
         <h:outputScript rendered="#{login.success}">

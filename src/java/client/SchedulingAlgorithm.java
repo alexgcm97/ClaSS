@@ -41,6 +41,7 @@ public class SchedulingAlgorithm implements Serializable {
     private int studyDays, blockDay = 0, errorCode = 0;
     private boolean toBalance = false;
     private double studyStart, studyEnd, blockStart, blockEnd, maxBreak = 99, noOfClassPerDay = 99;
+    private String errorMsg;
     private Class blockClass;
     private ArrayList<Class> dbList = new ArrayList();
 
@@ -51,6 +52,14 @@ public class SchedulingAlgorithm implements Serializable {
     private final TutorialGroupDA tgda = new TutorialGroupDA();
 
     private final String filePath = XMLPath.getXMLPath();
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
 
     public int getErrorCode() {
         return errorCode;
@@ -933,7 +942,8 @@ public class SchedulingAlgorithm implements Serializable {
             }
         }
         if (qualifiedList.isEmpty()) {
-            errorCode = 2;
+            errorCode = 1;
+            errorMsg = "Unable to generate schedule due to staff linking error for course code " + courseCode + courseType + ".";
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
         }
         return qualifiedList;
@@ -945,13 +955,6 @@ public class SchedulingAlgorithm implements Serializable {
             for (String courseCodeList : s.getCourseCodeList()) {
                 if (courseCodeList.contains(courseCode) && courseCodeList.contains(courseType)) {
                     switch (courseType) {
-                        case "L":
-                            for (String lecGroupList : s.getLecGroupList()) {
-                                if (lecGroupList.contains(courseCode) && lecGroupList.contains(groupID)) {
-                                    qualifiedList.add(s);
-                                }
-                            }
-                            break;
                         case "P":
                             for (String pracGroupList : s.getPracGroupList()) {
                                 if (pracGroupList.contains(courseCode) && pracGroupList.contains(groupID)) {
@@ -971,7 +974,8 @@ public class SchedulingAlgorithm implements Serializable {
             }
         }
         if (qualifiedList.isEmpty()) {
-            errorCode = 2;
+            errorCode = 1;
+            errorMsg = "Unable to generate schedule due to staff linking error for course code " + courseCode + courseType;
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
         }
         return qualifiedList.get(rand.nextInt(qualifiedList.size()));
@@ -987,7 +991,8 @@ public class SchedulingAlgorithm implements Serializable {
             }
         }
         if (qualifiedList.isEmpty()) {
-            errorCode = 3;
+            errorCode = 1;
+            errorMsg = "Unable to generate schedule due to lecture hall capacity error. \\nStaff ID: " + staffID + "\\nCourse Code & Cohort IDs: " + lecGroupStr + "";
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
         } else {
             venue = qualifiedList.get(0);
@@ -1002,26 +1007,31 @@ public class SchedulingAlgorithm implements Serializable {
 
     public Venue getCourseVenue(String courseType, String courseCode) throws IOException {
         Venue venue = new Venue();
-        ArrayList<Venue> qualifiedList = new ArrayList(), otherList = new ArrayList();
-
-        int index;
+        ArrayList<Venue> qualifiedList = new ArrayList();
         if (courseType.equals("P")) {
             for (Venue v : labList) {
                 if (v.getCourseCodeList().contains(courseCode)) {
                     qualifiedList.add(v);
                 }
-                if (v.getCourseCodeList().equals("-")) {
-                    otherList.add(v);
-                }
             }
             if (qualifiedList.isEmpty()) {
-                venue = otherList.get(rand.nextInt(otherList.size()));
+                for (Venue v : labList) {
+                    if (v.getCourseCodeList().equals("-")) {
+                        qualifiedList.add(v);
+                    }
+                }
+            }
+        } else {
+            venue = roomList.get(rand.nextInt(roomList.size()));
+        }
+        if (courseType.equals("P")) {
+            if (qualifiedList.isEmpty()) {
+                errorCode = 1;
+                errorMsg = "Lab venue error for course code " + courseCode + courseType + ".";
+                FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
             } else {
                 venue = qualifiedList.get(rand.nextInt(qualifiedList.size()));
             }
-        } else {
-            index = rand.nextInt(roomList.size());
-            venue = roomList.get(index);
         }
         return venue;
     }
@@ -1400,6 +1410,7 @@ public class SchedulingAlgorithm implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().redirect("ViewTimetable.xhtml");
         } else {
             errorCode = 1;
+            errorMsg = "Unable to generate schedule, possibly due to insufficient staff or venue provided.";
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
         }
     }
