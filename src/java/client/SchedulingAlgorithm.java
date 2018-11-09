@@ -1020,6 +1020,9 @@ public class SchedulingAlgorithm implements Serializable {
                         qualifiedList.add(v);
                     }
                 }
+                if (qualifiedList.isEmpty()) {
+                    qualifiedList = vda.getAllPurposeLab();
+                }
             }
         } else {
             venue = roomList.get(rand.nextInt(roomList.size()));

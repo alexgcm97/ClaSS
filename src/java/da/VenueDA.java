@@ -93,6 +93,28 @@ public class VenueDA {
 
     }
 
+    public ArrayList<Venue> getAllPurposeLab() {
+
+        Connection connect = null;
+
+        ArrayList<Venue> venueList = new ArrayList<Venue>();
+        try {
+            connect = DBConnection.getConnection();
+            PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM venue where venueType = 'Lab' AND (courseCodeList = '-' OR courseCodeList IS NULL)");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Venue v = new Venue(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
+                venueList.add(v);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+        DBConnection.close(connect);
+        return venueList;
+    }
+
     public List<Venue> getAllVenueRecords() throws SQLException {
 
         Connection connect = null;
