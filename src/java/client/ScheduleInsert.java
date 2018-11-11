@@ -176,7 +176,7 @@ public class ScheduleInsert implements Serializable {
                                                 stmt.setString(9, sd.getStaffName());
                                                 stmt.setString(10, pc.getProgrammeCode());
                                                 stmt.setInt(11, pc.getStudyYear());
-                                                stmt.setString(12, pc.getEntryYear());
+                                                stmt.setString(12, pc.getIntakeYear());
                                                 stmt.setString(13, sc.getsTime());
                                                 stmt.setString(14, sc.geteTime());
                                             } else {
@@ -193,7 +193,7 @@ public class ScheduleInsert implements Serializable {
                                                 stmt.setString(9, sd.getStaffName());
                                                 stmt.setString(10, pc.getProgrammeCode());
                                                 stmt.setInt(11, pc.getStudyYear());
-                                                stmt.setString(12, pc.getEntryYear());
+                                                stmt.setString(12, pc.getIntakeYear());
                                                 stmt.setString(13, sc.getsTime());
                                                 stmt.setString(14, sc.geteTime());
                                             }
@@ -503,7 +503,7 @@ public class ScheduleInsert implements Serializable {
                                                 stmt.setString(9, sd.getStaffName());
                                                 stmt.setString(10, pc.getProgrammeCode());
                                                 stmt.setInt(11, pc.getStudyYear());
-                                                stmt.setString(12, pc.getEntryYear());
+                                                stmt.setString(12, pc.getIntakeYear());
                                                 stmt.setString(13, sc.getsTime());
                                                 stmt.setString(14, sc.geteTime());
                                             } else {
@@ -520,7 +520,7 @@ public class ScheduleInsert implements Serializable {
                                                 stmt.setString(9, sd.getStaffName());
                                                 stmt.setString(10, pc.getProgrammeCode());
                                                 stmt.setInt(11, pc.getStudyYear());
-                                                stmt.setString(12, pc.getEntryYear());
+                                                stmt.setString(12, pc.getIntakeYear());
                                                 stmt.setString(13, sc.getsTime());
                                                 stmt.setString(14, sc.geteTime());
                                             }
