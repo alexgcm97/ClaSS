@@ -198,9 +198,7 @@ public class ModifySchedule implements Serializable {
         connect = DBConnection.getConnection();
 
         List<CourseType> cType = new ArrayList<CourseType>();
-        CourseType ctt = new CourseType();
-        CourseType ctp = new CourseType();
-        CourseType ctb = new CourseType();
+
         CourseType ct = new CourseType();
 
         PreparedStatement pstmt = connect.prepareStatement("SELECT * FROM Staff WHERE staffID = ?");
@@ -260,6 +258,7 @@ public class ModifySchedule implements Serializable {
                                             ResultSet rs1 = pstmt.executeQuery();
 
                                             while (rs1.next()) {
+                                                CourseType ctt = new CourseType();
                                                 ctt.setCourseID(rs1.getString("courseID"));
 
                                                 System.out.println("course=" + ctt.getCourseID());
@@ -288,6 +287,8 @@ public class ModifySchedule implements Serializable {
                                             ResultSet rs1 = pstmt.executeQuery();
 
                                             while (rs1.next()) {
+                                                CourseType ctp = new CourseType();
+
                                                 ctp.setCourseID(rs1.getString("courseID"));
 
                                                 System.out.println("course=" + ctp.getCourseID());
@@ -316,20 +317,22 @@ public class ModifySchedule implements Serializable {
                                             ResultSet rs1 = pstmt.executeQuery();
 
                                             while (rs1.next()) {
-                                                ctp.setCourseID(rs1.getString("courseID"));
+                                                CourseType ctb = new CourseType();
 
-                                                System.out.println("course=" + ctp.getCourseID());
+                                                ctb.setCourseID(rs1.getString("courseID"));
+
+                                                System.out.println("course=" + ctb.getCourseID());
 
                                                 pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
-                                                pstmt.setString(1, ctp.getCourseID());
+                                                pstmt.setString(1, ctb.getCourseID());
                                                 ResultSet rs2 = pstmt.executeQuery();
 
                                                 while (rs2.next()) {
-                                                    ctp.setCourseCode(rs2.getString("courseCode"));
-                                                    ctp.setCourseType(rs2.getString("courseType"));
+                                                    ctb.setCourseCode(rs2.getString("courseCode"));
+                                                    ctb.setCourseType(rs2.getString("courseType"));
 
-                                                    System.out.println("zzz" + ctp.getCourseCode());
-                                                    System.out.println("zzz" + ctp.getCourseType());
+                                                    System.out.println("zzz" + ctb.getCourseCode());
+                                                    System.out.println("zzz" + ctb.getCourseType());
 
                                                     cType.add(ctb);
                                                 }
@@ -460,6 +463,7 @@ public class ModifySchedule implements Serializable {
                                     ResultSet rs1 = pstmt.executeQuery();
 
                                     while (rs1.next()) {
+                                        CourseType ctt = new CourseType();
                                         ctt.setCourseID(rs1.getString("courseID"));
 
                                         System.out.println("course=" + ctt.getCourseID());
@@ -488,6 +492,8 @@ public class ModifySchedule implements Serializable {
                                     ResultSet rs1 = pstmt.executeQuery();
 
                                     while (rs1.next()) {
+                                        CourseType ctp = new CourseType();
+
                                         ctp.setCourseID(rs1.getString("courseID"));
 
                                         System.out.println("course=" + ctp.getCourseID());
@@ -516,20 +522,22 @@ public class ModifySchedule implements Serializable {
                                     ResultSet rs1 = pstmt.executeQuery();
 
                                     while (rs1.next()) {
-                                        ctp.setCourseID(rs1.getString("courseID"));
+                                        CourseType ctb = new CourseType();
+                                        
+                                        ctb.setCourseID(rs1.getString("courseID"));
 
-                                        System.out.println("course=" + ctp.getCourseID());
+                                        System.out.println("course=" + ctb.getCourseID());
 
                                         pstmt = connect.prepareStatement("SELECT * FROM courseType WHERE courseID = ?");
-                                        pstmt.setString(1, ctp.getCourseID());
+                                        pstmt.setString(1, ctb.getCourseID());
                                         ResultSet rs2 = pstmt.executeQuery();
 
                                         while (rs2.next()) {
-                                            ctp.setCourseCode(rs2.getString("courseCode"));
-                                            ctp.setCourseType(rs2.getString("courseType"));
+                                            ctb.setCourseCode(rs2.getString("courseCode"));
+                                            ctb.setCourseType(rs2.getString("courseType"));
 
-                                            System.out.println("zzz" + ctp.getCourseCode());
-                                            System.out.println("zzz" + ctp.getCourseType());
+                                            System.out.println("zzz" + ctb.getCourseCode());
+                                            System.out.println("zzz" + ctb.getCourseType());
 
                                             cType.add(ctb);
                                         }
@@ -826,7 +834,7 @@ public class ModifySchedule implements Serializable {
         this.success = false;
         return "ViewTimetable.xhtml?faces-redirect=true";
     }
-    
+
     public void cancel() throws IOException {
         this.message = false;
         this.success = false;
