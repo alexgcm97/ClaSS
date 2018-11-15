@@ -130,7 +130,7 @@ public class ModifySchedule implements Serializable {
         }
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);;
 
         return scheduleDetail;
     }
@@ -188,7 +188,7 @@ public class ModifySchedule implements Serializable {
         }
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);;
 
         return venue;
     }
@@ -638,7 +638,7 @@ public class ModifySchedule implements Serializable {
 
         pstmt.close();
 
-        connect.close();
+        DBConnection.close(connect);;
 
         return cType;
     }
@@ -675,7 +675,7 @@ public class ModifySchedule implements Serializable {
         }
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);;
 
         return group;
     }
@@ -708,7 +708,7 @@ public class ModifySchedule implements Serializable {
         }
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);;
 
         return venue;
     }

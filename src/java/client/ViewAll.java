@@ -51,7 +51,7 @@ public class ViewAll implements Serializable {
         // close resources
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);;
 
         return Venue;
     }
@@ -83,7 +83,7 @@ public class ViewAll implements Serializable {
         // close resources
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);;
 
         return Course;
     }
@@ -112,7 +112,7 @@ public class ViewAll implements Serializable {
         // close resources
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);;
 
         return TutorialGroup;
     }
@@ -148,7 +148,7 @@ public class ViewAll implements Serializable {
         // close resources
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);;
 
         return Staff;
     }
@@ -170,7 +170,7 @@ public class ViewAll implements Serializable {
         // close resources
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);;
 
         return programme;
     }
@@ -189,7 +189,7 @@ public class ViewAll implements Serializable {
         // close resources
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);;
 
         return ProgrammeCohort;
     }
@@ -218,7 +218,7 @@ public class ViewAll implements Serializable {
         }
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);;
 
         return ProgrammeCohort;
     }
@@ -245,7 +245,7 @@ public class ViewAll implements Serializable {
         // close resources
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);;
 
         return Programme;
     }

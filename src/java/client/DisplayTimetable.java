@@ -82,7 +82,7 @@ public class DisplayTimetable {
         }
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);;
     }
 
     public void mergeClass(ArrayList<scheduleDetail> schList) {
@@ -172,7 +172,7 @@ public class DisplayTimetable {
         }
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);;
 
         return schedule;
     }

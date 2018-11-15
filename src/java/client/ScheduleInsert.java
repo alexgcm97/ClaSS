@@ -564,7 +564,7 @@ public class ScheduleInsert implements Serializable {
         }
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);;
 
         return schedule;
     }
@@ -594,7 +594,7 @@ public class ScheduleInsert implements Serializable {
         }
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);;
 
         return schedule;
     }
@@ -624,7 +624,7 @@ public class ScheduleInsert implements Serializable {
         }
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);;
 
         return schedule;
     }

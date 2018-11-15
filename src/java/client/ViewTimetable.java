@@ -68,7 +68,7 @@ public class ViewTimetable {
         }
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);
         
         return Staff;
     }
@@ -99,7 +99,7 @@ public class ViewTimetable {
         }
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);
         
         return group;
     }
@@ -123,7 +123,7 @@ public class ViewTimetable {
         }
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);
         
         return venue;
     }
@@ -145,7 +145,7 @@ public class ViewTimetable {
         }
         rs.close();
         pstmt.close();
-        connect.close();
+        DBConnection.close(connect);
         
         return cType;
     }
