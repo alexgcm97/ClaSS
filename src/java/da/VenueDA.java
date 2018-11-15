@@ -40,7 +40,7 @@ public class VenueDA {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        connect.close();
+        DBConnection.close(connect);
         return classList;
     }
 

@@ -43,7 +43,7 @@ public class ClassDA {
             System.out.println(ex.getMessage());
         }
 
-        connect.close();
+        DBConnection.close(connect);
         return classList;
     }
 
@@ -64,7 +64,7 @@ public class ClassDA {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        connect.close();
+        DBConnection.close(connect);
         return groupIDList;
     }
 
@@ -86,7 +86,7 @@ public class ClassDA {
             System.out.println(ex.getMessage());
         }
 
-        connect.close();
+        DBConnection.close(connect);
         return classList;
     }
 
@@ -107,13 +107,11 @@ public class ClassDA {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        connect.close();
+        DBConnection.close(connect);
         return found;
     }
 
     public void deleteRecords(String groupID) throws SQLException {
-        boolean found = true;
-
         try {
             connect = DBConnection.getConnection();
 
@@ -124,7 +122,7 @@ public class ClassDA {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        connect.close();
+        DBConnection.close(connect);
     }
 
     public void insert(Class c) throws SQLException {
@@ -144,6 +142,6 @@ public class ClassDA {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        connect.close();
+        DBConnection.close(connect);
     }
 }

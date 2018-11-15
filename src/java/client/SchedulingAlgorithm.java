@@ -299,7 +299,7 @@ public class SchedulingAlgorithm implements Serializable {
                     previousClass = classList.get(j - 1);
                 }
                 if (!thisClass.getCourseType().equals("L")) {
-                    assignVenue(previousClass, thisClass);
+                    assignVenue(i, previousClass, thisClass);
                 }
             }
         }
@@ -819,7 +819,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
     }
 
-    public void assignVenue(Class previousClass, Class thisClass) throws IOException {
+    public void assignVenue(int index, Class previousClass, Class thisClass) throws IOException {
         boolean isClash, isBreak = false;
         int runCount = 0;
         double startTime2 = thisClass.getStartTime(), endTime2 = thisClass.getEndTime();
@@ -854,14 +854,14 @@ public class SchedulingAlgorithm implements Serializable {
                                         if (!thisClass.getCourseType().equals("P")) {
                                             v = getTutVenueWithBlock(previousV.getBlock());
                                         } else {
-                                            thisClass.moveRight(moveDuration);
+                                            scheduleList.get(index).moveRight(thisClass, moveDuration);
                                         }
                                     } else {
-                                        thisClass.moveRight(moveDuration);
+                                        scheduleList.get(index).moveRight(thisClass, moveDuration);
                                     }
                                 }
                             } else {
-                                thisClass.moveRight(moveDuration);
+                                scheduleList.get(index).moveRight(thisClass, moveDuration);
                             }
                         }
                     }

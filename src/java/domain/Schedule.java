@@ -70,4 +70,34 @@ public class Schedule {
     public void resetClassList() {
         this.classList = new ArrayList();
     }
+
+    public void moveRight(Class c, double moveDuration) {
+        boolean isClash = false;
+        for (Class d : this.classList) {
+            if (c.getDay() == d.getDay() && !c.getCourseID().equals(d.getCourseID())) {
+                double startTime1 = c.getStartTime() + moveDuration, endTime1 = c.getEndTime() + moveDuration, startTime2 = d.getStartTime(), endTime2 = d.getEndTime();
+                if ((startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2) || (startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1)) {
+                    isClash = true;
+                }
+            }
+        }
+        if (!isClash) {
+            c.moveRight(moveDuration);
+        }
+    }
+
+    public void moveLeft(Class c, double moveDuration) {
+        boolean isClash = false;
+        for (Class d : this.classList) {
+            if (c.getDay() == d.getDay() && !c.getCourseID().equals(d.getCourseID())) {
+                double startTime1 = c.getStartTime() - moveDuration, endTime1 = c.getEndTime() - moveDuration, startTime2 = d.getStartTime(), endTime2 = d.getEndTime();
+                if ((startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2) || (startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1)) {
+                    isClash = true;
+                }
+            }
+        }
+        if (!isClash) {
+            c.moveLeft(moveDuration);
+        }
+    }
 }
