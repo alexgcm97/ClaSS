@@ -80,7 +80,7 @@ public class StaffDA implements Serializable {
 
     }
 
-    public List<Staff> getSelectedStaff(String staffID) {
+    public List<Staff> getSelectedStaff(String staffID) throws SQLException {
 
         List<Staff> output = new ArrayList<Staff>();
 

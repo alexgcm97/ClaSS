@@ -34,7 +34,7 @@ public class SchedulingAlgorithm implements Serializable {
 
     private ArrayList<CourseType> lecList, courseList;
     private ArrayList<Staff> staffList;
-    private ArrayList<TutorialGroup> groupList;
+    private ArrayList<TutorialGroup> groupList, dbGroupList;
     private ArrayList<Venue> roomList, labList, hallList, allPurposeLabList;
     private ArrayList<Schedule> scheduleList;
 
@@ -77,6 +77,7 @@ public class SchedulingAlgorithm implements Serializable {
         String fileName = filePath + "TutorialGroup.xml";
         Document doc = dBuilder.parse(fileName);
         groupList = new ArrayList();
+        dbGroupList = tgda.getAll();
         NodeList nodes = doc.getElementsByTagName("tutorialGroup");
 
         for (int i = 0; i < nodes.getLength(); i++) {
@@ -603,10 +604,9 @@ public class SchedulingAlgorithm implements Serializable {
         }
     }
 
-    public int getTotalSize(String lecGroupStr, String courseCode, String staffID) {
+    public int getTotalSize(String lecGroupStr, String courseCode) {
         int totalSize = 0;
-        ArrayList<TutorialGroup> tgList = tgda.getGroupsWithCourseCode(courseCode);
-        for (TutorialGroup tg : tgList) {
+        for (TutorialGroup tg : dbGroupList) {
             if (lecGroupStr.contains(courseCode) && lecGroupStr.contains(tg.getCohortID())) {
                 totalSize += tg.getSize();
             }
@@ -1000,7 +1000,7 @@ public class SchedulingAlgorithm implements Serializable {
 
     public Venue getLecVenue(String lecGroupStr, String courseCode, String staffID) throws IOException {
         ArrayList<Venue> qualifiedList = new ArrayList();
-        int totalSize = getTotalSize(lecGroupStr, courseCode, staffID);
+        int totalSize = getTotalSize(lecGroupStr, courseCode);
         Venue venue = new Venue();
         for (Venue v : hallList) {
             if (v.getCapacity() >= totalSize) {
@@ -1413,7 +1413,7 @@ public class SchedulingAlgorithm implements Serializable {
                 runCount++;
 
                 System.out.println("Loop " + loopCount + " Run " + runCount + " (StudyDays: " + studyDays + " - MaxBreak: " + maxBreak + " h)");
-                //System.out.println(isClassEnough() + "-" + isClassListDataCompleted() + "-" + hasInvalidTime() + "-" + hasInvalidNoOfClass() + "-" + hasLongDurationClass() + "-" + isClashWithinList() + "-" + isClashWithOtherLists() + "-" + isClashWithBlockClass() + "-" + isClashWithDB());
+                System.out.println(isClassEnough() + "-" + isClassListDataCompleted() + "-" + hasInvalidTime() + "-" + hasInvalidNoOfClass() + "-" + hasLongDurationClass() + "-" + isClashWithinList() + "-" + isClashWithOtherLists() + "-" + isClashWithBlockClass() + "-" + isClashWithDB());
             }
         } while (toRestart || !isClassEnough() || !isClassListDataCompleted() || hasInvalidTime() || hasInvalidNoOfClass() || hasLongDurationClass() || isClashWithinList() || isClashWithOtherLists() || isClashWithBlockClass() || isClashWithDB());
 

@@ -206,7 +206,7 @@ public class generateXML implements Serializable {
 
     }
 
-    public void generateStaffXML(List<String> staffList) {
+    public void generateStaffXML(List<String> staffList) throws SQLException {
         List<Staff> list = new ArrayList<Staff>();
         List<Staff> recordList = new ArrayList<Staff>();
         String xmlFilePath = filePath + "Staff.xml";

@@ -93,7 +93,7 @@ public class VenueDA {
 
     }
 
-    public ArrayList<Venue> getAllPurposeLab() {
+    public ArrayList<Venue> getAllPurposeLab() throws SQLException {
 
         Connection connect = null;
 

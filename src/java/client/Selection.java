@@ -232,7 +232,7 @@ public class Selection {
         }
     }
 
-    public void venueButton() throws IOException {
+    public void venueButton() throws IOException, SQLException {
         for (int i = 0; i < selectedVenue.size(); i++) {
             selectedVenueID.add(selectedVenue.get(i).getVenueID());
         }
@@ -252,7 +252,7 @@ public class Selection {
         }
     }
 
-    public void generateXML() {
+    public void generateXML() throws SQLException {
         xml.generateCourseXML(courseCodeList);
         xml.generateTutorialGroupXML(selectedGroups);
         xml.generateStaffXML(selectedStaff);

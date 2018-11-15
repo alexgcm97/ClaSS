@@ -203,23 +203,23 @@ public class TutorialGroupDA {
 
     }
 
-    public ArrayList<TutorialGroup> getGroupsWithCourseCode(String courseCode) {
-        Connection connect;
+    public ArrayList<TutorialGroup> getAll() {
+        Connection connect = null;
         TutorialGroup tg = new TutorialGroup();
         ArrayList<TutorialGroup> tgList = new ArrayList();
         try {
             connect = DBConnection.getConnection();
-            PreparedStatement pstmt = connect.prepareStatement("select tg.groupID, tg.groupNumber, tg.size, tg.cohortID from TUTORIALGROUP tg, programmeCohort pc where pc.cohortID = tg.cohortID AND pc.courseCodeList LIKE ?");
-            pstmt.setString(1, "%" + courseCode + "%");
+            PreparedStatement pstmt = connect.prepareStatement("select tg.groupID, tg.groupNumber, tg.size, tg.cohortID, pc.courseCodeList from TUTORIALGROUP tg, programmeCohort pc where pc.cohortID = tg.cohortID");
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                tg = new TutorialGroup(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getString(4));
+                tg = new TutorialGroup(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5));
                 tgList.add(tg);
             }
 
         } catch (SQLException e) {
             System.out.println(e);
         }
+        DBConnection.close(connect);
         return tgList;
     }
 

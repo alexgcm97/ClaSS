@@ -239,7 +239,7 @@ public class CourseDA {
         this.update = update;
     }
 
-    public void insertCourse(Course c) {
+    public void insertCourse(Course c) throws SQLException {
         Connection connect = null;
 
         try {
