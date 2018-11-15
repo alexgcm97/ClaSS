@@ -208,7 +208,7 @@ public class scheduleDetail {
         if (this.getStaffName() == null || this.getStaffName().equals("")) {
             return this.cohort;
         } else {
-            return this.staffName + " - " + this.cohort;
+            return this.staffName;
 
         }
     }
@@ -217,7 +217,7 @@ public class scheduleDetail {
         if (this.getVenueID() == null || this.getVenueID().equals("")) {
             return this.cohort;
         } else {
-            return this.venueID + " - " + this.cohort;
+            return this.venueID;
         }
     }
 

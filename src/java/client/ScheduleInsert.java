@@ -551,9 +551,11 @@ public class ScheduleInsert implements Serializable {
         if (rs.next()) {
             do {
                 scheduleDetail sd = new scheduleDetail();
-                sd.setStaffName(rs.getString("staffName"));
-                sd.setCohort(rs.getString("cohort"));
-                schedule.add(sd);
+                if (schedule.isEmpty()) {
+                    sd.setStaffName(rs.getString("staffName"));
+                    sd.setCohort(rs.getString("cohort"));
+                    schedule.add(sd);
+                }
             } while (rs.next());
         } else {
             scheduleDetail sd = new scheduleDetail();
@@ -609,9 +611,11 @@ public class ScheduleInsert implements Serializable {
         if (rs.next()) {
             do {
                 scheduleDetail sd = new scheduleDetail();
-                sd.setVenueID(rs.getString("venueID"));
-                sd.setCohort(rs.getString("cohort"));
-                schedule.add(sd);
+                if (schedule.isEmpty()) {
+                    sd.setVenueID(rs.getString("venueID"));
+                    sd.setCohort(rs.getString("cohort"));
+                    schedule.add(sd);
+                }
             } while (rs.next());
         } else {
             scheduleDetail sd = new scheduleDetail();
