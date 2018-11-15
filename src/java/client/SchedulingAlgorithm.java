@@ -1141,8 +1141,8 @@ public class SchedulingAlgorithm implements Serializable {
                     Class class1 = classList.get(index1), class2 = classList.get(index2);
                     if (class1.getDay() == class2.getDay()) {
                         if ((class2.getStartTime() >= class1.getStartTime() && class2.getStartTime() < class1.getEndTime()) || (class2.getEndTime() > class1.getStartTime() && class2.getEndTime() <= class1.getEndTime()) || (class1.getStartTime() >= class2.getStartTime() && class1.getStartTime() < class2.getEndTime()) || (class1.getEndTime() > class2.getStartTime() && class1.getEndTime() <= class2.getEndTime())) {
-                            System.out.println("Class 1: " + class1.getCourseID() + class1.getCourseType() + "," + class1.getStartTime() + "-" + class1.getEndTime());
-                            System.out.println("Class 2: " + class2.getCourseID() + class2.getCourseType() + "," + class2.getStartTime() + "-" + class2.getEndTime());
+                            //System.out.println("Class 1: " + class1.getCourseID() + class1.getCourseType() + "," + class1.getStartTime() + "-" + class1.getEndTime());
+                            //System.out.println("Class 2: " + class2.getCourseID() + class2.getCourseType() + "," + class2.getStartTime() + "-" + class2.getEndTime());
                             isClash = true;
                             break;
                         }
@@ -1417,7 +1417,7 @@ public class SchedulingAlgorithm implements Serializable {
                 runCount++;
 
                 System.out.println("Loop " + loopCount + " Run " + runCount + " (StudyDays: " + studyDays + " - MaxBreak: " + maxBreak + " h)");
-                System.out.println(isClassEnough() + "-" + isClassListDataCompleted() + "-" + hasInvalidTime() + "-" + hasInvalidNoOfClass() + "-" + hasLongDurationClass() + "-" + isClashWithinList() + "-" + isClashWithOtherLists() + "-" + isClashWithBlockClass() + "-" + isClashWithDB());
+                //System.out.println(isClassEnough() + "-" + isClassListDataCompleted() + "-" + hasInvalidTime() + "-" + hasInvalidNoOfClass() + "-" + hasLongDurationClass() + "-" + isClashWithinList() + "-" + isClashWithOtherLists() + "-" + isClashWithBlockClass() + "-" + isClashWithDB());
             }
         } while (toRestart || !isClassEnough() || !isClassListDataCompleted() || hasInvalidTime() || hasInvalidNoOfClass() || hasLongDurationClass() || isClashWithinList() || isClashWithOtherLists() || isClashWithBlockClass() || isClashWithDB());
 
