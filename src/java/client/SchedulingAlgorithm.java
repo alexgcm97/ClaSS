@@ -442,7 +442,7 @@ public class SchedulingAlgorithm implements Serializable {
                     Class c1 = classCheckList.get(thisIndex), c2 = classCheckList.get(nextIndex);
                     if (!c1.getCourseType().equals("BLK")) {
                         if (c2.getCourseType().equals("BLK")) {
-                            if (nextIndex < classCheckList.size() - 1) {;
+                            if (nextIndex < classCheckList.size() - 1) {
                                 c2 = classCheckList.get(nextIndex + 1);
                             } else {
                                 break;
