@@ -269,8 +269,6 @@ public class SchedulingAlgorithm implements Serializable {
         if (maxBreak != 99) {
             sortList();
             optimizeBreak(1);
-            sortList();
-            optimizeBreak(2);
         }
 
         //Assign Other Schedules, ex: Tutorial, Practical
@@ -285,9 +283,9 @@ public class SchedulingAlgorithm implements Serializable {
         //Optimize All Courses Break
         if (maxBreak != 99) {
             sortList();
-            optimizeBreak(3);
+            optimizeBreak(2);
             sortList();
-            optimizeBreak(4);
+            optimizeBreak(3);
         }
 
         //Remove the block class added previously
@@ -406,102 +404,17 @@ public class SchedulingAlgorithm implements Serializable {
                 }
                 break;
             case 2:
-                ArrayList<Class> classCheckList = new ArrayList();
-                for (int i = 0; i < scheduleList.size(); i++) {
-                    classList = scheduleList.get(i).getClassList();
-                    for (Class c : classList) {
-                        boolean exist = false;
-                        for (Class d : classCheckList) {
-                            if (c.getDay() == d.getDay() && c.getCourseID().equals(d.getCourseID()) && c.getStaffID().equals(d.getStaffID()) && c.getStartTime() == d.getStartTime() && c.getEndTime() == d.getEndTime()) {
-                                exist = true;
-                            }
-                        }
-                        if (!exist) {
-                            c.setOriStartTime(c.getStartTime());
-                            c.setOriEndTime(c.getEndTime());
-                            classCheckList.add(c);
-                        }
-                    }
-                }
-
-                classCheckList.sort((Class o1, Class o2) -> {
-                    if (o1.getDay() == o2.getDay()) {
-                        double time1 = o1.getStartTime(), time2 = o2.getStartTime();
-                        if (time1 == time2) {
-                            return 0;
-                        } else if (time1 > time2) {
-                            return 1;
-                        } else {
-                            return -1;
-                        }
-                    }
-                    return o1.getDay() - o2.getDay();
-                });
-
-                for (int thisIndex = 0; thisIndex < classCheckList.size() - 1; thisIndex++) {
-                    int nextIndex = thisIndex + 1;
-                    Class c1 = classCheckList.get(thisIndex), c2 = classCheckList.get(nextIndex);
-                    if (!c1.getCourseType().equals("BLK")) {
-                        if (c2.getCourseType().equals("BLK")) {
-                            if (nextIndex < classCheckList.size() - 1) {
-                                c2 = classCheckList.get(nextIndex + 1);
-                            } else {
-                                break;
-                            }
-                        }
-                        if (c1.getDay() == c2.getDay()) {
-                            double breakTime = c2.getStartTime() - c1.getEndTime();
-                            if (c1.getVenueID().equals(c2.getVenueID())) {
-                                moveDuration = breakTime;
-                                if (thisIndex > 0) {
-                                    Class previousC = classCheckList.get(thisIndex - 1);
-                                    if (previousC.getDay() == c1.getDay()) {
-                                        if (previousC.getEndTime() == c1.getStartTime()) {
-                                            double totalDuration = previousC.getDuration() + c1.getDuration() + c2.getDuration();
-                                            if (totalDuration > 4) {
-                                                moveDuration = breakTime - getRandomMoveDuration();
-                                            }
-                                        }
-                                    }
-                                }
-                            } else {
-                                if (breakTime == 0) {
-                                    moveDuration = 0.5;
-                                } else if (breakTime > maxBreak) {
-                                    moveDuration = breakTime - getRandomMoveDuration();
-                                }
-                            }
-                            c2.moveLeft(moveDuration);
-                        }
-                    }
-                }
-
-                for (int index = 0; index < scheduleList.size(); index++) {
-                    classList = scheduleList.get(index).getClassList();
-                    for (Class c : classList) {
-                        for (Class d : classCheckList) {
-                            if (c.getDay() == d.getDay() && c.getCourseID().equals(d.getCourseID()) && c.getStaffID().equals(d.getStaffID()) && d.getOriStartTime() == c.getStartTime() && d.getOriEndTime() == c.getEndTime()) {
-                                if (c.isMoveFlag()) {
-                                    c.setStartTime(d.getStartTime());
-                                    c.setEndTime(d.getEndTime());
-                                }
-                            }
-                        }
-                    }
-                }
-                break;
-            case 3:
                 for (int i = 1; i <= studyDays; i++) {
                     for (int index = 0; index < scheduleList.size(); index++) {
                         classList = scheduleList.get(index).getClassList();
                         if (countClassBeforeHalfDay(i, classList) == 0 && countLecClassPerDay(i, classList) == 0) {
                             for (Class c : classList) {
                                 if (c.getDay() == i) {
-                                    if (!c.getCourseType().equals("BLK")) {
+                                    if (!c.getCourseType().equals("BLK") && !c.getCourseType().equals("L")) {
                                         if (moveDuration == 0) {
                                             moveDuration = c.getStartTime() - studyStart;
                                         }
-                                        c.moveLeft(moveDuration);
+                                        scheduleList.get(index).moveLeft(c, moveDuration);
                                     }
                                 }
                             }
@@ -510,7 +423,7 @@ public class SchedulingAlgorithm implements Serializable {
                     }
                 }
                 break;
-            case 4:
+            case 3:
                 for (int index = 0; index < scheduleList.size(); index++) {
                     classList = scheduleList.get(index).getClassList();
                     for (int i = 0; i < classList.size() - 1; i++) {
@@ -531,25 +444,25 @@ public class SchedulingAlgorithm implements Serializable {
                                     moveDuration = breakTime - getRandomMoveDuration();
                                     if (breakTime > maxBreak) {
                                         if (c1.getCourseType().equals("L") && !c2.getCourseType().equals("L")) {
-                                            c2.moveLeft(moveDuration);
+                                            scheduleList.get(index).moveLeft(c2, moveDuration);
                                         } else if (c2.getCourseType().equals("L") && !c1.getCourseType().equals("L")) {
-                                            c1.moveRight(moveDuration);
+                                            scheduleList.get(index).moveRight(c1, moveDuration);
                                         } else if (!c1.getCourseType().equals("L") && !c2.getCourseType().equals("L")) {
                                             if (c1.getStartTime() == studyStart) {
-                                                c1.moveRight(moveDuration);
+                                                scheduleList.get(index).moveRight(c1, moveDuration);
                                             } else {
-                                                c2.moveLeft(moveDuration);
+                                                scheduleList.get(index).moveLeft(c2, moveDuration);
                                             }
                                         }
                                     } else if (breakTime == 0) {
                                         moveDuration = 0.5;
                                         if (c1.getCourseType().equals("L") && !c2.getCourseType().equals("L")) {
-                                            c2.moveRight(moveDuration);
+                                            scheduleList.get(index).moveRight(c2, moveDuration);
                                         } else {
                                             if (c1.getStartTime() == studyStart) {
-                                                c1.moveRight(moveDuration);
+                                                scheduleList.get(index).moveRight(c1, moveDuration);
                                             } else {
-                                                c1.moveLeft(moveDuration);
+                                                scheduleList.get(index).moveLeft(c1, moveDuration);
                                             }
                                         }
                                     }
@@ -1268,6 +1181,8 @@ public class SchedulingAlgorithm implements Serializable {
             ArrayList<Class> classList = scheduleList.get(i).getClassList();
             for (Class c : classList) {
                 if (c.getStartTime() < studyStart || c.getEndTime() > studyEnd) {
+//                    System.out.println("Start Time: " + c.getStartTime());
+//                    System.out.println("End Time: " + c.getEndTime());
                     hasInvalid = true;
                     break;
                 }
@@ -1413,7 +1328,7 @@ public class SchedulingAlgorithm implements Serializable {
                 runCount++;
 
                 System.out.println("Loop " + loopCount + " Run " + runCount + " (StudyDays: " + studyDays + " - MaxBreak: " + maxBreak + " h)");
-                //System.out.println(isClassEnough() + "-" + isClassListDataCompleted() + "-" + hasInvalidTime() + "-" + hasInvalidNoOfClass() + "-" + hasLongDurationClass() + "-" + isClashWithinList() + "-" + isClashWithOtherLists() + "-" + isClashWithBlockClass() + "-" + isClashWithDB());
+                System.out.println(isClassEnough() + "-" + isClassListDataCompleted() + "-" + hasInvalidTime() + "-" + hasInvalidNoOfClass() + "-" + hasLongDurationClass() + "-" + isClashWithinList() + "-" + isClashWithOtherLists() + "-" + isClashWithBlockClass() + "-" + isClashWithDB());
             }
         } while (toRestart || !isClassEnough() || !isClassListDataCompleted() || hasInvalidTime() || hasInvalidNoOfClass() || hasLongDurationClass() || isClashWithinList() || isClashWithOtherLists() || isClashWithBlockClass() || isClashWithDB());
 
