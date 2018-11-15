@@ -35,7 +35,7 @@ public class SchedulingAlgorithm implements Serializable {
     private ArrayList<CourseType> lecList, courseList;
     private ArrayList<Staff> staffList;
     private ArrayList<TutorialGroup> groupList;
-    private ArrayList<Venue> roomList, labList, hallList;
+    private ArrayList<Venue> roomList, labList, hallList, allPurposeLabList;
     private ArrayList<Schedule> scheduleList;
 
     private int studyDays, blockDay = 0, errorCode = 0;
@@ -198,6 +198,7 @@ public class SchedulingAlgorithm implements Serializable {
         roomList = new ArrayList();
         labList = new ArrayList();
         hallList = new ArrayList();
+        allPurposeLabList = vda.getAllPurposeLab();
         nodes = doc.getElementsByTagName("venue");
 
         for (int i = 0; i < nodes.getLength(); i++) {
@@ -1032,7 +1033,7 @@ public class SchedulingAlgorithm implements Serializable {
                     }
                 }
                 if (qualifiedList.isEmpty()) {
-                    qualifiedList = vda.getAllPurposeLab();
+                    qualifiedList = allPurposeLabList;
                 }
             }
         } else {
