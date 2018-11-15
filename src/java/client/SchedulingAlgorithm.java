@@ -206,12 +206,18 @@ public class SchedulingAlgorithm implements Serializable {
 
             Venue v = new Venue(e.getAttribute("venueID"), e.getElementsByTagName("block").item(0).getTextContent(), e.getElementsByTagName("venueType").item(0).getTextContent(), Integer.parseInt(e.getElementsByTagName("capacity").item(0).getTextContent()), e.getElementsByTagName("courseCodeList").item(0).getTextContent());
             v.setClassList(vda.getClassList(v.getVenueID()));
-            if (v.getVenueType().equals("Room")) {
-                roomList.add(v);
-            } else if (v.getVenueType().equals("Lab")) {
-                labList.add(v);
-            } else if (v.getVenueType().equals("Hall")) {
-                hallList.add(v);
+            switch (v.getVenueType()) {
+                case "Room":
+                    roomList.add(v);
+                    break;
+                case "Lab":
+                    labList.add(v);
+                    break;
+                case "Hall":
+                    hallList.add(v);
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -609,7 +615,7 @@ public class SchedulingAlgorithm implements Serializable {
     }
 
     public void assignLecture(CourseType course) throws IOException {
-        boolean isClash, found = false, isSame = false;
+        boolean isClash, found, isSame = false;
 
         String courseID = course.getCourseID(), courseType = course.getCourseType(), courseCode = course.getCourseCode();
         Venue v;
