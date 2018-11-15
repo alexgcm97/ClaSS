@@ -1068,7 +1068,6 @@ public class SchedulingAlgorithm implements Serializable {
             for (int i = 0; i < scheduleList.size(); i++) {
                 ArrayList<Class> classList = scheduleList.get(i).getClassList();
                 for (Class c : classList) {
-                    double startTime = c.getStartTime(), endTime = c.getEndTime();
                     for (Class d : dbList) {
                         if (c.getDay() == d.getDay()) {
                             double startTime1 = c.getStartTime(), endTime1 = c.getEndTime(), startTime2 = d.getStartTime(), endTime2 = d.getEndTime();
@@ -1328,7 +1327,7 @@ public class SchedulingAlgorithm implements Serializable {
                 runCount++;
 
                 System.out.println("Loop " + loopCount + " Run " + runCount + " (StudyDays: " + studyDays + " - MaxBreak: " + maxBreak + " h)");
-                System.out.println(isClassEnough() + "-" + isClassListDataCompleted() + "-" + hasInvalidTime() + "-" + hasInvalidNoOfClass() + "-" + hasLongDurationClass() + "-" + isClashWithinList() + "-" + isClashWithOtherLists() + "-" + isClashWithBlockClass() + "-" + isClashWithDB());
+                //System.out.println(isClassEnough() + "-" + isClassListDataCompleted() + "-" + hasInvalidTime() + "-" + hasInvalidNoOfClass() + "-" + hasLongDurationClass() + "-" + isClashWithinList() + "-" + isClashWithOtherLists() + "-" + isClashWithBlockClass() + "-" + isClashWithDB());
             }
         } while (toRestart || !isClassEnough() || !isClassListDataCompleted() || hasInvalidTime() || hasInvalidNoOfClass() || hasLongDurationClass() || isClashWithinList() || isClashWithOtherLists() || isClashWithBlockClass() || isClashWithDB());
 

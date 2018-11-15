@@ -53,7 +53,7 @@
                 <h:selectBooleanCheckbox title="The system will balance the number of classes evenly over the number of study days." value="#{configuration.toBalanceClass}">
                 </h:selectBooleanCheckbox>
                 <h:outputText value="Balance Number of Classes Per Day"/><br/>
-                <h:selectBooleanCheckbox value="#{configuration.setBreak}">
+                <h:selectBooleanCheckbox value="#{configuration.setBreak}" title="It will increase generation time and failure rate.">
                     <f:ajax render="maxBreak"/>
                 </h:selectBooleanCheckbox>
                 <h:outputText value="Limit Maximum Break Time Between Classes: "/>
