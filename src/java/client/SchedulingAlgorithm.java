@@ -220,7 +220,7 @@ public class SchedulingAlgorithm implements Serializable {
         //Creating Schedule List for each Group
         for (int i = 0; i < groupList.size(); i++) {
             ArrayList<Class> classList = new ArrayList();
-            Schedule s = new Schedule(groupList.get(i).getGroupID(), groupList.get(i).getCohortID(), classList);
+            Schedule s = new Schedule(groupList.get(i).getGroupID(), groupList.get(i).getCohortID(), classList, groupList.get(i).getCourseCodeList());
             int count = 0;
             for (CourseType ct : courseList) {
                 if (groupList.get(i).getCourseCodeList().contains(ct.getCourseCode())) {
@@ -269,8 +269,7 @@ public class SchedulingAlgorithm implements Serializable {
         //Assign Other Schedules, ex: Tutorial, Practical
         for (int i = 0; i < courseList.size(); i++) {
             for (int j = 0; j < scheduleList.size(); j++) {
-                TutorialGroup tg = searchTutorialGroup(scheduleList.get(j).getGroupID());
-                if (tg.getCourseCodeList().contains(courseList.get(i).getCourseCode())) {
+                if (scheduleList.get(j).getCourseCodeList().contains(courseList.get(i).getCourseCode())) {
                     assignCourse(scheduleList.get(j).getRequiredNoOfClass(), scheduleList.get(j).getGroupID(), scheduleList.get(j).getClassList(), courseList.get(i));
                 }
             }
@@ -1107,16 +1106,6 @@ public class SchedulingAlgorithm implements Serializable {
             }
         }
         return venue;
-    }
-
-    public TutorialGroup searchTutorialGroup(String groupID) {
-        TutorialGroup tg = new TutorialGroup();
-        for (TutorialGroup temp : groupList) {
-            if (temp.getGroupID().equals(groupID)) {
-                tg = temp;
-            }
-        }
-        return tg;
     }
 
     public boolean isTimeClashWithClassList(ArrayList<Class> classList, Class c) {
