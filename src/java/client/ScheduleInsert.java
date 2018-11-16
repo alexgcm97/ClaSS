@@ -119,6 +119,7 @@ public class ScheduleInsert implements Serializable {
             while (rs1.next()) {
                 Staff sd = new Staff();
                 sd.setStaffName(rs1.getString("staffName"));
+                String name[] = sd.getStaffName().split(" ");
 
                 stmt = connect.prepareStatement("SELECT * FROM tutorialgroup WHERE groupID = ?");
                 stmt.setString(1, cd.getGroupID());
@@ -293,6 +294,15 @@ public class ScheduleInsert implements Serializable {
             while (rs1.next()) {
                 Staff sd = new Staff();
                 sd.setStaffName(rs1.getString("staffName"));
+                String name[] = sd.getStaffName().split(" ");
+                if (name.length >= 2) {
+                    name[0] += " ";
+                    for (int i = 1; i < name.length; i++) {
+                        name[i] = name[i].charAt(0) + "";
+                        name[0] += name[i];
+                    }
+                }
+                sd.setStaffName(name[0]);
 
                 stmt = connect.prepareStatement("SELECT * FROM tutorialgroup WHERE groupID = ?");
                 stmt.setString(1, groupID);
@@ -447,6 +457,15 @@ public class ScheduleInsert implements Serializable {
             while (rs1.next()) {
                 Staff sd = new Staff();
                 sd.setStaffName(rs1.getString("staffName"));
+                String name[] = sd.getStaffName().split(" ");
+                if (name.length >= 2) {
+                    name[0] += " ";
+                    for (int i = 1; i < name.length; i++) {
+                        name[i] = name[i].charAt(0) + "";
+                        name[0] += name[i];
+                    }
+                }
+                sd.setStaffName(name[0]);
 
                 stmt = connect.prepareStatement("SELECT * FROM tutorialgroup WHERE groupID = ?");
                 stmt.setString(1, cd.getGroupID());
