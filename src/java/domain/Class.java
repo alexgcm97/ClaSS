@@ -9,7 +9,7 @@ package domain;
  *
  * @author Alex
  */
-public class Class {
+public class Class implements Cloneable {
 
     private String courseID, venueID, groupID, staffID, courseType, cohortID;
     private int day;
@@ -174,6 +174,10 @@ public class Class {
 
     public void setMoveFlag(boolean moveFlag) {
         this.moveFlag = moveFlag;
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
 }
