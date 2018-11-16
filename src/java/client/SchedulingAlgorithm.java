@@ -1199,24 +1199,6 @@ public class SchedulingAlgorithm implements Serializable {
         return isClash;
     }
 
-    public boolean hasInvalidBreak() {
-        boolean hasInvalid = false;
-        for (int index = 0; index < scheduleList.size(); index++) {
-            ArrayList<Class> classList = scheduleList.get(index).getClassList();
-            for (int i = 0; i < classList.size() - 1; i++) {
-                int j = i + 1;
-                Class c1 = classList.get(i), c2 = classList.get(j);
-                if (c1.getDay() == c2.getDay()) {
-                    if ((c2.getStartTime() - c1.getEndTime()) > maxBreak) {
-                        hasInvalid = true;
-                        break;
-                    }
-                }
-            }
-        }
-        return hasInvalid;
-    }
-
     public boolean isClassListDataCompleted() {
         boolean isComplete = true;
         for (int i = 0; i < scheduleList.size(); i++) {
@@ -1324,23 +1306,22 @@ public class SchedulingAlgorithm implements Serializable {
         return hasLongDuration;
     }
 
-    public boolean hasLongBreak() {
-        boolean hasLongBreak = false;
-        for (int i = 0; i < scheduleList.size(); i++) {
-            ArrayList<Class> classList = scheduleList.get(i).getClassList();
-            for (int j1 = 0; j1 < classList.size(); j1++) {
-                for (int j2 = j1 + 1; j2 < classList.size() - 1; j2++) {
-                    Class c1 = classList.get(j1), c2 = classList.get(j2);
-                    if (c1.getDay() == c2.getDay()) {
-                        if ((c2.getStartTime() - c1.getEndTime()) > maxBreak) {
-                            hasLongBreak = true;
-                            break;
-                        }
+    public boolean hasInvalidBreak() {
+        boolean hasInvalid = false;
+        for (int index = 0; index < scheduleList.size(); index++) {
+            ArrayList<Class> classList = scheduleList.get(index).getClassList();
+            for (int i = 0; i < classList.size() - 1; i++) {
+                int j = i + 1;
+                Class c1 = classList.get(i), c2 = classList.get(j);
+                if (c1.getDay() == c2.getDay()) {
+                    if ((c2.getStartTime() - c1.getEndTime()) > maxBreak) {
+                        hasInvalid = true;
+                        break;
                     }
                 }
             }
         }
-        return hasLongBreak;
+        return hasInvalid;
     }
 
     //Method to start the algorithm task from JSF
