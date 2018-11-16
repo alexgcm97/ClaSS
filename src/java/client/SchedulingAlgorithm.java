@@ -426,8 +426,8 @@ public class SchedulingAlgorithm implements Serializable {
                                 }
                                 if (c1.getDay() == c2.getDay()) {
                                     double breakTime = c2.getStartTime() - c1.getEndTime();
-                                    moveDuration = breakTime - getRandomMoveDuration();
                                     if (breakTime > maxBreak) {
+                                        moveDuration = breakTime - getRandomMoveDuration();
                                         if (c1.getCourseType().equals("L") && !c2.getCourseType().equals("L")) {
                                             Class newC = (Class) c2.clone();
                                             newC.moveLeft(moveDuration);
@@ -1383,7 +1383,7 @@ public class SchedulingAlgorithm implements Serializable {
                 allocation();
                 runCount++;
                 System.out.println("Loop " + loopCount + " Run " + runCount + " (StudyDays: " + studyDays + " - MaxBreak: " + maxBreak + " h)");
-                System.out.println(isClassEnough() + "-" + isClassListDataCompleted() + "-" + hasInvalidTime() + "-" + hasInvalidNoOfClass() + "-" + hasLongDurationClass() + "-" + isClashWithinList() + "-" + isClashWithOtherLists() + "-" + isClashWithBlockClass() + "-" + isClashWithDB());
+                //System.out.println(isClassEnough() + "-" + isClassListDataCompleted() + "-" + hasInvalidTime() + "-" + hasInvalidNoOfClass() + "-" + hasLongDurationClass() + "-" + isClashWithinList() + "-" + isClashWithOtherLists() + "-" + isClashWithBlockClass() + "-" + isClashWithDB());
             }
         } while (toRestart || !isClassEnough() || !isClassListDataCompleted() || hasInvalidTime() || hasInvalidNoOfClass() || hasLongDurationClass() || isClashWithinList() || isClashWithOtherLists() || isClashWithBlockClass() || isClashWithDB());
 
