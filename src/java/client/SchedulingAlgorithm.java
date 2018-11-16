@@ -917,11 +917,16 @@ public class SchedulingAlgorithm implements Serializable {
         int totalSize = getTotalSize(lecGroupStr, courseCode);
         Venue venue = new Venue();
 
-        for (Venue v : hallList) {
-            if (v.getCapacity() >= totalSize && getVenueUseCount(v.getVenueID()) <= 10) {
-                qualifiedList.add(v);
+        if (totalSize <= 30) {
+            qualifiedList = roomList;
+        } else {
+            for (Venue v : hallList) {
+                if (v.getCapacity() >= totalSize && getVenueUseCount(v.getVenueID()) <= 10) {
+                    qualifiedList.add(v);
+                }
             }
         }
+
         qualifiedList.sort((Venue v1, Venue v2) -> {
             return v1.getCapacity() - v2.getCapacity();
         });
