@@ -942,7 +942,7 @@ public class SchedulingAlgorithm implements Serializable {
             qualifiedList = roomList;
         } else {
             for (Venue v : hallList) {
-                if (v.getCapacity() >= totalSize) {
+                if (v.getCapacity() >= totalSize && getVenueUseCount(v.getVenueID()) <= 10) {
                     qualifiedList.add(v);
                 }
             }
