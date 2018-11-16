@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -356,7 +357,6 @@ public class SchedulingAlgorithm implements Serializable {
                                         if (class1.getStartTime() != class2.getStartTime() || class1.getEndTime() != class2.getEndTime()) {
                                             if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1) || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2)) {
                                                 if (class1.getVenueID().equals(class2.getVenueID()) || class1.getStaffID().equals(class2.getStaffID())) {
-                                                    System.out.println("that");
                                                     isClash = true;
                                                     break;
                                                 }
@@ -366,7 +366,6 @@ public class SchedulingAlgorithm implements Serializable {
                                 } else {
                                     if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1) || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2)) {
                                         if (class1.getVenueID().equals(class2.getVenueID()) || class1.getStaffID().equals(class2.getStaffID())) {
-                                            System.out.println("there");
                                             isClash = true;
                                             break;
                                         }
@@ -916,44 +915,25 @@ public class SchedulingAlgorithm implements Serializable {
     public Venue getLecVenue(String lecGroupStr, String courseCode, String staffID) throws IOException {
         ArrayList<Venue> qualifiedList = new ArrayList();
         int totalSize = getTotalSize(lecGroupStr, courseCode);
-        boolean nextVenue = false;
         Venue venue = new Venue();
+
         for (Venue v : hallList) {
             if (v.getCapacity() >= totalSize) {
                 qualifiedList.add(v);
             }
         }
+        qualifiedList.sort((Venue v1, Venue v2) -> {
+            return v1.getCapacity() - v2.getCapacity();
+        });
+
         if (qualifiedList.isEmpty()) {
             errorCode = 1;
             errorMsg = "Unable to generate schedule due to lecture hall capacity error. \\nStaff ID: " + staffID + "\\nCourse Code & Cohort IDs: " + lecGroupStr + "";
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
         } else {
-            qualifiedList.sort((Venue v1, Venue v2) -> {
-                return v1.getCapacity() - v2.getCapacity();
-            });
-            int index = 0;
-            do {
-                nextVenue = false;
-                venue = qualifiedList.get(index);
-                if (noOfTimesVenueUsed(venue.getVenueID()) > 10) {
-                    index++;
-                    nextVenue = true;
-                }
-            } while (nextVenue && index < qualifiedList.size());
+            venue = qualifiedList.get(rand.nextInt(qualifiedList.size()));
         }
         return venue;
-    }
-
-    public int noOfTimesVenueUsed(String venueID) {
-        int count = 0;
-        for (Schedule s : scheduleList) {
-            for (Class c : s.getClassList()) {
-                if (c.getVenueID().equals(venueID)) {
-                    count++;
-                }
-            }
-        }
-        return count;
     }
 
     public Venue getCourseVenue(String courseType, String courseCode) throws IOException {
@@ -1346,7 +1326,6 @@ public class SchedulingAlgorithm implements Serializable {
                 }
                 allocation();
                 runCount++;
-
                 System.out.println("Loop " + loopCount + " Run " + runCount + " (StudyDays: " + studyDays + " - MaxBreak: " + maxBreak + " h)");
                 System.out.println(isClassEnough() + "-" + isClassListDataCompleted() + "-" + hasInvalidTime() + "-" + hasInvalidNoOfClass() + "-" + hasLongDurationClass() + "-" + isClashWithinList() + "-" + isClashWithOtherLists() + "-" + isClashWithBlockClass() + "-" + isClashWithDB());
             }
