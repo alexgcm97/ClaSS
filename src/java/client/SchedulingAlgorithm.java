@@ -918,7 +918,7 @@ public class SchedulingAlgorithm implements Serializable {
         Venue venue = new Venue();
 
         for (Venue v : hallList) {
-            if (v.getCapacity() >= totalSize) {
+            if (v.getCapacity() >= totalSize && getVenueUseCount(v.getVenueID()) <= 10) {
                 qualifiedList.add(v);
             }
         }
@@ -934,6 +934,18 @@ public class SchedulingAlgorithm implements Serializable {
             venue = qualifiedList.get(rand.nextInt(qualifiedList.size()));
         }
         return venue;
+    }
+
+    public int getVenueUseCount(String venueID) {
+        ArrayList<String> courseIDList = new ArrayList();
+        for (Schedule s : scheduleList) {
+            for (Class c : s.getClassList()) {
+                if (c.getVenueID().equals(venueID) && !courseIDList.contains(c.getCourseID())) {
+                    courseIDList.add(c.getCourseID());
+                }
+            }
+        }
+        return courseIDList.size();
     }
 
     public Venue getCourseVenue(String courseType, String courseCode) throws IOException {
