@@ -87,6 +87,7 @@ public class Schedule {
                 double startTime1 = c.getStartTime() + moveDuration, endTime1 = c.getEndTime() + moveDuration, startTime2 = d.getStartTime(), endTime2 = d.getEndTime();
                 if ((startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2) || (startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1)) {
                     isClash = true;
+                    break;
                 }
             }
         }
@@ -102,6 +103,7 @@ public class Schedule {
                 double startTime1 = c.getStartTime() - moveDuration, endTime1 = c.getEndTime() - moveDuration, startTime2 = d.getStartTime(), endTime2 = d.getEndTime();
                 if ((startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2) || (startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1)) {
                     isClash = true;
+                    break;
                 }
             }
         }

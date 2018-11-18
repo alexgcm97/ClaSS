@@ -327,7 +327,7 @@ public class SchedulingAlgorithm implements Serializable {
     }
 
     //Check if the classList has any clashes with another classList
-    public boolean isClashWithOtherLists() {
+    public boolean hasClashWithOtherLists() {
         boolean isClash = false;
         for (int i = 0; i < scheduleList.size() - 1; i++) {
             for (int j = i + 1; j < scheduleList.size(); j++) {
@@ -397,7 +397,8 @@ public class SchedulingAlgorithm implements Serializable {
                                         }
                                         Class newC = (Class) c.clone();
                                         newC.moveLeft(moveDuration);
-                                        if (!isTimeClashWithOtherClassLists(newC)) {
+
+                                        if (!isClashWithOtherLists(newC)) {
                                             scheduleList.get(index).moveLeft(c, moveDuration);
                                         }
                                     }
@@ -431,26 +432,30 @@ public class SchedulingAlgorithm implements Serializable {
                                         if (c1.getCourseType().equals("L") && !c2.getCourseType().equals("L")) {
                                             Class newC = (Class) c2.clone();
                                             newC.moveLeft(moveDuration);
-                                            if (!isTimeClashWithOtherClassLists(newC)) {
+
+                                            if (!isClashWithOtherLists(newC)) {
                                                 scheduleList.get(index).moveLeft(c2, moveDuration);
                                             }
                                         } else if (c2.getCourseType().equals("L") && !c1.getCourseType().equals("L")) {
                                             Class newC = (Class) c1.clone();
                                             newC.moveRight(moveDuration);
-                                            if (!isTimeClashWithOtherClassLists(newC)) {
+
+                                            if (!isClashWithOtherLists(newC)) {
                                                 scheduleList.get(index).moveRight(c1, moveDuration);
                                             }
                                         } else if (!c1.getCourseType().equals("L") && !c2.getCourseType().equals("L")) {
                                             if (c1.getStartTime() == studyStart) {
                                                 Class newC = (Class) c1.clone();
                                                 newC.moveRight(moveDuration);
-                                                if (!isTimeClashWithOtherClassLists(newC)) {
+
+                                                if (!isClashWithOtherLists(newC)) {
                                                     scheduleList.get(index).moveRight(c1, moveDuration);
                                                 }
                                             } else {
                                                 Class newC = (Class) c2.clone();
                                                 newC.moveLeft(moveDuration);
-                                                if (!isTimeClashWithOtherClassLists(newC)) {
+
+                                                if (!isClashWithOtherLists(newC)) {
                                                     scheduleList.get(index).moveLeft(c2, moveDuration);
                                                 }
                                             }
@@ -460,20 +465,23 @@ public class SchedulingAlgorithm implements Serializable {
                                         if (c1.getCourseType().equals("L") && !c2.getCourseType().equals("L")) {
                                             Class newC = (Class) c2.clone();
                                             newC.moveRight(moveDuration);
-                                            if (!isTimeClashWithOtherClassLists(newC)) {
+
+                                            if (!isClashWithOtherLists(newC)) {
                                                 scheduleList.get(index).moveRight(c2, moveDuration);
                                             }
                                         } else {
                                             if (c1.getStartTime() == studyStart) {
                                                 Class newC = (Class) c1.clone();
                                                 newC.moveRight(moveDuration);
-                                                if (!isTimeClashWithOtherClassLists(newC)) {
+
+                                                if (!isClashWithOtherLists(newC)) {
                                                     scheduleList.get(index).moveRight(c1, moveDuration);
                                                 }
                                             } else {
                                                 Class newC = (Class) c1.clone();
                                                 newC.moveLeft(moveDuration);
-                                                if (!isTimeClashWithOtherClassLists(newC)) {
+
+                                                if (!isClashWithOtherLists(newC)) {
                                                     scheduleList.get(index).moveLeft(c1, moveDuration);
                                                 }
                                             }
@@ -1068,15 +1076,17 @@ public class SchedulingAlgorithm implements Serializable {
         return venue;
     }
 
-    public boolean isTimeClashWithOtherClassLists(Class c) {
+    public boolean isClashWithOtherLists(Class c) {
         boolean found = false;
         for (Schedule s : scheduleList) {
             for (Class d : s.getClassList()) {
-                if (d.getDay() == c.getDay()) {
+                if (d.getDay() == c.getDay() && !c.getGroupID().equals(d.getGroupID())) {
                     double startTime = c.getStartTime(), endTime = c.getEndTime(), tempStart = d.getStartTime(), tempEnd = d.getEndTime();
                     if ((startTime >= tempStart && startTime < tempEnd) || (endTime > tempStart && endTime <= tempEnd) || (tempStart >= startTime && tempStart < endTime) || (tempEnd > startTime && tempEnd <= endTime)) {
-                        found = true;
-                        break;
+                        if (c.getStaffID().equals(d.getStaffID())) {
+                            found = true;
+                            break;
+                        }
                     }
                 }
             }
@@ -1098,7 +1108,7 @@ public class SchedulingAlgorithm implements Serializable {
         return found;
     }
 
-    public boolean isClashWithinList() {
+    public boolean hasClashWithinList() {
         boolean isClash = false;
         for (int i = 0; i < scheduleList.size(); i++) {
             ArrayList<Class> classList = scheduleList.get(i).getClassList();
@@ -1119,7 +1129,7 @@ public class SchedulingAlgorithm implements Serializable {
         return isClash;
     }
 
-    public boolean isClashWithDB() throws SQLException {
+    public boolean hasClashWithDBList() throws SQLException {
         boolean isClash = false;
         if (!dbList.isEmpty()) {
             for (int i = 0; i < scheduleList.size(); i++) {
@@ -1163,7 +1173,7 @@ public class SchedulingAlgorithm implements Serializable {
         return isClash;
     }
 
-    public boolean isClashWithBlockClass() {
+    public boolean hasClashWithBlockClass() {
         boolean isClash = false;
         double tempStart, tempEnd, startTime, endTime;
         for (int i = 0; i < scheduleList.size(); i++) {
@@ -1199,18 +1209,18 @@ public class SchedulingAlgorithm implements Serializable {
         return isClash;
     }
 
-    public boolean isClassListDataCompleted() {
-        boolean isComplete = true;
+    public boolean hasIncompleteClassData() {
+        boolean hasIncomplete = false;
         for (int i = 0; i < scheduleList.size(); i++) {
             ArrayList<Class> classList = scheduleList.get(i).getClassList();
             for (Class c : classList) {
                 if (c.getVenueID() == null || c.getStaffID() == null || c.getVenueID().equals("-") || c.getStaffID().equals("-")) {
-                    isComplete = false;
+                    hasIncomplete = true;
                     break;
                 }
             }
         }
-        return isComplete;
+        return hasIncomplete;
     }
 
     public boolean hasInvalidTime() {
@@ -1229,14 +1239,14 @@ public class SchedulingAlgorithm implements Serializable {
         return hasInvalid;
     }
 
-    public boolean isClassEnough() {
-        boolean isEnough = true;
+    public boolean hasEnoughClass() {
+        boolean hasEnough = true;
         for (int i = 0; i < scheduleList.size(); i++) {
             if (scheduleList.get(i).getNoOfClass() < scheduleList.get(i).getRequiredNoOfClass()) {
-                isEnough = false;
+                hasEnough = false;
             }
         }
-        return isEnough;
+        return hasEnough;
     }
 
     public boolean hasInvalidNoOfClass() {
@@ -1364,9 +1374,9 @@ public class SchedulingAlgorithm implements Serializable {
                 allocation();
                 runCount++;
                 System.out.println("Loop " + loopCount + " Run " + runCount + " (StudyDays: " + studyDays + " - MaxBreak: " + maxBreak + " h)");
-                //System.out.println(isClassEnough() + "-" + isClassListDataCompleted() + "-" + hasInvalidTime() + "-" + hasInvalidNoOfClass() + "-" + hasLongDurationClass() + "-" + isClashWithinList() + "-" + isClashWithOtherLists() + "-" + isClashWithBlockClass() + "-" + isClashWithDB());
+                System.out.println(hasEnoughClass() + "-" + hasIncompleteClassData() + "-" + hasInvalidTime() + "-" + hasInvalidNoOfClass() + "-" + hasLongDurationClass() + "-" + hasClashWithinList() + "-" + hasClashWithOtherLists() + "-" + hasClashWithBlockClass() + "-" + hasClashWithDBList());
             }
-        } while (toRestart || !isClassEnough() || !isClassListDataCompleted() || hasInvalidTime() || hasInvalidNoOfClass() || hasLongDurationClass() || isClashWithinList() || isClashWithOtherLists() || isClashWithBlockClass() || isClashWithDB());
+        } while (toRestart || !hasEnoughClass() || hasIncompleteClassData() || hasInvalidTime() || hasInvalidNoOfClass() || hasLongDurationClass() || hasClashWithinList() || hasClashWithOtherLists() || hasClashWithBlockClass() || hasClashWithDBList());
 
         if (!isBreak) {
             insertData();

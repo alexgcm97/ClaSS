@@ -176,8 +176,8 @@ public class Class implements Cloneable {
         this.moveFlag = moveFlag;
     }
 
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public Class clone() throws CloneNotSupportedException {
+        return (Class) super.clone();
     }
 
 }
