@@ -70,10 +70,10 @@
                         <tr> 
                             <h:panelGroup rendered="#{venueManage.v.venueType eq 'Lab'}">
                                 <td>
-                                    <h:outputLabel for="multiple" value="Course Code List: " />
+                                    <h:outputLabel for="courseCode" value="Course Code List: " />
                                 </td>
                                 <td>
-                                    <p:selectCheckboxMenu value="#{venueManage.courseCodeStr}" label="Course Codes" filter="true" filterMatchMode="startsWith">
+                                    <p:selectCheckboxMenu id="courseCode" value="#{venueManage.courseCodeStr}" label="Course Codes" filter="true" filterMatchMode="startsWith">
                                         <f:selectItems value="#{venueManage.courseCodeList}" />
                                     </p:selectCheckboxMenu>
                                 </td>

@@ -130,6 +130,7 @@ public class venueManage {
             }
             v.setVenueID(v.getVenueID().replace(v.getBlock(), ""));
         }
+        courseCodeStr = v.getCourseCodeList().split(",");
         FacesContext.getCurrentInstance().getExternalContext().redirect("editVenue.xhtml");
 
     }
