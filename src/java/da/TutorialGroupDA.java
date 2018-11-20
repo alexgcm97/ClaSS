@@ -107,7 +107,7 @@ public class TutorialGroupDA {
 
         try {
             connect = DBConnection.getConnection();
-            PreparedStatement pstmt = connect.prepareStatement("SELECT tg.groupID, tg.groupNumber, tg.size, tg.cohortID, pc.courseCodeList FROM tutorialgroup tg, programmeCohort pc WHERE groupID=? AND tg.cohortID = pc.cohortID");
+            PreparedStatement pstmt = connect.prepareStatement("SELECT tg.groupID, tg.groupNumber, tg.size, tg.cohortID, pc.courseCodeList, pc.programmeCode, pc.studyYear ,pc.entryYear,pc.intakeYear FROM tutorialgroup tg, programmeCohort pc WHERE groupID=? AND tg.cohortID = pc.cohortID");
             pstmt.setString(1, groupID);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -117,6 +117,10 @@ public class TutorialGroupDA {
                 TG.setSize(rs.getInt(3));
                 TG.setCohortID(rs.getString(4));
                 TG.setCourseCodeList(rs.getString(5));
+                TG.setProgrammeCode(rs.getString(6));
+                TG.setStudyYear(rs.getInt(7));
+                TG.setEntryYear(rs.getString(8));
+                TG.setIntakeYear(rs.getString(9));
                 output.add(TG);
             }
         } catch (SQLException ex) {
@@ -201,6 +205,25 @@ public class TutorialGroupDA {
             e.printStackTrace();
         }
 
+    }
+
+    public List<TutorialGroup> getTGviaCohortID(String cohortID) {
+        Connection connect = null;
+        List<TutorialGroup> output = new ArrayList<TutorialGroup>();
+        try {
+            connect = DBConnection.getConnection();
+            PreparedStatement pstmt = connect.prepareStatement("select * from TUTORIALGROUP where COHORTID = ?");
+            pstmt.setString(1, cohortID);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                TutorialGroup tg = new TutorialGroup(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getString(4));
+                output.add(tg);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return output;
     }
 
     public ArrayList<TutorialGroup> getAll() {

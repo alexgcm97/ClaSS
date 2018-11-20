@@ -158,6 +158,27 @@ public class ProgrammeCohortDA {
         return p;
     }
 
+    public List<ProgrammeCohort> getCourseCodePC(String courseCode) {
+        Connection connect;
+        ProgrammeCohort pc = new ProgrammeCohort();
+        List<ProgrammeCohort> output = new ArrayList<ProgrammeCohort>();
+            try {
+                connect = DBConnection.getConnection();
+                PreparedStatement pstmt = connect.prepareStatement("select * from PROGRAMMECOHORT where COURSECODELIST LIKE ?");
+                pstmt.setString(1, '%' + courseCode + '%');
+                ResultSet rs = pstmt.executeQuery();
+                while (rs.next()) {
+                    pc = new ProgrammeCohort(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6));
+                    output.add(pc);
+                }
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        
+        return output;
+    }
+
     public ProgrammeCohort get(String cohortID) {
         Connection connect;
         ProgrammeCohort pc = new ProgrammeCohort();

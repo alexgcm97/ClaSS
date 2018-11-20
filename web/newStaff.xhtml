@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <style>
             .btn{
@@ -99,19 +101,35 @@
                     </tr>
                     <tr>
                         <td>Course Code List: </td>
-                        <td><h:inputText value="#{staffManage.s.courseCodeListS}" /><br/></td>
+                        <td>                            
+                            <p:selectCheckboxMenu id="courseCode" value="#{staffManage.courseCodeStr}" label="Course Codes" filter="true" filterMatchMode="startsWith">
+                                <f:selectItems value="#{staffManage.courseCodeListType}" />
+                                <p:ajax event="change" update="selectLecGroup"/>
+                                <p:ajax event="change" update="selectTutGroup"/>
+                                <p:ajax event="change" update="selectPracGroup"/>
+                            </p:selectCheckboxMenu></td>
                     </tr>
                     <tr>
                         <td>Lecture Group: </td>
-                        <td><h:inputText value="#{staffManage.s.lecGroupListS}" /><br/></td>
+                        <td>                     
+
+                            <p:selectCheckboxMenu id="selectLecGroup" value="#{staffManage.lecGroupStr}" label="Lecture Groups" filter="true" filterMatchMode="startsWith">
+                                <f:selectItems value="#{staffManage.lecGroupListMethod}" var="pc" itemLabel="#{pc.courseCodeList}-#{pc.programmeCode}#{pc.studyYear}-Intake:#{pc.intakeYear}-Entry:#{pc.entryYear}" itemValue="#{pc.courseCodeList}-#{pc.cohortID}"/>
+                            </p:selectCheckboxMenu></td>
                     </tr>
                     <tr>
                         <td>Tutorial Group: </td>
-                        <td><h:inputText value="#{staffManage.s.tutGroupListS}" /><br/></td>
+                        <td>
+                            <p:selectCheckboxMenu id="selectTutGroup" value="#{staffManage.tutGroupStr}" label="Tutorial Groups" filter="true" filterMatchMode="startsWith">
+                                <f:selectItems value="#{staffManage.tutGroupListMethod}" var="tg" itemLabel="#{tg.courseCodeList}-#{tg.programmeCode}#{tg.studyYear}G#{tg.groupNumber}-Intake:#{tg.intakeYear}-Entry#{tg.entryYear}" itemValue="#{tg.courseCodeList}-#{tg.groupID}" />
+                            </p:selectCheckboxMenu></td>
                     </tr>
                     <tr>
                         <td>Practical Group: </td>
-                        <td><h:inputText value="#{staffManage.s.pracGroupListS}" /><br/></td>
+                        <td>
+                            <p:selectCheckboxMenu id="selectPracGroup" value="#{staffManage.pracGroupStr}" label="Practical Groups" filter="true" filterMatchMode="startsWith">
+                                <f:selectItems value="#{staffManage.pracGroupListMethod}" var="pg" itemLabel="#{pg.courseCodeList}-#{pg.programmeCode}#{pg.studyYear}G#{pg.groupNumber}-Intake:#{pg.intakeYear}-Entry#{pg.entryYear}" itemValue="#{pg.courseCodeList}-#{pg.groupID}" />
+                            </p:selectCheckboxMenu></td>
                     </tr>
                 </table>
 
