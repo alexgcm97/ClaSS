@@ -1175,24 +1175,24 @@ public class SchedulingAlgorithm implements Serializable {
     public boolean hasClashWithBlockClass() {
         boolean isClash = false;
         double tempStart, tempEnd, startTime, endTime;
-        for (int i = 0; i < scheduleList.size(); i++) {
-            ArrayList<Class> classList = scheduleList.get(i).getClassList();
-            for (Class c : classList) {
-                tempStart = c.getStartTime();
-                tempEnd = c.getEndTime();
+        if (blockClass != null) {
+            for (int i = 0; i < scheduleList.size(); i++) {
+                ArrayList<Class> classList = scheduleList.get(i).getClassList();
+                for (Class c : classList) {
+                    tempStart = c.getStartTime();
+                    tempEnd = c.getEndTime();
 
-                Staff staff = searchStaff(c.getStaffID());
-                startTime = staff.getBlockStart();
-                endTime = staff.getBlockStart() + staff.getBlockDuration();
+                    Staff staff = searchStaff(c.getStaffID());
+                    startTime = staff.getBlockStart();
+                    endTime = staff.getBlockStart() + staff.getBlockDuration();
 
-                if (c.getDay() == staff.getBlockDay()) {
-                    if ((startTime >= tempStart && startTime < tempEnd) || (endTime > tempStart && endTime <= tempEnd) || (tempStart >= startTime && tempStart < endTime) || (tempEnd > startTime && tempEnd <= endTime)) {
-                        isClash = true;
-                        break;
+                    if (c.getDay() == staff.getBlockDay()) {
+                        if ((startTime >= tempStart && startTime < tempEnd) || (endTime > tempStart && endTime <= tempEnd) || (tempStart >= startTime && tempStart < endTime) || (tempEnd > startTime && tempEnd <= endTime)) {
+                            isClash = true;
+                            break;
+                        }
                     }
-                }
 
-                if (blockClass != null) {
                     startTime = blockClass.getStartTime();
                     endTime = blockClass.getEndTime();
                     if (c.getDay() == blockClass.getDay()) {
