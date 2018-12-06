@@ -18,6 +18,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -88,6 +89,12 @@ public class SchedulingAlgorithm implements Serializable {
             groupList.add(tg);
         }
 
+        if (groupList.isEmpty()) {
+            errorCode = 1;
+            errorMsg = "Tutorial Group XML file is empty.";
+            FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
+        }
+
         fileName = filePath + "Course.xml";
         doc = dBuilder.parse(fileName);
         courseList = new ArrayList();
@@ -104,33 +111,43 @@ public class SchedulingAlgorithm implements Serializable {
                 courseList.add(c);
             }
         }
+        if (lecList.isEmpty() && courseList.isEmpty()) {
+            errorCode = 1;
+            errorMsg = "Course XML file is empty.";
+            FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
+        }
 
         fileName = filePath + "Configuration.xml";
         doc = dBuilder.parse(fileName);
         nodes = doc.getElementsByTagName("configuration");
 
-        e = (Element) nodes.item(0);
-
-        studyDays = Integer.parseInt(e.getElementsByTagName("studyDays").item(0).getTextContent());
-        studyStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
-        studyEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
-
-        nodes = doc.getElementsByTagName("constraints");
-        if (nodes.getLength() > 0) {
+        try {
             e = (Element) nodes.item(0);
-            if (e.getElementsByTagName("block").getLength() > 0) {
-                blockDay = Integer.parseInt(e.getElementsByTagName("day").item(0).getTextContent());
-                blockStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
-                blockEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
-            }
+            studyDays = Integer.parseInt(e.getElementsByTagName("studyDays").item(0).getTextContent());
+            studyStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
+            studyEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
 
-            if (e.getElementsByTagName("maxBreak").getLength() > 0) {
-                maxBreak = Double.parseDouble(e.getElementsByTagName("maxBreak").item(0).getTextContent());
-            }
+            nodes = doc.getElementsByTagName("constraints");
+            if (nodes.getLength() > 0) {
+                e = (Element) nodes.item(0);
+                if (e.getElementsByTagName("block").getLength() > 0) {
+                    blockDay = Integer.parseInt(e.getElementsByTagName("day").item(0).getTextContent());
+                    blockStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
+                    blockEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
+                }
 
-            if (e.getElementsByTagName("balanceClass").getLength() > 0) {
-                toBalance = Boolean.parseBoolean(e.getElementsByTagName("balanceClass").item(0).getTextContent());
+                if (e.getElementsByTagName("maxBreak").getLength() > 0) {
+                    maxBreak = Double.parseDouble(e.getElementsByTagName("maxBreak").item(0).getTextContent());
+                }
+
+                if (e.getElementsByTagName("balanceClass").getLength() > 0) {
+                    toBalance = Boolean.parseBoolean(e.getElementsByTagName("balanceClass").item(0).getTextContent());
+                }
             }
+        } catch (Exception ex) {
+            errorCode = 1;
+            errorMsg = "Configuration XML file is empty or incomplete.";
+            FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
         }
 
         fileName = filePath + "Staff.xml";
@@ -193,6 +210,11 @@ public class SchedulingAlgorithm implements Serializable {
             stf.setClassList(sda.getClassList(stf.getStaffID()));
             staffList.add(stf);
         }
+        if (staffList.isEmpty()) {
+            errorCode = 1;
+            errorMsg = "Staff XML file is empty.";
+            FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
+        }
 
         fileName = filePath + "Venue.xml";
         doc = dBuilder.parse(fileName);
@@ -220,6 +242,11 @@ public class SchedulingAlgorithm implements Serializable {
                 default:
                     break;
             }
+        }
+        if (roomList.isEmpty() && labList.isEmpty() && hallList.isEmpty()) {
+            errorCode = 1;
+            errorMsg = "Venue XML file is empty.";
+            FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
         }
 
         //Initialize Schedule List
