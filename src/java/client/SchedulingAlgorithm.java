@@ -39,7 +39,7 @@ public class SchedulingAlgorithm implements Serializable {
     private ArrayList<Venue> roomList, labList, hallList, allPurposeLabList;
     private ArrayList<Schedule> scheduleList;
 
-    private int studyDays, blockDay = 0, errorCode = 0;
+    private int studyDays = 0, blockDay = 0, errorCode = 0;
     private boolean toBalance = false;
     private double studyStart, studyEnd, blockStart, blockEnd, maxBreak = 99, noOfClassPerDay = 99;
     private String errorMsg;
@@ -70,7 +70,7 @@ public class SchedulingAlgorithm implements Serializable {
         this.errorCode = errorCode;
     }
 
-    public void initialize() throws Exception {
+    public boolean initialize() throws Exception {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Element e;
@@ -90,9 +90,10 @@ public class SchedulingAlgorithm implements Serializable {
         }
 
         if (groupList.isEmpty()) {
-            errorCode = 1;
             errorMsg = "Tutorial Group XML file is empty.";
+            errorCode = 1;
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
+            return false;
         }
 
         fileName = filePath + "Course.xml";
@@ -111,43 +112,56 @@ public class SchedulingAlgorithm implements Serializable {
                 courseList.add(c);
             }
         }
+
         if (lecList.isEmpty() && courseList.isEmpty()) {
             errorCode = 1;
             errorMsg = "Course XML file is empty.";
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
+            return false;
         }
 
         fileName = filePath + "Configuration.xml";
         doc = dBuilder.parse(fileName);
         nodes = doc.getElementsByTagName("configuration");
 
-        try {
-            e = (Element) nodes.item(0);
+        e = (Element) nodes.item(0);
+        if (e.getElementsByTagName("studyDays").getLength() > 0) {
             studyDays = Integer.parseInt(e.getElementsByTagName("studyDays").item(0).getTextContent());
-            studyStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
-            studyEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
-
-            nodes = doc.getElementsByTagName("constraints");
-            if (nodes.getLength() > 0) {
-                e = (Element) nodes.item(0);
-                if (e.getElementsByTagName("block").getLength() > 0) {
-                    blockDay = Integer.parseInt(e.getElementsByTagName("day").item(0).getTextContent());
-                    blockStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
-                    blockEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
-                }
-
-                if (e.getElementsByTagName("maxBreak").getLength() > 0) {
-                    maxBreak = Double.parseDouble(e.getElementsByTagName("maxBreak").item(0).getTextContent());
-                }
-
-                if (e.getElementsByTagName("balanceClass").getLength() > 0) {
-                    toBalance = Boolean.parseBoolean(e.getElementsByTagName("balanceClass").item(0).getTextContent());
-                }
-            }
-        } catch (Exception ex) {
+        } else {
             errorCode = 1;
+        }
+        if (e.getElementsByTagName("startTime").getLength() > 0) {
+            studyStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
+        } else {
+            errorCode = 1;
+        }
+        if (e.getElementsByTagName("endTime").getLength() > 0) {
+            studyEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
+        } else {
+            errorCode = 1;
+        }
+
+        nodes = doc.getElementsByTagName("constraints");
+        if (nodes.getLength() > 0) {
+            e = (Element) nodes.item(0);
+            if (e.getElementsByTagName("block").getLength() > 0) {
+                blockDay = Integer.parseInt(e.getElementsByTagName("day").item(0).getTextContent());
+                blockStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
+                blockEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
+            }
+
+            if (e.getElementsByTagName("maxBreak").getLength() > 0) {
+                maxBreak = Double.parseDouble(e.getElementsByTagName("maxBreak").item(0).getTextContent());
+            }
+
+            if (e.getElementsByTagName("balanceClass").getLength() > 0) {
+                toBalance = Boolean.parseBoolean(e.getElementsByTagName("balanceClass").item(0).getTextContent());
+            }
+        }
+        if (errorCode == 1) {
             errorMsg = "Configuration XML file is empty or incomplete.";
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
+            return false;
         }
 
         fileName = filePath + "Staff.xml";
@@ -214,6 +228,7 @@ public class SchedulingAlgorithm implements Serializable {
             errorCode = 1;
             errorMsg = "Staff XML file is empty.";
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
+            return false;
         }
 
         fileName = filePath + "Venue.xml";
@@ -243,10 +258,20 @@ public class SchedulingAlgorithm implements Serializable {
                     break;
             }
         }
-        if (roomList.isEmpty() && labList.isEmpty() && hallList.isEmpty()) {
+        if (roomList.isEmpty() || labList.isEmpty() || hallList.isEmpty()) {
             errorCode = 1;
-            errorMsg = "Venue XML file is empty.";
+            errorMsg = "Venue XML file is empty or incomplete.";
+            if (roomList.isEmpty()) {
+                errorMsg += "\\nNo rooms are selected for tutorial or blended classes.";
+            }
+            if (labList.isEmpty()) {
+                errorMsg += "\\nNo labs are selected for practical classes.";
+            }
+            if (hallList.isEmpty()) {
+                errorMsg += "\\nNo lecture halls are selected for lecture classes.";
+            }
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
+            return false;
         }
 
         //Initialize Schedule List
@@ -271,6 +296,7 @@ public class SchedulingAlgorithm implements Serializable {
             scheduleList.add(s);
         }
         dbList = cda.getAll();
+        return true;
     }
 
     public void allocation() throws IOException, CloneNotSupportedException {
@@ -1362,56 +1388,57 @@ public class SchedulingAlgorithm implements Serializable {
 
     //Method to start the algorithm task from JSF
     public void start() throws Exception {
-        initialize();
-        int runCount = 0, loopCount = 1;
-        double oriMaxBreak = maxBreak;
-        int oriStudyDays = studyDays;
-        boolean toRestart, isBreak = false;
+        if (initialize()) {
+            int runCount = 0, loopCount = 1;
+            double oriMaxBreak = maxBreak;
+            int oriStudyDays = studyDays;
+            boolean toRestart, isBreak = false;
 
-        do {
-            toRestart = false;
-            if (runCount == exitLimit) {
-                if (studyDays == 6 && maxBreak == 4) {
-                    isBreak = true;
-                    break;
-                } else {
-                    if (maxBreak < 4.0) {
-                        if (studyDays <= 5) {
-                            maxBreak += 0.5;
-                            studyDays = oriStudyDays;
+            do {
+                toRestart = false;
+                if (runCount == exitLimit) {
+                    if (studyDays == 6 && maxBreak == 4) {
+                        isBreak = true;
+                        break;
+                    } else {
+                        if (maxBreak < 4.0) {
+                            if (studyDays <= 5) {
+                                maxBreak += 0.5;
+                                studyDays = oriStudyDays;
+                                runCount = 0;
+                                toRestart = true;
+                                loopCount++;
+                            }
+                        } else {
+                            studyDays++;
+                            maxBreak = oriMaxBreak;
                             runCount = 0;
                             toRestart = true;
                             loopCount++;
                         }
-                    } else {
-                        studyDays++;
-                        maxBreak = oriMaxBreak;
-                        runCount = 0;
-                        toRestart = true;
-                        loopCount++;
                     }
+                } else {
+                    if (runCount != 0 && studyDays < 5 && (runCount % Math.floor(exitLimit * 0.25)) == 0) {
+                        studyDays++;
+                    } else if (runCount != 0 && studyDays == 6 && (runCount % Math.floor(exitLimit * 0.25)) == 0) {
+                        maxBreak += 0.5;
+                    }
+                    allocation();
+                    runCount++;
+                    System.out.println("Loop " + loopCount + " Run " + runCount + " (StudyDays: " + studyDays + " - MaxBreak: " + maxBreak + " h)");
+                    System.out.println(hasEnoughClass() + "-" + hasIncompleteClassData() + "-" + hasInvalidTime() + "-" + hasInvalidNoOfClass() + "-" + hasLongDurationClass() + "-" + hasClashWithinList() + "-" + hasClashWithOtherLists() + "-" + hasClashWithBlockClass() + "-" + hasClashWithDBList());
                 }
-            } else {
-                if (runCount != 0 && studyDays < 5 && (runCount % Math.floor(exitLimit * 0.25)) == 0) {
-                    studyDays++;
-                } else if (runCount != 0 && studyDays == 6 && (runCount % Math.floor(exitLimit * 0.25)) == 0) {
-                    maxBreak += 0.5;
-                }
-                allocation();
-                runCount++;
-                System.out.println("Loop " + loopCount + " Run " + runCount + " (StudyDays: " + studyDays + " - MaxBreak: " + maxBreak + " h)");
-                System.out.println(hasEnoughClass() + "-" + hasIncompleteClassData() + "-" + hasInvalidTime() + "-" + hasInvalidNoOfClass() + "-" + hasLongDurationClass() + "-" + hasClashWithinList() + "-" + hasClashWithOtherLists() + "-" + hasClashWithBlockClass() + "-" + hasClashWithDBList());
-            }
-        } while (toRestart || !hasEnoughClass() || hasIncompleteClassData() || hasInvalidTime() || hasInvalidNoOfClass() || hasLongDurationClass() || hasClashWithinList() || hasClashWithOtherLists() || hasClashWithBlockClass() || hasClashWithDBList());
+            } while (toRestart || !hasEnoughClass() || hasIncompleteClassData() || hasInvalidTime() || hasInvalidNoOfClass() || hasLongDurationClass() || hasClashWithinList() || hasClashWithOtherLists() || hasClashWithBlockClass() || hasClashWithDBList());
 
-        if (!isBreak) {
-            insertData();
-            printClass();
-            FacesContext.getCurrentInstance().getExternalContext().redirect("ViewTimetable.xhtml");
-        } else {
-            errorCode = 1;
-            errorMsg = "Unable to generate schedule, possibly due to insufficient staff or venue provided.";
-            FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
+            if (!isBreak) {
+                insertData();
+                printClass();
+                FacesContext.getCurrentInstance().getExternalContext().redirect("ViewTimetable.xhtml");
+            } else {
+                errorCode = 1;
+                errorMsg = "Unable to generate schedule, possibly due to insufficient staff or venue provided.";
+                FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
+            }
         }
     }
 
