@@ -2,87 +2,92 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <style>
+             .btn{
+                transition-duration: 0.4s;
+                padding: 10px 24px;
+                border-radius: 12px;
+            }
+            .btn .green:hover{
+                background-color:  #4CAF50;
+                color: white;
+            }
             body{
                 background-color: #a6dff4;
             }
             .form{
                 background-color: white;
-                height: 300px;
+                height: 350px;
             }
-            .btn{
-                transition-duration: 0.4s;
-                padding: 10px 24px;
-                border-radius: 12px;
-            }
-            .btn .btn:hover{
-                background-color:  #4CAF50;
+             .btn .blue:hover{
+                background-color: dodgerblue;
                 color: white;
             }
         </style>
         <title>Update Course</title>
     </h:head>
     <h:body>
-        <div align="center">
+        <div align="center" class="btn">
             <h1>Update Course</h1>
-            <h:form class="form">
+            <h:form class="form" >
                 <br/>
                 <table>
                     <tr>
                         <td>Course Code:</td>
-                        <td><h:inputText id="id" value="#{courseManage.c.courseCode}" required="true" requiredMessage="*Empty field"/>
+                        <td><p:inputText id="id" value="#{courseManage.c.courseCode}" required="true" requiredMessage="*Empty field"/>
                             <h:message for="id" style="color:red"/><br/></td>
                     </tr>
                     <tr>
                         <td>Course Name:</td>
-                        <td><h:inputText value="#{courseManage.c.courseName}" required="true" requiredMessage="*Empty field" />
+                        <td><p:inputText value="#{courseManage.c.courseName}" required="true" requiredMessage="*Empty field" />
                             <h:message for="id" style="color:red"/><br/></td>
                     </tr>
                     <tr>
                         <td>Credit Hour:</td>
-                        <td><h:selectOneMenu value="#{courseManage.c.creditHour}">
+                        <td><p:selectOneMenu value="#{courseManage.c.creditHour}">
                                 <f:selectItem itemValue="1.0" itemLabel="1.0 hours"/>                          
                                 <f:selectItem itemValue="2.0" itemLabel="2.0 hours"/> 
                                 <f:selectItem itemValue="3.0" itemLabel="3.0 hours"/>
                                 <f:selectItem itemValue="4.0" itemLabel="4.0 hours"/>
-                            </h:selectOneMenu><br/></td>
+                            </p:selectOneMenu><br/></td>
                     </tr>
                     <tr>
                         <td>Lecture Hours :</td>
-                        <td><h:selectOneMenu value="#{courseManage.lecHours}">
+                        <td><p:selectOneMenu value="#{courseManage.lecHours}">
                                 <f:selectItem itemValue="0.0" itemLabel="0.0 hours"/>
                                 <f:selectItem itemValue="1.0" itemLabel="1.0 hours"/>
                                 <f:selectItem itemValue="2.0" itemLabel="2.0 hours"/>
                                 <f:selectItem itemValue="3.0" itemLabel="3.0 hours"/>
-                            </h:selectOneMenu></td>
+                            </p:selectOneMenu></td>
                     </tr>
                     <br/>
                     <tr>
                         <td>Tutorial Hours :</td>
-                        <td><h:selectOneMenu value="#{courseManage.tutHours}">
+                        <td><p:selectOneMenu value="#{courseManage.tutHours}">
                                 <f:selectItem itemValue="0.0" itemLabel="0.0 hours"/>
                                 <f:selectItem itemValue="1.0" itemLabel="1.0 hours"/>
                                 <f:selectItem itemValue="2.0" itemLabel="2.0 hours"/>
                                 <f:selectItem itemValue="3.0" itemLabel="3.0 hours"/>
-                            </h:selectOneMenu></td>
+                            </p:selectOneMenu></td>
                     </tr>
                     <tr><td>Practical Hours :</td>
                         <td>
-                            <h:selectOneMenu value="#{courseManage.pracHours}">
+                            <p:selectOneMenu value="#{courseManage.pracHours}">
                                 <f:selectItem itemValue="0.0" itemLabel="0.0 hours"/>
                                 <f:selectItem itemValue="1.0" itemLabel="1.0 hours"/>
                                 <f:selectItem itemValue="2.0" itemLabel="2.0 hours"/>
                                 <f:selectItem itemValue="3.0" itemLabel="3.0 hours"/>
-                            </h:selectOneMenu></td>
+                            </p:selectOneMenu></td>
                     </tr>
                 </table><br/>
-                <h:commandButton action="#{courseManage.updateCourseType}" value="Update"/>
+                <h:commandButton action="#{courseManage.updateCourseType}" value="Update" styleClass="btn green"/>
 
             </h:form>
             <h:form>
-                <h:commandButton action="selectCourse?faces-redirect=true" value="Done"/>
+                <h:commandButton action="selectCourse?faces-redirect=true" value="Done" styleClass="btn blue"/>
             </h:form>
         </div >
     </h:body>

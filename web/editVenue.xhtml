@@ -37,28 +37,28 @@
                     <br/>
                     <tr>
                         <td>Venue Type:</td>
-                        <td><h:selectOneMenu value="#{venueManage.v.venueType}" valueChangeListener="#{venueManage.venueTypeChangeListener}">
+                        <td><p:selectOneMenu value="#{venueManage.v.venueType}" valueChangeListener="#{venueManage.venueTypeChangeListener}">
                                 <f:selectItem itemValue="Hall" itemLabel="Hall" />
                                 <f:selectItem itemValue="Room" itemLabel="Room"/>
                                 <f:selectItem itemValue="Lab" itemLabel="Lab"/>
                                 <f:ajax render="selectCourseCode"/>
                                 <f:ajax render="selectBlock"/>
-                            </h:selectOneMenu> </td>                        
+                            </p:selectOneMenu> </td>                        
                     </tr>
                     <tr>
                         <td>Venue ID:</td>
-                        <td><h:selectOneMenu id="selectBlock" value="#{venueManage.v.block}" style="margin-right:5px">
+                        <td><p:selectOneMenu id="selectBlock" value="#{venueManage.v.block}" style="margin-right:5px">
                                 <f:selectItems value="#{venueManage.blockList}"/>
-                            </h:selectOneMenu>
-                            <h:inputText title="Type only the venue number or ID, ex: DK ABA, type only ABA or K101, type only 101." id="id" value="#{venueManage.v.venueID}" required="true" requiredMessage=" *Empty field"/>
+                            </p:selectOneMenu>
+                            <p:inputText title="Type only the venue number or ID, ex: DK ABA, type only ABA or K101, type only 101." id="id" value="#{venueManage.v.venueID}" required="true" requiredMessage=" *Empty field"/>
                             <h:message for="id" style="color:red"/>
                         </td>
                     </tr>
                     <tr>
                         <td>Capacity:</td>
-                        <td><h:inputText value="#{venueManage.v.capacity}" required="true" id="capacity" requiredMessage=" *Empty field " converterMessage=" *Invalid input">
+                        <td><p:inputText value="#{venueManage.v.capacity}" required="true" id="capacity" requiredMessage=" *Empty field " converterMessage=" *Invalid input">
                                 <f:convertNumber integerOnly="true" />
-                            </h:inputText>
+                            </p:inputText>
                             <h:message for="capacity" style="color: red"/>
 
                         </td>

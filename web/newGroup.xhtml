@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <style>
             .btn{
@@ -42,24 +43,24 @@
                     </tr>
                     <tr>
                         <td>Group Number:</td>
-                        <td> <h:inputText id="gnumber" value="#{tutorialGroupManage.tg.groupNumber}" required="true" requiredMessage="*Empty field" converterMessage="*Numbers only" maxlength="2">
+                        <td> <p:inputText id="gnumber" value="#{tutorialGroupManage.tg.groupNumber}" required="true" requiredMessage="*Empty field" converterMessage="*Numbers only" maxlength="2">
                                 <f:convertNumber integerOnly="true" />
-                            </h:inputText>
+                            </p:inputText>
                             <h:message for="gnumber" style="color: red"/></td>
                     </tr>
                     <tr>
                         <td>Size:</td>
-                        <td><h:inputText id="size" value="#{tutorialGroupManage.tg.size}" required="true" requiredMessage="*Empty field" converterMessage="*Numbers only" maxlength="2">
+                        <td><p:inputText id="size" value="#{tutorialGroupManage.tg.size}" required="true" requiredMessage="*Empty field" converterMessage="*Numbers only" maxlength="2">
                                 <f:convertNumber integerOnly="true" />
-                            </h:inputText>
+                            </p:inputText>
                             <h:message for="size" style="color: red"/><br/></td>
                     </tr>
                     <tr>
                         <td>Programme ID</td>
-                        <td><h:selectOneMenu value="#{tutorialGroupManage.tg.cohortID}">
+                        <td><p:selectOneMenu value="#{tutorialGroupManage.tg.cohortID}">
                                 <f:selectItems value="#{viewAll.getAllCohortID()}" var="p"
                                                itemLabel="#{p.programmeCode}#{p.studyYear}-#{p.entryYear}-#{p.intakeYear}" itemValue="#{p.cohortID}" />
-                            </h:selectOneMenu></td>
+                            </p:selectOneMenu></td>
                     </tr>
 
 

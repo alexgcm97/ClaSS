@@ -53,14 +53,14 @@
                     </tr>
                     <tr>
                         <td>Staff Name: </td>
-                        <td><h:inputText id="id" value="#{staffManage.s.staffName}" required="true" requiredMessage=" *Empty field" /></td>
+                        <td><p:inputText id="id" value="#{staffManage.s.staffName}" required="true" requiredMessage=" *Empty field" /></td>
                     </tr>
                     <tr>                         
                         <td><h:message for="id" style="color:red"/></td>
                     </tr>
                     <tr>
                         <td>Block Day: </td>
-                        <td><h:selectOneMenu value="#{staffManage.s.blockDay}" >
+                        <td><p:selectOneMenu value="#{staffManage.s.blockDay}" >
                                 <f:selectItem itemValue="0" itemLabel="None" />
                                 <f:selectItem itemValue="1" itemLabel="Monday" />
                                 <f:selectItem itemValue="2" itemLabel="Tuesday"/>
@@ -70,20 +70,20 @@
                                 <f:selectItem itemValue="6" itemLabel="Saturday" />
                                 <f:ajax render="blockStart"/>
                                 <f:ajax render="blockDuration"/>
-                            </h:selectOneMenu><br/></td>
+                            </p:selectOneMenu><br/></td>
                     </tr>
                     <tr>
                         <td>Block Start: </td>
-                        <td><h:inputText id="blockStart" value="#{staffManage.blockStart}" disabled="#{staffManage.s.blockDay == 0}" validatorMessage="*Please enter time between 8 am to 8 pm." >
+                        <td><p:inputText id="blockStart" value="#{staffManage.blockStart}" disabled="#{staffManage.s.blockDay == 0}" validatorMessage="*Please enter time between 8 am to 8 pm." >
                                
-                            </h:inputText><br/></td>
+                            </p:inputText><br/></td>
                     </tr>
                     <tr>
                         <td colspan="2"><h:message for="blockStart" style="color:red;text-align:right"/></td>
                     </tr>
                     <tr>
                         <td>Block Duration: </td>
-                        <td><h:selectOneMenu id="blockDuration" value="#{staffManage.s.blockDuration}"  disabled="#{staffManage.s.blockDay == 0}">
+                        <td><p:selectOneMenu id="blockDuration" value="#{staffManage.s.blockDuration}"  disabled="#{staffManage.s.blockDay == 0}">
                                 <f:selectItem itemValue="0" itemLabel="0 hours" />
                                 <f:selectItem itemValue="0.5" itemLabel="30 mins" />
                                 <f:selectItem itemValue="1" itemLabel="1 hour"/>
@@ -93,7 +93,7 @@
                                 <f:selectItem itemValue="3" itemLabel="3 hours" />
                                 <f:selectItem itemValue="3.5" itemLabel="3 hours 30 mins"/>
                                 <f:selectItem itemValue="4" itemLabel="4 hours" />
-                            </h:selectOneMenu><br/></td>
+                            </p:selectOneMenu><br/></td>
                     </tr>
 
                     <tr>
@@ -134,10 +134,6 @@
                 </table>
 
                 <br/><h:commandButton action="#{staffManage.staffInsert()}" value="Submit" styleClass="btn green"/>
-
-
-
-
             </h:form>
             <h:form>
                 <br/>
