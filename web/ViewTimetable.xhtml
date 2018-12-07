@@ -61,7 +61,8 @@
                 alert("Successfully Updated!!!");
             </h:outputScript>
             <h:outputScript rendered="#{modifySchedule.message}">
-                alert("Error!!! Please provide correct information!");
+                alert("#{modifySchedule.errorMssg}");
+                #{modifySchedule.message = false}
             </h:outputScript>
             <section class="columns">
                 <div class="column">

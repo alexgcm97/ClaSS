@@ -715,6 +715,8 @@ public class ModifySchedule implements Serializable {
 
     //Get the alert message
     boolean success, message;
+    private String errorMssg;
+    private int errorCode = 0;
 
     public boolean isSuccess() {
         return success;
@@ -731,9 +733,17 @@ public class ModifySchedule implements Serializable {
     public void setMessage(boolean message) {
         this.message = message;
     }
+    
+    public String getErrorMssg() {
+        return errorMssg;
+    }
+
+    public void setErrorMssg(String errorMssg) {
+        this.errorMssg = errorMssg;
+    }
 
     //Update the modification
-    public String updateModify() throws SQLException {
+    public String updateModify() throws SQLException, IOException {
         String stfID = "", grpID = "", venID = "";
         connect = DBConnection.getConnection();
 
@@ -752,7 +762,9 @@ public class ModifySchedule implements Serializable {
         ResultSet rs = pstmt.executeQuery();
 
         if (rs.next()) {
+            errorMssg = "Error! Staff time clash!!!";
             this.message = true;
+            FacesContext.getCurrentInstance().getExternalContext().redirect("ViewTimetable.xhtml");
         } else {
             stfID = staffID;
         }
@@ -771,7 +783,9 @@ public class ModifySchedule implements Serializable {
         ResultSet rs2 = pstmt.executeQuery();
 
         if (rs2.next()) {
+            errorMssg = "Error! Tutorial group time clash!!!";
             this.message = true;
+            FacesContext.getCurrentInstance().getExternalContext().redirect("ViewTimetable.xhtml");
         } else {
             grpID = groupID;
         }
@@ -790,7 +804,9 @@ public class ModifySchedule implements Serializable {
         ResultSet rs3 = pstmt.executeQuery();
 
         if (rs3.next()) {
+            errorMssg = "Error! Venue time clash!!!";
             this.message = true;
+            FacesContext.getCurrentInstance().getExternalContext().redirect("ViewTimetable.xhtml");
         } else {
             venID = venueID;
         }
@@ -815,10 +831,6 @@ public class ModifySchedule implements Serializable {
             pstmt.setDouble(7, endTime);
             pstmt.executeUpdate();
             this.success = true;
-            this.message = false;
-        } else {
-            this.message = true;
-            this.success = false;
         }
         return "ViewTimetable.xhtml?faces-redirect=true";
     }
