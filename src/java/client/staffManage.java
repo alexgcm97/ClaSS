@@ -41,7 +41,6 @@ public class staffManage implements Serializable {
     public Staff s = new Staff();
     public TutorialGroup tg = new TutorialGroup();
     private List<String> selectedCourseCodeList = new ArrayList();
-    private List<String> courseCodeAndType = new ArrayList();
     private List<String> courseCodeStr = new ArrayList();
     private List<String> courseCodeString = new ArrayList();
     private String[] lecGroupStr, tutGroupStr, pracGroupStr;
@@ -153,14 +152,6 @@ public class staffManage implements Serializable {
         this.pcList = pcList;
     }
 
-    public List<String> getCourseCodeAndType() {
-        return courseCodeAndType;
-    }
-
-    public void setCourseCodeAndType(List<String> courseCodeAndType) {
-        this.courseCodeAndType = courseCodeAndType;
-    }
-
     public List<String> getCourseCodeStr() {
         return courseCodeStr;
     }
@@ -261,7 +252,6 @@ public class staffManage implements Serializable {
                 String result = courseCodeString.get(foundCourse);
                 result += "," + temp[1];
                 courseCodeString.set(foundCourse, result);
-
             } else {
                 courseCodeString.add(str);
             }
@@ -274,7 +264,6 @@ public class staffManage implements Serializable {
                 System.out.println(str);
                 substringCourse += str;
                 substringCourse += '|';
-
             }
             courseListString = substringCourse.substring(0, substringCourse.length() - 1);
             System.out.println(courseListString);
@@ -283,6 +272,7 @@ public class staffManage implements Serializable {
         }
 
         System.out.println("--------------END OF COURSECODE-----------------------");
+
         System.out.println("--------------LEC HERE!!--------------------");
         int foundIndex = 0;
         s.setLecGroupList(new ArrayList<String>());
@@ -303,7 +293,26 @@ public class staffManage implements Serializable {
             } else {
                 s.getLecGroupList().add(str);
             }
+
+            String tempCArr[] = courseListString.split("\\|");
+            System.out.println("lec" + temp[0]);
+            courseListString = "";
+            for (int i = 0; i < tempCArr.length; i++) {
+                String tempCStr = tempCArr[i];
+                if (tempCStr.contains(temp[0]) && !tempCStr.contains("L")) {
+                    if (tempCStr.contains("-")) {
+                        tempCStr += "," + "L";
+                    } else {
+                        tempCStr += "-L";
+                    }
+                }
+                courseListString += tempCStr;
+                if (i < tempCArr.length - 1) {
+                    courseListString += "|";
+                }
+            }
         }
+
         lectureListString = null;
         String substring = "";
         if (!s.getLecGroupList().isEmpty()) {
@@ -340,6 +349,24 @@ public class staffManage implements Serializable {
             } else {
                 s.getTutGroupList().add(str1);
             }
+
+            String tempCArr[] = courseListString.split("\\|");
+            System.out.println("tut" + temp[0]);
+            courseListString = "";
+            for (int i = 0; i < tempCArr.length; i++) {
+                String tempCStr = tempCArr[i];
+                if (tempCStr.contains(temp[0]) && !tempCStr.contains("T")) {
+                    if (tempCStr.contains("-")) {
+                        tempCStr += "," + "T";
+                    } else {
+                        tempCStr += "-T";
+                    }
+                }
+                courseListString += tempCStr;
+                if (i < tempCArr.length - 1) {
+                    courseListString += "|";
+                }
+            }
         }
         tutorialListString = null;
         String substring1 = "";
@@ -355,6 +382,7 @@ public class staffManage implements Serializable {
         } else {
             System.out.println("TUTORIAL EMPTY");
         }
+
         System.out.println("--------------END OF TUT-----------------------");
 
         System.out.println("--------------PRAC HERE!!--------------------");
@@ -376,6 +404,24 @@ public class staffManage implements Serializable {
                 s.getPracGroupList().set(foundIndex2, result);
             } else {
                 s.getPracGroupList().add(str1);
+            }
+
+            String tempCArr[] = courseListString.split("\\|");
+            System.out.println("prac" + temp[0]);
+            courseListString = "";
+            for (int i = 0; i < tempCArr.length; i++) {
+                String tempCStr = tempCArr[i];
+                if (tempCStr.contains(temp[0]) && !tempCStr.contains("P")) {
+                    if (tempCStr.contains("-")) {
+                        tempCStr += "," + "P";
+                    } else {
+                        tempCStr += "-P";
+                    }
+                }
+                courseListString += tempCStr;
+                if (i < tempCArr.length - 1) {
+                    courseListString += "|";
+                }
             }
         }
         practicalListString = null;
@@ -401,13 +447,11 @@ public class staffManage implements Serializable {
         check();
         if (courseListString == null) {
             s.setCourseCodeListS("-");
-
         } else {
             s.setCourseCodeListS(courseListString);
         }
         if (lectureListString == null) {
             s.setLecGroupListS("-");
-
         } else {
             s.setLecGroupListS(lectureListString);
         }
@@ -434,8 +478,8 @@ public class staffManage implements Serializable {
 
         for (int i = 0; i < courseCodeStr.size(); i++) {
             System.out.println(courseCodeStr.get(i));
-            if (!courseCodeStrTrimmed.contains(courseCodeStr.get(i).substring(0, courseCodeStr.get(i).length() - 2))) {
-                courseCodeStrTrimmed.add(courseCodeStr.get(i).substring(0, courseCodeStr.get(i).length() - 2));
+            if (!courseCodeStrTrimmed.contains(courseCodeStr.get(i).substring(0, courseCodeStr.get(i).length()))) {
+                courseCodeStrTrimmed.add(courseCodeStr.get(i).substring(0, courseCodeStr.get(i).length()));
             }
         }
         System.out.println("trimmed size:" + courseCodeStrTrimmed.size());
@@ -477,8 +521,8 @@ public class staffManage implements Serializable {
 
         for (int i = 0; i < courseCodeStr.size(); i++) {
             System.out.println(courseCodeStr.get(i));
-            if (!courseCodeStrTrimmed.contains(courseCodeStr.get(i).substring(0, courseCodeStr.get(i).length() - 2))) {
-                courseCodeStrTrimmed.add(courseCodeStr.get(i).substring(0, courseCodeStr.get(i).length() - 2));
+            if (!courseCodeStrTrimmed.contains(courseCodeStr.get(i).substring(0, courseCodeStr.get(i).length()))) {
+                courseCodeStrTrimmed.add(courseCodeStr.get(i).substring(0, courseCodeStr.get(i).length()));
             }
         }
         System.out.println("TG trimmed size:" + courseCodeStrTrimmed.size());
@@ -545,8 +589,8 @@ public class staffManage implements Serializable {
 
         for (int i = 0; i < courseCodeStr.size(); i++) {
             System.out.println(courseCodeStr.get(i));
-            if (!courseCodeStrTrimmed.contains(courseCodeStr.get(i).substring(0, courseCodeStr.get(i).length() - 2))) {
-                courseCodeStrTrimmed.add(courseCodeStr.get(i).substring(0, courseCodeStr.get(i).length() - 2));
+            if (!courseCodeStrTrimmed.contains(courseCodeStr.get(i).substring(0, courseCodeStr.get(i).length()))) {
+                courseCodeStrTrimmed.add(courseCodeStr.get(i).substring(0, courseCodeStr.get(i).length()));
             }
         }
         System.out.println("TG trimmed size:" + courseCodeStrTrimmed.size());
@@ -606,28 +650,13 @@ public class staffManage implements Serializable {
 
     }
 
-    public List<String> getCourseCodeListType() throws SQLException {
+    public List<String> getCourseCodeList() throws SQLException {
         List<Course> courseList = cda.getAllRecords();
         for (Course c : courseList) {
             this.selectedCourseCodeList.add(c.getCourseCode());
         }
 
-        List<CourseDetails> courseDetailsList = cda.getRelatedCourseRecords(selectedCourseCodeList);
-        for (CourseDetails cd : courseDetailsList) {
-            if (cd.getLecHours() > 0) {
-                courseCodeAndType.add(cd.getCourseCode() + "-" + "L");
-            }
-
-            if (cd.getTutHours() > 0) {
-                courseCodeAndType.add(cd.getCourseCode() + "-" + "T");
-            }
-
-            if (cd.getPracHours() > 0) {
-                courseCodeAndType.add(cd.getCourseCode() + "-" + "P");
-            }
-        }
-
-        return this.courseCodeAndType;
+        return this.selectedCourseCodeList;
     }
 
     public void retrieveStaff(String staffID) throws SQLException, IOException {

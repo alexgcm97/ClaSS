@@ -103,7 +103,7 @@
                         <td>Course Code List: </td>
                         <td>                            
                             <p:selectCheckboxMenu id="courseCode" value="#{staffManage.courseCodeStr}" label="Course Codes" filter="true" filterMatchMode="startsWith">
-                                <f:selectItems value="#{staffManage.courseCodeListType}" />
+                                <f:selectItems value="#{staffManage.courseCodeList}" />
                                 <p:ajax event="change" update="selectLecGroup"/>
                                 <p:ajax event="change" update="selectTutGroup"/>
                                 <p:ajax event="change" update="selectPracGroup"/>
