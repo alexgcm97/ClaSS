@@ -47,21 +47,21 @@ public class ScheduleInsert implements Serializable {
         stmt = connect.prepareStatement("insert into schedule(day, startTime, EndTime, courseID, courseCode, courseType, venueID, groupID, groupNumber, staffID, staffName, programmeCode, studyYear, cohort, sTime, eTime) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         //Get start time and end time from Configuration.xml
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Element e;
+//        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+//        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+//        Element e;
 
-        Document doc = dBuilder.parse(filePath + "Configuration.xml");
-        NodeList nodes = doc.getElementsByTagName("configuration");
+//        Document doc = dBuilder.parse(filePath + "Configuration.xml");
+//        NodeList nodes = doc.getElementsByTagName("configuration");
 
-        e = (Element) nodes.item(0);
+//        e = (Element) nodes.item(0);
 
-        double studyStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
-        double studyEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
+//        double studyStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
+//        double studyEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
 
         for (int d = 1; d <= 7; d++) {
-            double a = studyStart;
-            for (double t = studyStart; t < studyEnd; t += 0.5) {
+            double a = 8;
+            for (double t = 8; t < 20; t += 0.5) {
 
                 double chk = t - a;
 
@@ -149,7 +149,7 @@ public class ScheduleInsert implements Serializable {
 
                             double st = cd.getStartTime();
                             double et = cd.getEndTime();
-                            for (double i = studyStart; i <= studyEnd; i += 0.5) {
+                            for (double i = 8; i <= 20; i += 0.5) {
                                 if (st <= i) {
                                     if (i < et) {
                                         stmt = connect.prepareStatement("SELECT * FROM schedule WHERE startTime = " + i);
@@ -233,12 +233,12 @@ public class ScheduleInsert implements Serializable {
 
         e = (Element) nodes.item(0);
 
-        double studyStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
-        double studyEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
+//        double studyStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
+//        double studyEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
 
         for (int d = 1; d <= 7; d++) {
-            double a = studyStart;
-            for (double t = studyStart; t < studyEnd; t += 0.5) {
+            double a = 8;
+            for (double t = 8; t < 20; t += 0.5) {
 
                 double chk = t - a;
 
@@ -332,7 +332,7 @@ public class ScheduleInsert implements Serializable {
 
                             double st = cd.getStartTime();
                             double et = cd.getEndTime();
-                            for (double i = studyStart; i <= studyEnd; i += 0.5) {
+                            for (double i = 8; i <= 20; i += 0.5) {
                                 if (st <= i) {
                                     if (i < et) {
                                         stmt = connect.prepareStatement("SELECT * FROM schedule WHERE startTime = " + i);
@@ -396,12 +396,12 @@ public class ScheduleInsert implements Serializable {
 
         e = (Element) nodes.item(0);
 
-        double studyStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
-        double studyEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
+//        double studyStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
+//        double studyEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
 
         for (int d = 1; d <= 7; d++) {
-            double a = studyStart;
-            for (double t = studyStart; t < studyEnd; t += 0.5) {
+            double a = 8;
+            for (double t = 8; t < 20; t += 0.5) {
 
                 double chk = t - a;
 
@@ -495,7 +495,7 @@ public class ScheduleInsert implements Serializable {
 
                             double st = cd.getStartTime();
                             double et = cd.getEndTime();
-                            for (double i = studyStart; i <= studyEnd; i += 0.5) {
+                            for (double i = 8; i <= 20; i += 0.5) {
                                 if (st <= i) {
                                     if (i < et) {
                                         stmt = connect.prepareStatement("SELECT * FROM schedule WHERE startTime = " + i);
