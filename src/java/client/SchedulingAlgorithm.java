@@ -30,81 +30,81 @@ import org.w3c.dom.NodeList;
 @ManagedBean
 @SessionScoped
 public class SchedulingAlgorithm implements Serializable {
-
+    
     private final Random rand = new Random();
-
+    
     private ArrayList<CourseType> lecList, courseList;
     private ArrayList<Staff> staffList;
     private ArrayList<TutorialGroup> groupList, dbGroupList;
     private ArrayList<Venue> roomList, labList, hallList, allPurposeLabList;
     private ArrayList<Schedule> scheduleList;
-
+    
     private int studyDays = 0, blockDay = 0, errorCode = 0;
     private boolean toBalance = false;
     private double studyStart, studyEnd, blockStart, blockEnd, maxBreak = 99, noOfClassPerDay = 99;
     private String errorMsg;
     private Class blockClass;
     private ArrayList<Class> dbList = new ArrayList();
-
+    
     private final int assignLimit = 120, firstVLimit = 30, secondVLimit = 60, exitLimit = 140000;
     private final ClassDA cda = new ClassDA();
     private final VenueDA vda = new VenueDA();
     private final StaffDA sda = new StaffDA();
     private final TutorialGroupDA tgda = new TutorialGroupDA();
-
+    
     private final String filePath = XMLPath.getXMLPath();
-
+    
     public String getErrorMsg() {
         return errorMsg;
     }
-
+    
     public void setErrorMsg(String errorMsg) {
         this.errorMsg = errorMsg;
     }
-
+    
     public int getErrorCode() {
         return errorCode;
     }
-
+    
     public void setErrorCode(int errorCode) {
         this.errorCode = errorCode;
     }
-
+    
     public boolean initialize() throws Exception {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Element e;
-
+        
         String fileName = filePath + "TutorialGroup.xml";
         Document doc = dBuilder.parse(fileName);
         groupList = new ArrayList();
         dbGroupList = tgda.getAll();
         NodeList nodes = doc.getElementsByTagName("tutorialGroup");
-
+        
         for (int i = 0; i < nodes.getLength(); i++) {
             e = (Element) nodes.item(i);
-
+            
             TutorialGroup tg = new TutorialGroup(e.getAttribute("groupID"), Integer.parseInt(e.getElementsByTagName("groupNumber").item(0).getTextContent()), Integer.parseInt(e.getElementsByTagName("size").item(0).getTextContent()), e.getElementsByTagName("cohortID").item(0).getTextContent(), e.getElementsByTagName("courseCodeList").item(0).getTextContent());
             cda.deleteRecords(tg.getGroupID());
             groupList.add(tg);
         }
-
+        
         if (groupList.isEmpty()) {
             errorMsg = "Tutorial Group XML file is empty.";
             errorCode = 1;
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
             return false;
         }
-
+        
         fileName = filePath + "Course.xml";
         doc = dBuilder.parse(fileName);
         courseList = new ArrayList();
         lecList = new ArrayList();
         nodes = doc.getElementsByTagName("course");
-
+        
         for (int i = 0; i < nodes.getLength(); i++) {
             e = (Element) nodes.item(i);
-
+            
             CourseType c = new CourseType(e.getAttribute("courseID"), e.getElementsByTagName("courseType").item(0).getTextContent(), e.getElementsByTagName("courseDuration").item(0).getTextContent(), e.getElementsByTagName("courseCode").item(0).getTextContent());
             if (c.getCourseType().equals("L")) {
                 lecList.add(c);
@@ -112,18 +112,18 @@ public class SchedulingAlgorithm implements Serializable {
                 courseList.add(c);
             }
         }
-
+        
         if (lecList.isEmpty() && courseList.isEmpty()) {
             errorCode = 1;
             errorMsg = "Course XML file is empty.";
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
             return false;
         }
-
+        
         fileName = filePath + "Configuration.xml";
         doc = dBuilder.parse(fileName);
         nodes = doc.getElementsByTagName("configuration");
-
+        
         e = (Element) nodes.item(0);
         if (e.getElementsByTagName("studyDays").getLength() > 0) {
             studyDays = Integer.parseInt(e.getElementsByTagName("studyDays").item(0).getTextContent());
@@ -140,7 +140,7 @@ public class SchedulingAlgorithm implements Serializable {
         } else {
             errorCode = 1;
         }
-
+        
         nodes = doc.getElementsByTagName("constraints");
         if (nodes.getLength() > 0) {
             e = (Element) nodes.item(0);
@@ -149,11 +149,11 @@ public class SchedulingAlgorithm implements Serializable {
                 blockStart = Double.parseDouble(e.getElementsByTagName("startTime").item(0).getTextContent());
                 blockEnd = Double.parseDouble(e.getElementsByTagName("endTime").item(0).getTextContent());
             }
-
+            
             if (e.getElementsByTagName("maxBreak").getLength() > 0) {
                 maxBreak = Double.parseDouble(e.getElementsByTagName("maxBreak").item(0).getTextContent());
             }
-
+            
             if (e.getElementsByTagName("balanceClass").getLength() > 0) {
                 toBalance = Boolean.parseBoolean(e.getElementsByTagName("balanceClass").item(0).getTextContent());
             }
@@ -163,18 +163,18 @@ public class SchedulingAlgorithm implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
             return false;
         }
-
+        
         fileName = filePath + "Staff.xml";
         doc = dBuilder.parse(fileName);
         staffList = new ArrayList();
         nodes = doc.getElementsByTagName("staff");
-
+        
         for (int i = 0; i < nodes.getLength(); i++) {
             e = (Element) nodes.item(i);
-
+            
             Staff stf = new Staff(e.getAttribute("staffID"), e.getElementsByTagName("name").item(0).getTextContent());
             String tempStr = e.getElementsByTagName("courseCodeList").item(0).getTextContent();
-
+            
             String[] tempArr;
             if (tempStr.contains("|")) {
                 tempArr = tempStr.split("\\|");
@@ -184,7 +184,7 @@ public class SchedulingAlgorithm implements Serializable {
             } else {
                 stf.addCourseCodeToList(tempStr);
             }
-
+            
             tempStr = e.getElementsByTagName("lecGroupList").item(0).getTextContent();
             if (tempStr.contains("|")) {
                 tempArr = tempStr.split("\\|");
@@ -194,7 +194,7 @@ public class SchedulingAlgorithm implements Serializable {
             } else {
                 stf.addLecGroupToList(tempStr);
             }
-
+            
             tempStr = e.getElementsByTagName("tutGroupList").item(0).getTextContent();
             if (tempStr.contains("|")) {
                 tempArr = tempStr.split("\\|");
@@ -204,7 +204,7 @@ public class SchedulingAlgorithm implements Serializable {
             } else {
                 stf.addTutGroupToList(tempStr);
             }
-
+            
             String pracGroupStr = e.getElementsByTagName("pracGroupList").item(0).getTextContent();
             if (pracGroupStr.contains("|")) {
                 String pracGroupArr[] = pracGroupStr.split("\\|");
@@ -214,13 +214,13 @@ public class SchedulingAlgorithm implements Serializable {
             } else {
                 stf.addPracGroupToList(pracGroupStr);
             }
-
+            
             if (e.getElementsByTagName("blockDay").getLength() > 0) {
                 stf.setBlockDay(Integer.parseInt(e.getElementsByTagName("blockDay").item(0).getTextContent()));
                 stf.setBlockStart(Double.parseDouble(e.getElementsByTagName("blockStart").item(0).getTextContent()));
                 stf.setBlockDuration(Double.parseDouble(e.getElementsByTagName("blockDuration").item(0).getTextContent()));
             }
-
+            
             stf.setClassList(sda.getClassList(stf.getStaffID()));
             staffList.add(stf);
         }
@@ -230,7 +230,7 @@ public class SchedulingAlgorithm implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
             return false;
         }
-
+        
         fileName = filePath + "Venue.xml";
         doc = dBuilder.parse(fileName);
         roomList = new ArrayList();
@@ -238,10 +238,10 @@ public class SchedulingAlgorithm implements Serializable {
         hallList = new ArrayList();
         allPurposeLabList = vda.getAllPurposeLab();
         nodes = doc.getElementsByTagName("venue");
-
+        
         for (int i = 0; i < nodes.getLength(); i++) {
             e = (Element) nodes.item(i);
-
+            
             Venue v = new Venue(e.getAttribute("venueID"), e.getElementsByTagName("block").item(0).getTextContent(), e.getElementsByTagName("venueType").item(0).getTextContent(), Integer.parseInt(e.getElementsByTagName("capacity").item(0).getTextContent()), e.getElementsByTagName("courseCodeList").item(0).getTextContent());
             v.setClassList(vda.getClassList(v.getVenueID()));
             if (v.getVenueType().equalsIgnoreCase("room")) {
@@ -252,7 +252,7 @@ public class SchedulingAlgorithm implements Serializable {
                 hallList.add(v);
             }
         }
-
+        
         if (roomList.isEmpty() || labList.isEmpty() || hallList.isEmpty()) {
             errorCode = 1;
             errorMsg = "Venue XML file is empty or incomplete.";
@@ -281,7 +281,7 @@ public class SchedulingAlgorithm implements Serializable {
                     count++;
                 }
             }
-
+            
             for (CourseType ct : lecList) {
                 if (groupList.get(i).getCourseCodeList().contains(ct.getCourseCode())) {
                     count++;
@@ -293,7 +293,7 @@ public class SchedulingAlgorithm implements Serializable {
         dbList = cda.getAll();
         return true;
     }
-
+    
     public void allocation() throws IOException, CloneNotSupportedException {
         //Reset the classList to empty
         for (int i = 0; i < scheduleList.size(); i++) {
@@ -352,7 +352,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         sortList();
     }
-
+    
     public void sortList() {
         //Sort List by Day and StartTime
         for (int i = 0; i < scheduleList.size(); i++) {
@@ -385,7 +385,7 @@ public class SchedulingAlgorithm implements Serializable {
                         if (!class1.getCourseType().equals("BLK") && !class2.getCourseType().equals("BLK")) {
                             if (class1.getDay() == class2.getDay()) {
                                 double startTime1 = class1.getStartTime(), endTime1 = class1.getEndTime(), startTime2 = class2.getStartTime(), endTime2 = class2.getEndTime();
-
+                                
                                 if (class1.getCourseType().equals("L") && class2.getCourseType().equals("L")) {
                                     if (!class1.getCourseID().equals(class2.getCourseID())) {
                                         if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1) || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2)) {
@@ -427,7 +427,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return isClash;
     }
-
+    
     public void optimizeBreak(int step) throws CloneNotSupportedException {
         double moveDuration = 0;
         ArrayList<Class> classList;
@@ -445,7 +445,7 @@ public class SchedulingAlgorithm implements Serializable {
                                         }
                                         Class newC = (Class) c.clone();
                                         newC.moveLeft(moveDuration);
-
+                                        
                                         if (!isClashWithOtherLists(newC)) {
                                             scheduleList.get(index).moveLeft(c, moveDuration, studyStart);
                                         }
@@ -480,14 +480,14 @@ public class SchedulingAlgorithm implements Serializable {
                                         if (c1.getCourseType().equals("L") && !c2.getCourseType().equals("L")) {
                                             Class newC = (Class) c2.clone();
                                             newC.moveLeft(moveDuration);
-
+                                            
                                             if (!isClashWithOtherLists(newC)) {
                                                 scheduleList.get(index).moveLeft(c2, moveDuration, studyStart);
                                             }
                                         } else if (c2.getCourseType().equals("L") && !c1.getCourseType().equals("L")) {
                                             Class newC = (Class) c1.clone();
                                             newC.moveRight(moveDuration);
-
+                                            
                                             if (!isClashWithOtherLists(newC)) {
                                                 scheduleList.get(index).moveRight(c1, moveDuration, studyEnd);
                                             }
@@ -495,14 +495,14 @@ public class SchedulingAlgorithm implements Serializable {
                                             if (c1.getStartTime() == studyStart) {
                                                 Class newC = (Class) c1.clone();
                                                 newC.moveRight(moveDuration);
-
+                                                
                                                 if (!isClashWithOtherLists(newC)) {
                                                     scheduleList.get(index).moveRight(c1, moveDuration, studyEnd);
                                                 }
                                             } else {
                                                 Class newC = (Class) c2.clone();
                                                 newC.moveLeft(moveDuration);
-
+                                                
                                                 if (!isClashWithOtherLists(newC)) {
                                                     scheduleList.get(index).moveLeft(c2, moveDuration, studyStart);
                                                 }
@@ -513,7 +513,7 @@ public class SchedulingAlgorithm implements Serializable {
                                         if (c1.getCourseType().equals("L") && !c2.getCourseType().equals("L")) {
                                             Class newC = (Class) c2.clone();
                                             newC.moveRight(moveDuration);
-
+                                            
                                             if (!isClashWithOtherLists(newC)) {
                                                 scheduleList.get(index).moveRight(c2, moveDuration, studyEnd);
                                             }
@@ -521,14 +521,14 @@ public class SchedulingAlgorithm implements Serializable {
                                             if (c1.getStartTime() == studyStart) {
                                                 Class newC = (Class) c1.clone();
                                                 newC.moveRight(moveDuration);
-
+                                                
                                                 if (!isClashWithOtherLists(newC)) {
                                                     scheduleList.get(index).moveRight(c1, moveDuration, studyEnd);
                                                 }
                                             } else {
                                                 Class newC = (Class) c1.clone();
                                                 newC.moveLeft(moveDuration);
-
+                                                
                                                 if (!isClashWithOtherLists(newC)) {
                                                     scheduleList.get(index).moveLeft(c1, moveDuration, studyStart);
                                                 }
@@ -543,7 +543,7 @@ public class SchedulingAlgorithm implements Serializable {
                 break;
         }
     }
-
+    
     public int countLecClassPerDay(int day, ArrayList<Class> classList) {
         int count = 0;
         for (Class c : classList) {
@@ -555,7 +555,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return count;
     }
-
+    
     public int countClassBeforeHalfDay(int day, ArrayList<Class> classList) {
         int count = 0;
         for (Class c : classList) {
@@ -569,23 +569,23 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return count;
     }
-
+    
     public void insertData() throws SQLException {
         for (int i = 0; i < scheduleList.size(); i++) {
             ArrayList<Class> classList = scheduleList.get(i).getClassList();
-
+            
             for (Class c : classList) {
                 cda.insert(c);
             }
         }
     }
-
+    
     public void clearBlock() {
         for (int i = 0; i < scheduleList.size(); i++) {
             scheduleList.get(i).getClassList().remove(blockClass);
         }
     }
-
+    
     public int getTotalSize(String lecGroupStr, String courseCode) {
         int totalSize = 0;
         for (TutorialGroup tg : dbGroupList) {
@@ -595,10 +595,10 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return totalSize;
     }
-
+    
     public void assignLecture(CourseType course) throws IOException {
         boolean isClash, found, isSame = false;
-
+        
         String courseID = course.getCourseID(), courseType = course.getCourseType(), courseCode = course.getCourseCode();
         Venue v;
         ArrayList<Staff> lecStaffList = getLecStaffList(courseCode, courseType);
@@ -606,7 +606,7 @@ public class SchedulingAlgorithm implements Serializable {
         double startTime = 0, endTime = 0;
         int day = 0;
         Class c = new Class();
-
+        
         for (Staff s : lecStaffList) {
             for (String courseCodeStr : s.getCourseCodeList()) {
                 if (courseCodeStr.contains(courseCode) && courseCodeStr.contains(courseType)) {
@@ -620,7 +620,7 @@ public class SchedulingAlgorithm implements Serializable {
                                     break;
                                 }
                             }
-
+                            
                             if (found) {
                                 isSame = false;
                                 for (int i = 0; i < scheduleList.size(); i++) {
@@ -640,21 +640,21 @@ public class SchedulingAlgorithm implements Serializable {
                                         endTime = startTime + Double.parseDouble(course.getCourseDuration());
                                         day = getRandomDay();
                                     } while (startTime < studyStart || endTime > studyEnd);
-
+                                    
                                     if (s.getBlockDay() == day) {
                                         double startTime1 = s.getBlockStart(), endTime1 = s.getBlockStart() + s.getBlockDuration();
                                         if ((startTime >= startTime1 && startTime < endTime1) || (endTime > startTime1 && endTime <= endTime1) || (startTime1 >= startTime && startTime1 < endTime) || (endTime1 > startTime && endTime1 <= endTime)) {
                                             isClash = true;
                                         }
                                     }
-
+                                    
                                     ArrayList<Class> staffClassList = s.getClassList();
                                     if (staffClassList.size() > 0) {
                                         for (int i = 0; i < staffClassList.size(); i++) {
                                             Class temp = staffClassList.get(i);
                                             if (temp.getDay() == day) {
                                                 double startTime1 = temp.getStartTime(), endTime1 = temp.getEndTime();
-
+                                                
                                                 if ((startTime >= startTime1 && startTime < endTime1) || (endTime > startTime1 && endTime <= endTime1) || (startTime1 >= startTime && startTime1 < endTime) || (endTime1 > startTime && endTime1 <= endTime)) {
                                                     if (temp.getStaffID().equals(s.getStaffID())) {
                                                         isClash = true;
@@ -664,9 +664,9 @@ public class SchedulingAlgorithm implements Serializable {
                                             }
                                         }
                                     }
-
+                                    
                                     v = getLecVenue(lecGroupStr, courseCode, s.getStaffID());
-
+                                    
                                     ArrayList<Class> venueClassList = v.getClassList();
                                     if (venueClassList.size() > 0) {
                                         for (int i = 0; i < venueClassList.size(); i++) {
@@ -682,7 +682,7 @@ public class SchedulingAlgorithm implements Serializable {
                                             }
                                         }
                                     }
-
+                                    
                                     for (Schedule sch : scheduleList) {
                                         for (Class temp : sch.getClassList()) {
                                             if (temp.getDay() == day) {
@@ -696,7 +696,7 @@ public class SchedulingAlgorithm implements Serializable {
                                             }
                                         }
                                     }
-
+                                    
                                     c = new Class(courseID, v.getVenueID(), "-", s.getStaffID(), day, startTime, endTime, courseType);
                                     indexList = new ArrayList();
                                     for (int i = 0; i < scheduleList.size(); i++) {
@@ -710,7 +710,7 @@ public class SchedulingAlgorithm implements Serializable {
                                         }
                                     }
                                 } while (isClash);
-
+                                
                                 for (int i : indexList) {
                                     c = new Class(courseID, v.getVenueID(), scheduleList.get(i).getGroupID(), s.getStaffID(), day, startTime, endTime, courseType);
                                     scheduleList.get(i).addClassToList(c);
@@ -722,13 +722,13 @@ public class SchedulingAlgorithm implements Serializable {
             }
         }
     }
-
+    
     public void assignCourse(int requiredNoOfClass, String groupID, ArrayList<Class> classList, CourseType course) throws IOException {
         boolean isClash, isBreak = false;
         int day, classCount, runCount = 0;
         double startTime, endTime;
         Class thisClass = new Class();
-
+        
         Staff s = getStaffWithGroup(course.getCourseType(), course.getCourseCode(), groupID);
         do {
             if (runCount == assignLimit) {
@@ -750,7 +750,7 @@ public class SchedulingAlgorithm implements Serializable {
                         }
                     }
                 } while (classCount > noOfClassPerDay || startTime < studyStart || endTime > studyEnd);
-
+                
                 thisClass = new Class(course.getCourseID(), "-", groupID, s.getStaffID(), day, startTime, endTime, course.getCourseType());
                 if (isTimeClashWithClassList(classList, thisClass)) {
                     isClash = true;
@@ -761,7 +761,7 @@ public class SchedulingAlgorithm implements Serializable {
                             isClash = true;
                         }
                     }
-
+                    
                     if (!isClash) {
                         ArrayList<Class> staffClassList = s.getClassList();
                         if (staffClassList != null) {
@@ -778,7 +778,7 @@ public class SchedulingAlgorithm implements Serializable {
                                 }
                             }
                         }
-
+                        
                         for (int i = 0; i < classList.size(); i++) {
                             Class temp = classList.get(i);
                             if (temp.getDay() == thisClass.getDay()) {
@@ -793,18 +793,18 @@ public class SchedulingAlgorithm implements Serializable {
                                 }
                             }
                         }
-
-                        double startTime2 = thisClass.getStartTime(), endTime2 = thisClass.getEndTime();
+                        
+                        double startTime1 = thisClass.getStartTime(), endTime1 = thisClass.getEndTime();
                         for (int i = 0; i < scheduleList.size(); i++) {
                             ArrayList<Class> tempList = scheduleList.get(i).getClassList();
-                            if (tempList != null) {
+                            if (!scheduleList.get(i).getGroupID().equals(thisClass.getGroupID()) && tempList != null) {
                                 for (int j = 0; j < tempList.size(); j++) {
                                     Class temp = tempList.get(j);
                                     if (temp.getDay() == thisClass.getDay()) {
-                                        double startTime1 = temp.getStartTime(), endTime1 = temp.getEndTime();
+                                        double startTime2 = temp.getStartTime(), endTime2 = temp.getEndTime();
                                         if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1) || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2)) {
                                             if (temp.getStaffID() != null && !temp.getStaffID().equals("-")) {
-                                                if (temp.getStaffID().equals(s.getStaffID())) {
+                                                if (temp.getStaffID().equals(thisClass.getStaffID())) {
                                                     isClash = true;
                                                     break;
                                                 }
@@ -819,32 +819,33 @@ public class SchedulingAlgorithm implements Serializable {
                 runCount++;
             }
         } while (isClash);
-
+        
         if (!isBreak) {
             classList.add(thisClass);
         }
     }
-
-    public void assignVenue(int index, Class previousClass, Class thisClass) throws IOException {
+    
+    public void assignVenue(int index, Class previousClass, Class thisClass) throws IOException, CloneNotSupportedException {
         boolean isClash, isBreak = false;
         int runCount = 0;
         double startTime2 = thisClass.getStartTime(), endTime2 = thisClass.getEndTime();
         String courseCode = searchCourseCode(thisClass);
         Venue v = new Venue();
-
+        
         do {
             if (runCount == assignLimit) {
                 isBreak = true;
                 break;
             } else {
                 isClash = false;
-
+                
                 v = getCourseVenue(thisClass.getCourseType(), courseCode);
-
+                
                 if (previousClass != null) {
                     if (!previousClass.getCourseType().equals("BLK")) {
                         if (previousClass.getDay() == thisClass.getDay() && previousClass.getEndTime() == thisClass.getStartTime()) {
                             double moveDuration = 0.5;
+                            Class newC = thisClass.clone();
                             if (previousClass.getCourseType().equals(thisClass.getCourseType())) {
                                 Venue previousV = searchVenue(previousClass.getCourseType(), previousClass.getVenueID());
                                 if (previousV.getVenueID() != null && !previousV.getVenueID().equals("-")) {
@@ -860,26 +861,38 @@ public class SchedulingAlgorithm implements Serializable {
                                         if (!thisClass.getCourseType().equals("P")) {
                                             v = getTutVenueWithBlock(previousV.getBlock());
                                         } else {
-                                            scheduleList.get(index).moveRight(thisClass, moveDuration, studyEnd);
+                                            newC.moveRight(moveDuration);
+                                            
+                                            if (!isClashWithOtherLists(newC)) {
+                                                scheduleList.get(index).moveRight(thisClass, moveDuration, studyEnd);
+                                            }
                                         }
                                     } else {
-                                        scheduleList.get(index).moveRight(thisClass, moveDuration, studyEnd);
+                                        newC.moveRight(moveDuration);
+                                        
+                                        if (!isClashWithOtherLists(newC)) {
+                                            scheduleList.get(index).moveRight(thisClass, moveDuration, studyEnd);
+                                        }
                                     }
                                 }
                             } else {
-                                scheduleList.get(index).moveRight(thisClass, moveDuration, studyEnd);
+                                newC.moveRight(moveDuration);
+                                
+                                if (!isClashWithOtherLists(newC)) {
+                                    scheduleList.get(index).moveRight(thisClass, moveDuration, studyEnd);
+                                }
                             }
                         }
                     }
                 }
-
+                
                 ArrayList<Class> venueClassList = v.getClassList();
                 if (venueClassList != null) {
                     for (int i = 0; i < venueClassList.size(); i++) {
                         Class temp = venueClassList.get(i);
                         if (temp.getDay() == thisClass.getDay()) {
                             double startTime1 = temp.getStartTime(), endTime1 = temp.getEndTime();
-
+                            
                             if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1) || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2)) {
                                 if (temp.getVenueID().equals(v.getVenueID())) {
                                     isClash = true;
@@ -889,7 +902,7 @@ public class SchedulingAlgorithm implements Serializable {
                         }
                     }
                 }
-
+                
                 if (!isClash) {
                     for (int i = 0; i < scheduleList.size(); i++) {
                         ArrayList<Class> classList = scheduleList.get(i).getClassList();
@@ -907,7 +920,7 @@ public class SchedulingAlgorithm implements Serializable {
                                         }
                                     }
                                 }
-
+                                
                             }
                         }
                     }
@@ -915,12 +928,12 @@ public class SchedulingAlgorithm implements Serializable {
                 runCount++;
             }
         } while (isClash == true);
-
+        
         if (!isBreak) {
             thisClass.setVenueID(v.getVenueID());
         }
     }
-
+    
     public double getRandomMoveDuration() {
         if (maxBreak <= 1) {
             if (rand.nextBoolean()) {
@@ -936,7 +949,7 @@ public class SchedulingAlgorithm implements Serializable {
             }
         }
     }
-
+    
     public double getRandomStartTime() {
         if (rand.nextBoolean() == true) {
             return (rand.nextInt((int) (studyEnd - studyStart)) + studyStart);
@@ -944,11 +957,11 @@ public class SchedulingAlgorithm implements Serializable {
             return (rand.nextInt((int) (studyEnd - studyStart)) + studyStart) + 0.5;
         }
     }
-
+    
     public int getRandomDay() {
         return rand.nextInt(studyDays) + 1;
     }
-
+    
     public ArrayList<Staff> getLecStaffList(String courseCode, String courseType) throws IOException {
         ArrayList<Staff> qualifiedList = new ArrayList();
         for (Staff s : staffList) {
@@ -965,7 +978,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return qualifiedList;
     }
-
+    
     public Staff getStaffWithGroup(String courseType, String courseCode, String groupID) throws IOException {
         ArrayList<Staff> qualifiedList = new ArrayList();
         for (Staff s : staffList) {
@@ -997,12 +1010,12 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return qualifiedList.get(rand.nextInt(qualifiedList.size()));
     }
-
+    
     public Venue getLecVenue(String lecGroupStr, String courseCode, String staffID) throws IOException {
         ArrayList<Venue> qualifiedList = new ArrayList();
         int totalSize = getTotalSize(lecGroupStr, courseCode);
         Venue venue = new Venue();
-
+        
         if (totalSize <= 30) {
             qualifiedList = roomList;
         } else {
@@ -1012,7 +1025,7 @@ public class SchedulingAlgorithm implements Serializable {
                 }
             }
         }
-
+        
         if (qualifiedList.isEmpty()) {
             errorCode = 1;
             errorMsg = "Unable to generate schedule due to lecture hall capacity error. \\nStaff ID: " + staffID + "\\nCourse Code & Cohort IDs: " + lecGroupStr + "";
@@ -1022,7 +1035,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return venue;
     }
-
+    
     public int getVenueUseCount(String venueID) {
         ArrayList<String> courseIDList = new ArrayList();
         for (Schedule s : scheduleList) {
@@ -1034,7 +1047,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return courseIDList.size();
     }
-
+    
     public Venue getCourseVenue(String courseType, String courseCode) throws IOException {
         Venue venue = new Venue();
         ArrayList<Venue> qualifiedList = new ArrayList();
@@ -1068,7 +1081,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return venue;
     }
-
+    
     public Venue getTutVenueWithBlock(String block) {
         ArrayList<Venue> qualifiedList = new ArrayList();
         for (Venue v : roomList) {
@@ -1078,7 +1091,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return qualifiedList.get(rand.nextInt(qualifiedList.size()));
     }
-
+    
     public String searchCourseCode(Class c) {
         ArrayList<CourseType> tempList;
         String courseCode = "";
@@ -1094,7 +1107,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return courseCode;
     }
-
+    
     public Staff searchStaff(String staffID) {
         Staff staff = new Staff();
         for (Staff s : staffList) {
@@ -1104,7 +1117,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return staff;
     }
-
+    
     public Venue searchVenue(String courseType, String venueID) {
         Venue venue = new Venue();
         ArrayList<Venue> tempList;
@@ -1126,7 +1139,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return venue;
     }
-
+    
     public boolean isClashWithOtherLists(Class c) {
         boolean found = false;
         for (Schedule s : scheduleList) {
@@ -1134,7 +1147,7 @@ public class SchedulingAlgorithm implements Serializable {
                 if (d.getDay() == c.getDay() && !c.getGroupID().equals(d.getGroupID())) {
                     double startTime = c.getStartTime(), endTime = c.getEndTime(), tempStart = d.getStartTime(), tempEnd = d.getEndTime();
                     if ((startTime >= tempStart && startTime < tempEnd) || (endTime > tempStart && endTime <= tempEnd) || (tempStart >= startTime && tempStart < endTime) || (tempEnd > startTime && tempEnd <= endTime)) {
-                        if (c.getStaffID().equals(d.getStaffID())) {
+                        if (c.getStaffID().equals(d.getStaffID()) || c.getVenueID().equals(d.getVenueID())) {
                             found = true;
                             break;
                         }
@@ -1144,7 +1157,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return found;
     }
-
+    
     public boolean isTimeClashWithClassList(ArrayList<Class> classList, Class c) {
         boolean found = false;
         for (int i = 0; i < classList.size(); i++) {
@@ -1158,7 +1171,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return found;
     }
-
+    
     public boolean hasClashWithinList() {
         boolean isClash = false;
         for (int i = 0; i < scheduleList.size(); i++) {
@@ -1179,7 +1192,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return isClash;
     }
-
+    
     public boolean hasClashWithDBList() throws SQLException {
         boolean isClash = false;
         if (!dbList.isEmpty()) {
@@ -1189,7 +1202,7 @@ public class SchedulingAlgorithm implements Serializable {
                     for (Class d : dbList) {
                         if (c.getDay() == d.getDay()) {
                             double startTime1 = c.getStartTime(), endTime1 = c.getEndTime(), startTime2 = d.getStartTime(), endTime2 = d.getEndTime();
-
+                            
                             if (c.getCourseType().equals("L") && d.getCourseType().equals("L")) {
                                 if (!c.getCourseID().equals(d.getCourseID())) {
                                     if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1) || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2)) {
@@ -1223,7 +1236,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return isClash;
     }
-
+    
     public boolean hasClashWithBlockClass() {
         boolean isClash = false;
         double tempStart, tempEnd, startTime, endTime;
@@ -1233,18 +1246,18 @@ public class SchedulingAlgorithm implements Serializable {
                 for (Class c : classList) {
                     tempStart = c.getStartTime();
                     tempEnd = c.getEndTime();
-
+                    
                     Staff staff = searchStaff(c.getStaffID());
                     startTime = staff.getBlockStart();
                     endTime = staff.getBlockStart() + staff.getBlockDuration();
-
+                    
                     if (c.getDay() == staff.getBlockDay()) {
                         if ((startTime >= tempStart && startTime < tempEnd) || (endTime > tempStart && endTime <= tempEnd) || (tempStart >= startTime && tempStart < endTime) || (tempEnd > startTime && tempEnd <= endTime)) {
                             isClash = true;
                             break;
                         }
                     }
-
+                    
                     startTime = blockClass.getStartTime();
                     endTime = blockClass.getEndTime();
                     if (c.getDay() == blockClass.getDay()) {
@@ -1256,10 +1269,10 @@ public class SchedulingAlgorithm implements Serializable {
                 }
             }
         }
-
+        
         return isClash;
     }
-
+    
     public boolean hasIncompleteClassData() {
         boolean hasIncomplete = false;
         for (int i = 0; i < scheduleList.size(); i++) {
@@ -1273,7 +1286,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return hasIncomplete;
     }
-
+    
     public boolean hasInvalidTime() {
         boolean hasInvalid = false;
         for (int i = 0; i < scheduleList.size(); i++) {
@@ -1290,7 +1303,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return hasInvalid;
     }
-
+    
     public boolean hasEnoughClass() {
         boolean hasEnough = true;
         for (int i = 0; i < scheduleList.size(); i++) {
@@ -1300,7 +1313,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return hasEnough;
     }
-
+    
     public boolean hasInvalidNoOfClass() {
         boolean hasInvalid = false;
         for (int i = 0; i < scheduleList.size(); i++) {
@@ -1343,7 +1356,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return hasInvalid;
     }
-
+    
     public boolean hasLongDurationClass() {
         boolean hasLongDuration = false;
         for (int i = 0; i < scheduleList.size(); i++) {
@@ -1367,7 +1380,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
         return hasLongDuration;
     }
-
+    
     public boolean hasInvalidBreak() {
         boolean hasInvalid = false;
         for (int index = 0; index < scheduleList.size(); index++) {
@@ -1393,7 +1406,7 @@ public class SchedulingAlgorithm implements Serializable {
             double oriMaxBreak = maxBreak;
             int oriStudyDays = studyDays;
             boolean toRestart, isBreak = false;
-
+            
             do {
                 toRestart = false;
                 if (runCount == exitLimit) {
@@ -1429,7 +1442,7 @@ public class SchedulingAlgorithm implements Serializable {
                     System.out.println(hasEnoughClass() + "-" + hasIncompleteClassData() + "-" + hasInvalidTime() + "-" + hasInvalidNoOfClass() + "-" + hasLongDurationClass() + "-" + hasClashWithinList() + "-" + hasClashWithOtherLists() + "-" + hasClashWithBlockClass() + "-" + hasClashWithDBList());
                 }
             } while (toRestart || !hasEnoughClass() || hasIncompleteClassData() || hasInvalidTime() || hasInvalidNoOfClass() || hasLongDurationClass() || hasClashWithinList() || hasClashWithOtherLists() || hasClashWithBlockClass() || hasClashWithDBList());
-
+            
             if (!isBreak) {
                 insertData();
                 printClass();
@@ -1441,7 +1454,7 @@ public class SchedulingAlgorithm implements Serializable {
             }
         }
     }
-
+    
     public void printClass() {
         System.out.println("");
         for (int i = 0; i < scheduleList.size(); i++) {
@@ -1452,15 +1465,15 @@ public class SchedulingAlgorithm implements Serializable {
                     System.out.println("Group ID : " + c.getGroupID());
                 }
                 System.out.println("Course ID (Staff ID): " + c.getCourseID() + c.getCourseType() + " (" + c.getStaffID() + ")" + " Venue : " + c.getVenueID() + " Day & Time: " + c.getDay() + " (" + c.getStartTime() + "-" + c.getEndTime() + ")");
-
+                
             }
             System.out.println("-----------------------------------------------------------------------------");
         }
     }
-
+    
     public static void main(String args[]) throws Exception {
         SchedulingAlgorithm sa = new SchedulingAlgorithm();
         sa.start();
     }
-
+    
 }
