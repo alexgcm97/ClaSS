@@ -80,12 +80,12 @@ public class Schedule {
         this.courseCodeList = courseCodeList;
     }
 
-    public void moveRight(Class c, double moveDuration) {
+    public void moveRight(Class c, double moveDuration, double studyEnd) {
         boolean isClash = false;
         for (Class d : this.classList) {
             if (c.getDay() == d.getDay() && !c.getCourseID().equals(d.getCourseID())) {
                 double startTime1 = c.getStartTime() + moveDuration, endTime1 = c.getEndTime() + moveDuration, startTime2 = d.getStartTime(), endTime2 = d.getEndTime();
-                if ((startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2) || (startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1)) {
+                if ((c.getEndTime() + moveDuration) > studyEnd || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2) || (startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1)) {
                     isClash = true;
                     break;
                 }
@@ -96,12 +96,12 @@ public class Schedule {
         }
     }
 
-    public void moveLeft(Class c, double moveDuration) {
+    public void moveLeft(Class c, double moveDuration, double studyStart) {
         boolean isClash = false;
         for (Class d : this.classList) {
             if (c.getDay() == d.getDay() && !c.getCourseID().equals(d.getCourseID())) {
                 double startTime1 = c.getStartTime() - moveDuration, endTime1 = c.getEndTime() - moveDuration, startTime2 = d.getStartTime(), endTime2 = d.getEndTime();
-                if ((startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2) || (startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1)) {
+                if ((c.getStartTime() - moveDuration) < studyStart || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2) || (startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1)) {
                     isClash = true;
                     break;
                 }
