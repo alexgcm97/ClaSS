@@ -244,20 +244,15 @@ public class SchedulingAlgorithm implements Serializable {
 
             Venue v = new Venue(e.getAttribute("venueID"), e.getElementsByTagName("block").item(0).getTextContent(), e.getElementsByTagName("venueType").item(0).getTextContent(), Integer.parseInt(e.getElementsByTagName("capacity").item(0).getTextContent()), e.getElementsByTagName("courseCodeList").item(0).getTextContent());
             v.setClassList(vda.getClassList(v.getVenueID()));
-            switch (v.getVenueType()) {
-                case "Room":
-                    roomList.add(v);
-                    break;
-                case "Lab":
-                    labList.add(v);
-                    break;
-                case "Hall":
-                    hallList.add(v);
-                    break;
-                default:
-                    break;
+            if (v.getVenueType().equalsIgnoreCase("room")) {
+                roomList.add(v);
+            } else if (v.getVenueType().equalsIgnoreCase("lab")) {
+                labList.add(v);
+            } else if (v.getVenueType().equalsIgnoreCase("hall")) {
+                hallList.add(v);
             }
         }
+        
         if (roomList.isEmpty() || labList.isEmpty() || hallList.isEmpty()) {
             errorCode = 1;
             errorMsg = "Venue XML file is empty or incomplete.";
