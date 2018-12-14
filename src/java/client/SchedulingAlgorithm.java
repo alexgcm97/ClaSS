@@ -45,7 +45,7 @@ public class SchedulingAlgorithm implements Serializable {
     private Class blockClass;
     private ArrayList<Class> dbList = new ArrayList();
 
-    private final int assignLimit = 120, firstVLimit = 30, secondVLimit = 60, exitLimit = 140000;
+    private final int assignLimit = 120, firstVLimit = 30, secondVLimit = 60, exitLimit = 140000, longDurationLimit = 5;
     private final ClassDA cda = new ClassDA();
     private final VenueDA vda = new VenueDA();
     private final StaffDA sda = new StaffDA();
@@ -1430,13 +1430,15 @@ public class SchedulingAlgorithm implements Serializable {
 
     public boolean hasLongDurationClass() {
         boolean hasLongDuration = false;
+        int classCount = 0;
         for (int i = 0; i < scheduleList.size(); i++) {
             ArrayList<Class> classList = scheduleList.get(i).getClassList();
             for (int j = 0; j < classList.size() - 1; j++) {
                 int nextIndex = j + 1;
                 Class c1 = classList.get(j), c2 = classList.get(nextIndex);
-                double totalDuration = c1.getDuration();
-                while (nextIndex < classList.size() && c1.getDay() == c2.getDay() && c2.getStartTime() == c1.getEndTime()) {
+                double totalDuration = c1.getDuration(), endTime = c1.getEndTime();
+                while (nextIndex < classList.size() && c1.getDay() == c2.getDay() && c2.getStartTime() == endTime) {
+                    endTime = c2.getEndTime();
                     totalDuration += c2.getDuration();
                     nextIndex++;
                     if (nextIndex < classList.size()) {
@@ -1444,10 +1446,13 @@ public class SchedulingAlgorithm implements Serializable {
                     }
                 }
                 if (totalDuration > 4) {
-                    hasLongDuration = true;
+                    classCount++;
                     break;
                 }
             }
+        }
+        if (classCount > longDurationLimit) {
+            hasLongDuration = true;
         }
         return hasLongDuration;
     }
