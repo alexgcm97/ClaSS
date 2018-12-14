@@ -749,7 +749,7 @@ public class SchedulingAlgorithm implements Serializable {
                         if (countClassBeforeHalfDay(day, classList) <= Math.floor(noOfClassPerDay / 2)) {
                             startTime = getRandomStartTimeBeforeHalfDay();
                         } else {
-                            startTime = getRandomStartTimeAfterHalfDay();
+                            startTime = getRandomStartTime();
                         }
                         endTime = startTime + Double.parseDouble(course.getCourseDuration());
                     }
@@ -983,7 +983,7 @@ public class SchedulingAlgorithm implements Serializable {
         }
     }
 
-    public double getRandomStartTimeAfterHalfDay() {
+    public double getRandomStartTime() {
         if (rand.nextBoolean()) {
             return (rand.nextInt((int) (studyEnd - studyStart)) + studyStart);
         } else {
