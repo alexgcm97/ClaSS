@@ -18,7 +18,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -988,7 +987,8 @@ public class SchedulingAlgorithm implements Serializable {
         }
         if (qualifiedList.isEmpty()) {
             errorCode = 1;
-            errorMsg = "Unable to generate schedule due to staff linking error for course code " + courseCode + courseType + ".";
+            errorMsg = "Unable to generate schedule due to staff linking error for course code." + "\\nCourse Code: " + courseCode + courseType;
+            System.out.println(errorMsg);
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
         }
         return qualifiedList;
@@ -1020,7 +1020,8 @@ public class SchedulingAlgorithm implements Serializable {
         }
         if (qualifiedList.isEmpty()) {
             errorCode = 1;
-            errorMsg = "Unable to generate schedule due to staff linking error for course code " + courseCode + courseType;
+            errorMsg = "Unable to generate schedule due to staff linking error for course code." + "\\nGroup ID: " + groupID + "\\nCourse Code: " + courseCode + courseType;
+            System.out.println(errorMsg);
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
         }
         return qualifiedList.get(rand.nextInt(qualifiedList.size()));
@@ -1044,6 +1045,7 @@ public class SchedulingAlgorithm implements Serializable {
         if (qualifiedList.isEmpty()) {
             errorCode = 1;
             errorMsg = "Unable to generate schedule due to lecture hall capacity error. \\nStaff ID: " + staffID + "\\nCourse Code & Cohort IDs: " + lecGroupStr + "";
+            System.out.println(errorMsg);
             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
         } else {
             venue = qualifiedList.get(rand.nextInt(qualifiedList.size()));
@@ -1089,6 +1091,7 @@ public class SchedulingAlgorithm implements Serializable {
             if (qualifiedList.isEmpty()) {
                 errorCode = 1;
                 errorMsg = "Lab venue error for course code " + courseCode + courseType + ".";
+                System.out.println(errorMsg);
                 FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
             } else {
                 venue = qualifiedList.get(rand.nextInt(qualifiedList.size()));
@@ -1465,6 +1468,7 @@ public class SchedulingAlgorithm implements Serializable {
             } else {
                 errorCode = 1;
                 errorMsg = "Unable to generate schedule, possibly due to insufficient staff or venue provided.";
+                System.out.println(errorMsg);
                 FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
             }
         }
