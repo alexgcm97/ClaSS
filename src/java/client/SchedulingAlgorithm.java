@@ -746,7 +746,7 @@ public class SchedulingAlgorithm implements Serializable {
                             endTime = startTime + Double.parseDouble(course.getCourseDuration());
                         } while (endTime > 18);
                     } else {
-                        if (countClassBeforeHalfDay(day, classList) <= Math.floor(noOfClassPerDay / 2)) {
+                        if (countClassBeforeHalfDay(day, classList) < Math.ceil(noOfClassPerDay / 2)) {
                             startTime = getRandomStartTimeBeforeHalfDay();
                         } else {
                             startTime = getRandomStartTime();
