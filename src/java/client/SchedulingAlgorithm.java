@@ -634,7 +634,7 @@ public class SchedulingAlgorithm implements Serializable {
                                 do {
                                     isClash = false;
                                     do {
-                                        startTime = getRandomStartTime();
+                                        startTime = getRandomStartTimeBeforeHalfDay();
                                         endTime = startTime + Double.parseDouble(course.getCourseDuration());
                                         day = getRandomDay();
                                     } while (startTime < studyStart || endTime > studyEnd);
@@ -740,8 +740,19 @@ public class SchedulingAlgorithm implements Serializable {
                     }
                     classCount = 1;
                     day = getRandomDay();
-                    startTime = getRandomStartTime();
-                    endTime = startTime + Double.parseDouble(course.getCourseDuration());
+                    if (course.getCourseType().equalsIgnoreCase("P")) {
+                        do {
+                            startTime = getRandomStartTimeForLab();
+                            endTime = startTime + Double.parseDouble(course.getCourseDuration());
+                        } while (endTime > 18);
+                    } else {
+                        if (countClassBeforeHalfDay(day, classList) <= Math.floor(noOfClassPerDay / 2)) {
+                            startTime = getRandomStartTimeBeforeHalfDay();
+                        } else {
+                            startTime = getRandomStartTimeAfterHalfDay();
+                        }
+                        endTime = startTime + Double.parseDouble(course.getCourseDuration());
+                    }
                     for (Class temp : classList) {
                         if (temp.getDay() == day) {
                             classCount++;
@@ -964,11 +975,27 @@ public class SchedulingAlgorithm implements Serializable {
         }
     }
 
-    public double getRandomStartTime() {
+    public double getRandomStartTimeBeforeHalfDay() {
+        if (rand.nextBoolean()) {
+            return (rand.nextInt((int) (Math.ceil((studyEnd - studyStart) / 2) + studyStart)));
+        } else {
+            return (rand.nextInt((int) (Math.ceil((studyEnd - studyStart) / 2) + studyStart))) + 0.5;
+        }
+    }
+
+    public double getRandomStartTimeAfterHalfDay() {
         if (rand.nextBoolean()) {
             return (rand.nextInt((int) (studyEnd - studyStart)) + studyStart);
         } else {
             return (rand.nextInt((int) (studyEnd - studyStart)) + studyStart) + 0.5;
+        }
+    }
+
+    public double getRandomStartTimeForLab() {
+        if (rand.nextBoolean()) {
+            return (rand.nextInt((int) (18 - studyStart)) + studyStart);
+        } else {
+            return (rand.nextInt((int) (18 - studyStart)) + studyStart) + 0.5;
         }
     }
 
