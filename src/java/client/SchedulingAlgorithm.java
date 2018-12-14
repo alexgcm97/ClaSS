@@ -45,7 +45,8 @@ public class SchedulingAlgorithm implements Serializable {
     private Class blockClass;
     private ArrayList<Class> dbList = new ArrayList();
 
-    private final int assignLimit = 120, firstVLimit = 30, secondVLimit = 60, exitLimit = 140000, longDurationLimit = 5;
+    private final int assignLimit = 120, firstVLimit = 30, secondVLimit = 60, exitLimit = 140000, classLimit = 5;
+    private final double longDurationLimit = 4.0;
     private final ClassDA cda = new ClassDA();
     private final VenueDA vda = new VenueDA();
     private final StaffDA sda = new StaffDA();
@@ -1445,13 +1446,13 @@ public class SchedulingAlgorithm implements Serializable {
                         c2 = classList.get(nextIndex);
                     }
                 }
-                if (totalDuration > 4) {
+                if (totalDuration > longDurationLimit) {
                     classCount++;
                     break;
                 }
             }
         }
-        if (classCount > longDurationLimit) {
+        if (classCount > classLimit) {
             hasLongDuration = true;
         }
         return hasLongDuration;
