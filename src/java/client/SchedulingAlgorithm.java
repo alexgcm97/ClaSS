@@ -411,9 +411,8 @@ public class SchedulingAlgorithm implements Serializable {
                                 } else {
                                     if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1) || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2)) {
                                         if (class1.getVenueID().equals(class2.getVenueID()) || class1.getStaffID().equals(class2.getStaffID())) {
-                                            System.out.println("there");
-                                            System.out.println("Class 1: " + class1.getCourseID() + class1.getCourseType() + "-" + class1.getVenueID() + "-" + class1.getStaffID() + "(" + class1.getStartTime() + "-" + class1.getEndTime() + ")");
-                                            System.out.println("Class 2: " + class2.getCourseID() + class2.getCourseType() + "-" + class2.getVenueID() + "-" + class2.getStaffID() + "(" + class2.getStartTime() + "-" + class2.getEndTime() + ")");
+                                            //System.out.println("Class 1: " + class1.getCourseID() + class1.getCourseType() + "-" + class1.getVenueID() + "-" + class1.getStaffID() + "(" + class1.getStartTime() + "-" + class1.getEndTime() + ")");
+                                            //System.out.println("Class 2: " + class2.getCourseID() + class2.getCourseType() + "-" + class2.getVenueID() + "-" + class2.getStaffID() + "(" + class2.getStartTime() + "-" + class2.getEndTime() + ")");
                                             isClash = true;
                                             break;
                                         }
@@ -884,7 +883,6 @@ public class SchedulingAlgorithm implements Serializable {
                                                 scheduleList.get(index).moveRight(thisClass, moveDuration, studyEnd);
                                             }
                                         } while (nextLoop);
-
                                     }
                                 }
                             } else {
@@ -944,7 +942,7 @@ public class SchedulingAlgorithm implements Serializable {
                 }
                 runCount++;
             }
-        } while (isClash == true);
+        } while (isClash);
 
         if (!isBreak) {
             thisClass.setVenueID(v.getVenueID());
@@ -968,7 +966,7 @@ public class SchedulingAlgorithm implements Serializable {
     }
 
     public double getRandomStartTime() {
-        if (rand.nextBoolean() == true) {
+        if (rand.nextBoolean()) {
             return (rand.nextInt((int) (studyEnd - studyStart)) + studyStart);
         } else {
             return (rand.nextInt((int) (studyEnd - studyStart)) + studyStart) + 0.5;

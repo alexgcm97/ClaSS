@@ -85,7 +85,7 @@ public class Schedule {
         for (Class d : this.classList) {
             if (c.getDay() == d.getDay() && !c.getCourseID().equals(d.getCourseID())) {
                 double startTime1 = c.getStartTime() + moveDuration, endTime1 = c.getEndTime() + moveDuration, startTime2 = d.getStartTime(), endTime2 = d.getEndTime();
-                if ((c.getEndTime() + moveDuration) > studyEnd || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2) || (startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1)) {
+                if (endTime1 > studyEnd || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2) || (startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1)) {
                     isClash = true;
                     break;
                 }
@@ -101,7 +101,7 @@ public class Schedule {
         for (Class d : this.classList) {
             if (c.getDay() == d.getDay() && !c.getCourseID().equals(d.getCourseID())) {
                 double startTime1 = c.getStartTime() - moveDuration, endTime1 = c.getEndTime() - moveDuration, startTime2 = d.getStartTime(), endTime2 = d.getEndTime();
-                if ((c.getStartTime() - moveDuration) < studyStart || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2) || (startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1)) {
+                if (startTime1 < studyStart || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2) || (startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1)) {
                     isClash = true;
                     break;
                 }
