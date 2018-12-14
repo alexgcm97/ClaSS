@@ -996,15 +996,15 @@ public class SchedulingAlgorithm implements Serializable {
 
     public double getRandomStartTimeBeforeHalfDay() {
         if (rand.nextBoolean()) {
-            return (rand.nextInt((int) (Math.ceil((studyEnd - studyStart) / 2) + studyStart)));
+            return rand.nextInt((int) (Math.ceil((studyEnd - studyStart) / 2))) + studyStart;
         } else {
-            return (rand.nextInt((int) (Math.ceil((studyEnd - studyStart) / 2) + studyStart))) + 0.5;
+            return (rand.nextInt((int) (Math.ceil((studyEnd - studyStart) / 2))) + studyStart) + 0.5;
         }
     }
 
     public double getRandomStartTime() {
         if (rand.nextBoolean()) {
-            return (rand.nextInt((int) (studyEnd - studyStart)) + studyStart);
+            return rand.nextInt((int) (studyEnd - studyStart)) + studyStart;
         } else {
             return (rand.nextInt((int) (studyEnd - studyStart)) + studyStart) + 0.5;
         }
@@ -1012,7 +1012,7 @@ public class SchedulingAlgorithm implements Serializable {
 
     public double getRandomStartTimeForLab() {
         if (rand.nextBoolean()) {
-            return (rand.nextInt((int) (18 - studyStart)) + studyStart);
+            return rand.nextInt((int) (18 - studyStart)) + studyStart;
         } else {
             return (rand.nextInt((int) (18 - studyStart)) + studyStart) + 0.5;
         }
@@ -1434,6 +1434,7 @@ public class SchedulingAlgorithm implements Serializable {
         int classCount = 0;
         for (int i = 0; i < scheduleList.size(); i++) {
             ArrayList<Class> classList = scheduleList.get(i).getClassList();
+            OUTER:
             for (int j = 0; j < classList.size() - 1; j++) {
                 int nextIndex = j + 1;
                 Class c1 = classList.get(j), c2 = classList.get(nextIndex);
@@ -1442,14 +1443,16 @@ public class SchedulingAlgorithm implements Serializable {
                     endTime = c2.getEndTime();
                     totalDuration += c2.getDuration();
                     nextIndex++;
-                    if (nextIndex < classList.size()) {
-                        c2 = classList.get(nextIndex);
+                    if (totalDuration > longDurationLimit) {
+                        classCount++;
+                        break OUTER;
+                    } else {
+                        if (nextIndex < classList.size()) {
+                            c2 = classList.get(nextIndex);
+                        }
                     }
                 }
-                if (totalDuration > longDurationLimit) {
-                    classCount++;
-                    break;
-                }
+
             }
         }
         if (classCount > classLimit) {
