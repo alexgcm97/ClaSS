@@ -633,11 +633,29 @@ public class SchedulingAlgorithm implements Serializable {
                             if (!isSame) {
                                 do {
                                     isClash = false;
+                                    boolean toLoop = false;
                                     do {
                                         startTime = getRandomStartTimeBeforeHalfDay();
                                         endTime = startTime + Double.parseDouble(course.getCourseDuration());
                                         day = getRandomDay();
-                                    } while (startTime < studyStart || endTime > studyEnd);
+                                        for (int i = 0; i < scheduleList.size(); i++) {
+                                            if (lecGroupStr.contains(scheduleList.get(i).getCohortID())) {
+                                                toLoop = false;
+                                                if (toBalance) {
+                                                    noOfClassPerDay = Math.floor((double) scheduleList.get(i).getRequiredNoOfClass() / (studyDays)) + 1;
+                                                }
+                                                int classCount = 1;
+                                                for (Class temp : scheduleList.get(i).getClassList()) {
+                                                    if (temp.getDay() == day && !temp.getCourseType().equals("BLK")) {
+                                                        classCount++;
+                                                    }
+                                                }
+                                                if (classCount > noOfClassPerDay) {
+                                                    toLoop = true;
+                                                }
+                                            }
+                                        }
+                                    } while (toLoop || startTime < studyStart || endTime > studyEnd);
 
                                     if (s.getBlockDay() == day) {
                                         double startTime1 = s.getBlockStart(), endTime1 = s.getBlockStart() + s.getBlockDuration();
@@ -746,7 +764,7 @@ public class SchedulingAlgorithm implements Serializable {
                             endTime = startTime + Double.parseDouble(course.getCourseDuration());
                         } while (endTime > 18);
                     } else {
-                        if (countClassBeforeHalfDay(day, classList) < Math.ceil(noOfClassPerDay / 2)) {
+                        if (countClassBeforeHalfDay(day, classList) < Math.floor(noOfClassPerDay / 2)) {
                             startTime = getRandomStartTimeBeforeHalfDay();
                         } else {
                             startTime = getRandomStartTime();
@@ -754,7 +772,7 @@ public class SchedulingAlgorithm implements Serializable {
                         endTime = startTime + Double.parseDouble(course.getCourseDuration());
                     }
                     for (Class temp : classList) {
-                        if (temp.getDay() == day) {
+                        if (temp.getDay() == day && !temp.getCourseType().equals("BLK")) {
                             classCount++;
                         }
                     }
@@ -1324,6 +1342,8 @@ public class SchedulingAlgorithm implements Serializable {
             ArrayList<Class> classList = scheduleList.get(i).getClassList();
             for (Class c : classList) {
                 if (c.getVenueID() == null || c.getStaffID() == null || c.getVenueID().equals("-") || c.getStaffID().equals("-")) {
+//                    System.out.println("Group ID: " + c.getGroupID());
+//                    System.out.println("Course ID: " + c.getCourseID() + c.getCourseType());
                     hasIncomplete = true;
                     break;
                 }
