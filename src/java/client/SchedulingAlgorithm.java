@@ -1354,6 +1354,12 @@ public class SchedulingAlgorithm implements Serializable {
         for (int i = 0; i < scheduleList.size(); i++) {
             if (scheduleList.get(i).getNoOfClass() < scheduleList.get(i).getRequiredNoOfClass()) {
                 hasEnough = false;
+                //System.out.println("Group ID: " + scheduleList.get(i).getGroupID());
+                //System.out.println("Actual No: " + scheduleList.get(i).getNoOfClass());
+                //System.out.println("Required No: " + scheduleList.get(i).getRequiredNoOfClass());
+                //for (Class c : scheduleList.get(i).getClassList()) {
+                //    System.out.println("Course ID (Staff ID): " + c.getCourseID() + c.getCourseType() + " (" + c.getStaffID() + ")" + " Venue : " + c.getVenueID() + " Day & Time: " + c.getDay() + " (" + c.getStartTime() + "-" + c.getEndTime() + ")");
+                //}
             }
         }
         return hasEnough;
