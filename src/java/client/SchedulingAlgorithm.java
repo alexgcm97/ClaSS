@@ -38,15 +38,15 @@ public class SchedulingAlgorithm implements Serializable {
     private ArrayList<Venue> roomList, labList, hallList, allPurposeLabList;
     private ArrayList<Schedule> scheduleList;
 
-    private int studyDays = 0, blockDay = 0, errorCode = 0;
+    private int studyDays = 0, blockDay = 0, errorCode = 0, classLimit;
     private boolean toBalance = false;
     private double studyStart, studyEnd, blockStart, blockEnd, maxBreak = 99, noOfClassPerDay = 99;
     private String errorMsg;
     private Class blockClass;
     private ArrayList<Class> dbList = new ArrayList();
 
-    private final int assignLimit = 120, firstVLimit = 30, secondVLimit = 60, exitLimit = 140000, classLimit = 5;
-    private final double longDurationLimit = 4.0;
+    private final int assignLimit = 120, firstVLimit = 30, secondVLimit = 60, exitLimit = 140000;
+    private final double longDurationLimit = 4.0, assignRatio = 0.95;
     private final ClassDA cda = new ClassDA();
     private final VenueDA vda = new VenueDA();
     private final StaffDA sda = new StaffDA();
@@ -290,6 +290,8 @@ public class SchedulingAlgorithm implements Serializable {
             s.setRequiredNoOfClass(count);
             scheduleList.add(s);
         }
+
+        classLimit = (int) Math.floor(scheduleList.size() * 0.05);
         dbList = cda.getAll();
         return true;
     }
@@ -765,7 +767,7 @@ public class SchedulingAlgorithm implements Serializable {
                             endTime = startTime + Double.parseDouble(course.getCourseDuration());
                         } while (endTime > 18);
                     } else {
-                        if (countClassBeforeHalfDay(day, classList) < Math.floor(noOfClassPerDay / 2)) {
+                        if (countClassBeforeHalfDay(day, classList) < Math.floor(noOfClassPerDay / 2) && runCount < (assignLimit * assignRatio)) {
                             startTime = getRandomStartTimeBeforeHalfDay();
                         } else {
                             startTime = getRandomStartTime();
