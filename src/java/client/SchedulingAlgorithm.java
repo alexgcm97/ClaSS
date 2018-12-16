@@ -46,7 +46,7 @@ public class SchedulingAlgorithm implements Serializable {
     private ArrayList<Class> dbList = new ArrayList();
 
     private final int assignLimit = 120, firstVLimit = 30, secondVLimit = 60, exitLimit = 10000;
-    private final double longDurationLimit = 4.0, assignRatio = 0.95, classRatio = 0.07;
+    private final double longDurationLimit = 4.0, assignRatio = 0.95, classRatio = 0.07, timeRatio = 0.50;
     private final ClassDA cda = new ClassDA();
     private final VenueDA vda = new VenueDA();
     private final StaffDA sda = new StaffDA();
@@ -392,6 +392,7 @@ public class SchedulingAlgorithm implements Serializable {
                                     if (!class1.getCourseID().equals(class2.getCourseID())) {
                                         if ((startTime2 >= startTime1 && startTime2 < endTime1) || (endTime2 > startTime1 && endTime2 <= endTime1) || (startTime1 >= startTime2 && startTime1 < endTime2) || (endTime1 > startTime2 && endTime1 <= endTime2)) {
                                             if (class1.getVenueID().equals(class2.getVenueID()) || class1.getStaffID().equals(class2.getStaffID())) {
+
                                                 //System.out.println("Class 1: " + class1.getCourseID() + "-" + class1.getVenueID() + "-" + class1.getStaffID());
                                                 //System.out.println("Class 2: " + class2.getCourseID() + "-" + class2.getVenueID() + "-" + class2.getStaffID());
                                                 isClash = true;
@@ -604,7 +605,7 @@ public class SchedulingAlgorithm implements Serializable {
         Venue v;
         ArrayList<Staff> lecStaffList = getLecStaffList(courseCode, courseType);
         ArrayList<Integer> indexList = new ArrayList();
-        double startTime = 0, endTime = 0;
+        double startTime = 0, endTime = 0, courseDuration = Double.parseDouble(course.getCourseDuration());
         int day = 0;
         Class c = new Class();
 
@@ -638,7 +639,7 @@ public class SchedulingAlgorithm implements Serializable {
                                     isClash = false;
                                     boolean toLoop = false;
                                     do {
-                                        startTime = getRandomStartTimeBeforeHalfDay();
+                                        startTime = getRandomStartTimeWithRatio();
                                         endTime = startTime + Double.parseDouble(course.getCourseDuration());
                                         day = getRandomDay();
                                         for (int i = 0; i < scheduleList.size(); i++) {
@@ -745,7 +746,7 @@ public class SchedulingAlgorithm implements Serializable {
     public void assignCourse(int requiredNoOfClass, String groupID, ArrayList<Class> classList, CourseType course) throws IOException {
         boolean isClash, isBreak = false;
         int day, classCount, runCount = 0;
-        double startTime, endTime;
+        double startTime, endTime, courseDuration = Double.parseDouble(course.getCourseDuration());
         Class thisClass = new Class();
 
         Staff s = getStaffWithGroup(course.getCourseType(), course.getCourseCode(), groupID);
@@ -763,14 +764,14 @@ public class SchedulingAlgorithm implements Serializable {
                     day = getRandomDay();
                     if (course.getCourseType().equalsIgnoreCase("P")) {
                         do {
-                            startTime = getRandomStartTimeForLab();
+                            startTime = getRandomStartTimeForLab(courseDuration);
                             endTime = startTime + Double.parseDouble(course.getCourseDuration());
                         } while (endTime > 18);
                     } else {
                         if (countClassBeforeHalfDay(day, classList) < Math.floor(noOfClassPerDay / 2) && runCount < (assignLimit * assignRatio)) {
-                            startTime = getRandomStartTimeBeforeHalfDay();
+                            startTime = getRandomStartTimeWithRatio();
                         } else {
-                            startTime = getRandomStartTime();
+                            startTime = getRandomStartTime(courseDuration);
                         }
                         endTime = startTime + Double.parseDouble(course.getCourseDuration());
                     }
@@ -996,27 +997,27 @@ public class SchedulingAlgorithm implements Serializable {
         }
     }
 
-    public double getRandomStartTimeBeforeHalfDay() {
+    public double getRandomStartTimeWithRatio() {
         if (rand.nextBoolean()) {
-            return rand.nextInt((int) (Math.ceil((studyEnd - studyStart) / 2))) + studyStart;
+            return rand.nextInt((int) (Math.ceil((studyEnd - studyStart) * timeRatio))) + studyStart;
         } else {
-            return (rand.nextInt((int) (Math.ceil((studyEnd - studyStart) / 2))) + studyStart) + 0.5;
+            return (rand.nextInt((int) (Math.ceil((studyEnd - studyStart) * timeRatio))) + studyStart) + 0.5;
         }
     }
 
-    public double getRandomStartTime() {
+    public double getRandomStartTime(double classDuration) {
         if (rand.nextBoolean()) {
-            return rand.nextInt((int) (studyEnd - studyStart)) + studyStart;
+            return rand.nextInt((int) Math.floor(studyEnd - studyStart - classDuration)) + studyStart;
         } else {
-            return (rand.nextInt((int) (studyEnd - studyStart)) + studyStart) + 0.5;
+            return (rand.nextInt((int) Math.floor(studyEnd - studyStart - classDuration)) + studyStart) + 0.5;
         }
     }
 
-    public double getRandomStartTimeForLab() {
+    public double getRandomStartTimeForLab(double classDuration) {
         if (rand.nextBoolean()) {
-            return rand.nextInt((int) (18 - studyStart)) + studyStart;
+            return rand.nextInt((int) Math.floor(18 - studyStart - classDuration)) + studyStart;
         } else {
-            return (rand.nextInt((int) (18 - studyStart)) + studyStart) + 0.5;
+            return (rand.nextInt((int) Math.floor(18 - studyStart - classDuration)) + studyStart) + 0.5;
         }
     }
 
