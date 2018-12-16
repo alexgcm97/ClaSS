@@ -45,8 +45,8 @@ public class SchedulingAlgorithm implements Serializable {
     private Class blockClass;
     private ArrayList<Class> dbList = new ArrayList();
 
-    private final int assignLimit = 120, firstVLimit = 30, secondVLimit = 60, exitLimit = 140000;
-    private final double longDurationLimit = 4.0, assignRatio = 0.95;
+    private final int assignLimit = 120, firstVLimit = 30, secondVLimit = 60, exitLimit = 10000;
+    private final double longDurationLimit = 4.0, assignRatio = 0.95, classRatio = 0.07;
     private final ClassDA cda = new ClassDA();
     private final VenueDA vda = new VenueDA();
     private final StaffDA sda = new StaffDA();
@@ -291,7 +291,7 @@ public class SchedulingAlgorithm implements Serializable {
             scheduleList.add(s);
         }
 
-        classLimit = (int) Math.floor(scheduleList.size() * 0.05);
+        classLimit = (int) Math.floor(scheduleList.size() * classRatio);
         dbList = cda.getAll();
         return true;
     }
